@@ -110,8 +110,8 @@ class Server
          }
       }
       // use this to set any desired custom path to the "realtime" cgi script.
-      // req.open("POST", `${rt_config.protocol}://${rt_config.host}/${rt_config.path}`, true);
-      req.open("POST", `/opengamedata/realtime.cgi`, true);
+      req.open("POST", `${rt_config.protocol}://${rt_config.host}/${rt_config.path}`, true);
+      // req.open("POST", `/opengamedata/realtime.cgi`, true);
       req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       req.send(post_string);
    }
