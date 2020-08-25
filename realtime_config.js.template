@@ -5,3 +5,30 @@ rt_config = {
     max_outstanding_requests: 20,
     custom_title: null
 };
+
+active_models = {
+    "Lakeland": {
+        'dummyModel':{"name": "Dummy Model"},
+    },
+    "Waves": {
+    }
+    "CRYSTAL": {
+    }
+};
+
+active_features = {
+    "WAVES": {
+        "totalLevelTime":{"name": "Total Level Time", "vis":"raw", "type": "int"},
+    },
+    "CRYSTAL": {
+        "sessionEventCount":{"name": "Session Event Count", "type": "int"} 
+    },
+    "LAKELAND": {
+        "old_set": {
+            "sess_ActiveEventCount":{"name": "Active Event Count", "vis":"raw", "type": "int"},
+        },
+        "new_set": {
+          "sess_count_achievements":{"name": "# Achievements", "vis":"raw", "type": "int"},
+        }
+    }
+}

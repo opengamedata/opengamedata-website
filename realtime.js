@@ -342,6 +342,7 @@ class SessionDashboard {
         playstats_message('No features available.')
       } 
     };
+    let prediction_request_list = this.create_prediction_request_list();
     let predictions_handler = function(result) {
       let predictions_raw = that.parseJSONResult(result);
       let prediction_list = predictions_raw[that.selected_session_id]
@@ -355,7 +356,7 @@ class SessionDashboard {
       }
     };
     try {
-      Server.get_predictions_by_sessID(predictions_handler, this.selected_session_id, this.active_game, SIM_TIME);
+      Server.get_predictions_by_sessID(predictions_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(prediction_request_list));
       Server.get_features_by_sessID(features_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(feature_request_list));
     }
     catch(err) {
@@ -609,57 +610,18 @@ class SessionDashboard {
   create_feature_request_list()
   {
     let feature_request_list = {};
-    if(this.active_game === 'WAVES'){
-      feature_request_list = {
-        "totalSliderMoves":{"name": "Total Slider Moves", "vis":"raw", "type": "int"},
-        "totalLevelTime":{"name": "Total Level Time", "vis":"raw", "type": "int"},
-        "closenessSlope":{"name": "Closeness Slope", "vis":"raw", "type": "float"},
-        "percentOffsetMoves":{"name": "Percent Moves: Offset", "vis":"raw", "type":"pct"},
-        "percentAmplitudeMoves":{"name": "Percent Moves: Amplitude", "vis":"raw", "type": "pct"},
-        "percentWavelengthMoves":{"name": "Percent Moves: Wavelength", "vis":"raw", "type": "pct"}
-      };
-    } else if(this.active_game === 'CRYSTAL'){
-      feature_request_list = {
-        "sessionEventCount":{"name": "Session Event Count", "type": "int"} 
-      }
-    } else if(this.active_game === 'LAKELAND'){
+    // Special case for Lakeland, as at the moment I've got two sets of features set up.
+    // Eventually, there should just be the one.
+    if(this.active_game === 'LAKELAND'){
       if (NEW_FEATURE_SET) {
-        feature_request_list = {
-          "sess_count_achievements":{"name": "# Achievements", "vis":"raw", "type": "int"},
-          "sess_time_to_exist_achievement":{"name": "Achievement: Exist", "vis":"raw", "type": "int"},
-          "sess_time_to_group_achievement":{"name": "Achievement: Group", "vis":"raw", "type": "int"},
-          "sess_time_to_farmer_achievement":{"name": "Achievement: Farmer", "vis":"raw", "type": "int"},
-          "sess_time_to_farmers_achievement":{"name": "Achievement: Farmers", "vis":"raw", "type": "int"},
-          "sess_time_to_paycheck_achievement":{"name": "Achievement: Paycheck", "vis":"raw", "type": "int"},
-          "sess_time_to_thousandair_achievement":{"name": "Achievement: Thousandair", "vis":"raw", "type": "int"},
-          "sess_time_to_bloom_achievement":{"name": "Achievement: Bloom", "vis":"raw", "type": "int"},
-          "sess_time_to_bigbloom_achievement":{"name": "Achievement: Big Bloom", "vis":"raw", "type": "int"},
-          "sess_count_buy_home":{"name": "# Buy Home", "vis": "bar", "type":"int"},
-          "sess_count_buy_farm":{"name": "# Buy Farm", "vis": "bar", "type":"int"},
-          "sess_count_buy_livestock":{"name": "# Buy Livestock", "vis": "bar", "type":"int"},
-          "sess_count_buy_food":{"name": "# Buy Food", "vis": "bar", "type":"int"},
-          "sess_count_buy_fertilizer":{"name": "# Buy Fertilizer", "vis": "bar", "type":"int"},
-          "sess_count_deaths":{"name": "# Deaths", "vis": "count", "type":"int", "icon": "fas fa-dizzy"},
-          "sess_percent_building_a_farm_on_highest_nutrition_tile":{"name": "% Build Farm on Highest Nutrition Tile", "vis": "gauge", "type":"pct"},
-          "sess_percent_placing_fertilizer_on_lowest_nutrient_farm":{"name": "% Fertilizer on Lowest Nutrient Farm", "vis": "gauge", "type":"pct", "reverse_color": true},
-        }
+        feature_request_list = active_features["LAKELAND"]["new_set"]
       }
       else {
-        feature_request_list = {
-        "sess_count_achievements":{"name": "# Achievements", "vis":"raw", "type": "int"},
-        "sess_count_encounter_tutorial":{"name": "# Tutorials", "vis":"raw", "type": "int"},
-        "sess_count_skips":{"name": "# Skip Tutorials", "vis":"raw", "type": "int"},
-        "sess_count_buy_home":{"name": "# Buy Home", "vis":"raw", "type": "int"},
-        "sess_count_buy_farm":{"name": "# Buy Farm", "vis":"raw", "type": "int"},
-        "sess_count_buy_fertilizer":{"name": "# Buy Fertilizer", "vis":"raw", "type": "int"},
-        "sess_count_buy_livestock":{"name": "# Buy Livestock", "vis":"raw", "type": "int"},
-        "sess_money_earned":{"name": "Money Earned", "vis":"raw", "type": "int"},
-        "sess_count_deaths":{"name": "# Deaths", "vis":"raw", "type": "int"},
-        "sess_percent_building_a_farm_on_highest_nutrition_tile":{"name": "% Build Farm on Highest Nutrition Tile", "vis":"pct", "type": "pct"},
-        "sess_percent_placing_fertilizer_on_lowest_nutrient_farm":{"name": "% Fertilizer on Lowest Nutrient Farm", "vis":"pct", "type": "pct"},
-        "sess_ActiveEventCount":{"name": "Active Event Count", "vis":"raw", "type": "int"},
-        }
+        feature_request_list = active_features["LAKELAND"]["old_set"]
       }
+    }
+    else {
+      feature_request_list = active_features[this.active_game]
     }
     return feature_request_list;
   }
