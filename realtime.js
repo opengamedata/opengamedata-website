@@ -626,6 +626,11 @@ class SessionDashboard {
     return feature_request_list;
   }
 
+  create_prediction_request_list()
+  {
+    return active_models[this.active_game];
+  }
+
   parseJSONResult(json_result)
   {   let ret_val = 'null';
       try
