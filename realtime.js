@@ -4,6 +4,8 @@
 var SIMULATION_MODE = true;
 var NEW_FEATURE_SET = true;
 var SIM_TIME = 0;
+var PRINT_TRACE = true;
+
 function onload()
 {
   // Create a SessionList instance for tracking state, and start the refresh loop.
@@ -63,6 +65,10 @@ function onload()
     }
     catch(err) {
       console.log(err.message);
+      if (PRINT_TRACE)
+      {
+        console.trace();
+      }
       throw err;
     }
     finally {
@@ -154,6 +160,10 @@ class SessionList
       catch (err)
       {
         console.log(`Could not parse result as JSON:\n ${result}`);
+        if (PRINT_TRACE)
+        {
+          console.trace();
+        }
         that.request_count--;
         return;
       }
@@ -361,6 +371,10 @@ class SessionDashboard {
     }
     catch(err) {
       console.log(err.message);
+      if (PRINT_TRACE)
+      {
+        console.trace();
+      }
     }
   }
 
@@ -418,6 +432,10 @@ class SessionDashboard {
     }
     catch(err) {
       console.log(err.message);
+      if (PRINT_TRACE)
+      {
+        console.trace();
+      }
     }
   }
 
@@ -632,22 +650,27 @@ class SessionDashboard {
   }
 
   parseJSONResult(json_result)
-  {   let ret_val = 'null';
-      try
+  {
+    let ret_val = 'null';
+    try
+    {
+      let models_raw = JSON.parse(json_result);
+      ret_val = models_raw;
+    }
+    catch (err)
+    {
+      console.log(`Could not parse result as JSON:\n ${json_result}`);
+      console.log(`Full error: ${err.toString()}`);
+      if (PRINT_TRACE)
       {
-        let predictions_raw = JSON.parse(json_result);
-        ret_val = predictions_raw;
+        console.trace();
       }
-      catch (err)
-      {
-        console.log(`Could not parse result as JSON:\n ${json_result}`);
-        console.log(`Full error: ${err.toString()}`);
-        ret_val = {"message": json_result.toString()};
-      }
-      finally
-      {
-        return ret_val;
-      }
+      ret_val = {"message": json_result.toString()};
+    }
+    finally
+    {
+      return ret_val;
+    }
   }
 
 }
