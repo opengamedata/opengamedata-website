@@ -313,7 +313,7 @@ class SessionDashboard {
   }
 
   clear() {
-    // here we'll just clear the stuff displayed in the prediction area.
+    // here we'll just clear the stuff displayed in the model area.
     let playstats = document.getElementById("playstats");
     while (playstats.firstChild) {
       playstats.removeChild(playstats.firstChild);
@@ -323,9 +323,9 @@ class SessionDashboard {
   }
 
   /**
-   * Function to set up display of predictions for a given session.
+   * Function to set up display of models for a given session.
    * Once this has been run, another function can be used to update
-   * the prediction values in place (without removing and replacing elements).
+   * the model values in place (without removing and replacing elements).
    * @param {*} session_id The id of the session to display.
    */
   DisplaySession(session_id, player_id, game_id) {
@@ -342,7 +342,7 @@ class SessionDashboard {
     let features_handler = function(result) {
       let features_raw = that.parseJSONResult(result);
       let features_parsed = features_raw[that.selected_session_id];
-      // loop over all predictions, adding to the UI.
+      // loop over all models, adding to the UI.
       for (let feature_name in features_parsed) {
         that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
         that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
@@ -352,21 +352,21 @@ class SessionDashboard {
         playstats_message('No features available.')
       } 
     };
-    let prediction_request_list = this.create_prediction_request_list();
-    let predictions_handler = function(result) {
-      let predictions_raw = that.parseJSONResult(result);
-      let prediction_list = predictions_raw[that.selected_session_id]
-      // loop over all predictions, adding to the UI.
-      for (let prediction_name in prediction_list) {
-        that.createPredictionBox(prediction_name, prediction_list[prediction_name]["name"], playstats);
-        that.populatePredictionBox(prediction_name, prediction_list);
+    let model_request_list = this.create_model_request_list();
+    let models_handler = function(result) {
+      let models_raw = that.parseJSONResult(result);
+      let model_list = models_raw[that.selected_session_id]
+      // loop over all models, adding to the UI.
+      for (let model_name in model_list) {
+        that.createModelBox(model_name, model_list[model_name]["name"], playstats);
+        that.populateModelBox(model_name, model_list);
       }
-      if(predictions_raw === 'null'){
-        playstats_message('No predictions available.')
+      if(models_raw === 'null'){
+        playstats_message('No models available.')
       }
     };
     try {
-      Server.get_predictions_by_sessID(predictions_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(prediction_request_list));
+      Server.get_models_by_sessID(models_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(model_request_list));
       Server.get_features_by_sessID(features_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(feature_request_list));
     }
     catch(err) {
@@ -379,7 +379,7 @@ class SessionDashboard {
   }
 
   /**
-   * Function to update the prediction values for a displayed session.
+   * Function to update the model values for a displayed session.
    * This assumes a session has been selected, and its id stored in
    * the SessionList selected_session_id variable.
    */
@@ -388,7 +388,7 @@ class SessionDashboard {
     let that = this;
     let feature_request_list = this.create_feature_request_list();
     let features_handler = function(result) {
-      // console.log(`Got back predictions: ${result}`);
+      // console.log(`Got back models: ${result}`);
       let features_raw = that.parseJSONResult(result);
       let features_parsed = features_raw[that.selected_session_id]
       // After getting the feature values, loop over whole list,
@@ -402,18 +402,21 @@ class SessionDashboard {
       }
       that.request_count--;
     };
-    let predictions_handler = function(result) {
-      // console.log(`Got back predictions: ${result}`);
-      let predictions_raw = that.parseJSONResult(result);
-      let prediction_list = predictions_raw[that.selected_session_id]
-      // After getting the prediction values, loop over whole list,
+    let model_request_list = this.create_model_request_list();
+    console.log("model list:");
+    console.log(model_request_list);
+    let models_handler = function(result) {
+      // console.log(`Got back models: ${result}`);
+      let models_raw = that.parseJSONResult(result);
+      let model_list = models_raw[that.selected_session_id]
+      // After getting the model values, loop over whole list,
       // updating values.
-      for (let prediction_name in prediction_list) {
-        let pred_span = document.getElementById(prediction_name);
+      for (let model_name in model_list) {
+        let pred_span = document.getElementById(model_name);
         if (pred_span == null) {
-          that.createPredictionBox(prediction_name, prediction_list[prediction_name]["name"], playstats);
+          that.createModelBox(model_name, model_list[model_name]["name"], playstats);
         }
-        that.populatePredictionBox(prediction_name, prediction_list);
+        that.populateModelBox(model_name, model_list);
       }
       that.request_count--;
     };
@@ -421,7 +424,7 @@ class SessionDashboard {
       if (this.request_count < rt_config.max_outstanding_requests)
       {
         this.request_count++;
-        Server.get_predictions_by_sessID(predictions_handler, this.selected_session_id, this.active_game, SIM_TIME);
+        Server.get_models_by_sessID(models_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(model_request_list));
         this.request_count++;
         Server.get_features_by_sessID(features_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(feature_request_list));
       }
@@ -445,11 +448,11 @@ class SessionDashboard {
     let next_feature_span = document.createElement("span");
     next_feature_span.id=feature_name;
     next_feature_span.className="playstat";
-    // then, add an element with prediction title to the div
+    // then, add an element with model title to the div
     let title = document.createElement("p");
     title.innerText = title_str;
     next_feature_span.appendChild(title);
-    // finally, add an element for the prediction value to the div.
+    // finally, add an element for the model value to the div.
     let value_elem = document.createElement("h3");
     value_elem.id = `${feature_name}_val`;
     next_feature_span.appendChild(value_elem);
@@ -467,27 +470,53 @@ class SessionDashboard {
     // value_elem.appendChild(feature_value);
   }
 
-  createPredictionBox(prediction_name, title_str, playstats_list)
+  createModelBox(model_name, title_str, playstats_list)
   {
     // first, make a div for everything to sit in.
-    let next_prediction = document.createElement("span");
-    next_prediction.id=prediction_name;
-    next_prediction.className="playstat";
-    // then, add an element with prediction title to the div
+    let next_model = document.createElement("span");
+    next_model.id=model_name;
+    next_model.className="playstat";
+    // then, add an element with model title to the div
     let title = document.createElement("p");
     title.innerText = title_str;
-    next_prediction.appendChild(title);
-    // finally, add an element for the prediction value to the div.
+    next_model.appendChild(title);
+    // finally, add an element for the model value to the div.
     let value_elem = document.createElement("h3");
-    value_elem.id = `${prediction_name}_val`;
-    next_prediction.appendChild(value_elem);
-    playstats_list.appendChild(next_prediction);
+    value_elem.id = `${model_name}_val`;
+    next_model.appendChild(value_elem);
+    playstats_list.appendChild(next_model);
   }
 
-  populatePredictionBox(prediction_name, prediction_list) {
-    let prediction_value = prediction_list[prediction_name]["value"];
-    let value_elem = document.getElementById(`${prediction_name}_val`);
-    value_elem.innerText = prediction_value;
+  populateModelBox(model_name, model_list) {
+    let model_value = model_list[model_name]["value"];
+    let value_elem = document.getElementById(`${model_name}_val`);
+    value_elem.innerText = model_value;
+  }
+
+  static createMultiBarChart(vals, bind_to_id) {
+    let cols = [];
+    for (let i=0; i < vals.length; i++) {
+      let val = vals[i];
+      cols.push([`data${i}`, val]);
+    }
+    return c3.generate(
+      {
+        bindto: "#" + bind_to_id,
+        data: {
+          columns: cols,
+          type: 'bar'
+        },
+        axis : {
+          y : {
+              tick: { format: d3.format('d') },
+          }
+        },
+        size: {
+          height: 200-70,
+          width: .28*200
+        },
+        legend: { show: false }
+      });
   }
 
   static createBarChart(val, bind_to_id) {
@@ -644,9 +673,10 @@ class SessionDashboard {
     return feature_request_list;
   }
 
-  create_prediction_request_list()
+  create_model_request_list()
   {
-    return active_models[this.active_game];
+    let model_request_list = active_models[this.active_game];
+    return model_request_list;
   }
 
   parseJSONResult(json_result)

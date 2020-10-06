@@ -62,30 +62,30 @@ class Server
       Server._execute_request(callback, post_string);
    }
 
-   static get_predictions_by_sessID(callback, sessID, gameID, sim_time=-1, predictions=null){
-   //   returns the predictions of specific (callback, active) sessID.
-   //   takes optional argument predictions which if not null, is an array of prediction names
-   //   specifying which predictions to return. this would be like:
+   static get_models_by_sessID(callback, sessID, gameID, sim_time=-1, models=null){
+   //   returns the models of specific (callback, active) sessID.
+   //   takes optional argument models which if not null, is an array of model names
+   //   specifying which models to return. this would be like:
    //   ['probability to finish lv3' etc.].
-   //   Returns list of predictions in JSON format
+   //   Returns list of models in JSON format
       if (sessID != -1) {
-         let method_string = SIMULATION_MODE ? "sim_predictions_by_sessID" : "get_predictions_by_sessID";
-         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&predictions=${predictions}`
+         let method_string = SIMULATION_MODE ? "sim_models_by_sessID" : "get_models_by_sessID";
+         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}`
          if (SIMULATION_MODE) {
-            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&predictions=${predictions}&sim_time=${sim_time}`
+            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}&sim_time=${sim_time}`
          }
-         console.log(`Making request for predictions by session: ${post_string}`)
+         console.log(`Making request for models by session: ${post_string}`)
          Server._execute_request(callback, post_string)
       }
       else {
-         throw `RTServer was asked to find predictions on invalid session ID ${sessID}!`;
+         throw `RTServer was asked to find models on invalid session ID ${sessID}!`;
       }
    }
 
-   static get_prediction_names_by_game(callback, gameID){
-   //   returns all prediction names of that game (any format is fine)
-      var post_string = `method=get_prediction_names_by_game&gameID=${gameID}`
-      console.log(`Making request for prediction names by game: ${post_string}`)
+   static get_model_names_by_game(callback, gameID){
+   //   returns all model names of that game (any format is fine)
+      var post_string = `method=get_model_names_by_game&gameID=${gameID}`
+      console.log(`Making request for model names by game: ${post_string}`)
       Server._execute_request(callback, post_string)
    }
 
@@ -121,11 +121,11 @@ Example flow: {
   as of right now, the only game we are thinking of is lakeland, but theoretically the user could choose any game
   populate sidebars/map with data from realtime_api.get_all_active_sessions(gameID)
   user clicks on a state and a city
-  optional: user can select subset of features/predictions to display from realtime_api.get_feature/prediction_names_by_game(gameID)
-  Every ~5 seconds populate table with subset of features/predictions by {
+  optional: user can select subset of features/models to display from realtime_api.get_feature/model_names_by_game(gameID)
+  Every ~5 seconds populate table with subset of features/models by {
     loop through sessID in realtime_api.get_active_sessions_by_loc(gameID, state, city)
     set i-th row of the table equal to cells derived from:
-      realtime_api.get_predictions_by_sessID(sessID, predictions=subset)
+      realtime_api.get_models_by_sessID(sessID, models=subset)
   }
 
 
