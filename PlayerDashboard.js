@@ -36,7 +36,7 @@ class PlayerDashboard
     message.appendChild(document.createTextNode("Session "+session_id+player_msg));
     message.style.width = "-webkit-fill-available";
     playstats.appendChild(message);
-    let feature_request_list = this.create_feature_request_list();
+    let feature_request_list = active_features[this.active_game]();
     let features_handler = function(result) {
       let features_raw = that.parseJSONResult(result);
       let features_parsed = features_raw[that.selected_session_id];
@@ -51,7 +51,7 @@ class PlayerDashboard
         playstats_message('No features available.')
       } 
     };
-    let model_request_list = this.create_model_request_list();
+    let model_request_list = active_models[this.active_game];
     let models_handler = function(result) {
       let models_raw = that.parseJSONResult(result);
       let model_list = models_raw[that.selected_session_id]
@@ -87,23 +87,23 @@ class PlayerDashboard
   Refresh()
   {
     let that = this;
-    let feature_request_list = this.create_feature_request_list();
-    let features_handler = function(result) {
-      // console.log(`Got back models: ${result}`);
-      let features_raw = that.parseJSONResult(result);
-      let features_parsed = features_raw[that.selected_session_id]
-      // After getting the feature values, loop over whole list,
-      // updating values.
-      for (let feature_name in features_parsed) {
-        let feat_span = document.getElementById(feature_name);
-        if (feat_span == null) {
-          that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
-        }
-        that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
-      }
-      that.request_count--;
-    };
-    let model_request_list = this.create_model_request_list();
+    // let feature_request_list = active_features[this.active_game];
+    // let features_handler = function(result) {
+    //   // console.log(`Got back models: ${result}`);
+    //   let features_raw = that.parseJSONResult(result);
+    //   let features_parsed = features_raw[that.selected_session_id]
+    //   // After getting the feature values, loop over whole list,
+    //   // updating values.
+    //   for (let feature_name in features_parsed) {
+    //     let feat_span = document.getElementById(feature_name);
+    //     if (feat_span == null) {
+    //       that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
+    //     }
+    //     that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
+    //   }
+    //   that.request_count--;
+    // };
+    let model_request_list = active_models[this.active_game];
     console.log("model list:");
     console.log(model_request_list);
     let models_handler = function(result) {
@@ -126,8 +126,8 @@ class PlayerDashboard
       {
         this.request_count++;
         Server.get_models_by_sessID(models_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(model_request_list));
-        this.request_count++;
-        Server.get_features_by_sessID(features_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(feature_request_list));
+        // this.request_count++;
+        // Server.get_features_by_sessID(features_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(feature_request_list));
       }
       else
       {
@@ -141,31 +141,6 @@ class PlayerDashboard
         console.trace();
       }
     }
-  }
-
-  create_feature_request_list()
-  {
-    let feature_request_list = {};
-    // Special case for Lakeland, as at the moment I've got two sets of features set up.
-    // Eventually, there should just be the one.
-    if(this.active_game === 'LAKELAND'){
-      if (NEW_FEATURE_SET) {
-        feature_request_list = active_features["LAKELAND"]["new_set"]
-      }
-      else {
-        feature_request_list = active_features["LAKELAND"]["old_set"]
-      }
-    }
-    else {
-      feature_request_list = active_features[this.active_game]
-    }
-    return feature_request_list;
-  }
-
-  create_model_request_list()
-  {
-    let model_request_list = active_models[this.active_game];
-    return model_request_list;
   }
 
   parseJSONResult(json_result)
@@ -218,10 +193,10 @@ class PlayerCard
 
   update(features_parsed, feature_request_list)
   {
-    if (this.model_type === "feature") {
-      this.populateFeatureBox(this.name, features_parsed, feature_request_list);
-    }
-    else if (this.model_type === "model") {
+    // if (this.model_type === "feature") {
+    //   this.populateFeatureBox(this.name, features_parsed, feature_request_list);
+    // }
+    if (this.model_type === "model") {
       this.populateModelBox(this.name, features_parsed, feature_request_list);
     }
     else {
