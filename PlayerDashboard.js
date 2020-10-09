@@ -82,7 +82,7 @@ class PlayerDashboard
   /**
    * Function to update the model values for a displayed session.
    * This assumes a session has been selected, and its id stored in
-   * the SessionList selected_session_id variable.
+   * the PlayerList selected_session_id variable.
    */
   Refresh()
   {

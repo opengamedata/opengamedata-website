@@ -10,7 +10,7 @@
 class PlayerList
 {
   /**
-   * Constructor for the SessionList class
+   * Constructor for the PlayerList class
    * Sets up variables to track the active game, lists of sessions ids
    * (one list is what's active, the other is what's actively displayed),
    * and a selected ID (for detailed display).
@@ -25,16 +25,16 @@ class PlayerList
     this.statistics_NA_msg = false;
     this.request_count = 0;
     this.selected_session_dash = new PlayerDashboard()
-    this.refreshActiveSessionList();
+    this.refreshActivePlayerList();
   }
 
   /**
    * Function to retrieve a list of currently active sessions.
    * First, we call the CGI backend to get the list.
-   * In the handler, the returned list updates the SessionList data,
+   * In the handler, the returned list updates the PlayerList data,
    * and then makes a further call to refresh the display list.
    */
-  refreshActiveSessionList() {
+  refreshActivePlayerList() {
     let that = this;
     function active_sessions_handler(result) {
       let parsed_sessions = 'null';
@@ -56,7 +56,7 @@ class PlayerList
       console.log('Refreshed session IDs:');
       console.log(that.active_sessions);
       that.active_session_ids = Array.from(Object.keys(that.active_sessions));
-      that.refreshDisplayedSessionList();
+      that.refreshDisplayedPlayerList();
       that.request_count--;
     };
     if (this.request_count < rt_config.max_outstanding_requests)
@@ -75,7 +75,7 @@ class PlayerList
    * This is done in a way that preserves the order of session IDs
    * as much as possible.
    */
-  refreshDisplayedSessionList() {
+  refreshDisplayedPlayerList() {
     let display_set = new Set(this.displayed_session_ids);
     let active_set = new Set(this.active_session_ids);
     let remove_set = setMinus(display_set, active_set); // subtract active from display to get inactives, which are currently displayed.
