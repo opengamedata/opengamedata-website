@@ -168,7 +168,7 @@ class PlayerDashboard
   }
 }
 
-class PlayerCard
+class ModelCard
 {
   constructor(model_type, name, title_str, playstats_list)
   {
