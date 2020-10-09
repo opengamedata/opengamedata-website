@@ -15,7 +15,7 @@ class PlayerList
    * (one list is what's active, the other is what's actively displayed),
    * and a selected ID (for detailed display).
    */
-  constructor() {
+  constructor(selectionHandler) {
     this.active_game = "LAKELAND";
     this.active_sessions = [];
     this.active_session_ids = [];
@@ -24,6 +24,8 @@ class PlayerList
     this.require_player_id = document.getElementById("require_pid").checked;
     this.statistics_NA_msg = false;
     this.request_count = 0;
+    // Call this when selection changes.
+    this.selectionHandler = selectionHandler;
     // this.selected_session_dash = new PlayerDashboard()
     this.refreshActivePlayerList();
   }
@@ -122,7 +124,6 @@ class PlayerList
   constructDisplayedSession(session_id, player_id)
   {
     let game_themes = {"CRYSTAL": "seascape", "WAVES":"daisygarden", "JOWILDER": "heatwave", "LAKELAND": "summerwarmth"}
-    let that = this; // needed for onclick handler.
 
     let session_div = document.createElement("div");
     session_div.id = session_id;
@@ -130,7 +131,8 @@ class PlayerList
     avatar_img.src = 'http://tinygraphs.com/spaceinvaders/' + session_id + `?theme=${game_themes[this.active_game]}&numcolors=4`;
     session_div.appendChild(avatar_img);
     let session_link = document.createElement("a");
-    session_link.onclick = function() { that.displaySelectedSession(session_id); return false;}
+    let that = this; // needed for onclick handler.
+    session_link.onclick = function() { that.selectionHandler(session_id, player_id, that.active_game); return false;}
     session_link.innerText = !["", "null"].includes(player_id) ? player_id : session_id;
     session_link.href = `#${session_id}`;
     session_div.appendChild(session_link);
