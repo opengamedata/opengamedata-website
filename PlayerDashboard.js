@@ -39,7 +39,6 @@ class PlayerDashboard
    * @param {*} session_id The id of the session to display.
    */
   DisplaySession(session_id, player_id, game_id) {
-    let that = this;
     this.selected_session_id = session_id;
     this.active_game = game_id;
     let playstats = document.getElementById("playstats");
@@ -49,20 +48,22 @@ class PlayerDashboard
     message.style.width = "-webkit-fill-available";
     playstats.appendChild(message);
     let feature_request_list = active_features[this.active_game]();
-    let features_handler = function(result) {
-      let features_raw = that.parseJSONResult(result);
-      let features_parsed = features_raw[that.selected_session_id];
-      // loop over all models, adding to the UI.
-      for (let feature_name in features_parsed) {
-        let next_box = ModelBox(feature_name, feature_request_list[feature_name]["name"], playstats);
-        next_box.update(features_parsed, feature_request_list);
-        that.feature_boxes.push(next_box);
-      }
+    // Now that setup is done, create handler and send off request.
+    let that = this;
+    // let features_handler = function(result) {
+    //   let features_raw = that.parseJSONResult(result);
+    //   let features_parsed = features_raw[that.selected_session_id];
+    //   // loop over all models, adding to the UI.
+    //   for (let feature_name in features_parsed) {
+    //     let next_box = ModelBox(feature_name, feature_request_list[feature_name]["name"], playstats);
+    //     next_box.update(features_parsed, feature_request_list);
+    //     that.feature_boxes.push(next_box);
+    //   }
 
-      if(features_raw === 'null'){
-        playstats_message('No features available.')
-      } 
-    };
+    //   if(features_raw === 'null'){
+    //     playstats_message('No features available.')
+    //   } 
+    // };
     let model_request_list = active_models[this.active_game];
     let models_handler = function(result) {
       let models_raw = that.parseJSONResult(result);
@@ -182,7 +183,7 @@ class PlayerDashboard
 
 class ModelCard
 {
-  constructor(model_config, playstats_list, model_type="model")
+  constructor(model_config, modelcard_list, model_type="model")
   {
     this.name = model_config.name;
     this.display_name = model_config.display_name;
@@ -191,7 +192,8 @@ class ModelCard
     this.icon = model_config.icon;
     this.reverse_color = model_config.reverse_color;
 
-    this.playstats_list = playstats_list;
+    // this.playstats_list = modelcard_list;
+    // TODO: eventually, just do away with type, and only use models.
     this.model_type = model_type;
     // first, make a div for everything to sit in.
     let span_next_model = document.createElement("span");
@@ -205,7 +207,7 @@ class ModelCard
     let value_elem = document.createElement("h3");
     value_elem.id = `${this.name}_val`;
     span_next_model.appendChild(value_elem);
-    playstats_list.appendChild(span_next_model);
+    modelcard_list.appendChild(span_next_model);
   }
 
   update(raw_val, feature_request_list)
@@ -238,7 +240,7 @@ class ModelCard
   populateModelBox(raw_val) {
     // let model_value = model_list[model_name]["value"];
     let value_elem = document.getElementById(`${this.name}_val`);
-    let vis = ModelBox.Visualize(raw_value, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
+    let vis = ModelCard.Visualize(raw_value, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
     let icon = feature_request_list[feature_name]["icon"];
     let reverse_color = feature_request_list[feature_name]["reverse_color"];
     value_elem.innerText = model_value;
