@@ -195,5 +195,143 @@ class PlayerDashboard
 
 class PlayerCard
 {
+  constructor(model_type, name, title_str, playstats_list)
+  {
+    this.model_type = model_type;
+    this.name = name;
+    this.title_str = title_str;
+    this.playstats_list = playstats_list;
+    // first, make a div for everything to sit in.
+    let span_next_model = document.createElement("span");
+    span_next_model.id=model_name;
+    span_next_model.className="playstat";
+    // then, add an element with model title to the div
+    let title = document.createElement("p");
+    title.innerText = title_str;
+    span_next_model.appendChild(title);
+    // finally, add an element for the model value to the div.
+    let value_elem = document.createElement("h3");
+    value_elem.id = `${model_name}_val`;
+    span_next_model.appendChild(value_elem);
+    playstats_list.appendChild(span_next_model);
+  }
 
+  update(features_parsed, feature_request_list)
+  {
+    if (this.model_type === "feature") {
+      this.populateFeatureBox(this.name, features_parsed, feature_request_list);
+    }
+    else if (this.model_type === "model") {
+      this.populateModelBox(this.name, features_parsed, feature_request_list);
+    }
+    else {
+      throw `Invalid ModelBox type ${this.model_type}!`;
+    }
+  }
+
+  populateFeatureBox(feature_name, features_parsed, feature_request_list) {
+    let value_elem = document.getElementById(`${feature_name}_val`);
+    let raw_value = features_parsed[feature_name]["value"];
+    let val_type = feature_request_list[feature_name]["type"];
+    let vis_type = feature_request_list[feature_name]["vis"];
+    let icon = feature_request_list[feature_name]["icon"];
+    let reverse_color = feature_request_list[feature_name]["reverse_color"];
+    let vis = ModelBox.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
+    // value_elem.appendChild(feature_value);
+  }
+
+  populateModelBox(model_name, model_list) {
+    let model_value = model_list[model_name]["value"];
+    let value_elem = document.getElementById(`${model_name}_val`);
+    value_elem.innerText = model_value;
+  }
+
+  static Visualize(val, val_type, vis, feature_name, html_elem, icon=null, reverse_color=false)
+  {
+      let ret_val;
+      if (vis == "raw")
+      {
+        ret_val = ModelBox.formatValue(val, val_type);
+        html_elem.innerText = ret_val;
+      }
+      else if (vis == "pct")
+      {
+        ret_val = ModelBox.formatValue(val, val_type);
+        html_elem.innerText = `${ret_val} %`;
+      }
+      else if (vis == "bar")
+      {
+        // html_elem.innerHTML = '';
+        let chart_id = `bar_chart_${feature_name}`;
+        // let chart_div = document.getElementById(chart_id);
+        // if (!chart_div) {
+        let chart_div = document.createElement('div');
+        chart_div.id = chart_id;
+        let chart = Visualizer.createBarChart(ModelBox.formatValue(val, val_type), chart_div.id);
+        html_elem.appendChild(chart_div);
+        // }
+        // else { chart_div.innerHTML = ''; }
+        ret_val = chart_div.innerHTML
+      }
+      else if (vis == "gauge")
+      {
+        let chart_id = `gauge_chart_${feature_name}`;
+        let chart_div = document.getElementById(chart_id);
+        if (!chart_div) {
+          chart_div = document.createElement('div');
+          chart_div.id = chart_id;
+          html_elem.appendChild(chart_div);
+        }
+        else { chart_div.innerHTML = ''; }
+        let chart = Visualizer.createGaugeChart(ModelBox.formatValue(val, val_type), chart_div.id, reverse_color);
+        ret_val = chart_div.innerHTML
+      }
+      else if (vis == "count")
+      {
+        // first, clear old children
+        while (html_elem.firstChild)
+        { html_elem.removeChild(html_elem.lastChild); }
+        // then, add instances of the icon to match the count.
+        ret_val = ModelBox.formatValue(val, val_type);
+        if (ret_val == 0) {
+          html_elem.innerText = ret_val;
+        }
+        else {
+          for (let i = 0; i < ret_val; i++) {
+            let next_icon = document.createElement('i');
+            next_icon.className = icon;
+            html_elem.appendChild(next_icon);
+          }
+        }
+      }
+      else
+      {
+        console.log(`Display value had unrecognized format ${format}. Using raw value ${val}`);
+        ret_val = val;
+      }
+      return ret_val;
+  }
+
+  static formatValue(val, format)
+  {
+      let ret_val;
+      if (format == "int")
+      {
+        ret_val = parseFloat(val).toFixed(0);
+      }
+      else if (format == "float")
+      {
+        ret_val = parseFloat(val).toFixed(2);
+      }
+      else if (format == "pct")
+      {
+        ret_val = (parseFloat(val)*100).toFixed(0);
+      }
+      else
+      {
+        console.log(`Display value had unrecognized format ${format}. Using raw value ${val}`);
+        ret_val = val;
+      }
+      return ret_val;
+  }
 }
