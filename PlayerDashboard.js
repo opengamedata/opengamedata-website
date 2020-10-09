@@ -1,3 +1,15 @@
+class ModelConfig
+{
+    constructor(name, body) {
+        this.name = name;
+        this.display_name = body["name"];
+        this.vis_type = body["vis"];
+        this.val_type = body["type"];
+        this.icon = body["icon"];
+        this.reverse_color = body["reverse_color"];
+    }
+}
+
 class PlayerDashboard
 {
   constructor() {
@@ -170,54 +182,65 @@ class PlayerDashboard
 
 class ModelCard
 {
-  constructor(model_type, name, title_str, playstats_list)
+  constructor(model_config, playstats_list, model_type="model")
   {
-    this.model_type = model_type;
-    this.name = name;
-    this.title_str = title_str;
+    this.name = model_config.name;
+    this.display_name = model_config.display_name;
+    this.vis_type = model_config.vis_type;
+    this.val_type = model_config.val_type;
+    this.icon = model_config.icon;
+    this.reverse_color = model_config.reverse_color;
+
     this.playstats_list = playstats_list;
+    this.model_type = model_type;
     // first, make a div for everything to sit in.
     let span_next_model = document.createElement("span");
-    span_next_model.id=model_name;
+    span_next_model.id=this.name;
     span_next_model.className="playstat";
     // then, add an element with model title to the div
     let title = document.createElement("p");
-    title.innerText = title_str;
+    title.innerText = this.display_name;
     span_next_model.appendChild(title);
     // finally, add an element for the model value to the div.
     let value_elem = document.createElement("h3");
-    value_elem.id = `${model_name}_val`;
+    value_elem.id = `${this.name}_val`;
     span_next_model.appendChild(value_elem);
     playstats_list.appendChild(span_next_model);
   }
 
-  update(features_parsed, feature_request_list)
+  update(raw_val, feature_request_list)
   {
     // if (this.model_type === "feature") {
     //   this.populateFeatureBox(this.name, features_parsed, feature_request_list);
     // }
     if (this.model_type === "model") {
-      this.populateModelBox(this.name, features_parsed, feature_request_list);
+      this.populateModelBox(raw_val);
+    }
+    else if (this.model_type === "feature") {
+        throw "Feature data not currently supported.";
     }
     else {
       throw `Invalid ModelBox type ${this.model_type}!`;
     }
   }
 
-  populateFeatureBox(feature_name, features_parsed, feature_request_list) {
-    let value_elem = document.getElementById(`${feature_name}_val`);
-    let raw_value = features_parsed[feature_name]["value"];
-    let val_type = feature_request_list[feature_name]["type"];
-    let vis_type = feature_request_list[feature_name]["vis"];
+//   populateFeatureBox(feature_name, features_parsed, feature_request_list) {
+//     let value_elem = document.getElementById(`${feature_name}_val`);
+//     let raw_value = features_parsed[feature_name]["value"];
+//     let val_type = feature_request_list[feature_name]["type"];
+//     let vis_type = feature_request_list[feature_name]["vis"];
+//     let icon = feature_request_list[feature_name]["icon"];
+//     let reverse_color = feature_request_list[feature_name]["reverse_color"];
+//     let vis = ModelBox.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
+//     // value_elem.appendChild(feature_value);
+//   }
+
+  populateModelBox(raw_val) {
+    // let model_value = model_list[model_name]["value"];
+    let value_elem = document.getElementById(`${this.name}_val`);
+    let vis = ModelBox.Visualize(raw_value, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
     let icon = feature_request_list[feature_name]["icon"];
     let reverse_color = feature_request_list[feature_name]["reverse_color"];
-    let vis = ModelBox.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
-    // value_elem.appendChild(feature_value);
-  }
-
-  populateModelBox(model_name, model_list) {
-    let model_value = model_list[model_name]["value"];
-    let value_elem = document.getElementById(`${model_name}_val`);
     value_elem.innerText = model_value;
   }
 
