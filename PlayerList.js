@@ -24,7 +24,7 @@ class PlayerList
     this.require_player_id = document.getElementById("require_pid").checked;
     this.statistics_NA_msg = false;
     this.request_count = 0;
-    this.selected_session_dash = new SessionDashboard()
+    this.selected_session_dash = new PlayerDashboard()
     this.refreshActiveSessionList();
   }
 

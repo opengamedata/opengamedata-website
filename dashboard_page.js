@@ -8,8 +8,8 @@ var PRINT_TRACE = true;
 
 function onload()
 {
-  // Create a SessionList instance for tracking state, and start the refresh loop.
-  sess_list = new SessionList();
+  // Create a PlayerList instance for tracking state, and start the refresh loop.
+  sess_list = new PlayerList();
   rt_change_games(sess_list, "LAKELAND");
   if (rt_config.custom_title !== null)
   {
@@ -23,7 +23,7 @@ function onload()
   }
   document.getElementById("require_pid").onclick = function() {
     sess_list.require_player_id = this.checked;
-    sess_list.refreshActiveSessionList();
+    sess_list.refreshActivePlayerList();
     if (sess_list.selected_session_id != -1)
     {
       sess_list.refreshSelectedSession();
@@ -33,7 +33,7 @@ function onload()
     SIMULATION_MODE = this.checked;
     SIM_TIME = 0; // anytime we click, reset sim time.
     document.getElementById("require_pid").disabled = this.checked;
-    sess_list.refreshActiveSessionList();
+    sess_list.refreshActivePlayerList();
     if (sess_list.selected_session_id != -1)
     {
       sess_list.refreshSelectedSession();
@@ -49,7 +49,7 @@ function onload()
   };
   document.getElementById("new_feature_set").onclick = function() {
     NEW_FEATURE_SET = this.checked;
-    sess_list.refreshActiveSessionList();
+    sess_list.refreshActivePlayerList();
     if (sess_list.selected_session_id != -1)
     {
       sess_list.refreshSelectedSession();
@@ -57,7 +57,7 @@ function onload()
   };
   window.setInterval(() => {
     try {
-      sess_list.refreshActiveSessionList();
+      sess_list.refreshActivePlayerList();
       if (sess_list.selected_session_id != -1)
       {
         sess_list.refreshSelectedSession();
@@ -83,12 +83,12 @@ function onload()
  * Handler function to change the game whose sessions are on display.
  * Fairly simple, just set the active game and refresh the displayed
  * data
- * @param {} list The SessionList instance for tracking the game and its sessions.
+ * @param {} list The PlayerList instance for tracking the game and its sessions.
  * @param {*} game_name The name of the game to switch to.
  */
 function rt_change_games(list, game_name){
   list.active_game = game_name;
-  list.refreshActiveSessionList();
+  list.refreshActivePlayerList();
   list.clearSelected();
 
   document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";
@@ -157,7 +157,7 @@ class ModelBox
     let vis_type = feature_request_list[feature_name]["vis"];
     let icon = feature_request_list[feature_name]["icon"];
     let reverse_color = feature_request_list[feature_name]["reverse_color"];
-    let vis = SessionDashboard.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
+    let vis = ModelBox.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
     // value_elem.appendChild(feature_value);
   }
 
