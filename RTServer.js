@@ -16,51 +16,12 @@ class Server
    }
    //returns {} if there are no active sessions.
 
-   static get_active_sessions_by_loc(callback, gameID, state, city, sim_time=-1)
-   {
-   //   GameID - str ID of game eg 'CRYSTAL'
-   //   state - str state name as returned by get_all_active_sessions(GameID)
-   //   city - str city name as returned by get_all_active_sessions(GameID)
-   //   returns an array of active sessions eg
-   //   [SessID0, SessID1, SessID2]
-      let method_string = SIMULATION_MODE ? "sim_active_sessions_by_loc" : "get_active_sessions_by_loc";
-      var post_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}`
-      if (SIMULATION_MODE) {
-         post_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}&sim_time=${sim_time}`
-      }
-      console.log(`Making request for active sessions by location: ${post_string}`)
+   /*static get_model_names_by_game(callback, gameID){
+   //   returns all model names of that game (any format is fine)
+      var post_string = `method=get_model_names_by_game&gameID=${gameID}`
+      console.log(`Making request for model names by game: ${post_string}`)
       Server._execute_request(callback, post_string)
-   }
-
-   // Note: The _by_sessID functions below are probably going to mostly be run
-   // in a row, so if its more efficient to input and output whole lists, that
-   // is fine too.
-   static get_features_by_sessID(callback, sessID, gameID, sim_time=-1, features=null){
-   //   returns the features of specific (callback, active) sessID.
-   //   takes optional argument features which if not null, is an array of feature names
-   //   specifying which features to return. this would be like:
-   //   ['GameStart','Fail','GameEnd'].
-   //   Returns list of features in JSON format
-      if (sessID != -1) {
-         let method_string = SIMULATION_MODE ? "sim_features_by_sessID" : "get_features_by_sessID";
-         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}`;
-         if (SIMULATION_MODE) {
-            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}&sim_time=${sim_time}`
-         }
-         console.log(`Making request for features by session: ${post_string}`);
-         Server._execute_request(callback, post_string);
-      }
-      else {
-         throw `RTServer was asked to find features on invalid session ID ${sessID}!`;
-      }
-   }
-
-   static get_feature_names_by_game(callback, gameID){
-   //   returns all feature names of that game (callback, any format is fine)
-      var post_string = `method=get_feature_names_by_game&gameID=${gameID}`;
-      console.log(`Making request for feature names by game: ${post_string}`);
-      Server._execute_request(callback, post_string);
-   }
+   }*/
 
    static get_models_by_sessID(callback, sessID, gameID, sim_time=-1, models=null){
    //   returns the models of specific (callback, active) sessID.
@@ -82,12 +43,51 @@ class Server
       }
    }
 
-   static get_model_names_by_game(callback, gameID){
-   //   returns all model names of that game (any format is fine)
-      var post_string = `method=get_model_names_by_game&gameID=${gameID}`
-      console.log(`Making request for model names by game: ${post_string}`)
+   /*static get_active_sessions_by_loc(callback, gameID, state, city, sim_time=-1)
+   {
+   //   GameID - str ID of game eg 'CRYSTAL'
+   //   state - str state name as returned by get_all_active_sessions(GameID)
+   //   city - str city name as returned by get_all_active_sessions(GameID)
+   //   returns an array of active sessions eg
+   //   [SessID0, SessID1, SessID2]
+      let method_string = SIMULATION_MODE ? "sim_active_sessions_by_loc" : "get_active_sessions_by_loc";
+      var post_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}`
+      if (SIMULATION_MODE) {
+         post_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}&sim_time=${sim_time}`
+      }
+      console.log(`Making request for active sessions by location: ${post_string}`)
       Server._execute_request(callback, post_string)
-   }
+   }*/
+
+   /*static get_feature_names_by_game(callback, gameID){
+   //   returns all feature names of that game (callback, any format is fine)
+      var post_string = `method=get_feature_names_by_game&gameID=${gameID}`;
+      console.log(`Making request for feature names by game: ${post_string}`);
+      Server._execute_request(callback, post_string);
+   }*/
+
+   /*// Note: The _by_sessID functions below are probably going to mostly be run
+   // in a row, so if its more efficient to input and output whole lists, that
+   // is fine too.
+   static get_features_by_sessID(callback, sessID, gameID, sim_time=-1, features=null){
+   //   returns the features of specific (callback, active) sessID.
+   //   takes optional argument features which if not null, is an array of feature names
+   //   specifying which features to return. this would be like:
+   //   ['GameStart','Fail','GameEnd'].
+   //   Returns list of features in JSON format
+      if (sessID != -1) {
+         let method_string = SIMULATION_MODE ? "sim_features_by_sessID" : "get_features_by_sessID";
+         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}`;
+         if (SIMULATION_MODE) {
+            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}&sim_time=${sim_time}`
+         }
+         console.log(`Making request for features by session: ${post_string}`);
+         Server._execute_request(callback, post_string);
+      }
+      else {
+         throw `RTServer was asked to find features on invalid session ID ${sessID}!`;
+      }
+   }*/
 
    /**
     * Private function to do actual execution of a request. 
