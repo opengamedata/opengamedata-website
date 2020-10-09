@@ -62,9 +62,9 @@ function onload()
   window.setInterval(() => {
     try {
       sess_list.refreshActivePlayerList();
-      if (sess_list.selected_session_id != -1)
+      if (dashboard.selected_session_id != -1)
       {
-        sess_list.refreshSelectedSession();
+        dashboard.Refresh();
       }
     }
     catch(err) {
