@@ -181,6 +181,14 @@ class PlayerDashboard
   }
 }
 
+function playstats_message(msg){
+  let message = document.createElement("p")
+  message.appendChild(document.createTextNode(msg))
+  message.style.width = "-webkit-fill-available";
+  let playstats = document.getElementById("playstats");
+  playstats.appendChild(message);
+}
+
 class ModelCard
 {
   constructor(model_config, modelcard_list, model_type="model")

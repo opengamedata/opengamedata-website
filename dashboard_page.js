@@ -107,22 +107,3 @@ function rt_change_games(list, game_name){
   let playstats = document.getElementById("playstats");
   playstats.appendChild(message);
 }
-
-/**
- * Simple set minus operation, based on a suggestion on StackOverflow.
- * just filter A based on B not having the element.
- * @param {*} A Set from which to subtract another set.
- * @param {*} B Set to subtract from A.
- */
-function setMinus(A, B) {
-  return new Set([...A].filter(x => !B.has(x)));
-}
-
-
-function playstats_message(msg){
-  let message = document.createElement("p")
-  message.appendChild(document.createTextNode(msg))
-  message.style.width = "-webkit-fill-available";
-  let playstats = document.getElementById("playstats");
-  playstats.appendChild(message);
-}

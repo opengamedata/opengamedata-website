@@ -121,7 +121,40 @@ class PlayerList
     }
   }
 
-  constructDisplayedSession(session_id, player_id)
+//   displaySelectedSession(session_id) {
+//     this.clearSelected();
+//     let player_id = this.active_sessions[session_id]['player_id']
+//     this.selected_session_dash.DisplaySession(session_id, player_id, this.active_game);
+//     this.selected_session_id = session_id;
+//   }
+
+//   refreshSelectedSession() {
+//     this.selected_session_dash.Refresh();
+//   }
+
+  /**
+   * Simple function to clear out data display for a selected session.
+   * This is mostly intended for when switching to a new session or switching
+   * to another game entirely.
+   */
+//   clearSelected() {
+//     this.selected_session_dash.clear()
+//   }
+}
+
+/**
+ * Simple set minus operation, based on a suggestion on StackOverflow.
+ * just filter A based on B not having the element.
+ * @param {*} A Set from which to subtract another set.
+ * @param {*} B Set to subtract from A.
+ */
+function setMinus(A, B) {
+  return new Set([...A].filter(x => !B.has(x)));
+}
+
+class PlayerCard
+{
+  constructor(session_id, player_id, session_list_area, game_theme, clickHandler)
   {
     let game_themes = {"CRYSTAL": "seascape", "WAVES":"daisygarden", "JOWILDER": "heatwave", "LAKELAND": "summerwarmth"}
 
