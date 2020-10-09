@@ -24,7 +24,7 @@ class PlayerList
     this.require_player_id = document.getElementById("require_pid").checked;
     this.statistics_NA_msg = false;
     this.request_count = 0;
-    this.selected_session_dash = new PlayerDashboard()
+    // this.selected_session_dash = new PlayerDashboard()
     this.refreshActivePlayerList();
   }
 
@@ -167,25 +167,25 @@ class PlayerList
     }
   }
 
-  displaySelectedSession(session_id) {
-    this.clearSelected();
-    let player_id = this.active_sessions[session_id]['player_id']
-    this.selected_session_dash.DisplaySession(session_id, player_id, this.active_game);
-    this.selected_session_id = session_id;
-  }
+//   displaySelectedSession(session_id) {
+//     this.clearSelected();
+//     let player_id = this.active_sessions[session_id]['player_id']
+//     this.selected_session_dash.DisplaySession(session_id, player_id, this.active_game);
+//     this.selected_session_id = session_id;
+//   }
 
-  refreshSelectedSession() {
-    this.selected_session_dash.Refresh();
-  }
+//   refreshSelectedSession() {
+//     this.selected_session_dash.Refresh();
+//   }
 
   /**
    * Simple function to clear out data display for a selected session.
    * This is mostly intended for when switching to a new session or switching
    * to another game entirely.
    */
-  clearSelected() {
-    this.selected_session_dash.clear()
-  }
+//   clearSelected() {
+//     this.selected_session_dash.clear()
+//   }
 }
 
 class PlayerCard
