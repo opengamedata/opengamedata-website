@@ -265,7 +265,7 @@ class ModelCard
         // if (!chart_div) {
         let chart_div = document.createElement('div');
         chart_div.id = chart_id;
-        let chart = Visualizer.createBarChart(ModelBox.formatValue(val, val_type), chart_div.id);
+        let chart = ViewRenderer.createBarChart(ModelBox.formatValue(val, val_type), chart_div.id);
         html_elem.appendChild(chart_div);
         // }
         // else { chart_div.innerHTML = ''; }
@@ -281,7 +281,7 @@ class ModelCard
           html_elem.appendChild(chart_div);
         }
         else { chart_div.innerHTML = ''; }
-        let chart = Visualizer.createGaugeChart(ModelBox.formatValue(val, val_type), chart_div.id, reverse_color);
+        let chart = ViewRenderer.createGaugeChart(ModelBox.formatValue(val, val_type), chart_div.id, reverse_color);
         ret_val = chart_div.innerHTML
       }
       else if (vis == "count")
