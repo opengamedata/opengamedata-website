@@ -11,7 +11,9 @@ class Server
       if (SIMULATION_MODE) {
          post_string = `method=${method_string}&gameID=${gameID}&require_player_id=${require_player_id}&sim_time=${sim_time}`
       }
-      console.log(`Making request for all active sessions: ${post_string}`)
+      if (rt_config.debug_print["RTServer"] === true) {
+         console.log(`Making request for all active sessions: ${post_string}`)
+      }
       Server._execute_request(callback, post_string)
    }
    //returns {} if there are no active sessions.
@@ -35,7 +37,9 @@ class Server
          if (SIMULATION_MODE) {
             post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}&sim_time=${sim_time}`
          }
-         console.log(`Making request for models by session: ${post_string}`)
+         if (rt_config.debug_print["RTServer"] === true) {
+            console.log(`Making request for models by session: ${post_string}`)
+         }
          Server._execute_request(callback, post_string)
       }
       else {
@@ -102,6 +106,9 @@ class Server
       {
          if (this.readyState == 4 && this.status == 200)
          {
+            if (rt_config.debug_print["RTServer"] === true) {
+               console.log(`raw result for ${post_string} was ${this.responseText.toString()}`);
+            }
             callback(this.responseText.toString());
          }
          else
