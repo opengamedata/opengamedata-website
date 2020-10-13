@@ -14,7 +14,7 @@ function onload()
     dashboard.DisplaySession(session_id, player_id, game_id);
   }
   sess_list = new PlayerList();
-  rt_change_games(sess_list, "LAKELAND");
+  rt_change_games(sess_list, dashboard, "LAKELAND");
   if (rt_config.custom_title !== null)
   {
     document.title = rt_config.custom_title;
@@ -90,10 +90,10 @@ function onload()
  * @param {} list The PlayerList instance for tracking the game and its sessions.
  * @param {*} game_name The name of the game to switch to.
  */
-function rt_change_games(list, game_name){
+function rt_change_games(list, player_dash, game_name){
   list.active_game = game_name;
   list.refreshActivePlayerList();
-  list.clearSelected();
+  player_dash.DisplaySession(-1,-1,game_name);
 
   document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";
   document.getElementById('rt_game_events_readme').href = data_readmes[game_name];

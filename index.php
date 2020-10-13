@@ -85,10 +85,10 @@
             <input type="checkbox" id="new_feature_set" value="Alpha 2" checked>
             </p>
             <ul id="rt_gameselect">
-              <li><a href="javascript:rt_change_games(sess_list, 'CRYSTAL');">Crystal</a></li>
-              <li><a href="javascript:rt_change_games(sess_list, 'WAVES');">Waves</a></li>
-              <li><a href="javascript:rt_change_games(sess_list, 'LAKELAND');">Lakeland</a></li>
-              <li><a href="javascript:rt_change_games(sess_list, 'JOWILDER');">Jo Wilder</a></li>
+              <li><a href="javascript:rt_change_games(sess_list, dashboard, 'CRYSTAL');">Crystal</a></li>
+              <li><a href="javascript:rt_change_games(sess_list, dashboard, 'WAVES');">Waves</a></li>
+              <li><a href="javascript:rt_change_games(sess_list, dashboard, 'LAKELAND');">Lakeland</a></li>
+              <li><a href="javascript:rt_change_games(sess_list, dashboard, 'JOWILDER');">Jo Wilder</a></li>
             </ul>
           </div>
         </div>

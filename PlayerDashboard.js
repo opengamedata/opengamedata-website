@@ -15,11 +15,11 @@ class PlayerDashboard
   constructor() {
     this.active_game = "None";
     this.selected_session_id = -1;
-    this.require_player_id = document.getElementById("require_pid").checked;
+    // this.require_player_id = document.getElementById("require_pid").checked;
     this.statistics_NA_msg = false;
     this.request_count = 0;
-    this.feature_boxes = [];
-    this.model_boxes = [];
+    // this.feature_boxes = [];
+    this.model_cards = {};
   }
 
   clear() {
@@ -39,17 +39,28 @@ class PlayerDashboard
    * @param {*} session_id The id of the session to display.
    */
   DisplaySession(session_id, player_id, game_id) {
-    this.selected_session_id = session_id;
-    this.active_game = game_id;
-    let playstats = document.getElementById("playstats");
-    let message = document.createElement("h4")
-    let player_msg = !["", "null"].includes(player_id) ? " (Player "+player_id+")" : '';
-    message.appendChild(document.createTextNode("Session "+session_id+player_msg));
-    message.style.width = "-webkit-fill-available";
-    playstats.appendChild(message);
-    let feature_request_list = active_features[this.active_game]();
-    // Now that setup is done, create handler and send off request.
-    let that = this;
+    this.clear();
+    if (session_id != -1) {
+      this.selected_session_id = session_id;
+      this.active_game = game_id;
+      let playstats = document.getElementById("playstats");
+      let message = document.createElement("h4")
+      let player_msg = !["", "null"].includes(player_id) ? " (Player "+player_id+")" : '';
+      message.appendChild(document.createTextNode("Session "+session_id+player_msg));
+      message.style.width = "-webkit-fill-available";
+      playstats.appendChild(message);
+      // Now that setup is done, create handler and send off request.
+      let model_request_list = active_models[this.active_game];
+      for (let model_name in model_request_list) {
+          let next_config = new ModelConfig(model_name, model_request_list[model_name])
+          let next_box = new ModelCard(next_config, playstats);
+          this.model_cards[model_name] = next_box;
+          this.Update();
+          // that.populateModelBox(model_name, model_list);
+      }
+    }
+    // let that = this;
+    // let feature_request_list = active_features[this.active_game]();
     // let features_handler = function(result) {
     //   let features_raw = that.parseJSONResult(result);
     //   let features_parsed = features_raw[that.selected_session_id];
@@ -64,32 +75,6 @@ class PlayerDashboard
     //     playstats_message('No features available.')
     //   } 
     // };
-    let model_request_list = active_models[this.active_game];
-    let models_handler = function(result) {
-      let models_raw = that.parseJSONResult(result);
-      let model_list = models_raw[that.selected_session_id]
-      // loop over all models, adding to the UI.
-      for (let model_name in model_list) {
-        let next_box = ModelBox(model_name, model_list[model_name]["name"], playstats);
-        next_box.update(models_parsed, model_request_list);
-        that.model_boxes.push(next_box);
-        that.populateModelBox(model_name, model_list);
-      }
-      if(models_raw === 'null'){
-        playstats_message('No models available.')
-      }
-    };
-    try {
-      Server.get_models_by_sessID(models_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(model_request_list));
-      Server.get_features_by_sessID(features_handler, this.selected_session_id, this.active_game, SIM_TIME, Object.keys(feature_request_list));
-    }
-    catch(err) {
-      console.log(err.message);
-      if (PRINT_TRACE)
-      {
-        console.trace();
-      }
-    }
   }
 
   /**
@@ -97,43 +82,48 @@ class PlayerDashboard
    * This assumes a session has been selected, and its id stored in
    * the PlayerList selected_session_id variable.
    */
-  Refresh()
+  Update()
   {
     let that = this;
-    // let feature_request_list = active_features[this.active_game];
-    // let features_handler = function(result) {
-    //   // console.log(`Got back models: ${result}`);
-    //   let features_raw = that.parseJSONResult(result);
-    //   let features_parsed = features_raw[that.selected_session_id]
-    //   // After getting the feature values, loop over whole list,
-    //   // updating values.
-    //   for (let feature_name in features_parsed) {
-    //     let feat_span = document.getElementById(feature_name);
-    //     if (feat_span == null) {
-    //       that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
-    //     }
-    //     that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
-    //   }
-    //   that.request_count--;
-    // };
     let model_request_list = active_models[this.active_game];
-    console.log("model list:");
-    console.log(model_request_list);
+    console.log(`model list: ${model_request_list}`);
     let models_handler = function(result) {
-      // console.log(`Got back models: ${result}`);
+      console.log(`Got back models: ${result}`);
       let models_raw = that.parseJSONResult(result);
       let model_list = models_raw[that.selected_session_id]
       // After getting the model values, loop over whole list,
       // updating values.
       for (let model_name in model_list) {
-        let pred_span = document.getElementById(model_name);
-        if (pred_span == null) {
-          that.createModelBox(model_name, model_list[model_name]["name"], playstats);
+        if (that.model_cards[model_name] === undefined) {
+          let next_config = new ModelConfig(model_name, model_request_list[model_name])
+          let next_box = new ModelCard(next_config, document.getElementById("playstats"));
+          that.model_cards[model_name] = next_box;
         }
-        that.populateModelBox(model_name, model_list);
+        that.model_cards[model_name].update(model_list[model_name]["value"]);
+      }
+      if(models_raw === 'null'){
+        playstats_message('No models available.')
       }
       that.request_count--;
     };
+
+    /*let feature_request_list = active_features[this.active_game];
+    let features_handler = function(result) {
+      // console.log(`Got back models: ${result}`);
+      let features_raw = that.parseJSONResult(result);
+      let features_parsed = features_raw[that.selected_session_id]
+      // After getting the feature values, loop over whole list,
+      // updating values.
+      for (let feature_name in features_parsed) {
+        let feat_span = document.getElementById(feature_name);
+        if (feat_span == null) {
+          that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
+        }
+        that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
+      }
+      that.request_count--;
+    };*/
+
     try {
       if (this.request_count < rt_config.max_outstanding_requests)
       {
@@ -218,7 +208,7 @@ class ModelCard
     modelcard_list.appendChild(span_next_model);
   }
 
-  update(raw_val, feature_request_list)
+  update(raw_val)
   {
     // if (this.model_type === "feature") {
     //   this.populateFeatureBox(this.name, features_parsed, feature_request_list);

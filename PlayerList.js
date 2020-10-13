@@ -24,8 +24,11 @@ class PlayerList
     this.require_player_id = document.getElementById("require_pid").checked;
     this.statistics_NA_msg = false;
     this.request_count = 0;
-    // Call this when selection changes.
     this.selectionHandler = selectionHandler;
+    this.player_cards = {};
+    // Call this when selection changes.
+    let that = this;
+    this.clickHandlerCallback = function(session_id, player_id) { selectionHandler(session_id, player_id, that.active_game); }
     // this.selected_session_dash = new PlayerDashboard()
     this.refreshActivePlayerList();
   }
@@ -78,6 +81,7 @@ class PlayerList
    * as much as possible.
    */
   refreshDisplayedPlayerList() {
+    let game_themes = {"CRYSTAL": "seascape", "WAVES":"daisygarden", "JOWILDER": "heatwave", "LAKELAND": "summerwarmth"}
     let display_set = new Set(this.displayed_session_ids);
     let active_set = new Set(this.active_session_ids);
     let remove_set = setMinus(display_set, active_set); // subtract active from display to get inactives, which are currently displayed.
@@ -96,11 +100,12 @@ class PlayerList
       // A) If object is in remove set, remove it.
       if (remove_set.has(session_id)) {
         session_link.remove();
-        if (this.selected_session_id == session_link.id) { this.clearSelected(); }
+        if (this.selected_session_id == session_link.id) { this.selectionHandler(-1, -1, this.active_game); }
       }
       // B) Else, update the max and current levels.
       else {
-        this.populateDisplayedSession(session_id);
+        // this.populateDisplayedSession(session_id);
+        this.player_cards[session_id].Update(this.active_sessions[session_id])
       }
     }
     // loop over all newly active sessions, adding them to the list.
@@ -108,15 +113,16 @@ class PlayerList
       let session_id = id;
       let player_id = this.active_sessions[session_id]["player_id"];
       // start constructing the element
-      let session_div = this.constructDisplayedSession(session_id, player_id);
-      session_list_area.appendChild(session_div);
-      this.populateDisplayedSession(session_id);
+      let next_player_card = new PlayerCard(session_id, player_id, session_list_area, game_themes[this.active_game], this.clickHandlerCallback);
+      next_player_card.Update(this.active_sessions[session_id]);
+      this.player_cards[session_id] = next_player_card;
     }
     this.displayed_session_ids = [...this.active_session_ids]; // at this point, these should theoretically be the same.
     if(this.displayed_session_ids.length == 0){
       let message = document.createElement("p")
-      let player_id_msg = this.require_player_id ? " Try viewing sessions without player IDs." : "";
-      message.appendChild(document.createTextNode("No sessions currently available."+player_id_msg))
+    //   let player_id_msg = this.require_player_id ? " Try viewing sessions without player IDs." : "";
+    //   message.appendChild(document.createTextNode("No sessions currently available."+player_id_msg))
+      message.appendChild(document.createTextNode("No sessions currently active."))
       session_list_area.appendChild(message);
     }
   }
@@ -156,39 +162,50 @@ class PlayerCard
 {
   constructor(session_id, player_id, session_list_area, game_theme, clickHandler)
   {
-    let game_themes = {"CRYSTAL": "seascape", "WAVES":"daisygarden", "JOWILDER": "heatwave", "LAKELAND": "summerwarmth"}
+    this.session_id = JSON.parse(JSON.stringify(session_id));
+    this.player_id = player_id;
+    this.clickHandler = clickHandler;
+    this.game_theme = game_theme;
+    this.constructCard(session_list_area);
+  }
 
+  constructCard(session_list_area) {
+
+    // Create overall div
     let session_div = document.createElement("div");
-    session_div.id = session_id;
+    session_div.id = this.session_id;
+    // Set up little avatar dude.
     let avatar_img = document.createElement('img');
-    avatar_img.src = 'http://tinygraphs.com/spaceinvaders/' + session_id + `?theme=${game_themes[this.active_game]}&numcolors=4`;
+    avatar_img.src = 'http://tinygraphs.com/spaceinvaders/' + this.session_id + `?theme=${this.game_theme}&numcolors=4`;
     session_div.appendChild(avatar_img);
+    // Set up link to display the player dashboard on click.
     let session_link = document.createElement("a");
     let that = this; // needed for onclick handler.
-    session_link.onclick = function() { that.selectionHandler(session_id, player_id, that.active_game); return false;}
-    session_link.innerText = !["", "null"].includes(player_id) ? player_id : session_id;
-    session_link.href = `#${session_id}`;
+    session_link.onclick = function() { that.clickHandler(that.session_id, that.player_id); return false;}
+    session_link.innerText = !["", "null"].includes(this.player_id) ? this.player_id : this.session_id;
+    session_link.href = `#${this.session_id}`;
     session_div.appendChild(session_link);
+    // Set up divs for current and max level.
     let cur_level_div = document.createElement("div");
-    cur_level_div.id = `cur_level_${session_id}`;
+    cur_level_div.id = `cur_level_${this.session_id}`;
     session_div.appendChild(cur_level_div);
     let max_level_div = document.createElement("div");
-    max_level_div.id = `max_level_${session_id}`;
+    max_level_div.id = `max_level_${this.session_id}`;
     session_div.appendChild(max_level_div);
     session_div.appendChild(document.createElement("br"));
-
+    // Set up idle alert box.
     let alert_msg = document.createElement("span");
-    alert_msg.id = `idle_${session_id}`;
+    alert_msg.id = `idle_${this.session_id}`;
     alert_msg.innerText = "Inactive";
     alert_msg.classList.add("player_inactive");
     session_div.appendChild(alert_msg);
 
-    return session_div
+    session_list_area.appendChild(session_div);
   }
 
-  populateDisplayedSession(session_id) {
+  Update(player_session_data) {
     let cur_level_div = document.getElementById(`cur_level_${session_id}`);
-    cur_level_div.innerText = `current: ${this.active_sessions[session_id]["cur_level"].toString()}`;
+    cur_level_div.innerText = `current: ${player_session_data["cur_level"].toString()}`;
     let max_level_div = document.getElementById(`max_level_${session_id}`);
     max_level_div.innerText = `max: ${this.active_sessions[session_id]["max_level"].toString()}`;
     let inactive_span = document.getElementById(`idle_${session_id}`);
@@ -201,29 +218,4 @@ class PlayerCard
       inactive_span.style.display = "none";
     }
   }
-
-//   displaySelectedSession(session_id) {
-//     this.clearSelected();
-//     let player_id = this.active_sessions[session_id]['player_id']
-//     this.selected_session_dash.DisplaySession(session_id, player_id, this.active_game);
-//     this.selected_session_id = session_id;
-//   }
-
-//   refreshSelectedSession() {
-//     this.selected_session_dash.Refresh();
-//   }
-
-  /**
-   * Simple function to clear out data display for a selected session.
-   * This is mostly intended for when switching to a new session or switching
-   * to another game entirely.
-   */
-//   clearSelected() {
-//     this.selected_session_dash.clear()
-//   }
-}
-
-class PlayerCard
-{
-
 }
