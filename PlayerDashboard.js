@@ -98,7 +98,7 @@ class PlayerDashboard
           let next_box = new ModelCard(next_config, document.getElementById("playstats"));
           that.model_cards[model_name] = next_box;
         }
-        that.model_cards[model_name].update(model_result_list[model_name]["value"]);
+        that.model_cards[model_name].update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
       }
       if(models_raw === 'null'){
         playstats_message('No models available.')
@@ -207,13 +207,23 @@ class ModelCard
     modelcard_list.appendChild(span_next_model);
   }
 
-  update(raw_val)
+  update(success_state, raw_val)
   {
     // if (this.model_type === "feature") {
     //   this.populateFeatureBox(this.name, features_parsed, feature_request_list);
     // }
     if (this.model_type === "model") {
-      this.populateModelCard(raw_val);
+      // let model_value = model_list[model_name]["value"];
+      let value_elem = document.getElementById(`${this.name}_val`);
+      if (success_state === true) {
+        let vis = ModelCard.Visualize(raw_val, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
+      }
+      else if (success_state === false) {
+        let vis = ModelCard.Visualize(raw_val, "raw", "raw", this.display_name, value_elem, this.icon, this.reverse_color);
+      }
+      else {
+        let vis = ModelCard.Visualize(`Something screwed up, success state is ${success_state}`, "raw", "raw", this.display_name, value_elem, this.icon, this.reverse_color);
+      }
     }
     else if (this.model_type === "feature") {
         throw "Feature data not currently supported.";
@@ -233,12 +243,6 @@ class ModelCard
 //     let vis = ModelCard.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
 //     // value_elem.appendChild(feature_value);
 //   }
-
-  populateModelCard(raw_val) {
-    // let model_value = model_list[model_name]["value"];
-    let value_elem = document.getElementById(`${this.name}_val`);
-    let vis = ModelCard.Visualize(raw_val, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
-  }
 
   static Visualize(val, val_type, vis, feature_name, html_elem, icon=null, reverse_color=false)
   {
