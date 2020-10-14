@@ -321,6 +321,10 @@ class ModelCard
       {
         ret_val = (parseFloat(val)*100).toFixed(0);
       }
+      else if (format == "raw")
+      {
+        ret_val = val;
+      }
       else
       {
         console.log(`Display value had unrecognized format ${format}. Using raw value ${val}`);
