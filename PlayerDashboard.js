@@ -48,7 +48,7 @@ class PlayerDashboard
       let player_msg = !["", "null"].includes(player_id) ? " (Player "+player_id+")" : '';
       message.appendChild(document.createTextNode("Session "+session_id+player_msg));
       message.style.width = "-webkit-fill-available";
-      playstats.appendChild(message);
+      document.getElementById("playstats_row").insertBefore(message, playstats);
       // Now that setup is done, create handler and send off request.
       let model_request_list = active_models[this.active_game];
       for (let model_name in model_request_list) {
@@ -238,9 +238,6 @@ class ModelCard
     // let model_value = model_list[model_name]["value"];
     let value_elem = document.getElementById(`${this.name}_val`);
     let vis = ModelCard.Visualize(raw_val, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
-    let icon = feature_request_list[feature_name]["icon"];
-    let reverse_color = feature_request_list[feature_name]["reverse_color"];
-    value_elem.innerText = model_value;
   }
 
   static Visualize(val, val_type, vis, feature_name, html_elem, icon=null, reverse_color=false)

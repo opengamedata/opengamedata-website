@@ -109,7 +109,9 @@
                 <a id="rt_game_link" href="" target="_blank">Play the game</a>
               </div>
             </div>
-            <div class="playstats" id="playstats"></div>
+            <div class="row" id="playstats_row">
+              <div class="playstats" id="playstats"></div>
+            </div>
           </div>
           <div class="pub-wrap">
             <h3>About Realtime Player Data</h3>
