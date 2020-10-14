@@ -109,13 +109,11 @@ class PlayerList
       }
     }
     // loop over all newly active sessions, adding them to the list.
-    for (let id of add_set) {
-      let session_id = id;
+    for (let session_id of add_set) {
       let player_id = this.active_sessions[session_id]["player_id"];
       // start constructing the element
-      let next_player_card = new PlayerCard(session_id, player_id, session_list_area, game_themes[this.active_game], this.clickHandlerCallback);
-      next_player_card.Update(this.active_sessions[session_id]);
-      this.player_cards[session_id] = next_player_card;
+      this.player_cards[session_id] = new PlayerCard(session_id, player_id, session_list_area, game_themes[this.active_game], this.clickHandlerCallback);
+      this.player_cards[session_id].Update(this.active_sessions[session_id]);
     }
     this.displayed_session_ids = [...this.active_session_ids]; // at this point, these should theoretically be the same.
     if(this.displayed_session_ids.length == 0){
@@ -204,12 +202,12 @@ class PlayerCard
   }
 
   Update(player_session_data) {
-    let cur_level_div = document.getElementById(`cur_level_${session_id}`);
+    let cur_level_div = document.getElementById(`cur_level_${this.session_id}`);
     cur_level_div.innerText = `current: ${player_session_data["cur_level"].toString()}`;
-    let max_level_div = document.getElementById(`max_level_${session_id}`);
-    max_level_div.innerText = `max: ${this.active_sessions[session_id]["max_level"].toString()}`;
-    let inactive_span = document.getElementById(`idle_${session_id}`);
-    if (this.active_sessions[session_id]["idle_time"] > 60)
+    let max_level_div = document.getElementById(`max_level_${this.session_id}`);
+    max_level_div.innerText = `max: ${player_session_data["max_level"].toString()}`;
+    let inactive_span = document.getElementById(`idle_${this.session_id}`);
+    if (player_session_data["idle_time"] > 60)
     {
       inactive_span.style.display = "inline";
     }

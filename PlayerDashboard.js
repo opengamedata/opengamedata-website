@@ -53,10 +53,9 @@ class PlayerDashboard
       let model_request_list = active_models[this.active_game];
       for (let model_name in model_request_list) {
           let next_config = new ModelConfig(model_name, model_request_list[model_name])
-          let next_box = new ModelCard(next_config, playstats);
-          this.model_cards[model_name] = next_box;
+          this.model_cards[model_name] = new ModelCard(next_config, playstats);
           this.Update();
-          // that.populateModelBox(model_name, model_list);
+          // that.populateModelCard(model_name, model_list);
       }
     }
     // let that = this;
@@ -66,7 +65,7 @@ class PlayerDashboard
     //   let features_parsed = features_raw[that.selected_session_id];
     //   // loop over all models, adding to the UI.
     //   for (let feature_name in features_parsed) {
-    //     let next_box = ModelBox(feature_name, feature_request_list[feature_name]["name"], playstats);
+    //     let next_box = ModelCard(feature_name, feature_request_list[feature_name]["name"], playstats);
     //     next_box.update(features_parsed, feature_request_list);
     //     that.feature_boxes.push(next_box);
     //   }
@@ -90,16 +89,16 @@ class PlayerDashboard
     let models_handler = function(result) {
       console.log(`Got back models: ${result}`);
       let models_raw = that.parseJSONResult(result);
-      let model_list = models_raw[that.selected_session_id]
+      let model_result_list = models_raw[that.selected_session_id]
       // After getting the model values, loop over whole list,
       // updating values.
-      for (let model_name in model_list) {
+      for (let model_name in model_request_list) {
         if (that.model_cards[model_name] === undefined) {
           let next_config = new ModelConfig(model_name, model_request_list[model_name])
           let next_box = new ModelCard(next_config, document.getElementById("playstats"));
           that.model_cards[model_name] = next_box;
         }
-        that.model_cards[model_name].update(model_list[model_name]["value"]);
+        that.model_cards[model_name].update(model_result_list[model_name]["value"]);
       }
       if(models_raw === 'null'){
         playstats_message('No models available.')
@@ -214,13 +213,13 @@ class ModelCard
     //   this.populateFeatureBox(this.name, features_parsed, feature_request_list);
     // }
     if (this.model_type === "model") {
-      this.populateModelBox(raw_val);
+      this.populateModelCard(raw_val);
     }
     else if (this.model_type === "feature") {
         throw "Feature data not currently supported.";
     }
     else {
-      throw `Invalid ModelBox type ${this.model_type}!`;
+      throw `Invalid ModelCard type ${this.model_type}!`;
     }
   }
 
@@ -231,14 +230,14 @@ class ModelCard
 //     let vis_type = feature_request_list[feature_name]["vis"];
 //     let icon = feature_request_list[feature_name]["icon"];
 //     let reverse_color = feature_request_list[feature_name]["reverse_color"];
-//     let vis = ModelBox.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
+//     let vis = ModelCard.Visualize(raw_value, val_type, vis_type, feature_name, value_elem, icon, reverse_color);
 //     // value_elem.appendChild(feature_value);
 //   }
 
-  populateModelBox(raw_val) {
+  populateModelCard(raw_val) {
     // let model_value = model_list[model_name]["value"];
     let value_elem = document.getElementById(`${this.name}_val`);
-    let vis = ModelCard.Visualize(raw_value, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
+    let vis = ModelCard.Visualize(raw_val, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
     let icon = feature_request_list[feature_name]["icon"];
     let reverse_color = feature_request_list[feature_name]["reverse_color"];
     value_elem.innerText = model_value;
@@ -249,12 +248,12 @@ class ModelCard
       let ret_val;
       if (vis == "raw")
       {
-        ret_val = ModelBox.formatValue(val, val_type);
+        ret_val = ModelCard.formatValue(val, val_type);
         html_elem.innerText = ret_val;
       }
       else if (vis == "pct")
       {
-        ret_val = ModelBox.formatValue(val, val_type);
+        ret_val = ModelCard.formatValue(val, val_type);
         html_elem.innerText = `${ret_val} %`;
       }
       else if (vis == "bar")
@@ -265,7 +264,7 @@ class ModelCard
         // if (!chart_div) {
         let chart_div = document.createElement('div');
         chart_div.id = chart_id;
-        let chart = ViewRenderer.createBarChart(ModelBox.formatValue(val, val_type), chart_div.id);
+        let chart = ViewRenderer.createBarChart(ModelCard.formatValue(val, val_type), chart_div.id);
         html_elem.appendChild(chart_div);
         // }
         // else { chart_div.innerHTML = ''; }
@@ -281,7 +280,7 @@ class ModelCard
           html_elem.appendChild(chart_div);
         }
         else { chart_div.innerHTML = ''; }
-        let chart = ViewRenderer.createGaugeChart(ModelBox.formatValue(val, val_type), chart_div.id, reverse_color);
+        let chart = ViewRenderer.createGaugeChart(ModelCard.formatValue(val, val_type), chart_div.id, reverse_color);
         ret_val = chart_div.innerHTML
       }
       else if (vis == "count")
@@ -290,7 +289,7 @@ class ModelCard
         while (html_elem.firstChild)
         { html_elem.removeChild(html_elem.lastChild); }
         // then, add instances of the icon to match the count.
-        ret_val = ModelBox.formatValue(val, val_type);
+        ret_val = ModelCard.formatValue(val, val_type);
         if (ret_val == 0) {
           html_elem.innerText = ret_val;
         }

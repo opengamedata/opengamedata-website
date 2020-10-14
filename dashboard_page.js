@@ -13,7 +13,7 @@ function onload()
   var NewSelectionHandler = function(session_id, player_id, game_id) {
     dashboard.DisplaySession(session_id, player_id, game_id);
   }
-  sess_list = new PlayerList();
+  sess_list = new PlayerList(selectionHandler=NewSelectionHandler);
   rt_change_games(sess_list, dashboard, "LAKELAND");
   if (rt_config.custom_title !== null)
   {
@@ -64,7 +64,7 @@ function onload()
       sess_list.refreshActivePlayerList();
       if (dashboard.selected_session_id != -1)
       {
-        dashboard.Refresh();
+        dashboard.Update();
       }
     }
     catch(err) {
