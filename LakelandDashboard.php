@@ -75,7 +75,7 @@
 <script src="ViewRenderer.js"></script>
 <script src="PlayerList.js"></script>
 <script src="PlayerDashboard.js"></script>
-<script src="dashboard_page.js"></script>
+<script src="lakeland_dashboard_page.js"></script>
 <script>
 $(function() {
 
