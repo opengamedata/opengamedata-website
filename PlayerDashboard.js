@@ -66,7 +66,7 @@ class PlayerDashboard
     //   // loop over all models, adding to the UI.
     //   for (let feature_name in features_parsed) {
     //     let next_box = ModelCard(feature_name, feature_request_list[feature_name]["name"], playstats);
-    //     next_box.update(features_parsed, feature_request_list);
+    //     next_box.Update(features_parsed, feature_request_list);
     //     that.feature_boxes.push(next_box);
     //   }
 
@@ -98,7 +98,7 @@ class PlayerDashboard
           let next_box = new ModelCard(next_config, document.getElementById("playstats"));
           that.model_cards[model_name] = next_box;
         }
-        that.model_cards[model_name].update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
+        that.model_cards[model_name].Update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
       }
       if(models_raw === 'null'){
         playstats_message('No models available.')
@@ -207,7 +207,7 @@ class ModelCard
     modelcard_list.appendChild(span_next_model);
   }
 
-  update(success_state, raw_val)
+  Update(success_state, raw_val)
   {
     // if (this.model_type === "feature") {
     //   this.populateFeatureBox(this.name, features_parsed, feature_request_list);
