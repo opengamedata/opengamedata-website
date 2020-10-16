@@ -25,6 +25,7 @@ function onload()
     document.getElementById("require_pid").disabled = true;
     document.title = document.title.concat(" - SIMULATED");
   }
+  // Set up onclick and onupdate events.
   document.getElementById("require_pid").onclick = function() {
     sess_list.require_player_id = this.checked;
     sess_list.refreshActivePlayerList();

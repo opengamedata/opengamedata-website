@@ -23,6 +23,12 @@
     </div>
   </section>
   <div class="row">
+    <input type="text" id="classroom_id">
+    <input type="text" id="portal_link" readonly>
+    <br>
+    <button type="button" class="btn btn-secondary">Generate</button>
+  </div>
+  <div class="row">
     <div class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
       <h2 id="whatis">Choose a session:</h2>
       <p>View sessions by Player ID:
