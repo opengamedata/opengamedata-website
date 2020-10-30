@@ -1,7 +1,7 @@
 /**
  * Function to initialize data and refresh loop when the page loads.
  */
-var SIMULATION_MODE = true;
+var SIMULATION_MODE = document.getElementById("sim_mode").checked;
 // var NEW_FEATURE_SET = true;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
@@ -52,6 +52,16 @@ function onload()
       document.title = document.title.concat(" - SIMULATED");
     }
   };
+  document.getElementById("btn_id_gen").onclick = function() {
+    let classroom_id_box = document.getElementById("classroom_id");
+    let portal_link_box = document.getElementById("portal_link")
+    if (classroom_id_box.value === "") {
+      // generate an id
+
+      // store in cookie.
+    }
+    portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?classroom_id=${classroom_id_box.value}`;
+  }
   window.setInterval(() => {
     try {
       sess_list.refreshActivePlayerList();
