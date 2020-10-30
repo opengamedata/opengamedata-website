@@ -250,6 +250,7 @@ class ModelCard
       if (vis == "raw")
       {
         ret_val = ModelCard.formatValue(val, val_type);
+        html_elem.style.fontSize = "8pt";
         html_elem.innerText = ret_val;
       }
       else if (vis == "pct")
