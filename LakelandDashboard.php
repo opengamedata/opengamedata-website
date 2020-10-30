@@ -1,7 +1,7 @@
 <!--include head
 ------------------------>
 <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/includes/header.php";  include_once($path); ?>
-<title>Field Day - Open Game Data</title>
+<title>Field Day - Lakeland Dashboard</title>
 </head>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
@@ -15,8 +15,8 @@
   ------------------------>
   <section class="singlehero page_hero">
     <div class="info">
-      <h1 class="corrected">Open Game Data</h1>
-      <p class="">This dashboard tool allows you to observe the in-game progress of players in the Lakeland game. To see only the players who are in your classroom, use the button below to generate a "classroom ID," along with a link for players to sign in to that classroom.</p>
+      <h1 class="corrected">Lakeland Teacher Dashboard</h1>
+      <p class="">This dashboard tool allows you to observe the in-game progress of players in the Lakeland game. To see only the players who are in your classroom, enter your "classroom ID," and use the button to generate a link for players to sign in to the classroom.</p>
       <div style="color: black">
         <input type="text" id="classroom_id">
         <input type="text" id="portal_link" size=65 readonly>
