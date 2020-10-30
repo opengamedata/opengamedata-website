@@ -16,18 +16,18 @@
   <section class="singlehero page_hero">
     <div class="info">
       <h1 class="corrected">Open Game Data</h1>
-      <p class="">These anonymous data are provided in service of future educational data mining research. They are made available under the <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CCO 1.0 Universal license.</a> Source code for this website and related data processing is available on <a target="_blank" href="https://github.com/fielddaylab/opengamedata">github</a></p>
+      <p class="">This dashboard tool allows you to observe the in-game progress of players in the Lakeland game. To see only the players who are in your classroom, use the button below to generate a "classroom ID," along with a link for players to sign in to that classroom.</p>
+      <div style="color: black">
+        <input type="text" id="classroom_id">
+        <input type="text" id="portal_link" size=65 readonly>
+        <br>
+        <button type="button" class="btn btn-secondary" id="btn_id_gen">Generate New Class ID</button>
+      </div>
     </div>
     <div class="graphic">
       <img class="graph_img" src="/assets/img/illustrations/mountainrange.png">
     </div>
   </section>
-  <div class="row">
-    <input type="text" id="classroom_id">
-    <input type="text" id="portal_link" readonly>
-    <br>
-    <button type="button" class="btn btn-secondary">Generate</button>
-  </div>
   <div class="row">
     <div class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
       <h2 id="whatis">Choose a session:</h2>
