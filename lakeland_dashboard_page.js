@@ -60,7 +60,7 @@ function onload()
 
       // store in cookie.
     }
-    portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?classroom_id=${classroom_id_box.value}`;
+    portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?class_id=${classroom_id_box.value}`;
   }
   window.setInterval(() => {
     try {
