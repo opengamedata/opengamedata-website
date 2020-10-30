@@ -18,6 +18,21 @@ class Server
    }
    //returns {} if there are no active sessions.
 
+   static get_all_active_sessions_by_classroom(callback, gameID, class_id, sim_time=-1) //gameID eg 'CRYSTAL'
+   {
+   //returns object of form:
+      // {[SessID0, SessID1, SessID2, ... sessIDn]}
+      let method_string = SIMULATION_MODE ? "sim_all_active_sessions_by_classroom" : "get_all_active_sessions_by_classroom";
+      var post_string = `method=${method_string}&gameID=${gameID}&class_id=${class_id}`
+      if (SIMULATION_MODE) {
+         post_string = `method=${method_string}&gameID=${gameID}&class_id=${class_id}&sim_time=${sim_time}`
+      }
+      if (rt_config.debug_print["RTServer"] === true) {
+         console.log(`Making request for all active sessions in classroom: ${post_string}`)
+      }
+      Server._execute_request(callback, post_string)
+   }
+
    /*static get_model_names_by_game(callback, gameID){
    //   returns all model names of that game (any format is fine)
       var post_string = `method=get_model_names_by_game&gameID=${gameID}`

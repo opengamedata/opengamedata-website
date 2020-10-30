@@ -67,7 +67,13 @@ class PlayerList
     if (this.request_count < rt_config.max_outstanding_requests)
     {
       this.request_count++;
-      Server.get_all_active_sessions(active_sessions_handler, this.active_game, this.require_player_id, SIM_TIME);
+      let txt_class_id = document.getElementById("classroom_id").value;
+      if (txt_class_id) {
+        Server.get_all_active_sessions_by_classroom(active_sessions_handler, this.active_game, txt_class_id, SIM_TIME)
+      }
+      else {
+        Server.get_all_active_sessions(active_sessions_handler, this.active_game, this.require_player_id, SIM_TIME);
+      }
     }
     else
     {
