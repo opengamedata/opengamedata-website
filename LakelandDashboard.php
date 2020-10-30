@@ -31,9 +31,9 @@
   <div class="row">
     <div class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
       <h2 id="whatis">Choose a session:</h2>
-      <p>View sessions by Player ID:
+      <!-- <p>View sessions by Player ID:
         <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
-      </p>
+      </p> -->
       <p>SIMULATION MODE:
         <input type="checkbox" id="sim_mode" value="SIMULATION MODE">
       </p>
