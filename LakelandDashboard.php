@@ -35,7 +35,7 @@
         <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
       </p>
       <p>SIMULATION MODE:
-        <input type="checkbox" id="sim_mode" value="SIMULATION MODE" checked>
+        <input type="checkbox" id="sim_mode" value="SIMULATION MODE">
       </p>
       <ul class="session_list" id="session_list"></ul>
     </div>
