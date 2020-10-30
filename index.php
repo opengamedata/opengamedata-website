@@ -93,8 +93,8 @@
           </div>
         </div>
         <div class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
-        <h2 id="whatis">Choose a session:</h2>
-        <ul class="session_list" id="session_list"></ul>
+          <h2 id="whatis">Choose a session:</h2>
+          <ul class="session_list" id="session_list"></ul>
         </div>
         <div class="col-xl-8 col-md-7 col-sm-5 col-xs-12 ui_column">
           <div class="game_info">
