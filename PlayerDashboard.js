@@ -247,6 +247,14 @@ class ModelCard
   static Visualize(val, val_type, vis, feature_name, html_elem, icon=null, reverse_color=false)
   {
       let ret_val;
+      // First, check case where we got nothing.
+      if (val === null || val === undefined)
+      {
+        vis = "raw";
+        val_type = "raw";
+        val = "N/A";
+      }
+      // Then, handle actual data formatting.
       if (vis == "raw")
       {
         ret_val = ModelCard.formatValue(val, val_type);
