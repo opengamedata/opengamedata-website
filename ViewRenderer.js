@@ -1,5 +1,48 @@
 class ViewRenderer
 {
+  static formatValue(val, format)
+  {
+      let ret_val;
+      if (format == "int")
+      {
+        ret_val = parseFloat(val).toFixed(0);
+      }
+      else if (format == "multiint")
+      {
+        ret_val = [];
+        let vals = JSON.parse(val);
+        for (let i = 0; i < vals.length; i++) {
+          ret_val.push(ViewRenderer.formatValue(vals[i], "int"));
+        }
+      }
+      else if (format == "float")
+      {
+        ret_val = parseFloat(val).toFixed(2);
+      }
+      else if (format == "multifloat")
+      {
+        ret_val = [];
+        let vals = JSON.parse(val);
+        for (let i = 0; i < vals.length; i++) {
+          ret_val.push(ViewRenderer.formatValue(vals[i], "float"));
+        }
+      }
+      else if (format == "pct")
+      {
+        ret_val = (parseFloat(val)*100).toFixed(0);
+      }
+      else if (format == "raw")
+      {
+        ret_val = val;
+      }
+      else
+      {
+        console.log(`Display value had unrecognized format ${format}. Using raw value ${val}`);
+        ret_val = val;
+      }
+      return ret_val;
+  }
+
   static createMultiBarChart(vals, bind_to_id) {
     let cols = [];
     for (let i=0; i < vals.length; i++) {

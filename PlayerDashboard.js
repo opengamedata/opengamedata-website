@@ -264,13 +264,13 @@ class ModelCard
       // Then, handle actual data formatting.
       if (vis == "raw")
       {
-        ret_val = ModelCard.formatValue(val, val_type);
+        ret_val = ViewRenderer.formatValue(val, val_type);
         html_elem.style.fontSize = "8pt";
         html_elem.innerText = ret_val;
       }
       else if (vis == "pct")
       {
-        ret_val = ModelCard.formatValue(val, val_type);
+        ret_val = ViewRenderer.formatValue(val, val_type);
         html_elem.innerText = `${ret_val} %`;
       }
       else if (vis == "bar")
@@ -281,7 +281,7 @@ class ModelCard
         // if (!chart_div) {
         let chart_div = document.createElement('div');
         chart_div.id = chart_id;
-        let chart = ViewRenderer.createBarChart(ModelCard.formatValue(val, val_type), chart_div.id);
+        let chart = ViewRenderer.createBarChart(ViewRenderer.formatValue(val, val_type), chart_div.id);
         html_elem.appendChild(chart_div);
         // }
         // else { chart_div.innerHTML = ''; }
@@ -297,7 +297,7 @@ class ModelCard
           html_elem.appendChild(chart_div);
         }
         else { chart_div.innerHTML = ''; }
-        let chart = ViewRenderer.createGaugeChart(ModelCard.formatValue(val, val_type), chart_div.id, reverse_color);
+        let chart = ViewRenderer.createGaugeChart(ViewRenderer.formatValue(val, val_type), chart_div.id, reverse_color);
         ret_val = chart_div.innerHTML
       }
       else if (vis == "count")
@@ -306,7 +306,7 @@ class ModelCard
         while (html_elem.firstChild)
         { html_elem.removeChild(html_elem.lastChild); }
         // then, add instances of the icon to match the count.
-        ret_val = ModelCard.formatValue(val, val_type);
+        ret_val = ViewRenderer.formatValue(val, val_type);
         if (ret_val == 0) {
           html_elem.innerText = ret_val;
         }
@@ -324,7 +324,7 @@ class ModelCard
         while (html_elem.firstChild)
         { html_elem.removeChild(html_elem.lastChild); }
         // then, add instances of the icon to match the count.
-        ret_val = ModelCard.formatValue(val, val_type);
+        ret_val = ViewRenderer.formatValue(val, val_type);
         if (ret_val == 0) {
           html_elem.innerText = ret_val;
         }
@@ -351,38 +351,4 @@ class ModelCard
       return ret_val;
   }
 
-  static formatValue(val, format)
-  {
-      let ret_val;
-      if (format == "int")
-      {
-        ret_val = parseFloat(val).toFixed(0);
-      }
-      else if (format == "multiint")
-      {
-        ret_val = [];
-        let vals = JSON.parse(val);
-        for (let i = 0; i < vals.length; i++) {
-          ret_val.push(parseFloat(vals[i]).toFixed(0));
-        }
-      }
-      else if (format == "float")
-      {
-        ret_val = parseFloat(val).toFixed(2);
-      }
-      else if (format == "pct")
-      {
-        ret_val = (parseFloat(val)*100).toFixed(0);
-      }
-      else if (format == "raw")
-      {
-        ret_val = val;
-      }
-      else
-      {
-        console.log(`Display value had unrecognized format ${format}. Using raw value ${val}`);
-        ret_val = val;
-      }
-      return ret_val;
-  }
 }
