@@ -13,11 +13,11 @@
 <div id="mainwrapper">
   <!--Start page content
   ------------------------>
-  <section class="singlehero page_hero">
+  <section id="top_segment" class="singlehero page_hero">
     <div class="info">
       <h1 class="corrected">Lakeland Teacher Dashboard</h1>
-      <p class="">This dashboard tool allows you to observe the in-game progress of players in the Lakeland game. To see only the players who are in your classroom, enter your "classroom ID," and use the button to generate a link for players to sign in to the classroom.</p>
-      <div style="color: black">
+      <p class="">This dashboard tool allows you to observe the in-game progress of players in Lakeland. To see only the players who are in your classroom, enter your "classroom ID," and use the button to generate a link for players to sign in to the classroom.</p>
+      <div id="classroom_setup" style="color: black">
         <input type="text" id="classroom_id">
         <input type="text" id="portal_link" size=65 readonly>
         <br>
@@ -29,17 +29,15 @@
     </div>
   </section>
   <div class="row">
-    <div class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
+    <div class="col-xl-4 col-md-5 col-sm-6 col-xs-12 ui_column">
       <h2 id="whatis">Choose a session:</h2>
       <!-- <p>View sessions by Player ID:
         <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
       </p> -->
-      <p>SIMULATION MODE:
-        <input type="checkbox" id="sim_mode" value="SIMULATION MODE">
-      </p>
-      <ul class="session_list" id="session_list"></ul>
+      <p hidden>SIMULATION MODE: <input id="sim_mode" type="checkbox" value="SIMULATION MODE"> </p>
+      <ul id="session_list" class="session_list"></ul>
     </div>
-    <div class="col-xl-8 col-md-7 col-sm-5 col-xs-12 ui_column">
+    <div class="col-xl-8 col-md-7 col-sm-6 col-xs-12 ui_column">
       <div class="game_info">
         <div class="row">
           <div class="col-md-4">
@@ -47,12 +45,13 @@
           </div>
           <div class="col-md-8">
             <h2 id="rt_game_title">Realtime Player Data</h2>
-            <a id="rt_game_events_readme" href="" target="_blank">View README for the game events</a><br>
-            <a id="rt_game_features_readme" href="" target="_blank">View README for the processed features</a><br>
-            <a id="rt_game_link" href="" target="_blank">Play the game</a>
+            <!-- <a id="rt_game_events_readme" href="" target="_blank">View README for the game events</a><br> -->
+            <!-- <a id="rt_game_features_readme" href="" target="_blank">View README for the processed features</a><br> -->
+            <!-- <a id="rt_game_link" href="" target="_blank">Play the game</a> -->
           </div>
         </div>
         <div class="row" id="playstats_row">
+          <h4 id="lbl_playstat_selection"></h4>
           <div class="playstats" id="playstats"></div>
         </div>
       </div>
@@ -73,6 +72,7 @@
 <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/includes/footer.php";  include_once($path); ?>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" />
+<link href="LocalStyle.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
 <script src="realtime_config.js"></script>

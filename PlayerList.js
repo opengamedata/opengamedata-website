@@ -21,14 +21,15 @@ class PlayerList
     this.active_session_ids = [];
     this.displayed_session_ids = [];
     this.selected_session_id = -1;
-    this.require_player_id = document.getElementById("require_pid").checked;
+    // this.require_player_id = document.getElementById("require_pid").checked;
+    this.require_player_id = false; // For now, never worry about checking for player ID.
     this.statistics_NA_msg = false;
     this.request_count = 0;
     this.selectionHandler = selectionHandler;
     this.player_cards = {};
     // Call this when selection changes.
     let that = this;
-    this.clickHandlerCallback = function(session_id, player_id) { selectionHandler(session_id, player_id, that.active_game); }
+    this.clickHandlerCallback = function(session_id, username) { selectionHandler(session_id, username, that.active_game); }
     // this.selected_session_dash = new PlayerDashboard()
     this.refreshActivePlayerList();
   }
@@ -46,6 +47,10 @@ class PlayerList
       try
       {
         parsed_sessions = JSON.parse(result);
+        console.log(`parsed data from active player fetch: ${Object.keys(parsed_sessions)}`);
+        // Slight hack, we get timing data back and want to print before moving on.
+        console.log(`Timing data for fetch of active players: ${parsed_sessions["message"]}`);
+        delete parsed_sessions["message"];
       }
       catch (err)
       {
@@ -58,12 +63,12 @@ class PlayerList
         return;
       }
       that.active_sessions = parsed_sessions;
-      console.log('Refreshed session IDs:');
-      console.log(that.active_sessions);
+      console.log(`Refreshed session IDs: ${JSON.stringify(that.active_sessions)}`);
       that.active_session_ids = Array.from(Object.keys(that.active_sessions));
       that.refreshDisplayedPlayerList();
       that.request_count--;
     };
+
     if (this.request_count < rt_config.max_outstanding_requests)
     {
       this.request_count++;
@@ -116,9 +121,9 @@ class PlayerList
     }
     // loop over all newly active sessions, adding them to the list.
     for (let session_id of add_set) {
-      let player_id = this.active_sessions[session_id]["player_id"];
+      let username = this.active_sessions[session_id]["username"];
       // start constructing the element
-      this.player_cards[session_id] = new PlayerCard(session_id, player_id, session_list_area, game_themes[this.active_game], this.clickHandlerCallback);
+      this.player_cards[session_id] = new PlayerCard(session_id, username, session_list_area, game_themes[this.active_game], this.clickHandlerCallback);
       this.player_cards[session_id].Update(this.active_sessions[session_id]);
     }
     this.displayed_session_ids = [...this.active_session_ids]; // at this point, these should theoretically be the same.
@@ -164,10 +169,11 @@ function setMinus(A, B) {
 
 class PlayerCard
 {
-  constructor(session_id, player_id, session_list_area, game_theme, clickHandler)
+  constructor(session_id, username, session_list_area, game_theme, clickHandler)
   {
     this.session_id = JSON.parse(JSON.stringify(session_id));
-    this.player_id = player_id;
+    // this.player_id = player_id;
+    this.username = username
     this.clickHandler = clickHandler;
     this.game_theme = game_theme;
     this.constructCard(session_list_area);
@@ -181,12 +187,23 @@ class PlayerCard
     // Set up little avatar dude.
     let avatar_img = document.createElement('img');
     avatar_img.src = 'http://tinygraphs.com/spaceinvaders/' + this.session_id + `?theme=${this.game_theme}&numcolors=4`;
+    avatar_img.className = "PlayerAvatar";
     session_div.appendChild(avatar_img);
     // Set up link to display the player dashboard on click.
     let session_link = document.createElement("a");
+    session_link.id = `lnk_${this.session_id}`;
     let that = this; // needed for onclick handler.
-    session_link.onclick = function() { that.clickHandler(that.session_id, that.player_id); return false;}
-    session_link.innerText = !["", "null"].includes(this.player_id) ? this.player_id : this.session_id;
+    session_link.onclick = function() { that.clickHandler(that.session_id, that.username); return false;}
+    if (!["", "null", undefined].includes(this.username)) {
+      session_link.innerText = this.username;
+    }
+    // else if (!["", "null"].includes(this.username)) {
+    //   session_link.innerText = this.player_id;
+    // }
+    else {
+      session_link.innerText =  this.session_id;
+    }
+
     session_link.href = `#${this.session_id}`;
     session_div.appendChild(session_link);
     // Set up divs for current and max level.
@@ -208,6 +225,14 @@ class PlayerCard
   }
 
   Update(player_session_data) {
+    this.username = player_session_data["username"]
+    let session_link = document.getElementById(`lnk_${this.session_id}`);
+    if (!["", "null", undefined].includes(this.username)) {
+      session_link.innerText = this.username;
+    }
+    else {
+      session_link.innerText =  this.session_id;
+    }
     let cur_level_div = document.getElementById(`cur_level_${this.session_id}`);
     cur_level_div.innerText = `current: ${player_session_data["cur_level"].toString()}`;
     let max_level_div = document.getElementById(`max_level_${this.session_id}`);

@@ -38,17 +38,16 @@ class PlayerDashboard
    * the model values in place (without removing and replacing elements).
    * @param {*} session_id The id of the session to display.
    */
-  DisplaySession(session_id, player_id, game_id) {
+  DisplaySession(session_id, username, game_id) {
     this.clear();
     if (session_id != -1) {
       this.selected_session_id = session_id;
       this.active_game = game_id;
       let playstats = document.getElementById("playstats");
-      let message = document.createElement("h4")
-      let player_msg = !["", "null"].includes(player_id) ? " (Player "+player_id+")" : '';
-      message.appendChild(document.createTextNode("Session "+session_id+player_msg));
+      let message = document.getElementById("lbl_playstat_selection");
+      let player_msg = !["", "null"].includes(username) ? " (Player "+username+")" : '';
+      message.innerHTML = `Session ${session_id} ${player_msg}`;
       message.style.width = "-webkit-fill-available";
-      document.getElementById("playstats_row").insertBefore(message, playstats);
       // Now that setup is done, create handler and send off request.
       let model_request_list = active_models[this.active_game];
       for (let model_name in model_request_list) {
@@ -85,10 +84,13 @@ class PlayerDashboard
   {
     let that = this;
     let model_request_list = active_models[this.active_game];
-    console.log(`model list: ${model_request_list}`);
+    // console.log(`model list: ${JSON.stringify(model_request_list)}`);
     let models_handler = function(result) {
       console.log(`Got back models: ${result}`);
       let models_raw = that.parseJSONResult(result);
+      console.log(`Timing data for getting models: ${models_raw["message"]}`);
+      delete models_raw["message"];
+
       let model_result_list = models_raw[that.selected_session_id]
       // After getting the model values, loop over whole list,
       // updating values.
@@ -98,7 +100,12 @@ class PlayerDashboard
           let next_box = new ModelCard(next_config, document.getElementById("playstats"));
           that.model_cards[model_name] = next_box;
         }
-        that.model_cards[model_name].Update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
+        if (model_result_list[model_name] !== "undefined") {
+          that.model_cards[model_name].Update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
+        }
+        else {
+          that.model_cards[model_name].Update(false, "Not Available");
+        }
       }
       if(models_raw === 'null'){
         playstats_message('No models available.')
@@ -216,13 +223,13 @@ class ModelCard
       // let model_value = model_list[model_name]["value"];
       let value_elem = document.getElementById(`${this.name}_val`);
       if (success_state === true) {
-        let vis = ModelCard.Visualize(raw_val, this.val_type, this.vis_type, this.display_name, value_elem, this.icon, this.reverse_color);
+        let vis = ModelCard.Visualize(raw_val, this.val_type, this.vis_type, this.name, value_elem, this.icon, this.reverse_color);
       }
       else if (success_state === false) {
-        let vis = ModelCard.Visualize(raw_val, "raw", "raw", this.display_name, value_elem, this.icon, this.reverse_color);
+        let vis = ModelCard.Visualize(raw_val, "raw", "raw", this.name, value_elem, this.icon, this.reverse_color);
       }
       else {
-        let vis = ModelCard.Visualize(`Something screwed up, success state is ${success_state}`, "raw", "raw", this.display_name, value_elem, this.icon, this.reverse_color);
+        let vis = ModelCard.Visualize(`Something screwed up, success state is ${success_state}`, "raw", "raw", this.name, value_elem, this.icon, this.reverse_color);
       }
     }
     else if (this.model_type === "feature") {
@@ -311,6 +318,31 @@ class ModelCard
           }
         }
       }
+      else if (vis == "multicount")
+      {
+        // first, clear old children
+        while (html_elem.firstChild)
+        { html_elem.removeChild(html_elem.lastChild); }
+        // then, add instances of the icon to match the count.
+        ret_val = ModelCard.formatValue(val, val_type);
+        if (ret_val == 0) {
+          html_elem.innerText = ret_val;
+        }
+        else {
+          for (let i = 0; i < icon.length; i++)
+          {
+            let next_div = document.createElement("div");
+            let next_icon = document.createElement('i');
+            next_icon.className = icon[i];
+            let count = document.createElement("span");
+            count.style.fontSize = '10pt';
+            count.innerHTML = `x ${ret_val[i]}`
+            next_div.appendChild(next_icon);
+            next_div.appendChild(count);
+            html_elem.append(next_div);
+          }
+        }
+      }
       else
       {
         console.log(`Display value had unrecognized format ${format}. Using raw value ${val}`);
@@ -325,6 +357,14 @@ class ModelCard
       if (format == "int")
       {
         ret_val = parseFloat(val).toFixed(0);
+      }
+      else if (format == "multiint")
+      {
+        ret_val = [];
+        let vals = JSON.parse(val);
+        for (let i = 0; i < vals.length; i++) {
+          ret_val.push(parseFloat(vals[i]).toFixed(0));
+        }
       }
       else if (format == "float")
       {

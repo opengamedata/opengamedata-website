@@ -117,12 +117,15 @@ class Server
    static _execute_request(callback, post_string)
    {
       var req = new XMLHttpRequest();
+      req.custom_start_time = new Date().getTime();
       req.onreadystatechange = function()
       {
          if (this.readyState == 4 && this.status == 200)
          {
             if (rt_config.debug_print["RTServer"] === true) {
+               let time = new Date().getTime() - this.custom_start_time;
                console.log(`raw result for ${post_string} was ${this.responseText.toString()}`);
+               console.log(`time for ${post_string} was ${time / 1000} s`);
             }
             callback(this.responseText.toString());
          }

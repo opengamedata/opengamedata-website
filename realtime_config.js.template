@@ -3,6 +3,7 @@ rt_config = {
     host: "",
     path: "cgi-bin/opengamedata/realtime.cgi",
     max_outstanding_requests: 20,
+    refresh_rate: 5000,
     custom_title: null,
     debug_print: {"RTServer": false, "PlayerDashboard": false, "PlayerList": false}
 };

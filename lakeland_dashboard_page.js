@@ -21,23 +21,23 @@ function onload()
   }
   SIMULATION_MODE = document.getElementById("sim_mode").checked;
   // NEW_FEATURE_SET = document.getElementById("new_feature_set").checked;
-  if (SIMULATION_MODE) {
-    document.getElementById("require_pid").disabled = true;
-    document.title = document.title.concat(" - SIMULATED");
-  }
-  // Set up onclick and onupdate events.
-  document.getElementById("require_pid").onclick = function() {
-    sess_list.require_player_id = this.checked;
-    sess_list.refreshActivePlayerList();
-    if (sess_list.selected_session_id != -1)
-    {
-      sess_list.refreshSelectedSession();
-    }
-  };
+  // if (SIMULATION_MODE) {
+  //   document.getElementById("require_pid").disabled = true;
+  //   document.title = document.title.concat(" - SIMULATED");
+  // }
+  // // Set up onclick and onupdate events.
+  // document.getElementById("require_pid").onclick = function() {
+  //   sess_list.require_player_id = this.checked;
+  //   sess_list.refreshActivePlayerList();
+  //   if (sess_list.selected_session_id != -1)
+  //   {
+  //     sess_list.refreshSelectedSession();
+  //   }
+  // };
   document.getElementById("sim_mode").onclick = function() {
     SIMULATION_MODE = this.checked;
     SIM_TIME = 0; // anytime we click, reset sim time.
-    document.getElementById("require_pid").disabled = this.checked;
+    // document.getElementById("require_pid").disabled = this.checked;
     sess_list.refreshActivePlayerList();
     if (sess_list.selected_session_id != -1)
     {
@@ -82,7 +82,7 @@ function onload()
       if (SIMULATION_MODE)
       {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
     }
-  }, 5000);
+  }, rt_config.refresh_rate);
 }
 
 
@@ -99,9 +99,9 @@ function rt_change_games(list, player_dash, game_name){
   player_dash.DisplaySession(-1,-1,game_name);
 
   document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";
-  document.getElementById('rt_game_events_readme').href = data_readmes[game_name];
-  document.getElementById('rt_game_features_readme').href = feature_readmes[game_name];
-  document.getElementById('rt_game_link').href = game_links[game_name];  document.getElementById('rt_game_img').src = thumbs[game_name];
+  // document.getElementById('rt_game_events_readme').href = data_readmes[game_name];
+  // document.getElementById('rt_game_features_readme').href = feature_readmes[game_name];
+  // document.getElementById('rt_game_link').href = game_links[game_name];  document.getElementById('rt_game_img').src = thumbs[game_name];
   document.getElementById('rt_game_img').alt = "Example image of "+game_name;
 
 
