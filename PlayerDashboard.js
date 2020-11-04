@@ -100,7 +100,7 @@ class PlayerDashboard
           let next_box = new ModelCard(next_config, document.getElementById("playstats"));
           that.model_cards[model_name] = next_box;
         }
-        if (model_result_list[model_name] !== "undefined") {
+        if (model_result_list[model_name] !== undefined) {
           that.model_cards[model_name].Update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
         }
         else {
