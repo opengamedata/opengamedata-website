@@ -607,5 +607,4 @@ class ModelCard
       }
       return ret_val;
   }
-
 }
