@@ -229,6 +229,11 @@ class PlayerCard
     // Create overall div
     let session_div = document.createElement("div");
     session_div.id = this.session_id;
+    session_div.style.borderStyle = 'solid'
+    session_div.style.borderWidth = 'thin';
+    session_div.style.borderColor = '#52b7ff';
+    session_div.style.borderRadius = "10px";
+    session_div.style.marginBottom = "3px";
     // Set up little avatar dude.
     let avatar_img = document.createElement('img');
     avatar_img.src = 'http://tinygraphs.com/spaceinvaders/' + this.session_id + `?theme=${this.game_theme}&numcolors=4`;
@@ -252,12 +257,12 @@ class PlayerCard
     session_link.href = `#${this.session_id}`;
     session_div.appendChild(session_link);
     // Set up divs for current and max level.
-    let cur_level_div = document.createElement("div");
-    cur_level_div.id = `cur_level_${this.session_id}`;
-    session_div.appendChild(cur_level_div);
-    let max_level_div = document.createElement("div");
-    max_level_div.id = `max_level_${this.session_id}`;
-    session_div.appendChild(max_level_div);
+    // let cur_level_div = document.createElement("div");
+    // cur_level_div.id = `cur_level_${this.session_id}`;
+    // session_div.appendChild(cur_level_div);
+    // let max_level_div = document.createElement("div");
+    // max_level_div.id = `max_level_${this.session_id}`;
+    // session_div.appendChild(max_level_div);
     session_div.appendChild(document.createElement("br"));
     // Set up idle alert box.
     let alert_msg = document.createElement("span");
@@ -278,10 +283,10 @@ class PlayerCard
     else {
       session_link.innerText =  this.session_id;
     }
-    let cur_level_div = document.getElementById(`cur_level_${this.session_id}`);
-    cur_level_div.innerText = `current: ${player_session_data["cur_level"].toString()}`;
-    let max_level_div = document.getElementById(`max_level_${this.session_id}`);
-    max_level_div.innerText = `max: ${player_session_data["max_level"].toString()}`;
+    // let cur_level_div = document.getElementById(`cur_level_${this.session_id}`);
+    // cur_level_div.innerText = `current: ${player_session_data["cur_level"].toString()}`;
+    // let max_level_div = document.getElementById(`max_level_${this.session_id}`);
+    // max_level_div.innerText = `max: ${player_session_data["max_level"].toString()}`;
     let inactive_span = document.getElementById(`idle_${this.session_id}`);
     if (player_session_data["idle_time"] > 60)
     {
