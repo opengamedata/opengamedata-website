@@ -86,9 +86,13 @@ class PlayerList
       try
       {
         parsed_sessions = JSON.parse(result);
-        console.log(`parsed data from active player fetch: ${Object.keys(parsed_sessions)}`);
+        if (rt_config.debug_print["PlayerList"] === true) {
+          console.log(`parsed data from active player fetch: ${Object.keys(parsed_sessions)}`);
+        }
+        else {
+          console.log(`Timing data for fetch of active players: ${parsed_sessions["message"]}`);
+        }
         // Slight hack, we get timing data back and want to print before moving on.
-        console.log(`Timing data for fetch of active players: ${parsed_sessions["message"]}`);
         delete parsed_sessions["message"];
       }
       catch (err)
@@ -102,7 +106,9 @@ class PlayerList
         return;
       }
       that.active_sessions = parsed_sessions;
-      console.log(`Refreshed session IDs: ${JSON.stringify(that.active_sessions)}`);
+      if (rt_config.debug_print["PlayerList"] === true) {
+        console.log(`Refreshed session IDs: ${JSON.stringify(that.active_sessions)}`);
+      }
       that.active_session_ids = Array.from(Object.keys(that.active_sessions));
       that.refreshDisplayedPlayerList();
       that.request_count--;

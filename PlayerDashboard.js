@@ -125,9 +125,13 @@ class PlayerDashboard
     let model_request_list = active_models[this.active_game];
     // console.log(`model list: ${JSON.stringify(model_request_list)}`);
     let models_handler = function(result) {
-      console.log(`Got back models: ${result}`);
       let models_raw = that.parseJSONResult(result);
-      console.log(`Timing data for getting models: ${models_raw["message"]}`);
+      if (rt_config.debug_print["PlayerDashboard"] === true) {
+        console.log(`Got back models: ${result}`);
+      }
+      else {
+        console.log(`Timing data for getting models: ${models_raw["message"]}`);
+      }
       delete models_raw["message"];
 
       let model_result_list = models_raw[that.selected_session_id]
