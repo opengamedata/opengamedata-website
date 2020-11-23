@@ -27,11 +27,50 @@ class PlayerList
     this.request_count = 0;
     this.selectionHandler = selectionHandler;
     this.player_cards = {};
+    this.working = false;
     // Call this when selection changes.
     let that = this;
     this.clickHandlerCallback = function(session_id, username) { selectionHandler(session_id, username, that.active_game); }
     // this.selected_session_dash = new PlayerDashboard()
-    this.refreshActivePlayerList();
+    this.Update(false);
+  }
+
+  Update(force=false) {
+    if (force === true) {
+      console.log("Forced player list refresh");
+      try {
+        this.refreshActivePlayerList();
+      }
+      catch(err) {
+        console.log(err.message);
+        if (PRINT_TRACE)
+        {
+          console.trace();
+        }
+      }
+      finally {
+        this.working = false;
+      }
+    }
+    else if (this.working === false) {
+      this.working = true;
+      try {
+        this.refreshActivePlayerList();
+      }
+      catch(err) {
+        console.log(err.message);
+        if (PRINT_TRACE)
+        {
+          console.trace();
+        }
+      }
+      finally {
+        this.working = false;
+      }
+    }
+    else {
+      console.log(`PlayerList is already updating, waiting on next timer.`)
+    }
   }
 
   /**

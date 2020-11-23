@@ -38,7 +38,7 @@ function onload()
     SIMULATION_MODE = this.checked;
     SIM_TIME = 0; // anytime we click, reset sim time.
     // document.getElementById("require_pid").disabled = this.checked;
-    sess_list.refreshActivePlayerList();
+    sess_list.Update(true);
     if (sess_list.selected_session_id != -1)
     {
       sess_list.refreshSelectedSession();
@@ -60,29 +60,20 @@ function onload()
 
       // store in cookie.
     }
-    portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?class_id=${classroom_id_box.value}`;
+    else {
+      portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?class_id=${classroom_id_box.value}`;
+    }
   }
   window.setInterval(() => {
-    try {
-      sess_list.refreshActivePlayerList();
-      if (dashboard.selected_session_id != -1)
-      {
-        dashboard.Update();
-      }
+    sess_list.Update();
+    if (dashboard.selected_session_id != -1)
+    {
+      dashboard.Update();
     }
-    catch(err) {
-      console.log(err.message);
-      if (PRINT_TRACE)
-      {
-        console.trace();
-      }
-      throw err;
-    }
-    finally {
-      if (SIMULATION_MODE)
-      {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
-    }
-  }, rt_config.refresh_rate);
+    if (SIMULATION_MODE)
+    {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
+  },
+  rt_config.refresh_rate);
 }
 
 
@@ -95,7 +86,7 @@ function onload()
  */
 function rt_change_games(list, player_dash, game_name){
   list.active_game = game_name;
-  list.refreshActivePlayerList();
+  list.Update(true);
   player_dash.DisplaySession(-1,-1,game_name);
 
   document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";

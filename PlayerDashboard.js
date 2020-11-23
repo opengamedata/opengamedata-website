@@ -20,6 +20,7 @@ class PlayerDashboard
     this.request_count = 0;
     // this.feature_boxes = [];
     this.model_cards = {};
+    this.working = false;
   }
 
   clear() {
@@ -53,7 +54,7 @@ class PlayerDashboard
       for (let model_name in model_request_list) {
           let next_config = new ModelConfig(model_name, model_request_list[model_name])
           this.model_cards[model_name] = new ModelCard(next_config, playstats);
-          this.Update();
+          this.Update(false);
           // that.populateModelCard(model_name, model_list);
       }
     }
@@ -75,12 +76,50 @@ class PlayerDashboard
     // };
   }
 
+  async Update(force=false) {
+    if (force === true) {
+      console.log("Forced player dashboard refresh");
+      try {
+        this._update();
+      }
+      catch(err) {
+        console.log(err.message);
+        if (PRINT_TRACE)
+        {
+          console.trace();
+        }
+      }
+      finally {
+        this.working = false;
+      }
+    }
+    else if (this.working === false) {
+      this.working = true;
+      try {
+        await this._update();
+      }
+      catch(err) {
+        console.log(err.message);
+        if (PRINT_TRACE)
+        {
+          console.trace();
+        }
+      }
+      finally {
+        this.working = false;
+      }
+    }
+    else {
+      console.log(`Dashboard is already updating, waiting on next timer.`)
+    }
+  }
+
   /**
    * Function to update the model values for a displayed session.
    * This assumes a session has been selected, and its id stored in
    * the PlayerList selected_session_id variable.
    */
-  Update()
+  _update()
   {
     let that = this;
     let model_request_list = active_models[this.active_game];
@@ -100,11 +139,19 @@ class PlayerDashboard
           let next_box = new ModelCard(next_config, document.getElementById("playstats"));
           that.model_cards[model_name] = next_box;
         }
-        if (model_result_list[model_name] !== undefined) {
-          that.model_cards[model_name].Update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
+        try {
+          if (model_result_list[model_name] !== undefined) {
+              that.model_cards[model_name].Update(model_result_list[model_name]["success"], model_result_list[model_name]["value"]);
+          }
+          else {
+            that.model_cards[model_name].Update(false, "Not Available");
+          }
         }
-        else {
-          that.model_cards[model_name].Update(false, "Not Available");
+        catch (err) {
+          console.log(`ERROR: ${err}, attempting to process ${model_name}`);
+          if (PRINT_TRACE) {
+            console.trace();
+          }
         }
       }
       if(models_raw === 'null'){
@@ -112,23 +159,6 @@ class PlayerDashboard
       }
       that.request_count--;
     };
-
-    /*let feature_request_list = active_features[this.active_game];
-    let features_handler = function(result) {
-      // console.log(`Got back models: ${result}`);
-      let features_raw = that.parseJSONResult(result);
-      let features_parsed = features_raw[that.selected_session_id]
-      // After getting the feature values, loop over whole list,
-      // updating values.
-      for (let feature_name in features_parsed) {
-        let feat_span = document.getElementById(feature_name);
-        if (feat_span == null) {
-          that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
-        }
-        that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
-      }
-      that.request_count--;
-    };*/
 
     try {
       if (this.request_count < rt_config.max_outstanding_requests)
@@ -150,6 +180,23 @@ class PlayerDashboard
         console.trace();
       }
     }
+
+    /*let feature_request_list = active_features[this.active_game];
+    let features_handler = function(result) {
+      // console.log(`Got back models: ${result}`);
+      let features_raw = that.parseJSONResult(result);
+      let features_parsed = features_raw[that.selected_session_id]
+      // After getting the feature values, loop over whole list,
+      // updating values.
+      for (let feature_name in features_parsed) {
+        let feat_span = document.getElementById(feature_name);
+        if (feat_span == null) {
+          that.createFeatureBox(feature_name, feature_request_list[feature_name]["name"], playstats);
+        }
+        that.populateFeatureBox(feature_name, features_parsed, feature_request_list);
+      }
+      that.request_count--;
+    };*/
   }
 
   parseJSONResult(json_result)
