@@ -18,10 +18,10 @@
       <h1 class="corrected">Lakeland Teacher Dashboard</h1>
       <p class="">This dashboard tool allows you to observe the in-game progress of players in Lakeland. To see only the players who are in your classroom, enter your "classroom ID," and use the button to generate a link for players to sign in to the classroom.</p>
       <div id="classroom_setup" style="color: black">
-        <input type="text" id="classroom_id">
+        <input type="text" id="classroom_id" placeholder="Class ID">
         <input type="text" id="portal_link" size=65 readonly>
         <br>
-        <button type="button" class="btn btn-secondary" id="btn_id_gen">Generate New Class ID</button>
+        <button type="button" class="btn btn-secondary" id="btn_id_gen">Generate Classroom Link</button>
       </div>
     </div>
     <div class="graphic">
@@ -29,7 +29,7 @@
     </div>
   </section>
   <div class="row">
-    <div class="col-xl-4 col-md-5 col-sm-6 col-xs-12 ui_column">
+    <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6 ui_column" style="height: 100%; overflow-y:scroll">
       <h2 id="whatis">Choose a session:</h2>
       <!-- <p>View sessions by Player ID:
         <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
@@ -37,7 +37,7 @@
       <p hidden>SIMULATION MODE: <input id="sim_mode" type="checkbox" value="SIMULATION MODE"> </p>
       <ul id="session_list" class="session_list"></ul>
     </div>
-    <div class="col-xl-8 col-md-7 col-sm-6 col-xs-12 ui_column">
+    <div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column">
       <div class="game_info">
         <div class="row">
           <div class="col-md-4">
@@ -52,7 +52,7 @@
         </div>
         <div class="row" id="playstats_row">
           <h4 id="lbl_playstat_selection"></h4>
-          <div class="playstats" id="playstats"></div>
+          <div class="playstats" id="playstats" style="height: 100%; overflow-y:scroll"></div>
         </div>
       </div>
       <div class="pub-wrap">
