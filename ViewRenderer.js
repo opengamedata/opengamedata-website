@@ -3,11 +3,11 @@ class ViewRenderer
   static formatValue(val, format)
   {
       let ret_val;
-      if (format == "int")
+      if (format === "int")
       {
-        ret_val = parseFloat(val).toFixed(0);
+        ret_val = parseInt(val)
       }
-      else if (format == "multiint")
+      else if (format === "multiint")
       {
         ret_val = [];
         let vals = JSON.parse(val);
@@ -15,11 +15,11 @@ class ViewRenderer
           ret_val.push(ViewRenderer.formatValue(vals[i], "int"));
         }
       }
-      else if (format == "float")
+      else if (format === "float")
       {
-        ret_val = parseFloat(val).toFixed(2);
+        ret_val = parseFloat(val);
       }
-      else if (format == "multifloat")
+      else if (format === "multifloat")
       {
         ret_val = [];
         let vals = JSON.parse(val);
@@ -27,11 +27,20 @@ class ViewRenderer
           ret_val.push(ViewRenderer.formatValue(vals[i], "float"));
         }
       }
-      else if (format == "pct")
+      else if (format === "pct")
       {
         ret_val = (parseFloat(val)*100).toFixed(0);
       }
-      else if (format == "raw")
+      else if (format === "grid")
+      {
+        return JSON.parse(val);
+      }
+      else if (format === "dict")
+      {
+        let toparse = val.replace(/'/g, '"');
+        return JSON.parse(toparse);
+      }
+      else if (format === "raw")
       {
         ret_val = val;
       }
