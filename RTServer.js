@@ -122,11 +122,11 @@ class Server
       {
          if (this.readyState == 4 && this.status == 200)
          {
+            let time = new Date().getTime() - this.custom_start_time;
             if (rt_config.debug_print["RTServer"] === true) {
-               let time = new Date().getTime() - this.custom_start_time;
                console.log(`raw result for ${post_string} was ${this.responseText.toString()}`);
-               console.log(`time for ${post_string} was ${time / 1000} s`);
             }
+            console.log(`time for ${post_string} was ${time / 1000} s`);
             callback(this.responseText.toString());
          }
          else
