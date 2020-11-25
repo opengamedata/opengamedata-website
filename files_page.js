@@ -75,7 +75,7 @@ function generateTable(table, data, headers) {
             var linkText = document.createTextNode("Raw");
             raw_link.appendChild(linkText);
             raw_link.title = "Raw";
-            if(!document.getElementById('game_title').innerText.toUpperCase() == 'LAKELAND'){
+            if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
             raw_link.href = set["raw"].replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
             }
             cell.appendChild(raw_link);
@@ -91,16 +91,16 @@ function generateTable(table, data, headers) {
             cell.appendChild(proc_link);
             cell.append(document.createTextNode(' - '))
           }
-          if (set["sql"] != null)
+          if (set["dump"] != null)
           {
-            var sql_link = document.createElement('a');
-            var linkText = document.createTextNode("SQL");
-            sql_link.appendChild(linkText);
-            sql_link.title = "SQL Dump";
-            if(!document.getElementById('game_title').innerText.toUpperCase() == 'LAKELAND'){
-            sql_link.href = set["sql"].replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+            var dump_link = document.createElement('a');
+            var linkText = document.createTextNode("Dump");
+            dump_link.appendChild(linkText);
+            dump_link.title = "Database Dump";
+            if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
+              dump_link.href = set["dump"].replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
             }
-            cell.appendChild(sql_link);
+            cell.appendChild(dump_link);
           }
           break;
         default:
