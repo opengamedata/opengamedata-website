@@ -5,6 +5,7 @@
 </head>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<link rel="stylesheet" href="dropdown.css">
 <body class="singleapp page opengamedata" onload="onload()">
 <!--include Main Navigation
 ------------------------>
@@ -47,6 +48,33 @@
                 <a id="game_events_readme" href="" target="_blank">View README for the game events</a><br>
                 <a id="game_features_readme" href="" target="_blank">View README for the processed features</a><br>
                 <a id="game_link" href="" target="_blank">Play the game</a>
+                <div id="g_id_onload"
+                    data-client_id="538048568897-ucp8nbgqgfr51vd3ulns8lgptkq2lsm0.apps.googleusercontent.com"
+                    data-callback="handleLogin"
+                    data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-size="large"
+                    data-theme="outline"
+                    data-text="sign_in_with"
+                    data-shape="rectangular"
+                    data-logo_alignment="left"
+                    id="gbutton">
+                </div>
+                <div id="new_classroom_button" class="hide">
+                  <form id="new_classroom_form" class="hide">
+                    <label>Enter class name: <input type="text" id="new_class_input" value=""></label>
+                  </form>
+                  <div id="new_class_input"></div>
+                </div>
+                <div id="open_classroom_button" class="hide">
+                  <div id="open_class_list"></div>
+                  <div class="dropdown">
+                    <button onclick="dropdown()" class="dropbtn">Open Classroom</button>
+                    <div id="classrooms" class="dropdown-content"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <table id="table"></table>
@@ -142,6 +170,8 @@
 <script src="PlayerDashboard.js"></script>
 <script src="dashboard_page.js"></script>
 <script src="games_list.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="teacher_interface.js"></script>
 <script>
 $(function() {
 
