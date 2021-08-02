@@ -1,4 +1,7 @@
-fetch("https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/classroom/asdf")
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+
+fetch(`https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/classroom/${id}`)
     .then(response => response.json())
     .then(json => displayStudentList(json));
 
