@@ -32,7 +32,7 @@ function createClassroom() {
 function submitNewClassName(event) {
     event.preventDefault();
     var name = document.getElementById("new_class_input").value;
-    var classUrl = `fieldday.org/aqualab/classroomplay/${name}`
+    var classUrl = `https://fielddaylab.wisc.edu/play/aqualab/ci/develop?classcode=${name}`
 
     var form = document.getElementById("new_classroom_form");
     form.style.display = "none";
