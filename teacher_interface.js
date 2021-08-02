@@ -34,6 +34,13 @@ function submitNewClassName(event) {
     var name = document.getElementById("new_class_input").value;
     var classUrl = `https://fielddaylab.wisc.edu/play/aqualab/ci/develop?classcode=${name}`
 
+    fetch(`https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/classroom/${name}`, {
+        method: "PUT", 
+        body: name
+    }).then(res => {
+        console.log(res);
+    });
+
     var form = document.getElementById("new_classroom_form");
     form.style.display = "none";
 
