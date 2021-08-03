@@ -57,9 +57,9 @@ function submitNewClassName(event) {
 }
 
 function loadOpenClassrooms() {
-    fetch("classrooms.json")
+    fetch("https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/teacher")
         .then(response => response.json())
-        .then(json => displayOpenClassrooms(json));
+        .then(json => displayOpenClassrooms(json.teacher.classrooms));
 }
 
 function displayOpenClassrooms(classrooms) {
@@ -67,8 +67,8 @@ function displayOpenClassrooms(classrooms) {
 
     for (var i = 0; i < classrooms.length; ++i) {
         var classroomElement = document.createElement('a');
-        classroomElement.href = `teacher_view.html?id=${classrooms[i].id}`
-        classroomElement.innerHTML = `${classrooms[i].name} ${classrooms[i].url}`
+        classroomElement.href = `teacher_view.html?id=${classrooms[i]}`
+        classroomElement.innerHTML = `${classrooms[i]}`
         classroomsDiv.appendChild(classroomElement);
     }
 }
