@@ -10,7 +10,7 @@ const TABLE_HEADERS = {
 }
 
 function change_games(game_name, start=false) {
-  let table = document.querySelector("game_files_table");
+  let table = document.getElementById("game_files_table");
   table.innerHTML = '';
   let loadIndexCallback = function(result){
     game_files = result;
@@ -22,7 +22,7 @@ function change_games(game_name, start=false) {
       console.debug(game_files, )
       // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
     }
-    let table = document.querySelector("game_files_table");
+    let table = document.getElementById("game_files_table");
     generateTableHead(table);
     generateTable(table, game_files[game_name]);
     document.getElementById('game_title').innerHTML = game_name;
