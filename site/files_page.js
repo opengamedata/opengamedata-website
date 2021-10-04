@@ -1,30 +1,30 @@
 var game_files;
 var table;
-var headers = {
+const TABLE_HEADERS = {
   "start_date": "Start Date",
   "end_date": "End Date",
-  "date_modified": "Date Modified",
-  "Dataset ID": "Dataset ID",
+  "date_modified": "Date Uploaded",
+  "dataset_id": "Dataset ID",
   "sessions": "Sessions",
-  "raw": "Downloads",
+  "downloads": "Downloads",
 }
-var active_game;
 
 function change_games(game_name, start=false) {
   let table = document.querySelector("game_files_table");
   table.innerHTML = '';
   let loadIndexCallback = function(result){
     game_files = result;
-    game_name = start ? Object.keys(game_files)[0] : game_name
-    let table = document.querySelector("game_files_table");
-    generateTableHead(table, headers);
+    // game_name = start ? Object.keys(game_files)[0] : game_name
     if(start)
     {
-      generate_options();
-      console.log(game_files)
+      game_name = Object.keys(game_files)[0]
+      generate_gamelist();
+      console.debug(game_files, )
       // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
     }
-    generateTable(table, game_files[game_name], headers);
+    let table = document.querySelector("game_files_table");
+    generateTableHead(table);
+    generateTable(table, game_files[game_name]);
     document.getElementById('game_title').innerHTML = game_name;
     document.getElementById('game_title_2').innerHTML = game_name;
     document.getElementById('game_title_3').innerHTML = game_name;
@@ -34,39 +34,37 @@ function change_games(game_name, start=false) {
     document.getElementById('game_features_readme_2').href = feature_readmes[game_name];
     document.getElementById('game_link').href = game_links[game_name];
     document.getElementById('game_img').src = thumbs[game_name];
-    document.getElementById('game_img').alt = "Example image of "+game_name;
-
-    
+    document.getElementById('game_img').alt = "Example image of "+ game_name;
   };
   jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
 }
 
-function generateTableHead(table, headers) {
+function generateTableHead(table) {
   let thead = table.createTHead();
-
   let row = table.insertRow();
-  for (let key in headers) {
+  for (let key in TABLE_HEADERS) {
     let th = document.createElement("th");
-    let text = document.createTextNode(headers[key]);
+    let text = document.createTextNode(TABLE_HEADERS[key]);
     th.appendChild(text);
     row.appendChild(th);
   }
 }
-function generateTable(table, data, headers) {
+
+function generateTable(table, data) {
   setIDs = Object.keys(data)
   setIDs.sort((x,y) => Date.parse(data[y]["start_date"]) - Date.parse(data[x]["start_date"]))
   for (let setID of setIDs) {
     var set = data[setID]
     let row = table.insertRow();
-    for (key in headers) {
+    for (key in TABLE_HEADERS) {
       let cell = row.insertCell();
       var text = null;
       switch (key) {
-        case "Dataset ID":
+        case "dataset_id":
           text = document.createTextNode(setID);
           cell.appendChild(text);
           break;
-        case "raw":
+        case "downloads":
           if (set["raw_f"] != null)
           {
             
@@ -119,7 +117,7 @@ function generateTable(table, data, headers) {
   }
 }
 
-function generate_options(){
+function generate_gamelist(){
   for(let game_name in game_files){
     let li = document.createElement("li");
     let gamelink = document.createElement("a");
