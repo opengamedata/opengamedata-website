@@ -135,6 +135,7 @@ function add_event_file(events_file, cell) {
     events_link.href = events_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
   }
   cell.appendChild(events_link);
+  cell.append(document.createTextNode(' - '))
 }
 
 function add_sessions_file(sessions_file, cell) {
@@ -154,7 +155,6 @@ function add_population_file(population_file, cell) {
   proc_link.title = "Population Features";
   proc_link.href = population_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
   cell.appendChild(proc_link);
-  cell.append(document.createTextNode(' - '))
 }
 
 change_games("CRYSTAL",true); // Note that the table name is irrelevant if start is marked "true"
