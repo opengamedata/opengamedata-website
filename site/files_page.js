@@ -51,60 +51,42 @@ function generateTableHead(table) {
 }
 
 function generateTable(table, data) {
-  setIDs = Object.keys(data)
-  setIDs.sort((x,y) => Date.parse(data[y]["start_date"]) - Date.parse(data[x]["start_date"]))
-  for (let setID of setIDs) {
-    var set = data[setID]
+  let datasetIDs = Object.keys(data)
+  datasetIDs.sort((x,y) => Date.parse(data[y]["start_date"]) - Date.parse(data[x]["start_date"]))
+  for (let datasetID of datasetIDs) {
+    var dataset = data[datasetID]
     let row = table.insertRow();
     for (key in TABLE_HEADERS) {
       let cell = row.insertCell();
       var text = null;
       switch (key) {
         case "dataset_id":
-          text = document.createTextNode(setID);
+          text = document.createTextNode(datasetID);
           cell.appendChild(text);
           break;
         case "downloads":
-          if (set["raw_f"] != null)
+          if (dataset['raw_file'] != null)
           {
-            
-            var raw_link = document.createElement('a');
-            var linkText = document.createTextNode("Raw");
-            raw_link.appendChild(linkText);
-            raw_link.title = "Raw";
-            if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
-            raw_link.href = set["raw_f"].replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
-            }
-            cell.appendChild(raw_link);
-            cell.append(document.createTextNode(' - '))
+            add_raw_file(dataset['raw_file'], cell)
           }
-          if (set["sessions_f"] != null)
+          if (dataset['events_file'] != null)
           {
-            var proc_link = document.createElement('a');
-            var linkText = document.createTextNode("Session");
-            proc_link.appendChild(linkText);
-            proc_link.title = "Session Features";
-            proc_link.href = set["sessions_f"].replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
-            cell.appendChild(proc_link);
-            cell.append(document.createTextNode(' - '))
+            add_event_file(dataset['events_file'], cell);
           }
-          if (set["events_f"] != null)
+          if (dataset['sessions_file'] != null)
           {
-            var events_link = document.createElement('a');
-            var linkText = document.createTextNode("Events");
-            events_link.appendChild(linkText);
-            events_link.title = "Database Events";
-            if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
-              events_link.href = set["events_f"].replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
-            }
-            cell.appendChild(events_link);
+            add_sessions_file(dataset['sessions_file'], cell)
+          }
+          if (dataset['population_file'] != null)
+          {
+            add_population_file(dataset['population_file'], cell)
           }
           break;
         default:
           let text_val;
-          if (set[key] != null)
+          if (dataset[key] != null)
           {
-            text_val = set[key].toString();
+            text_val = dataset[key].toString();
           }
           else
           {
@@ -117,7 +99,7 @@ function generateTable(table, data) {
   }
 }
 
-function generate_gamelist(){
+function generate_gamelist() {
   for(let game_name in game_files){
     let li = document.createElement("li");
     let gamelink = document.createElement("a");
@@ -130,6 +112,49 @@ function generate_gamelist(){
     li.appendChild(gamelink);
     document.getElementById('gameselect').appendChild(li);
   }
+}
+
+function add_raw_file(raw_file, cell) {
+  var raw_link = document.createElement('a');
+  var linkText = document.createTextNode("Raw");
+  raw_link.appendChild(linkText);
+  raw_link.title = "Raw";
+  if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
+    raw_link.href = raw_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+  }
+  cell.appendChild(raw_link);
+  cell.append(document.createTextNode(' - '))
+}
+
+function add_event_file(events_file, cell) {
+  var events_link = document.createElement('a');
+  var linkText = document.createTextNode("Events");
+  events_link.appendChild(linkText);
+  events_link.title = "Database Events";
+  if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
+    events_link.href = events_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+  }
+  cell.appendChild(events_link);
+}
+
+function add_sessions_file(sessions_file, cell) {
+  var proc_link = document.createElement('a');
+  var linkText = document.createTextNode("Sessions");
+  proc_link.appendChild(linkText);
+  proc_link.title = "Session Features";
+  proc_link.href = sessions_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+  cell.appendChild(proc_link);
+  cell.append(document.createTextNode(' - '))
+}
+
+function add_population_file(population_file, cell) {
+  var proc_link = document.createElement('a');
+  var linkText = document.createTextNode("Pop");
+  proc_link.appendChild(linkText);
+  proc_link.title = "Population Features";
+  proc_link.href = population_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+  cell.appendChild(proc_link);
+  cell.append(document.createTextNode(' - '))
 }
 
 change_games("CRYSTAL",true); // Note that the table name is irrelevant if start is marked "true"
