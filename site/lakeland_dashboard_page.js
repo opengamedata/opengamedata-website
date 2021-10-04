@@ -53,15 +53,20 @@ function onload()
     }
   };
   document.getElementById("btn_id_gen").onclick = function() {
-    let classroom_id_box = document.getElementById("classroom_id");
-    let portal_link_box = document.getElementById("portal_link")
-    if (classroom_id_box.value === "") {
-      // generate an id
+    try {
+      let classroom_id_box = document.getElementById("classroom_id");
+      let portal_link_box = document.getElementById("portal_link")
+      if (classroom_id_box.value === "") {
+        // generate an id
 
-      // store in cookie.
+        // store in cookie.
+      }
+      else {
+        portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?class_id=${classroom_id_box.value}`;
+      }
     }
-    else {
-      portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?class_id=${classroom_id_box.value}`;
+    catch (error) {
+      console.warn("Didn't find box for classroom ID in realtime dashboard");
     }
   }
   window.setInterval(() => {
