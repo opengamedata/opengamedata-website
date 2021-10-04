@@ -10,14 +10,13 @@ var headers = {
 }
 var active_game;
 
-function change_tables(value, start=false) {
-  let table = document.querySelector("table");
+function change_games(game_name, start=false) {
+  let table = document.querySelector("game_files_table");
   table.innerHTML = '';
   let loadIndexCallback = function(result){
     game_files = result;
-    value = start ? Object.keys(game_files)[0] : value
-    let table = document.querySelector("table");
-    let table_name;
+    game_name = start ? Object.keys(game_files)[0] : game_name
+    let table = document.querySelector("game_files_table");
     generateTableHead(table, headers);
     if(start)
     {
@@ -25,17 +24,17 @@ function change_tables(value, start=false) {
       console.log(game_files)
       // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
     }
-    generateTable(table, game_files[value], headers);
-    document.getElementById('game_title').innerHTML = value;
-    document.getElementById('game_title_2').innerHTML = value;
-    document.getElementById('game_title_3').innerHTML = value;
-    document.getElementById('game_events_readme').href = data_readmes[value];
-    document.getElementById('game_events_readme_2').href = data_readmes[value];
-    document.getElementById('game_features_readme').href = feature_readmes[value];
-    document.getElementById('game_features_readme_2').href = feature_readmes[value];
-    document.getElementById('game_link').href = game_links[value];
-    document.getElementById('game_img').src = thumbs[value];
-    document.getElementById('game_img').alt = "Example image of "+value;
+    generateTable(table, game_files[game_name], headers);
+    document.getElementById('game_title').innerHTML = game_name;
+    document.getElementById('game_title_2').innerHTML = game_name;
+    document.getElementById('game_title_3').innerHTML = game_name;
+    document.getElementById('game_events_readme').href = data_readmes[game_name];
+    document.getElementById('game_events_readme_2').href = data_readmes[game_name];
+    document.getElementById('game_features_readme').href = feature_readmes[game_name];
+    document.getElementById('game_features_readme_2').href = feature_readmes[game_name];
+    document.getElementById('game_link').href = game_links[game_name];
+    document.getElementById('game_img').src = thumbs[game_name];
+    document.getElementById('game_img').alt = "Example image of "+game_name;
 
     
   };
@@ -125,7 +124,7 @@ function generate_options(){
     let li = document.createElement("li");
     let gamelink = document.createElement("a");
     gamelink.onclick = function(){
-      change_tables(game_name);
+      change_games(game_name);
       return false;
     }
     gamelink.href = '';
@@ -135,4 +134,4 @@ function generate_options(){
   }
 }
 
-change_tables("CRYSTAL",true); // Note that the table name is irrelevant if start is marked "true"
+change_games("CRYSTAL",true); // Note that the table name is irrelevant if start is marked "true"
