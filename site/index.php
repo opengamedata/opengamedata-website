@@ -76,11 +76,11 @@ include_once($path); ?>
           </div>
         </section>
       </div>
-      <div role="tabpanel" class="tab-pane fade in" id="realtime">
+      <!-- <div role="tabpanel" class="tab-pane fade in" id="realtime">
         <div class="row">
           <div class="col-xl-2 col-md-2 col-sm-3 col-xs-12 ui_column">
             <div class="pub-nav">
-              <!--<img src="http://tinygraphs.com/spaceinvaders/19090314233329190">-->
+              </!--<img src="http://tinygraphs.com/spaceinvaders/19090314233329190">--/>
               <h2 id="whatis">Choose a game:</h2>
               <p>View sessions by Player ID:
                 <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
@@ -127,7 +127,7 @@ include_once($path); ?>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <span class="spreader"></span>
     <!----------------------

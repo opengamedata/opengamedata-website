@@ -8,78 +8,78 @@ var PRINT_TRACE = true;
 
 function onload()
 {
-  // Create a PlayerList instance for tracking state, and start the refresh loop.
-  var dashboard = new PlayerDashboard();
-  var NewSelectionHandler = function(session_id, player_id, game_id) {
-    dashboard.DisplaySession(session_id, player_id, game_id);
-  }
-  sess_list = new PlayerList(selectionHandler=NewSelectionHandler);
-  rt_change_games(sess_list, dashboard, "LAKELAND");
-  if (rt_config.custom_title !== null)
-  {
-    document.title = rt_config.custom_title;
-  }
-  SIMULATION_MODE = document.getElementById("sim_mode").checked;
-  NEW_FEATURE_SET = document.getElementById("new_feature_set").checked;
-  if (SIMULATION_MODE) {
-    document.getElementById("require_pid").disabled = true;
-    document.title = document.title.concat(" - SIMULATED");
-  }
-  document.getElementById("require_pid").onclick = function() {
-    sess_list.require_player_id = this.checked;
-    sess_list.refreshActivePlayerList();
-    if (sess_list.selected_session_id != -1)
-    {
-      sess_list.refreshSelectedSession();
-    }
-  };
-  document.getElementById("sim_mode").onclick = function() {
-    SIMULATION_MODE = this.checked;
-    SIM_TIME = 0; // anytime we click, reset sim time.
-    document.getElementById("require_pid").disabled = this.checked;
-    sess_list.refreshActivePlayerList();
-    if (sess_list.selected_session_id != -1)
-    {
-      sess_list.refreshSelectedSession();
-    }
-    // update the title bar.
-    if (rt_config.custom_title !== null)
-    {
-      document.title = rt_config.custom_title;
-    }
-    if (this.checked) {
-      document.title = document.title.concat(" - SIMULATED");
-    }
-  };
-  document.getElementById("new_feature_set").onclick = function() {
-    NEW_FEATURE_SET = this.checked;
-    sess_list.refreshActivePlayerList();
-    if (sess_list.selected_session_id != -1)
-    {
-      sess_list.refreshSelectedSession();
-    }
-  };
-  window.setInterval(() => {
-    try {
-      sess_list.refreshActivePlayerList();
-      if (dashboard.selected_session_id != -1)
-      {
-        dashboard.Update();
-      }
-    }
-    catch(err) {
-      console.log(err.message);
-      if (PRINT_TRACE)
-      {
-        console.trace();
-      }
-      throw err;
-    }
-    finally {
-      if (SIMULATION_MODE)
-      {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
-    }
-  }, 5000);
+//   // Create a PlayerList instance for tracking state, and start the refresh loop.
+//   var dashboard = new PlayerDashboard();
+//   var NewSelectionHandler = function(session_id, player_id, game_id) {
+//     dashboard.DisplaySession(session_id, player_id, game_id);
+//   }
+//   sess_list = new PlayerList(selectionHandler=NewSelectionHandler);
+//   rt_change_games(sess_list, dashboard, "LAKELAND");
+//   if (rt_config.custom_title !== null)
+//   {
+//     document.title = rt_config.custom_title;
+//   }
+//   SIMULATION_MODE = document.getElementById("sim_mode").checked;
+//   NEW_FEATURE_SET = document.getElementById("new_feature_set").checked;
+//   if (SIMULATION_MODE) {
+//     document.getElementById("require_pid").disabled = true;
+//     document.title = document.title.concat(" - SIMULATED");
+//   }
+//   document.getElementById("require_pid").onclick = function() {
+//     sess_list.require_player_id = this.checked;
+//     sess_list.refreshActivePlayerList();
+//     if (sess_list.selected_session_id != -1)
+//     {
+//       sess_list.refreshSelectedSession();
+//     }
+//   };
+//   document.getElementById("sim_mode").onclick = function() {
+//     SIMULATION_MODE = this.checked;
+//     SIM_TIME = 0; // anytime we click, reset sim time.
+//     document.getElementById("require_pid").disabled = this.checked;
+//     sess_list.refreshActivePlayerList();
+//     if (sess_list.selected_session_id != -1)
+//     {
+//       sess_list.refreshSelectedSession();
+//     }
+//     // update the title bar.
+//     if (rt_config.custom_title !== null)
+//     {
+//       document.title = rt_config.custom_title;
+//     }
+//     if (this.checked) {
+//       document.title = document.title.concat(" - SIMULATED");
+//     }
+//   };
+//   document.getElementById("new_feature_set").onclick = function() {
+//     NEW_FEATURE_SET = this.checked;
+//     sess_list.refreshActivePlayerList();
+//     if (sess_list.selected_session_id != -1)
+//     {
+//       sess_list.refreshSelectedSession();
+//     }
+//   };
+//   window.setInterval(() => {
+//     try {
+//       sess_list.refreshActivePlayerList();
+//       if (dashboard.selected_session_id != -1)
+//       {
+//         dashboard.Update();
+//       }
+//     }
+//     catch(err) {
+//       console.log(err.message);
+//       if (PRINT_TRACE)
+//       {
+//         console.trace();
+//       }
+//       throw err;
+//     }
+//     finally {
+//       if (SIMULATION_MODE)
+//       {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
+//     }
+//   }, 5000);
 }
 
 
