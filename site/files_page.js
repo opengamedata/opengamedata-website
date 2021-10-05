@@ -120,7 +120,7 @@ function add_raw_file(raw_file, cell) {
   raw_link.appendChild(linkText);
   raw_link.title = "Raw";
   if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
-    raw_link.href = raw_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+    raw_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + raw_file;
   }
   cell.appendChild(raw_link);
   cell.append(document.createTextNode(' - '))
@@ -132,29 +132,29 @@ function add_event_file(events_file, cell) {
   events_link.appendChild(linkText);
   events_link.title = "Database Events";
   if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
-    events_link.href = events_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
+    events_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + events_file;
   }
   cell.appendChild(events_link);
   cell.append(document.createTextNode(' - '))
 }
 
 function add_sessions_file(sessions_file, cell) {
-  var proc_link = document.createElement('a');
+  var sess_link = document.createElement('a');
   var linkText = document.createTextNode("Sessions");
-  proc_link.appendChild(linkText);
-  proc_link.title = "Session Features";
-  proc_link.href = sessions_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
-  cell.appendChild(proc_link);
+  sess_link.appendChild(linkText);
+  sess_link.title = "Session Features";
+  sess_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + sessions_file;
+  cell.appendChild(sess_link);
   cell.append(document.createTextNode(' - '))
 }
 
 function add_population_file(population_file, cell) {
-  var proc_link = document.createElement('a');
+  var pop_link = document.createElement('a');
   var linkText = document.createTextNode("Pop");
-  proc_link.appendChild(linkText);
-  proc_link.title = "Population Features";
-  proc_link.href = population_file.replace('./', 'https://opengamedata.fielddaylab.wisc.edu/');
-  cell.appendChild(proc_link);
+  pop_link.appendChild(linkText);
+  pop_link.title = "Population Features";
+  pop_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + population_file;
+  cell.appendChild(pop_link);
 }
 
 change_games("CRYSTAL",true); // Note that the table name is irrelevant if start is marked "true"
