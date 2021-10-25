@@ -125,13 +125,13 @@
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
-  <script src="page_handlers.js"></script>
-  <script src="games_list.js"></script>
-  <script src="realtime_config.js"></script>
-  <script src="dashboard/RTServer.js"></script>
-  <script src="dashboard/ViewRenderer.js"></script>
-  <script src="dashboard/PlayerList.js"></script>
-  <script src="dashboard/PlayerDashboard.js"></script>
+  <script src="script/page_handlers.js"></script>
+  <script src="script/games_list.js"></script>
+  <script src="script/dashboard/RTServer.js"></script>
+  <script src="script/dashboard/ViewRenderer.js"></script>
+  <script src="script/dashboard/PlayerList.js"></script>
+  <script src="script/dashboard/PlayerDashboard.js"></script>
+  <script src="config/realtime_config.js"></script>
   <script>
     $(function() {
 
