@@ -32,7 +32,7 @@ class PlayerList
     let that = this;
     this.clickHandlerCallback = function(session_id, username) { selectionHandler(session_id, username, that.active_game); }
     // this.selected_session_dash = new PlayerDashboard()
-    this.Update(false);
+    // this.Update(false);
   }
 
   Update(force=false) {
