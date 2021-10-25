@@ -9,96 +9,121 @@ const TABLE_HEADERS = {
   "sessions": "Sessions",
   "downloads": "Downloads",
 }
-var SIMULATION_MODE = true;
+var SIMULATION_MODE = false;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
+var dashboard = null;
+var sess_list = null;
 
 var game_files;
 var table;
 
 function onload()
 {
-  // Create a PlayerList instance for tracking state, and start the refresh loop.
-  var dashboard = new PlayerDashboard();
-  // var NewSelectionHandler = function(session_id, player_id, game_id) {
-  //   dashboard.DisplaySession(session_id, player_id, game_id);
+  // Create a Dashboard and PlayerList instance for tracking state.
+  dashboard = new PlayerDashboard();
+  var NewSelectionHandler = function(session_id, player_id, game_id) {
+    return
+    // dashboard.DisplaySession(session_id, player_id, game_id);
+  }
+  sess_list = new PlayerList(selectionHandler=NewSelectionHandler);
+  if (rt_config.custom_title !== null)
+  {
+    document.title = rt_config.custom_title;
+  }
+  SIMULATION_MODE = document.getElementById("sim_mode").checked;
+  if (SIMULATION_MODE) {
+    document.getElementById("require_pid").disabled = true;
+    document.title = document.title.concat(" - SIMULATED");
+  }
+  change_games("CRYSTAL",is_onload=true);
+
+  // Set up onclick and onupdate events.
+  document.getElementById("require_pid").onclick = function() {
+    sess_list.require_player_id = this.checked;
+    // sess_list.refreshActivePlayerList();
+    // if (sess_list.selected_session_id != -1)
+    // {
+    //   sess_list.refreshSelectedSession();
+    // }
+  };
+  document.getElementById("sim_mode").onclick = function() {
+    SIMULATION_MODE = this.checked;
+    SIM_TIME = 0; // anytime we click, reset sim time.
+    document.getElementById("require_pid").disabled = this.checked;
+    // sess_list.refreshActivePlayerList();
+    // if (sess_list.selected_session_id != -1)
+    // {
+    //   sess_list.refreshSelectedSession();
+    // }
+    // update the title bar.
+    if (rt_config.custom_title !== null)
+    {
+      document.title = rt_config.custom_title;
+    }
+    if (this.checked) {
+      document.title = document.title.concat(" - SIMULATED");
+    }
+  };
+  // document.getElementById("btn_id_gen").onclick = function() {
+  //   try {
+  //     let classroom_id_box = document.getElementById("classroom_id");
+  //     let portal_link_box = document.getElementById("portal_link")
+  //     if (classroom_id_box.value === "") {
+  //       // generate an id
+
+  //       // store in cookie.
+  //     }
+  //     // else {
+  //     //   portal_link_box.value = `https://fielddaylab.wisc.edu/studies/lakeland/?class_id=${classroom_id_box.value}`;
+  //     // }
+  //   }
+  //   catch (error) {
+  //     console.warn("Didn't find box for classroom ID in realtime dashboard");
+  //   }
   // }
-  var sess_list = new PlayerList(selectionHandler=() => null); //NewSelectionHandler);
-//   rt_change_games(sess_list, dashboard, "LAKELAND");
-//   if (rt_config.custom_title !== null)
-//   {
-//     document.title = rt_config.custom_title;
-//   }
-//   SIMULATION_MODE = document.getElementById("sim_mode").checked;
-//   if (SIMULATION_MODE) {
-//     document.getElementById("require_pid").disabled = true;
-//     document.title = document.title.concat(" - SIMULATED");
-//   }
-//   document.getElementById("require_pid").onclick = function() {
-//     sess_list.require_player_id = this.checked;
-//     sess_list.refreshActivePlayerList();
-//     if (sess_list.selected_session_id != -1)
-//     {
-//       sess_list.refreshSelectedSession();
-//     }
-//   };
-//   document.getElementById("sim_mode").onclick = function() {
-//     SIMULATION_MODE = this.checked;
-//     SIM_TIME = 0; // anytime we click, reset sim time.
-//     document.getElementById("require_pid").disabled = this.checked;
-//     sess_list.refreshActivePlayerList();
-//     if (sess_list.selected_session_id != -1)
-//     {
-//       sess_list.refreshSelectedSession();
-//     }
-//     // update the title bar.
-//     if (rt_config.custom_title !== null)
-//     {
-//       document.title = rt_config.custom_title;
-//     }
-//     if (this.checked) {
-//       document.title = document.title.concat(" - SIMULATED");
-//     }
-//   };
-//   window.setInterval(() => {
-//     try {
+  // Finally, set up the page refresh timer.
+  var ticks = 0;
+  window.setInterval(() => {
+    try {
+      if (ticks % 2)
+        console.log("tick.");
+      else
+        console.log("tock.");
+      ticks++;
 //       sess_list.refreshActivePlayerList();
 //       if (dashboard.selected_session_id != -1)
 //       {
 //         dashboard.Update();
 //       }
-//     }
-//     catch(err) {
-//       console.log(err.message);
-//       if (PRINT_TRACE)
-//       {
-//         console.trace();
-//       }
-//       throw err;
-//     }
-//     finally {
-//       if (SIMULATION_MODE)
-//       {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
-//     }
-//   }, 5000);
+    }
+    catch(err) {
+      throw err;
+    }
+    finally {
+      if (SIMULATION_MODE)
+      {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
+    }
+  }, 5000);
 }
 
-function change_games(game_name, start=false) {
+function change_games(game_name, is_onload=false) {
   let table = document.getElementById("game_files_table");
   table.innerHTML = '';
   let loadIndexCallback = function(result){
     game_files = result;
     // game_name = start ? Object.keys(game_files)[0] : game_name
-    if(start)
+    if(is_onload)
     {
-      game_name = Object.keys(game_files)[0]
+      // Set up the game data table.
+      // game_name = Object.keys(game_files)[0]
       generate_gamelist();
       console.debug(game_files, )
       // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
     }
     let table = document.getElementById("game_files_table");
     generateTableHead(table);
-    generateTable(table, game_files[game_name]);
+    generateTableBody(table, game_files[game_name]);
     document.getElementById('game_title').innerHTML = game_name;
     document.getElementById('game_title_2').innerHTML = game_name;
     document.getElementById('game_title_3').innerHTML = game_name;
@@ -111,7 +136,10 @@ function change_games(game_name, start=false) {
     document.getElementById('game_img').alt = "Example image of "+ game_name;
   };
   jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
-  rt_change_games(sess_list, dashboard, game_name);
+  if (dashboard != null && sess_list != null)
+  {
+    rt_change_games(game_name, sess_list, dashboard);
+  }
 }
 
 function generateTableHead(table) {
@@ -125,7 +153,7 @@ function generateTableHead(table) {
   }
 }
 
-function generateTable(table, data) {
+function generateTableBody(table, data) {
   let datasetIDs = Object.keys(data)
   datasetIDs.sort((x,y) => Date.parse(data[y]["start_date"]) - Date.parse(data[x]["start_date"]))
   for (let datasetID of datasetIDs) {
@@ -240,10 +268,10 @@ function add_population_file(population_file, cell) {
  * @param {} list The PlayerList instance for tracking the game and its sessions.
  * @param {*} game_name The name of the game to switch to.
  */
-function rt_change_games(list, player_dash, game_name){
+function rt_change_games(game_name, list, player_dash){
   list.active_game = game_name;
-  list.refreshActivePlayerList();
-  player_dash.DisplaySession(-1,-1,game_name);
+  // list.refreshActivePlayerList();
+  // player_dash.DisplaySession(-1,-1,game_name);
 
   document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";
   document.getElementById('rt_game_events_readme').href = data_readmes[game_name];
@@ -257,5 +285,3 @@ function rt_change_games(list, player_dash, game_name){
   let playstats = document.getElementById("playstats");
   playstats.appendChild(message);
 }
-
-change_games("CRYSTAL",true); // Note that the table name is irrelevant if start is marked "true"
