@@ -37,6 +37,7 @@ function change_games(game_name, start=false) {
     document.getElementById('game_img').alt = "Example image of "+ game_name;
   };
   jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
+  rt_change_games(sess_list, dashboard, game_name);
 }
 
 function generateTableHead(table) {
