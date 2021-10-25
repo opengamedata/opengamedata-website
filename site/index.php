@@ -15,9 +15,9 @@ include_once($path); ?>
   $path .= "/includes/main-nav.php";
   include_once($path); ?>
 
+  <!--Start page content
+------------------------>
   <div id="mainwrapper">
-    <!--Start page content
-  ------------------------>
     <section class="singlehero page_hero">
       <div class="info">
         <h1 class="corrected">Open Game Data</h1>
@@ -26,15 +26,19 @@ include_once($path); ?>
       <div class="graphic">
         <img class="graph_img" src="/assets/img/illustrations/mountainrange.png">
       </div>
-
+    <!--Page tabs
+  ------------------------>
       <nav class="nav nav-tabs press-toggles">
         <ul>
           <li class="press-toggle press-toggle1 active"><a href="#data" role="tab" data-toggle="tab">Game Data</a></li>
-          <li class="press-toggle press-toggle2"><a href="#realtime" role="tab" data-toggle="tab">Realtime player data</a></li>
+          <!-- <li class="press-toggle press-toggle2"><a href="#realtime" role="tab" data-toggle="tab">Realtime player data</a></li> -->
         </ul>
       </nav>
     </section>
+
     <div class="tab-content">
+      <!-- OpenGameData tab
+    ------------------------>
       <div role="tabpanel" class="tab-pane fade in active" id="data">
         <section class="publications">
           <div class="row">
@@ -76,6 +80,8 @@ include_once($path); ?>
           </div>
         </section>
       </div>
+      <!-- Classroom dashboard tab
+    ------------------------>
       <!-- <div role="tabpanel" class="tab-pane fade in" id="realtime">
         <div class="row">
           <div class="col-xl-2 col-md-2 col-sm-3 col-xs-12 ui_column">
@@ -144,13 +150,13 @@ include_once($path); ?>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
   <script src="files_page.js"></script>
-  <script src="realtime_config.js"></script>
-  <script src="RTServer.js"></script>
-  <script src="ViewRenderer.js"></script>
-  <script src="PlayerList.js"></script>
-  <script src="PlayerDashboard.js"></script>
-  <script src="dashboard_page.js"></script>
   <script src="games_list.js"></script>
+  <script src="dashboard_page.js"></script>
+  <script src="realtime_config.js"></script>
+  <script src="dashboard/RTServer.js"></script>
+  <script src="dashboard/ViewRenderer.js"></script>
+  <script src="dashboard/PlayerList.js"></script>
+  <script src="dashboard/PlayerDashboard.js"></script>
   <script>
     $(function() {
 
