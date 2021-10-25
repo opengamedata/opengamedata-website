@@ -2,7 +2,6 @@
  * Function to initialize data and refresh loop when the page loads.
  */
 var SIMULATION_MODE = true;
-var NEW_FEATURE_SET = true;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
 
@@ -20,7 +19,6 @@ function onload()
 //     document.title = rt_config.custom_title;
 //   }
 //   SIMULATION_MODE = document.getElementById("sim_mode").checked;
-//   NEW_FEATURE_SET = document.getElementById("new_feature_set").checked;
 //   if (SIMULATION_MODE) {
 //     document.getElementById("require_pid").disabled = true;
 //     document.title = document.title.concat(" - SIMULATED");
@@ -49,14 +47,6 @@ function onload()
 //     }
 //     if (this.checked) {
 //       document.title = document.title.concat(" - SIMULATED");
-//     }
-//   };
-//   document.getElementById("new_feature_set").onclick = function() {
-//     NEW_FEATURE_SET = this.checked;
-//     sess_list.refreshActivePlayerList();
-//     if (sess_list.selected_session_id != -1)
-//     {
-//       sess_list.refreshSelectedSession();
 //     }
 //   };
 //   window.setInterval(() => {
