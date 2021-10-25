@@ -25,7 +25,7 @@
       <nav class="nav nav-tabs press-toggles">
         <ul>
           <li class="press-toggle press-toggle1 active"><a href="#data" role="tab" data-toggle="tab">Game Data</a></li>
-          <!-- <li class="press-toggle press-toggle2"><a href="#realtime" role="tab" data-toggle="tab">Realtime player data</a></li> -->
+          <li class="press-toggle press-toggle2"><a href="#realtime" role="tab" data-toggle="tab">Realtime player data</a></li>
         </ul>
       </nav>
     </section>
@@ -78,14 +78,8 @@
         <div class="row">
           <div class="col-xl-2 col-md-2 col-sm-3 col-xs-12 ui_column">
             <div class="pub-nav">
-              </!--<img src="http://tinygraphs.com/spaceinvaders/19090314233329190">--/>
+              <!--<img src="http://tinygraphs.com/spaceinvaders/19090314233329190">-->
               <h2 id="whatis">Choose a game:</h2>
-              <p>View sessions by Player ID:
-                <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
-              </p>
-              <p>SIMULATION MODE:
-                <input type="checkbox" id="sim_mode" value="SIMULATION MODE" checked>
-              </p>
               <ul id="rt_gameselect">
                 <li><a href="javascript:rt_change_games(sess_list, dashboard, 'CRYSTAL');">Crystal</a></li>
                 <li><a href="javascript:rt_change_games(sess_list, dashboard, 'WAVES');">Waves</a></li>
@@ -94,10 +88,16 @@
               </ul>
             </div>
           </div>
-          <div class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
+          <section id="session_picker_section" class="col-xl-2 col-md-3 col-sm-4 col-xs-12 ui_column">
+              <p>Only sessions with Player ID:
+                <input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
+              </p>
+              <p>SIMULATION MODE:
+                <input type="checkbox" id="sim_mode" value="SIMULATION MODE" checked>
+              </p>
             <h2 id="whatis">Choose a session:</h2>
             <ul class="session_list" id="session_list"></ul>
-          </div>
+          </section>
           <div class="col-xl-8 col-md-7 col-sm-5 col-xs-12 ui_column">
             <div class="game_info">
               <div class="row">
