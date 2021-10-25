@@ -2,7 +2,6 @@
  * Function to initialize data and refresh loop when the page loads.
  */
 var SIMULATION_MODE = document.getElementById("sim_mode").checked;
-// var NEW_FEATURE_SET = true;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
 
@@ -20,11 +19,6 @@ function onload()
     document.title = rt_config.custom_title;
   }
   SIMULATION_MODE = document.getElementById("sim_mode").checked;
-  // NEW_FEATURE_SET = document.getElementById("new_feature_set").checked;
-  // if (SIMULATION_MODE) {
-  //   document.getElementById("require_pid").disabled = true;
-  //   document.title = document.title.concat(" - SIMULATED");
-  // }
   // // Set up onclick and onupdate events.
   // document.getElementById("require_pid").onclick = function() {
   //   sess_list.require_player_id = this.checked;

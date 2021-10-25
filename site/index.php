@@ -86,9 +86,6 @@
               <p>SIMULATION MODE:
                 <input type="checkbox" id="sim_mode" value="SIMULATION MODE" checked>
               </p>
-              <p>Alpha 2:
-                <input type="checkbox" id="new_feature_set" value="Alpha 2" checked>
-              </p>
               <ul id="rt_gameselect">
                 <li><a href="javascript:rt_change_games(sess_list, dashboard, 'CRYSTAL');">Crystal</a></li>
                 <li><a href="javascript:rt_change_games(sess_list, dashboard, 'WAVES');">Waves</a></li>
