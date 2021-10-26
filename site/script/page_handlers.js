@@ -86,10 +86,6 @@ function onload()
   var ticks = 0;
   window.setInterval(() => {
     try {
-      if (ticks % 2)
-        console.log("tick.");
-      else
-        console.log("tock.");
       ticks++;
 //       sess_list.refreshActivePlayerList();
 //       if (dashboard.selected_session_id != -1)
@@ -290,26 +286,25 @@ function rt_change_games(game_name, list, player_dash){
 
 // *** Ok, stuff for desginer dashboard here, to be refactored later.
 function UpdateData(game_id) {
-  let dropdown = document.getElementById("game_selector");
-  if (dropdown.options.contains(game_id)) {
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
+  let request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      if (this.status == 200) {
         let response_data = JSON.parse(this.responseText);
         console.log("...got data from server.");
         UpdateTable(response_data['val']);
       }
+      else {
+        console.log(`Got the following non-200 response from the server: ${this.responseText}`);
+      }
     }
-    request.open("GET", "https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/WAVES/metrics")
-    request.send()
-    let table = document.getElementById("data_table");
-    let row = table.insertRow(0);
-    row.innerHTML = "Waiting for data from server...";
-    console.log("Waiting for data from server...");
   }
-  else {
-    console.log("Invalid game ID requested.")
-  }
+  request.open("GET", "https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/WAVES/metrics")
+  request.send()
+  let table = document.getElementById("data_table");
+  let row = table.insertRow(0);
+  row.innerHTML = "Waiting for data from server...";
+  console.log("Waiting for data from server...");
 }
 
 function UpdateTable(population_data) {
