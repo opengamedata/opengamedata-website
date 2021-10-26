@@ -20,6 +20,14 @@ var table;
 
 function onload()
 {
+  let loadIndexCallback = function(result){
+    game_files = result;
+    // Set up the game data table.
+    generate_gamelist();
+    console.debug(game_files, )
+    // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
+  };
+  jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
   // Create a Dashboard and PlayerList instance for tracking state.
   dashboard = new PlayerDashboard();
   var NewSelectionHandler = function(session_id, player_id, game_id) {
@@ -106,41 +114,27 @@ function onload()
 function change_games(game_name, is_onload=false) {
   let table = document.getElementById("game_files_table");
   table.innerHTML = '';
-  let loadIndexCallback = function(result){
-    game_files = result;
-    // game_name = start ? Object.keys(game_files)[0] : game_name
-    if(is_onload)
-    {
-      // Set up the game data table.
-      // game_name = Object.keys(game_files)[0]
-      generate_gamelist();
-      console.debug(game_files, )
-      // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
-    }
-    let table = document.getElementById("game_files_table");
-    generateTableHead(table);
-    generateTableBody(table, game_files[game_name]);
-    document.getElementById('game_title').innerHTML = game_name;
-    document.getElementById('game_title_2').innerHTML = game_name;
-    document.getElementById('game_title_3').innerHTML = game_name;
-    document.getElementById('game_events_readme').href = data_readmes[game_name];
-    document.getElementById('game_events_readme_2').href = data_readmes[game_name];
-    document.getElementById('game_features_readme').href = feature_readmes[game_name];
-    document.getElementById('game_features_readme_2').href = feature_readmes[game_name];
-    document.getElementById('game_link').href = game_links[game_name];
-    document.getElementById('game_img').src = thumbs[game_name];
-    document.getElementById('game_img').alt = "Example image of "+ game_name;
-  };
-  jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
+  generateTableHead(table);
+  generateTableBody(table, game_files[game_name]);
+  document.getElementById('game_title').innerHTML = game_name;
+  document.getElementById('game_title_2').innerHTML = game_name;
+  document.getElementById('game_title_3').innerHTML = game_name;
+  document.getElementById('game_events_readme').href = data_readmes[game_name];
+  document.getElementById('game_events_readme_2').href = data_readmes[game_name];
+  document.getElementById('game_features_readme').href = feature_readmes[game_name];
+  document.getElementById('game_features_readme_2').href = feature_readmes[game_name];
+  document.getElementById('game_link').href = game_links[game_name];
+  document.getElementById('game_img').src = thumbs[game_name];
+  document.getElementById('game_img').alt = "Example image of "+ game_name;
   if (dashboard != null && sess_list != null)
   {
     rt_change_games(game_name, sess_list, dashboard);
   }
-  UpdateData(game_name);
+  update_designer_dash(game_name);
 }
 
 function generateTableHead(table) {
-  let thead = table.createTHead();
+  table.createTHead();
   let row = table.insertRow();
   for (let key in TABLE_HEADERS) {
     let th = document.createElement("th");
@@ -204,6 +198,11 @@ function generate_gamelist() {
     let li = document.createElement("li");
     let gamelink = document.createElement("a");
     gamelink.onclick = function(){
+      let prev_active = document.getElementById('gameselect').getElementsByClassName('active_game');
+      if (prev_active != null && prev_active.length != 0) {
+        prev_active.classList.remove('active_game');
+      }
+      this.parentElement.classList.add('active_game');
       change_games(game_name);
       return false;
     }
@@ -285,7 +284,7 @@ function rt_change_games(game_name, list, player_dash){
 
 
 // *** Ok, stuff for desginer dashboard here, to be refactored later.
-function UpdateData(game_id) {
+function update_designer_dash(game_id) {
   let request = new XMLHttpRequest();
   request.onreadystatechange = function() {
     if (this.readyState == 4) {
