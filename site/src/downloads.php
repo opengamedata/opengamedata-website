@@ -4,7 +4,7 @@
 			<img id="game_img" src="" alt="">
 		</div>
 		<div class="col-md-8">
-			<h2 id="game_title">Realtime Player Data</h2>
+			<h2 id="game_title">Game Title</h2>
 			<a id="game_events_readme" href="" target="_blank">View README for the game events</a><br>
 			<a id="game_features_readme" href="" target="_blank">View README for the processed features</a><br>
 			<a id="game_link" href="" target="_blank">Play the game</a>
