@@ -11,12 +11,14 @@
 	<option value="AQUALAB">Aqualab</option>
 	<option value="WAVES">Waves</option>
 </select> -->
-<div>
+<div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column">
 	<span id="game_id">Aqualab</span> Game Data Dashboard<br>
 	(Data for past hour)<br>
 	<p id="sess_ct"></p>
-	<div class="playstats" style="height: 100%; overflow-x:scroll">
-		<table id="data_table"></table>
+	<div class="row" id="playstats_row">
+		<div class="playstats" style="height: 100%; overflow-x:scroll">
+			<table id="data_table"></table>
+		</div>
 		<button type="button" onclick="UpdateData()">Refresh Data</button>
 	</div>
 </div>
@@ -28,5 +30,5 @@
 		text-align: right;
 		border: 1px solid black;
 	}
-</style> -->
-</html>
+</style>
+</html> -->
