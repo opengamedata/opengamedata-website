@@ -51,18 +51,18 @@
         ------------------------>
         <div role="tabpanel" class="tab-pane fade in active" id="data">
           <section class="publications">
-            <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/src/downloads.php"; include_once($path); ?>
+            <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/opengamedata/src/downloads.php"; include_once($path); ?>
           </section>
         </div>
         <!-- Classroom dashboard tab
         ------------------------>
         <div role="tabpanel" class="tab-pane fade in" id="teacher">
-          <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/src/teacher_dash.php"; include_once($path); ?>
+          <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/opengamedata/src/teacher_dash.php"; include_once($path); ?>
         </div>
         <!-- Designer dashboard tab
         ------------------------>
         <div role="tabpanel" class="tab-pane fade in" id="designer">
-          <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/src/designer_dash.php"; include_once($path); ?>
+          <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/opengamedata/src/designer_dash.php"; include_once($path); ?>
         </div>
       </div>
     </div>
