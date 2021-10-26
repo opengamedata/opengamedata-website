@@ -41,8 +41,8 @@
       </nav>
     </section>
 
-    <div class="row">
-      <div class="pub-nav-wrap pub-nav sticky col-sm-3 ui_column">
+    <section class="row">
+      <div class="pub-nav-wrap pub-nav col-sm-3 ui_column"> <!-- class="sticky" -->
         <h2>Choose a Game:</h2>
         <ul id="gameselect"></ul>
       </div>
@@ -65,7 +65,7 @@
           <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/opengamedata/src/designer_dash.php"; include_once($path); ?>
         </div>
       </div>
-    </div>
+    </section>
     <span class="spreader"></span>
     <!----------------------
   End page content -->
@@ -73,11 +73,10 @@
 
   <!--include footer
 ------------------------>
-  <?php $path = $_SERVER['DOCUMENT_ROOT'];
-  $path .= "/includes/footer.php";
-  include_once($path); ?>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" />
+  <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/includes/footer.php"; include_once($path); ?>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
+  <link rel="stylesheet" href="LocalStyle.css">
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
