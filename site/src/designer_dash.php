@@ -15,8 +15,10 @@
 	<span id="game_id">Aqualab</span> Game Data Dashboard<br>
 	(Data for past hour)<br>
 	<p id="sess_ct"></p>
-	<table id="data_table"></table>
-	<button type="button" onclick="UpdateData()">Refresh Data</button>
+	<div class="playstats" style="height: 100%; overflow-x:scroll">
+		<table id="data_table"></table>
+		<button type="button" onclick="UpdateData()">Refresh Data</button>
+	</div>
 </div>
 <!-- <style>
 	table {
