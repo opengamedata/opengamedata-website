@@ -140,6 +140,7 @@ function change_games(game_name, is_onload=false) {
   {
     rt_change_games(game_name, sess_list, dashboard);
   }
+  UpdateData(game_name);
 }
 
 function generateTableHead(table) {
@@ -284,4 +285,66 @@ function rt_change_games(game_name, list, player_dash){
   message.appendChild(document.createTextNode("Please choose a "+game_name+" session or another game."))
   let playstats = document.getElementById("playstats");
   playstats.appendChild(message);
+}
+
+
+// *** Ok, stuff for desginer dashboard here, to be refactored later.
+function UpdateData(game_id) {
+  let dropdown = document.getElementById("game_selector");
+  if (dropdown.options.contains(game_id)) {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        let response_data = JSON.parse(this.responseText);
+        console.log("...got data from server.");
+        UpdateTable(response_data['val']);
+      }
+    }
+    request.open("GET", "https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/WAVES/metrics")
+    request.send()
+    let table = document.getElementById("data_table");
+    let row = table.insertRow(0);
+    row.innerHTML = "Waiting for data from server...";
+    console.log("Waiting for data from server...");
+  }
+  else {
+    console.log("Invalid game ID requested.")
+  }
+}
+
+function UpdateTable(population_data) {
+  const per_level_features = ["BeginCount", "CompleteCount", "TotalLevelTime", "TotalResets", "TotalSkips"]
+  const session_features = ["SessionCount"]
+  const NUM_LEVELS = 34;
+  // set the session count
+  let sess_ct = document.getElementById("sess_ct");
+  sess_ct.innerText = `Session Count: ${population_data['SessionCount']}`;
+  // set up the table
+  let table = document.getElementById("data_table");
+  table.innerHTML = null;
+  // set up table header
+  let header = table.insertRow(0);
+  let col = header.insertCell(0);
+  col.innerText = "Level";
+  for (let feature of per_level_features) {
+      let col = header.insertCell(-1);
+      col.innerText = feature;
+  }
+  // put data into table
+  for (let i = 0; i <= NUM_LEVELS; i++) {
+    let row = table.insertRow(-1);
+    let col = row.insertCell(-1);
+    col.innerText = i;
+    for (let feature of per_level_features) {
+      let col = row.insertCell(-1);
+      let index = `lvl${i}_${feature}`;
+      let datum = population_data[index]
+      if (datum.toString().includes('.') && !isNaN(parseFloat(datum))) {
+        col.innerText = datum.toFixed(2);
+      }
+      else {
+        col.innerText = datum;
+      }
+    }
+  }
 }
