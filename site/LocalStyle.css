@@ -5,3 +5,7 @@
 .PlayerAvatar {
     width: 20%;
 }
+
+.opengamedata .pub-nav ul .active_game {
+    border-left:4px solid blue
+}
