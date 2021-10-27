@@ -40,7 +40,8 @@ class Server
       Server._execute_request(callback, post_string)
    }*/
 
-   static get_models_by_sessID(callback, sessID, gameID, sim_time=-1, models=null){
+   static get_models_by_sessID(callback, sessID, gameID, sim_time=-1, models=null)
+   {
    //   returns the models of specific (callback, active) sessID.
    //   takes optional argument models which if not null, is an array of model names
    //   specifying which models to return. this would be like:
@@ -48,18 +49,27 @@ class Server
    //   Returns list of models in JSON format
       if (sessID != -1) {
          let method_string = SIMULATION_MODE ? "sim_models_by_sessID" : "get_models_by_sessID";
-         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}`
+         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}`;
          if (SIMULATION_MODE) {
-            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}&sim_time=${sim_time}`
+            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&models=${models}&sim_time=${sim_time}`;
          }
          if (rt_config.debug_print["RTServer"] === true) {
-            console.log(`Making request for models by session: ${post_string}`)
+            console.log(`Making request for models by session: ${post_string}`);
          }
-         Server._execute_request(callback, post_string)
+         Server._execute_request(callback, post_string);
       }
       else {
          throw `RTServer was asked to find models on invalid session ID ${sessID}!`;
       }
+   }
+
+   static get_models_by_daterange(callback, min_date, max_date, models=null)
+   {
+      let get_string = `start_datetime=${min_date}&end_datetime=${max_date}&metrics=${models}`;
+      if (rt_config.debug_print["RTServer"] === true) {
+         console.log(`Making request for models by daterange: ${get_string}`);
+      }
+      Server._execute_request(callback, get_string);
    }
 
    /*static get_active_sessions_by_loc(callback, gameID, state, city, sim_time=-1)
