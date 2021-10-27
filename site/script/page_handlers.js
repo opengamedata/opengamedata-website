@@ -25,7 +25,7 @@ function onload()
     // Set up the game data table.
     generate_gamelist();
     console.debug(game_files, )
-    // document.getElementById("readme_fname").href = `data/${Object.keys(game_files)[0]}/readme.md`;
+    change_games(Object.keys(game_files)[0]);
   };
   jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
   // Create a Dashboard and PlayerList instance for tracking state.
@@ -44,7 +44,6 @@ function onload()
     document.getElementById("require_pid").disabled = true;
     document.title = document.title.concat(" - SIMULATED");
   }
-  change_games("CRYSTAL",is_onload=true);
 
   // Set up onclick and onupdate events.
   document.getElementById("require_pid").onclick = function() {
@@ -111,11 +110,10 @@ function onload()
   }, 5000);
 }
 
-function change_games(game_name, is_onload=false) {
+function change_games(game_name) {
   let table = document.getElementById("game_files_table");
   table.innerHTML = '';
-  generateTableHead(table);
-  generateTableBody(table, game_files[game_name]);
+  generateTable(table, game_files[game_name]);
   document.getElementById('game_title').innerHTML = game_name;
   document.getElementById('game_title_2').innerHTML = game_name;
   document.getElementById('game_title_3').innerHTML = game_name;
@@ -126,6 +124,12 @@ function change_games(game_name, is_onload=false) {
   document.getElementById('game_link').href = game_links[game_name];
   document.getElementById('game_img').src = thumbs[game_name];
   document.getElementById('game_img').alt = "Example image of "+ game_name;
+
+  document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";
+  document.getElementById('rt_game_events_readme').href = data_readmes[game_name];
+  document.getElementById('rt_game_features_readme').href = feature_readmes[game_name];
+  document.getElementById('rt_game_link').href = game_links[game_name];  document.getElementById('rt_game_img').src = thumbs[game_name];
+  document.getElementById('rt_game_img').alt = "Example image of "+game_name;
   if (dashboard != null && sess_list != null)
   {
     rt_change_games(game_name, sess_list, dashboard);
@@ -133,18 +137,8 @@ function change_games(game_name, is_onload=false) {
   update_designer_dash(game_name);
 }
 
-function generateTableHead(table) {
-  table.createTHead();
-  let row = table.insertRow();
-  for (let key in TABLE_HEADERS) {
-    let th = document.createElement("th");
-    let text = document.createTextNode(TABLE_HEADERS[key]);
-    th.appendChild(text);
-    row.appendChild(th);
-  }
-}
-
-function generateTableBody(table, data) {
+function generateTable(table, data) {
+  generateTableHead(table);
   let datasetIDs = Object.keys(data)
   datasetIDs.sort((x,y) => Date.parse(data[y]["start_date"]) - Date.parse(data[x]["start_date"]))
   for (let datasetID of datasetIDs) {
@@ -193,14 +187,26 @@ function generateTableBody(table, data) {
   }
 }
 
+function generateTableHead(table) {
+  table.createTHead();
+  let row = table.insertRow();
+  for (let key in TABLE_HEADERS) {
+    let th = document.createElement("th");
+    let text = document.createTextNode(TABLE_HEADERS[key]);
+    th.appendChild(text);
+    row.appendChild(th);
+  }
+}
+
 function generate_gamelist() {
+  let first = true;
   for(let game_name in game_files){
     let li = document.createElement("li");
     let gamelink = document.createElement("a");
     gamelink.onclick = function(){
       let prev_active = document.getElementById('gameselect').getElementsByClassName('active_game');
       if (prev_active != null && prev_active.length != 0) {
-        prev_active.classList.remove('active_game');
+        prev_active[0].classList.remove('active_game');
       }
       this.parentElement.classList.add('active_game');
       change_games(game_name);
@@ -209,6 +215,10 @@ function generate_gamelist() {
     gamelink.href = '';
     gamelink.innerText= game_name;
     li.appendChild(gamelink);
+    if (first) {
+      li.classList.add('active_game');
+      first = false;
+    }
     document.getElementById('gameselect').appendChild(li);
   }
 }
@@ -268,13 +278,6 @@ function rt_change_games(game_name, list, player_dash){
   list.active_game = game_name;
   // list.refreshActivePlayerList();
   // player_dash.DisplaySession(-1,-1,game_name);
-
-  document.getElementById('rt_game_title').innerHTML = game_name+ " Realtime Player Data";
-  document.getElementById('rt_game_events_readme').href = data_readmes[game_name];
-  document.getElementById('rt_game_features_readme').href = feature_readmes[game_name];
-  document.getElementById('rt_game_link').href = game_links[game_name];  document.getElementById('rt_game_img').src = thumbs[game_name];
-  document.getElementById('rt_game_img').alt = "Example image of "+game_name;
-
 
   let message = document.createElement("p")
   message.appendChild(document.createTextNode("Please choose a "+game_name+" session or another game."))
