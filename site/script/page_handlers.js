@@ -10,6 +10,7 @@ const TABLE_HEADERS = {
   "downloads": "Downloads",
 }
 var SIMULATION_MODE = false;
+var SIMULATION_RUNNING = false;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
 var dashboard = null;
@@ -20,6 +21,7 @@ var table;
 
 function onload()
 {
+  // load files for main game files page
   let loadIndexCallback = function(result){
     game_files = result;
     // Set up the game data table.
@@ -28,7 +30,8 @@ function onload()
     change_games(Object.keys(game_files)[0]);
   };
   jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
-  // Create a Dashboard and PlayerList instance for tracking state.
+  
+  // Setup Teacher Dashboard page, with a Dashboard and PlayerList instance for tracking state.
   dashboard = new PlayerDashboard();
   var NewSelectionHandler = function(session_id, player_id, game_id) {
     return
@@ -45,6 +48,17 @@ function onload()
     document.title = document.title.concat(" - SIMULATED");
   }
 
+  // Set up the Designer Dashboard page
+  let ipt_starttime = document.getElementById('ipt_starttime');
+  let ipt_endtime = document.getElementById('ipt_endtime');
+  let start_dt = new Date(Date.now() - 1000*60*60); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
+  let end_dt = new Date();
+  ipt_starttime.value = toLocalISO(start_dt);
+  ipt_endtime.value   = toLocalISO(end_dt);
+  // below, the simpler way of doing things, if we ever switch to using GMT.
+  // ipt_starttime.value = new Date(Date.now() - 1000*60*60).toISOString().slice(0,16); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
+  // ipt_endtime.value = new Date().toISOString().slice(0,16);
+
   // Set up onclick and onupdate events.
   document.getElementById("require_pid").onclick = function() {
     sess_list.require_player_id = this.checked;
@@ -58,6 +72,8 @@ function onload()
     SIMULATION_MODE = this.checked;
     SIM_TIME = 0; // anytime we click, reset sim time.
     document.getElementById("require_pid").disabled = this.checked;
+    document.getElementById("btn_play").disabled = !this.checked;
+    document.getElementById("btn_pause").disabled = !this.checked;
     // sess_list.refreshActivePlayerList();
     // if (sess_list.selected_session_id != -1)
     // {
@@ -71,6 +87,18 @@ function onload()
     if (this.checked) {
       document.title = document.title.concat(" - SIMULATED");
     }
+  };
+  document.getElementById("btn_play").onclick = function() {
+    SIMULATION_RUNNING = true;
+    console.log("Running simulation mode.");
+  };
+  document.getElementById("btn_pause").onclick = function() {
+    SIMULATION_RUNNING = false;
+    console.log("Simulation mode paused.");
+  };
+  document.getElementById("refresh_designer").onclick = function() {
+    let game_name = document.getElementById("game_title").innerText;
+    update_designer_dash(game_name);
   };
   // document.getElementById("btn_id_gen").onclick = function() {
   //   try {
@@ -104,10 +132,25 @@ function onload()
       throw err;
     }
     finally {
-      if (SIMULATION_MODE)
-      {SIM_TIME += 5; console.log(`sim time: ${SIM_TIME}`);}
+      if (SIMULATION_MODE && SIMULATION_RUNNING) {
+        SIM_TIME += 5; console.info(`sim time: ${SIM_TIME}`);
+      }
     }
   }, 5000);
+}
+
+function toLocalISO(date) {
+  let month_num = date.getMonth();
+  let month_str = month_num < 10 ? `0${month_num}` : month_num.toString();
+  let day_num = date.getDay();
+  let day_str = day_num < 10 ? `0${day_num}` : day_num.toString();
+  let hour_num = date.getHours();
+  let hour_str = hour_num < 10 ? `0${hour_num}` : hour_num.toString();
+  let minute_num = date.getMinutes();
+  let minute_str = minute_num < 10 ? `0${minute_num}` : minute_num.toString();
+  let second_num = date.getSeconds();
+  let second_str = second_num < 10 ? `0${second_num}` : second_num.toString();
+  return `${date.getFullYear()}-${month_str}-${day_str}T${hour_str}:${minute_str}:${second_str}`
 }
 
 function change_games(game_name) {
@@ -283,65 +326,4 @@ function rt_change_games(game_name, list, player_dash){
   message.appendChild(document.createTextNode("Please choose a "+game_name+" session or another game."))
   let playstats = document.getElementById("playstats");
   playstats.appendChild(message);
-}
-
-
-// *** Ok, stuff for desginer dashboard here, to be refactored later.
-function update_designer_dash(game_id) {
-  let request = new XMLHttpRequest();
-  request.onreadystatechange = function() {
-    if (this.readyState == 4) {
-      if (this.status == 200) {
-        let response_data = JSON.parse(this.responseText);
-        console.log("...got data from server.");
-        UpdateTable(response_data['val']);
-      }
-      else {
-        console.log(`Got the following non-200 response from the server: ${this.responseText}`);
-      }
-    }
-  }
-  request.open("GET", "https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/WAVES/metrics")
-  request.send()
-  let table = document.getElementById("data_table");
-  let row = table.insertRow(0);
-  row.innerHTML = "Waiting for data from server...";
-  console.log("Waiting for data from server...");
-}
-
-function UpdateTable(population_data) {
-  const per_level_features = ["BeginCount", "CompleteCount", "TotalLevelTime", "TotalResets", "TotalSkips"]
-  const session_features = ["SessionCount"]
-  const NUM_LEVELS = 34;
-  // set the session count
-  let sess_ct = document.getElementById("sess_ct");
-  sess_ct.innerText = `Session Count: ${population_data['SessionCount']}`;
-  // set up the table
-  let table = document.getElementById("data_table");
-  table.innerHTML = null;
-  // set up table header
-  let header = table.insertRow(0);
-  let col = header.insertCell(0);
-  col.innerText = "Level";
-  for (let feature of per_level_features) {
-      let col = header.insertCell(-1);
-      col.innerText = feature;
-  }
-  // put data into table
-  for (let i = 0; i <= NUM_LEVELS; i++) {
-    let row = table.insertRow(-1);
-    let col = row.insertCell(-1);
-    col.innerText = i;
-    for (let feature of per_level_features) {
-      let col = row.insertCell(-1);
-      let index = `lvl${i}_${feature}`;
-      let datum = population_data[index]
-      if (datum.toString().includes('.') && !isNaN(parseFloat(datum))) {
-        col.innerText = datum.toFixed(2);
-      }
-      else {
-        col.innerText = datum;
-      }
-    }
-  }
 }
