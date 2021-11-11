@@ -13,13 +13,16 @@
 </select> -->
 <div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column">
 	<span id="game_id">Aqualab</span> Game Data Dashboard<br>
-	(Data for past hour)<br>
+	Start:
+	<input type="datetime-local" id="ipt_starttime" min="2020-11-01T00:00">
+	End:
+	<input type="datetime-local" id="ipt_endtime" min="2020-11-01T00:00">
 	<p id="sess_ct"></p>
 	<div class="row" id="playstats_row">
 		<div class="playstats" style="height: 100%; overflow-x:scroll">
 			<table id="data_table"></table>
 		</div>
-		<button type="button" onclick="UpdateData()">Refresh Data</button>
+		<button type="button" id="refresh_designer" onclick="UpdateData()">Refresh Data</button>
 	</div>
 </div>
 <!-- <style>
