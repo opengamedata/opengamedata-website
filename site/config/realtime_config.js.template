@@ -18,19 +18,29 @@ active_models = {
     }
 };
 
-active_features = {
+population_features = {
+    "WAVES": {
+        "percount" : [],
+        "aggregate" : ["SessionCount"]
+    },
+    "CRYSTAL": {
+        "percount" : [],
+        "aggregate" : ["SessionCount"]
+    },
+    "LAKELAND": {
+        "percount" : [],
+        "aggregate" : ["SessionCount"]
+    }
+}
+
+player_features = {
     "WAVES": {
         "totalLevelTime":{"name": "Total Level Time", "vis":"raw", "type": "int"},
     },
     "CRYSTAL": {
-        "sessionEventCount":{"name": "Session Event Count", "type": "int"} 
+        "sessionEventCount":{"name": "Session Event Count", "vis":"raw", "type": "int"} 
     },
     "LAKELAND": {
-        "old_set": {
-            "sess_ActiveEventCount":{"name": "Active Event Count", "vis":"raw", "type": "int"},
-        },
-        "new_set": {
-          "sess_count_achievements":{"name": "# Achievements", "vis":"raw", "type": "int"},
-        }
+        "sess_ActiveEventCount":{"name": "Active Event Count", "vis":"raw", "type": "int"},
     }
 }
