@@ -63,13 +63,13 @@ class Server
       }
    }
 
-   static get_models_by_daterange(callback, min_date, max_date, models=null)
+   static get_models_by_daterange(callback, game, min_date, max_date, models=null)
    {
-      let get_string = `start_datetime=${min_date}&end_datetime=${max_date}&metrics=${models}`;
+      let get_string = `start_datetime=${min_date}&end_datetime=${max_date}&metrics=[${models}]`;
       if (rt_config.debug_print["RTServer"] === true) {
          console.log(`Making request for models by daterange: ${get_string}`);
       }
-      Server._execute_request(callback, get_string);
+      Server._execute_request(callback, get_string, `wsgi-bin/opengamedata.wsgi/game/${game}/metrics`, "GET");
    }
 
    /*static get_active_sessions_by_loc(callback, gameID, state, city, sim_time=-1)
@@ -80,19 +80,19 @@ class Server
    //   returns an array of active sessions eg
    //   [SessID0, SessID1, SessID2]
       let method_string = SIMULATION_MODE ? "sim_active_sessions_by_loc" : "get_active_sessions_by_loc";
-      var post_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}`
+      var param_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}`
       if (SIMULATION_MODE) {
-         post_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}&sim_time=${sim_time}`
+         param_string = `method=${method_string}&gameID=${gameID}&state=${state}&city=${city}&sim_time=${sim_time}`
       }
-      console.log(`Making request for active sessions by location: ${post_string}`)
-      Server._execute_request(callback, post_string)
+      console.log(`Making request for active sessions by location: ${param_string}`)
+      Server._execute_request(callback, param_string)
    }*/
 
    /*static get_feature_names_by_game(callback, gameID){
    //   returns all feature names of that game (callback, any format is fine)
-      var post_string = `method=get_feature_names_by_game&gameID=${gameID}`;
-      console.log(`Making request for feature names by game: ${post_string}`);
-      Server._execute_request(callback, post_string);
+      var param_string = `method=get_feature_names_by_game&gameID=${gameID}`;
+      console.log(`Making request for feature names by game: ${param_string}`);
+      Server._execute_request(callback, param_string);
    }*/
 
    /*// Note: The _by_sessID functions below are probably going to mostly be run
@@ -106,12 +106,12 @@ class Server
    //   Returns list of features in JSON format
       if (sessID != -1) {
          let method_string = SIMULATION_MODE ? "sim_features_by_sessID" : "get_features_by_sessID";
-         var post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}`;
+         var param_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}`;
          if (SIMULATION_MODE) {
-            post_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}&sim_time=${sim_time}`
+            param_string = `method=${method_string}&sessID=${sessID}&gameID=${gameID}&features=${features}&sim_time=${sim_time}`
          }
-         console.log(`Making request for features by session: ${post_string}`);
-         Server._execute_request(callback, post_string);
+         console.log(`Making request for features by session: ${param_string}`);
+         Server._execute_request(callback, param_string);
       }
       else {
          throw `RTServer was asked to find features on invalid session ID ${sessID}!`;
@@ -122,33 +122,42 @@ class Server
     * Private function to do actual execution of a request. 
     * Creates a post request with given callback and parameter string.
     * @param {*} callback 
-    * @param {*} post_string 
+    * @param {*} param_string 
     */
-   static _execute_request(callback, post_string)
+   static _execute_request(callback, param_string, path=null, method="POST")
    {
+      if (path === null) { path=rt_config.path; }
       var req = new XMLHttpRequest();
       req.custom_start_time = new Date().getTime();
       req.onreadystatechange = function()
       {
-         if (this.readyState == 4 && this.status == 200)
-         {
-            let time = new Date().getTime() - this.custom_start_time;
-            if (rt_config.debug_print["RTServer"] === true) {
-               console.log(`raw result for ${post_string} was ${this.responseText.toString()}`);
+         if (this.readyState == 4) {
+            if (this.status == 200)
+            {
+               let time = new Date().getTime() - this.custom_start_time;
+               if (rt_config.debug_print["RTServer"] === true) {
+                  console.log(`raw result for ${param_string} was ${this.responseText.toString()}`);
+               }
+               console.log(`time for ${param_string} was ${time / 1000} s`);
+               callback(this.responseText.toString());
             }
-            console.log(`time for ${post_string} was ${time / 1000} s`);
-            callback(this.responseText.toString());
-         }
-         else
-         {
-            // console.log(`Status for ${post_string} is ${this.statusText}`);
+            else
+            {
+               console.log(`Got the following non-200 response from the server: ${this.status}:${this.statusText}`);
+            }
          }
       }
+      let url = `${rt_config.protocol}://${rt_config.host}/${path}`;
       // use this to set any desired custom path to the "realtime" cgi script.
-      req.open("POST", `${rt_config.protocol}://${rt_config.host}/${rt_config.path}`, true);
+      if (method=="GET") {
+         req.open(method, `${url}?${param_string}`, true);
+      }
+      else {
+         req.open(method, url, true);
+      }
       // req.open("POST", `/opengamedata/realtime.cgi`, true);
       req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      req.send(post_string);
+      req.send(param_string);
    }
 
 /*
