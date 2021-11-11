@@ -1,10 +1,10 @@
 <section id="session_picker_section" class="col-xl-2 col-md-3 col-sm-4 col-xs-12 style="height: 100%; overflow-y:scroll">
-	<p>Only sessions with Player ID:
-		<input type="checkbox" id="require_pid" value="View only sessions with Player IDs">
-	</p>
-	<p>SIMULATION MODE:
-		<input type="checkbox" id="sim_mode" value="SIMULATION MODE" checked>
-	</p>
+	<p>Only sessions with Player ID: <input type="checkbox" id="require_pid" value="View only sessions with Player IDs"></p>
+	<span>
+		<p>SIMULATION MODE: <input type="checkbox" id="sim_mode" value="SIMULATION MODE" checked></p>
+		<button type="button" id="btn_play">Run</button>
+		<button type="button" id="btn_pause">Pause</button>
+	</span>
 	<h2 id="whatis">Choose a session:</h2>
 	<ul class="session_list" id="session_list"></ul>
 </section>
