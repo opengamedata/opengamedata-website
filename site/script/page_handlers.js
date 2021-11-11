@@ -140,9 +140,9 @@ function onload()
 }
 
 function toLocalISO(date) {
-  let month_num = date.getMonth();
+  let month_num = date.getMonth()+1;
   let month_str = month_num < 10 ? `0${month_num}` : month_num.toString();
-  let day_num = date.getDay();
+  let day_num = date.getDate();
   let day_str = day_num < 10 ? `0${day_num}` : day_num.toString();
   let hour_num = date.getHours();
   let hour_str = hour_num < 10 ? `0${hour_num}` : hour_num.toString();
