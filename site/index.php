@@ -83,6 +83,7 @@
   <script src="config/realtime_config.js"></script>
   <script src="script/page_handlers.js"></script>
   <script src="script/games_list.js"></script>
+  <script src="script/FilesTable.js"></script>
   <script src="script/dashboard/RTServer.js"></script>
   <script src="script/dashboard/ViewRenderer.js"></script>
   <script src="script/dashboard/PlayerList.js"></script>
