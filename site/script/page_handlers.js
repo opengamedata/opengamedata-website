@@ -1,19 +1,13 @@
 /**
  * Function to initialize data and refresh loop when the page loads.
  */
-const TABLE_HEADERS = {
-  "start_date": "Start Date",
-  "end_date": "End Date",
-  "date_modified": "Date Uploaded",
-  "dataset_id": "Dataset ID",
-  "sessions": "Sessions",
-  "downloads": "Downloads",
-}
 var SIMULATION_MODE = false;
 var SIMULATION_RUNNING = false;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
-var dashboard = null;
+var pl_dashboard = null;
+var pop_dashboard = null;
+var files_table = null;
 var sess_list = null;
 
 var game_files;
@@ -32,10 +26,10 @@ function onload()
   jQuery.getJSON(`https://opengamedata.fielddaylab.wisc.edu/data/file_list.json`, loadIndexCallback);
   
   // Setup Teacher Dashboard page, with a Dashboard and PlayerList instance for tracking state.
-  dashboard = new PlayerDashboard();
+  pl_dashboard = new PlayerDashboard();
   var NewSelectionHandler = function(session_id, player_id, game_id) {
     return
-    // dashboard.DisplaySession(session_id, player_id, game_id);
+    // pl_dashboard.DisplaySession(session_id, player_id, game_id);
   }
   sess_list = new PlayerList(selectionHandler=NewSelectionHandler);
   if (rt_config.custom_title !== null)
@@ -58,6 +52,7 @@ function onload()
   // below, the simpler way of doing things, if we ever switch to using GMT.
   // ipt_starttime.value = new Date(Date.now() - 1000*60*60).toISOString().slice(0,16); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
   // ipt_endtime.value = new Date().toISOString().slice(0,16);
+  pop_dashboard = new PopulationDashboard();
 
   // Set up onclick and onupdate events.
   document.getElementById("require_pid").onclick = function() {
@@ -98,7 +93,7 @@ function onload()
   };
   document.getElementById("refresh_designer").onclick = function() {
     let game_name = document.getElementById("game_title").innerText;
-    update_designer_dash(game_name);
+    pop_dashboard.Update(true);
   };
   // document.getElementById("btn_id_gen").onclick = function() {
   //   try {
@@ -114,7 +109,7 @@ function onload()
   //     // }
   //   }
   //   catch (error) {
-  //     console.warn("Didn't find box for classroom ID in realtime dashboard");
+  //     console.warn("Didn't find box for classroom ID in realtime pl_dashboard");
   //   }
   // }
   // Finally, set up the page refresh timer.
@@ -123,9 +118,9 @@ function onload()
     try {
       ticks++;
 //       sess_list.refreshActivePlayerList();
-//       if (dashboard.selected_session_id != -1)
+//       if (pl_dashboard.selected_session_id != -1)
 //       {
-//         dashboard.Update();
+//         pl_dashboard.Update();
 //       }
     }
     catch(err) {
@@ -173,7 +168,7 @@ function change_games(game_name) {
   document.getElementById('rt_game_features_readme').href = feature_readmes[game_name];
   document.getElementById('rt_game_link').href = game_links[game_name];  document.getElementById('rt_game_img').src = thumbs[game_name];
   document.getElementById('rt_game_img').alt = "Example image of "+game_name;
-  if (dashboard != null && sess_list != null)
+  if (pl_dashboard != null && sess_list != null)
   {
     rt_change_games(game_name, sess_list, dashboard);
   }
@@ -239,6 +234,7 @@ function generateTableHead(table) {
     th.appendChild(text);
     row.appendChild(th);
   }
+  pop_dashboard.ChangeGames(game_name);
 }
 
 function generate_gamelist() {
@@ -252,6 +248,7 @@ function generate_gamelist() {
         prev_active[0].classList.remove('active_game');
       }
       this.parentElement.classList.add('active_game');
+      // use the callback to prompt a change of selected game page-wide.
       change_games(game_name);
       return false;
     }
