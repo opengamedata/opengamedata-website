@@ -18,8 +18,9 @@ function onload()
   // load files for main game files page
   let loadIndexCallback = function(result){
     game_files = result;
+    let table = document.getElementById("game_files_table");
+    files_table = new FilesTable(table);
     // Set up the game data table.
-    generate_gamelist();
     console.debug(game_files, )
     change_games(Object.keys(game_files)[0]);
   };
@@ -149,9 +150,7 @@ function toLocalISO(date) {
 }
 
 function change_games(game_name) {
-  let table = document.getElementById("game_files_table");
-  table.innerHTML = '';
-  generateTable(table, game_files[game_name]);
+  files_table.Update(game_files[game_name]);
   document.getElementById('game_title').innerHTML = game_name;
   document.getElementById('game_title_2').innerHTML = game_name;
   document.getElementById('game_title_3').innerHTML = game_name;
@@ -170,69 +169,7 @@ function change_games(game_name) {
   document.getElementById('rt_game_img').alt = "Example image of "+game_name;
   if (pl_dashboard != null && sess_list != null)
   {
-    rt_change_games(game_name, sess_list, dashboard);
-  }
-  update_designer_dash(game_name);
-}
-
-function generateTable(table, data) {
-  generateTableHead(table);
-  let datasetIDs = Object.keys(data)
-  datasetIDs.sort((x,y) => Date.parse(data[y]["start_date"]) - Date.parse(data[x]["start_date"]))
-  for (let datasetID of datasetIDs) {
-    var dataset = data[datasetID]
-    let row = table.insertRow();
-    for (key in TABLE_HEADERS) {
-      let cell = row.insertCell();
-      var text = null;
-      switch (key) {
-        case "dataset_id":
-          text = document.createTextNode(datasetID);
-          cell.appendChild(text);
-          break;
-        case "downloads":
-          if (dataset['raw_file'] != null)
-          {
-            add_raw_file(dataset['raw_file'], cell)
-          }
-          if (dataset['events_file'] != null)
-          {
-            add_event_file(dataset['events_file'], cell);
-          }
-          if (dataset['sessions_file'] != null)
-          {
-            add_sessions_file(dataset['sessions_file'], cell)
-          }
-          if (dataset['population_file'] != null)
-          {
-            add_population_file(dataset['population_file'], cell)
-          }
-          break;
-        default:
-          let text_val;
-          if (dataset[key] != null)
-          {
-            text_val = dataset[key].toString();
-          }
-          else
-          {
-            text_val = "null";
-          }
-          text = document.createTextNode(text_val);
-          cell.appendChild(text);
-      }
-    }
-  }
-}
-
-function generateTableHead(table) {
-  table.createTHead();
-  let row = table.insertRow();
-  for (let key in TABLE_HEADERS) {
-    let th = document.createElement("th");
-    let text = document.createTextNode(TABLE_HEADERS[key]);
-    th.appendChild(text);
-    row.appendChild(th);
+    rt_change_games(game_name, sess_list, pl_dashboard);
   }
   pop_dashboard.ChangeGames(game_name);
 }
@@ -262,50 +199,6 @@ function generate_gamelist() {
     document.getElementById('gameselect').appendChild(li);
   }
 }
-
-function add_raw_file(raw_file, cell) {
-  var raw_link = document.createElement('a');
-  var linkText = document.createTextNode("Raw");
-  raw_link.appendChild(linkText);
-  raw_link.title = "Raw";
-  if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
-    raw_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + raw_file;
-  }
-  cell.appendChild(raw_link);
-  cell.append(document.createTextNode(' - '))
-}
-
-function add_event_file(events_file, cell) {
-  var events_link = document.createElement('a');
-  var linkText = document.createTextNode("Events");
-  events_link.appendChild(linkText);
-  events_link.title = "Database Events";
-  if(!(document.getElementById('game_title').innerText.toUpperCase() === 'LAKELAND')){
-    events_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + events_file;
-  }
-  cell.appendChild(events_link);
-  cell.append(document.createTextNode(' - '))
-}
-
-function add_sessions_file(sessions_file, cell) {
-  var sess_link = document.createElement('a');
-  var linkText = document.createTextNode("Sessions");
-  sess_link.appendChild(linkText);
-  sess_link.title = "Session Features";
-  sess_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + sessions_file;
-  cell.appendChild(sess_link);
-  cell.append(document.createTextNode(' - '))
-}
-
-function add_population_file(population_file, cell) {
-  var pop_link = document.createElement('a');
-  var linkText = document.createTextNode("Pop");
-  pop_link.appendChild(linkText);
-  pop_link.title = "Population Features";
-  pop_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + population_file;
-  cell.appendChild(pop_link);
-}
-
 
 /**
  * Handler function to change the game whose sessions are on display.
