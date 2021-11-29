@@ -21,7 +21,7 @@ class FilesTable {
 		for (let datasetID of datasetIDs) {
 			var dataset = data[datasetID]
 			let row = this.table.insertRow();
-			for (key in TABLE_HEADERS) {
+			for (let key in TABLE_HEADERS) {
 				let cell = row.insertCell();
 				var text = null;
 				switch (key) {
