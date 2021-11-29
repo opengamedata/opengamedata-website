@@ -89,7 +89,7 @@ class PopulationDashboard {
       let per_ct_table = document.getElementById("percount_table");
       if (!per_ct_table.hidden) {
         per_ct_table.innerHTML = null;
-        row = per_ct_table.insertRow(0);
+        let row = per_ct_table.insertRow(0);
         row.innerHTML = "Waiting for data from server...";
       }
       console.log("Waiting for data from server...");
