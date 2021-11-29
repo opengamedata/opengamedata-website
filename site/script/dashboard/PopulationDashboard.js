@@ -75,7 +75,7 @@ class PopulationDashboard {
 
   _update() {
     if (this.active_game in population_features) {
-      const features = population_features[this.active_game]['percount'].concat(population_features[game_id]['aggregate']);
+      const features = population_features[this.active_game]['percount'].concat(population_features[this.active_game]['aggregate']);
 
       let ipt_starttime = document.getElementById('ipt_starttime');
       let ipt_endtime = document.getElementById('ipt_endtime');
@@ -93,7 +93,7 @@ class PopulationDashboard {
         that._updateAggregateTable(response_data['val']);
         that._updatePercountTable(response_data['val']);
       }
-      Server.get_models_by_daterange(designer_dash_callback, game_id, encodeURIComponent(ipt_starttime.value), encodeURIComponent(ipt_endtime.value), features);
+      Server.get_models_by_daterange(designer_dash_callback, this.active_game, encodeURIComponent(ipt_starttime.value), encodeURIComponent(ipt_endtime.value), features);
     }
     else {
       this._updateAggregateTable({})
