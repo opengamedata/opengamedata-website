@@ -1,12 +1,22 @@
 class PopulationDashboard {
   constructor(_init_game="None") {
     this.active_game = _init_game;
-    this.AGGREGATE_FEATS = population_features[this.active_game]['aggregate'];
-    this.PER_LEVEL_FEATS = population_features[this.active_game]['percount'];
-    this.NUM_LEVELS = population_features[this.active_game]['levelcount'];
-    this.PREFIX = population_features[this.active_game]['prefix'];
-    this.AGGREGATE_METAS = Object.keys(population_features[this.active_game]['aggregate_metas']);
-    this.PER_LEVEL_METAS = Object.keys(population_features[this.active_game]['percount_metas']);
+    if (this.active_game in population_features) {
+      this.AGGREGATE_FEATS = population_features[this.active_game]['aggregate'];
+      this.PER_LEVEL_FEATS = population_features[this.active_game]['percount'];
+      this.NUM_LEVELS = population_features[this.active_game]['levelcount'];
+      this.PREFIX = population_features[this.active_game]['prefix'];
+      this.AGGREGATE_METAS = Object.keys(population_features[this.active_game]['aggregate_metas']);
+      this.PER_LEVEL_METAS = Object.keys(population_features[this.active_game]['percount_metas']);
+    }
+    else {
+      this.AGGREGATE_FEATS = [];
+      this.PER_LEVEL_FEATS = [];
+      this.NUM_LEVELS = [];
+      this.PREFIX = [];
+      this.AGGREGATE_METAS = [];
+      this.PER_LEVEL_METAS = [];
+    }
     document.getElementById("aggregate_row").hidden = this.AGGREGATE_FEATS.length === 0;
     document.getElementById("percount_row").hidden = this.PER_LEVEL_FEATS.length === 0;
     this.working = false;
