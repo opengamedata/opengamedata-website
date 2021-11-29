@@ -42,7 +42,7 @@ class PopulationDashboard {
         this._update();
       }
       catch(err) {
-        console.log(err.message);
+        console.warn(err.message);
         if (PRINT_TRACE)
         {
           console.trace();
@@ -58,7 +58,7 @@ class PopulationDashboard {
         await this._update();
       }
       catch(err) {
-        console.log(err.message);
+        console.warn(err.message);
         if (PRINT_TRACE)
         {
           console.trace();
@@ -80,10 +80,18 @@ class PopulationDashboard {
       let ipt_starttime = document.getElementById('ipt_starttime');
       let ipt_endtime = document.getElementById('ipt_endtime');
 
-      let table = document.getElementById("data_table");
-      table.innerHTML = null;
-      let row = table.insertRow(0);
-      row.innerHTML = "Waiting for data from server...";
+      let agg_table = document.getElementById("aggregate_table");
+      if (!agg_table.hidden) {
+        agg_table.innerHTML = null;
+        let row = agg_table.insertRow(0);
+        row.innerHTML = "Waiting for data from server...";
+      }
+      let per_ct_table = document.getElementById("percount_table");
+      if (!per_ct_table.hidden) {
+        per_ct_table.innerHTML = null;
+        row = per_ct_table.insertRow(0);
+        row.innerHTML = "Waiting for data from server...";
+      }
       console.log("Waiting for data from server...");
 
       let that = this;
