@@ -18,6 +18,7 @@ function onload()
   // load files for main game files page
   let loadIndexCallback = function(result){
     game_files = result;
+    generate_gamelist();
     let table = document.getElementById("game_files_table");
     files_table = new FilesTable(table);
     // Set up the game data table.
