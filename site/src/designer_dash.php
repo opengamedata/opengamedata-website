@@ -17,10 +17,14 @@
 	<input type="datetime-local" id="ipt_starttime" min="2020-11-01T00:00">
 	End:
 	<input type="datetime-local" id="ipt_endtime" min="2020-11-01T00:00">
-	<p id="sess_ct"></p>
-	<div class="row" id="playstats_row">
+	<div class="row" id="aggregate_row" hidden>
 		<div class="playstats" style="height: 100%; overflow-x:scroll">
-			<table id="data_table"></table>
+			<table id="aggregate_table"></table>
+		</div>
+	</div>
+	<div class="row" id="percount_row" hidden>
+		<div class="playstats" style="height: 100%; overflow-x:scroll">
+			<table id="percount_table"></table>
 		</div>
 		<button type="button" id="refresh_designer" onclick="UpdateData()">Refresh Data</button>
 	</div>

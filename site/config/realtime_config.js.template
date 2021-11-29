@@ -25,7 +25,12 @@ population_features = {
     },
     "CRYSTAL": {
         "percount" : [],
-        "aggregate" : ["SessionCount"]
+        "aggregate" : ["SessionCount"],
+        "percount_metas" : {
+        },
+        "aggregate_metas" : {
+            "test_agg":["SessionCount", "SessionCount", "+"]
+        }
     },
     "LAKELAND": {
         "percount" : [],
