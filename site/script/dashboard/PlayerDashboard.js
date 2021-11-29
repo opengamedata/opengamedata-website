@@ -79,6 +79,7 @@ class PlayerDashboard
 
   async Update(force=false) {
     if (force === true) {
+      this.working = true;
       console.log("Forced player dashboard refresh");
       try {
         this._update();
