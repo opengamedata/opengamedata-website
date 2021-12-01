@@ -24,12 +24,22 @@ class PopulationDashboard {
 
   ChangeGames(game_id) {
     this.active_game = game_id
-    this.AGGREGATE_FEATS = population_features[this.active_game]['aggregate'];
-    this.PER_LEVEL_FEATS = population_features[this.active_game]['percount'];
-    this.NUM_LEVELS = population_features[this.active_game]['levelcount'];
-    this.PREFIX = population_features[this.active_game]['prefix'];
-    this.AGGREGATE_METAS = Object.keys(population_features[this.active_game]['aggregate_metas']);
-    this.PER_LEVEL_METAS = Object.keys(population_features[this.active_game]['percount_metas']);
+    if (this.active_game in population_features) {
+      this.AGGREGATE_FEATS = population_features[this.active_game]['aggregate'];
+      this.PER_LEVEL_FEATS = population_features[this.active_game]['percount'];
+      this.NUM_LEVELS = population_features[this.active_game]['levelcount'];
+      this.PREFIX = population_features[this.active_game]['prefix'];
+      this.AGGREGATE_METAS = Object.keys(population_features[this.active_game]['aggregate_metas']);
+      this.PER_LEVEL_METAS = Object.keys(population_features[this.active_game]['percount_metas']);
+    }
+    else {
+      this.AGGREGATE_FEATS = [];
+      this.PER_LEVEL_FEATS = [];
+      this.NUM_LEVELS = [];
+      this.PREFIX = [];
+      this.AGGREGATE_METAS = [];
+      this.PER_LEVEL_METAS = [];
+    }
     document.getElementById("aggregate_row").hidden = this.AGGREGATE_FEATS.length === 0;
     document.getElementById("percount_row").hidden = this.PER_LEVEL_FEATS.length === 0;
   }
@@ -129,7 +139,7 @@ class PopulationDashboard {
           let col = header.insertCell(-1);
           col.innerText = meta;
           col = row.insertCell(-1);
-          this._genMeta(col, this.PER_LEVEL_METAS[meta], population_data)
+          this._genAggMeta(col, population_features[this.active_game]['aggregate_metas'][meta], population_data)
         }
       }
       else {
@@ -170,7 +180,7 @@ class PopulationDashboard {
           }
           for (let meta of this.PER_LEVEL_METAS) {
             let col = row.insertCell(-1);
-            this._genMeta(col, this.PER_LEVEL_METAS[meta], population_data)
+            this._genPercountMeta(col, this.PREFIX, i, population_features[this.active_game]['percount_metas'][meta], population_data)
           }
         }
       }
@@ -198,11 +208,11 @@ class PopulationDashboard {
     }
   }
 
-  _genMeta(col, meta_tokens, population_data) {
+  _genAggMeta(col, meta_tokens, population_data) {
     let stack = [];
     for (let token of meta_tokens) {
       let as_num = Number(token);
-      if (as_num !== NaN) {
+      if (!isNaN(as_num)) {
         stack.push(as_num);
       }
       else {
@@ -244,6 +254,58 @@ class PopulationDashboard {
         }
       }
     }
+    col.innerText = stack.join();
+  }
+
+  _genPercountMeta(col, prefix, i, meta_tokens, population_data) {
+    let stack = [];
+    let a, b;
+    for (let token of meta_tokens) {
+      let as_num = Number(token);
+      if (!isNaN(as_num)) {
+        stack.push(as_num);
+      }
+      else {
+        switch (token) {
+          case '+':
+            a = stack.pop();
+            b = stack.pop();
+            stack.push(a + b);
+            break;
+          case '-':
+            a = stack.pop();
+            b = stack.pop();
+            stack.push(a - b);
+            break;
+          case '*':
+            a = stack.pop();
+            b = stack.pop();
+            stack.push(a * b);
+            break;
+          case '/':
+          case '\\':
+            a = stack.pop();
+            b = stack.pop();
+            stack.push(a / b);
+            break;
+          case '%':
+            a = stack.pop();
+            b = stack.pop();
+            stack.push(a % b);
+            break;
+          default:
+            let as_feature = population_data[`${prefix}${i}_${token}`];
+            if (as_feature !== undefined) {
+              stack.push(as_feature)
+            }
+            else {
+              console.warn(`Found invalid feature in meta-feature expression: ${meta}`)
+            }
+        }
+      }
+    }
+    // format item (or items, if there's multiple) left in stack before inserting to the cell.
+    stack.forEach( function(elem, i, arr) { typeof(elem) === 'number' ? arr[i] = elem.toFixed(2) : elem.toString() } );
     col.innerText = stack.join();
   }
 }
