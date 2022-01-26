@@ -1,17 +1,18 @@
 const thumbs = {
-  // 'AQUALAB': '../assets/img/thumbs/aqualab-thumb.png',
-  'BACTERIA': '../assets/img/thumbs/bacteria-thumb.png',
-  'BALLOON': '../assets/img/thumbs/balloon-thumb.png',
-  'CRYSTAL': '../assets/img/thumbs/crystal-thumb.png',
-  'CYCLE_CARBON': '../assets/img/thumbs/cycle-carbon-thumb.png',
-  'CYCLE_NITROGEN': '../assets/img/thumbs/cycle-nitrogen-thumb.png',
-  'CYCLE_WATER': '../assets/img/thumbs/cycle-water-thumb.png',
-  'EARTHQUAKE': '../assets/img/thumbs/earthquake-thumb.png',
-  'JOWILDER': '../assets/img/thumbs/jowilder-thumb.jpg',
-  'LAKELAND': '../assets/img/thumbs/lakeland-thumb.jpg',
-  'MAGNET': '../assets/img/thumbs/magnet-thumb.png',
-  'WAVES': '../assets/img/thumbs/waves-thumb.jpg',
-  'WIND': '../assets/img/thumbs/wind-thumb.png'
+  'AQUALAB': './assets/aqualab-thumb.jpg',
+  'BACTERIA': './assets/bacteria-thumb.png',
+  'BALLOON': './assets/balloon-thumb.png',
+  'CRYSTAL': './assets/crystal-thumb.png',
+  'CYCLE_CARBON': './assets/cycle-carbon-thumb.png',
+  'CYCLE_NITROGEN': './assets/cycle-nitrogen-thumb.png',
+  'CYCLE_WATER': './assets/cycle-water-thumb.png',
+  'EARTHQUAKE': './assets/earthquake-thumb.png',
+  'JOWILDER': './assets/jowilder-thumb.jpg',
+  'LAKELAND': './assets/lakeland-thumb.jpg',
+  'MAGNET': './assets/magnet-thumb.png',
+  'WAVES': './assets/waves-thumb.jpg',
+  'WIND': './assets/wind-thumb.png',
+  'SHADOWSPECT': './assets/shadowspect-thumb.jpg'
 }
 const data_readmes = {
   'AQUALAB': 'https://github.com/fielddaylab/aqualab/blob/develop/README.md',
@@ -26,7 +27,8 @@ const data_readmes = {
   'LAKELAND': 'https://github.com/fielddaylab/lakeland/blob/master/README.md',
   'MAGNET': 'https://github.com/fielddaylab/magnetism/blob/master/readme.md',
   'WAVES': 'https://github.com/fielddaylab/waves/blob/master/README.md',
-  'WIND': 'https://github.com/fielddaylab/wind/blob/master/readme.md'
+  'WIND': 'https://github.com/fielddaylab/wind/blob/master/readme.md',
+  'SHADOWSPECT': 'https://github.com/fielddaylab/shadowspect/blob/master/readme.md'
 }
 const feature_readmes = {
   'BACTERIA': 'https://opengamedata.fielddaylab.wisc.edu/data/BACTERIA/readme.md',
@@ -40,9 +42,11 @@ const feature_readmes = {
   'LAKELAND': 'https://opengamedata.fielddaylab.wisc.edu/data/LAKELAND/readme.md',
   'MAGNET': 'https://opengamedata.fielddaylab.wisc.edu/data/MAGNET/readme.md',
   'WAVES': 'https://opengamedata.fielddaylab.wisc.edu/data/WAVES/readme.md',
-  'WIND': 'https://opengamedata.fielddaylab.wisc.edu/data/WIND/readme.md'
+  'WIND': 'https://opengamedata.fielddaylab.wisc.edu/data/WIND/readme.md',
+  'SHADOWSPECT': 'https://opengamedata.fielddaylab.wisc.edu/data/SHADOWSPECT/readme.md'
 }
 const game_links = {
+  'AQUALAB': 'https://fielddaylab.wisc.edu/play/aqualab/ci/develop',
   'BACTERIA': 'https://theyardgames.org/game/bacteria/',
   'BALLOON': 'https://theyardgames.org/game/balloon.html',
   'CRYSTAL': 'https://theyardgames.org/game/crystal.html',
@@ -53,7 +57,7 @@ const game_links = {
   'JOWILDER': 'https://wpteducation.org/CapitolCase',
   'LAKELAND': 'https://fielddaylab.wisc.edu/play/lakeland/game/iframe.html',
   'MAGNET': 'https://theyardgames.org/game/magnetism.html',
-  'SHADOWSPECT': 'https://shadowspect.org/',
+  'SHADOWSPECT': 'http://shadowspect.org/',
   'WAVES': 'https://theyardgames.org/game/waves.html',
   'WIND': 'https://theyardgames.org/game/wind.html'
 }
