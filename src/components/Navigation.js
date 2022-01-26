@@ -1,11 +1,21 @@
-export default function Navigation(){
+import { Link } from "react-router-dom";
 
-    return(
-        <div className="">
-            <div>Open Game Data</div>
-            <div>About</div>
-            <div>Datasets</div>
-            <div>Visualization</div>
-        </div>
+export default function Navigation() {
+
+    return (
+        <nav className="small-nav nav-fixed" id="">
+            <div className="left">
+                <ul>
+                    <li><Link to="/">Open Game Data</Link></li>
+                </ul>
+            </div>
+            <div className="right">
+                <ul>
+                    <li className="small-navlink"><Link to="/about">About</Link></li>
+                    <li className="small-navlink"><Link to="/datasets">Datasets</Link></li>
+                    <li className="small-navlink"><Link to="/dashboard">Visulization</Link></li>
+                </ul>
+            </div>
+        </nav>
     )
 }

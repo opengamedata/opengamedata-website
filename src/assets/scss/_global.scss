@@ -10,7 +10,7 @@ body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 2px;
   background-color: #fff;
-  overflow-x:auto;
+  overflow:hidden;
   &.nav-open {
     overflow: hidden;
   }
