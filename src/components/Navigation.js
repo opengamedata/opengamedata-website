@@ -1,7 +1,7 @@
 export default function Navigation(){
 
     return(
-        <div>
+        <div className="">
             <div>Open Game Data</div>
             <div>About</div>
             <div>Datasets</div>
