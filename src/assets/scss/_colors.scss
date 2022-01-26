@@ -1,0 +1,44 @@
+/* Colors
+------------------------------------------ */
+
+$red: #DD1C1A;
+$light_red: #FCC9C2;
+.red { color: $red; }
+.light-red { color: $light_red; }
+
+$pink: #FAD9D9;
+.pink { color: $pink; }
+
+$light_blue: #5B95A1;
+$blue: #06AED5;
+$dark_blue: #086788;
+$fd_blue: #2E31E0;
+$blue-black: #001E2A;
+.light_blue { color: $light_blue; }
+.fd_blue { color: $fd_blue; }
+.blue { color: $blue; }
+.dark-blue { color: $dark_blue; }
+.blue-black { color: $blue-black; }
+
+$creme: #F6F6F3;
+.creme { color: $creme; }
+
+$light_yellow: #FFDF71;
+.light-yellow { color:$light_yellow; }
+$yellow: #E0BC4E;
+.yellow { color: $yellow; }
+$dark-yellow: #D6A718;
+.dark-yellow { color: $dark-yellow; }
+$xtradark_yellow:#B9920E;
+
+$ultralight_gray: #f5f5f5;
+$light_gray: #DDDDDD;
+$mid_gray: #A3A3A3;
+$gray: #5A5F6A;
+$dark_gray: #202E3C;
+$black: #001E2A;
+.ultralight-gray { color: $ultralight_gray; }
+.light-gray { color: $light_gray; }
+.gray { color: $gray; }
+.dark-gray { color: $dark_gray; }
+.black { color: $black; }

@@ -1,0 +1,237 @@
+/* hero
+------------------------------------------ */
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  min-height: 40vw;
+  z-index: 200;
+  position: relative;
+  background-size: cover;
+  background-position: bottom;
+  @media #{$break-sm} {
+    height: 95vh;
+  }
+}
+
+.hero-slider  {
+  .carousel-inner {
+    .item {
+      transition-property: opacity;
+      width: 100%;
+      height: 100vh;
+      @media #{$break-sm} {
+        height: 95vh;
+      }
+      .info-wrap {
+        width: 100%;
+        height: 100vh;
+        display:flex;
+        align-items:center;
+        @media #{$break-sm} {
+          height: 95vh;
+          background:rgba(16,25,32,0.5);
+        }
+      }
+      .item-info {
+        img {
+          height:15vw;
+          width:auto;
+          @media #{$break-sm} {
+            height:30vw;
+          }
+          &.small_hero_img {
+            width: 150px;
+            height: auto;
+            min-width: initial;
+          }
+        }
+        color: #fff;
+        z-index:1000;
+        position:relative;
+        width: 45vw;
+        margin-left:10vw;
+        &.dark {
+          color:$black;
+        }
+        h2 {
+          margin-bottom: 10px;
+          margin-left:0;
+        }
+        p {
+          @media #{$break-sm} {
+            width:80vw;
+          }
+        }
+        @media #{$break-sm} {
+          width:70vw;
+        }
+      }
+      .main-mark {
+        background: url('../img/fd-logo-white.png') no-repeat;
+        width: 25vw;
+        margin: 0 auto;
+        height: 6vw;
+        text-indent: -9999px;
+        background-size: 25vw auto;
+        margin-bottom: 10px;
+        @media #{$break-xs} {
+          width: 35vw;
+          background-size: 35vw auto;
+          height: 10vw;
+        }
+      }
+    }
+
+    .item:nth-child(1) {
+      background: url(../img/hero-images/dashboard-fellows.jpeg) no-repeat;
+      background-size:cover;
+      background-position:center;
+      .item-info {
+        img {
+          width:15vw;
+          height:auto;
+          margin-bottom:15px;
+        }
+      }
+      @media #{$break-sm} {
+        background-position:right;
+      }
+    }
+
+    .item:nth-child(2) {
+      background: url(../img/hero-images/lakeland.jpg) no-repeat;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .item:nth-child(3) {
+      background: url(../img/hero-images/jowilder-bg.jpg) no-repeat;
+      background-size:cover;
+      background-position:center;
+      @media #{$break-sm} {
+        background-position:right;
+      }
+    }
+
+    .item:nth-child(4) {
+      background: url(../img/hero-images/ice-cube.jpg) no-repeat;
+      background-size:cover;
+      background-position:center;
+    }
+
+    .item,
+    .active.left,
+    .active.right {
+      opacity: 0;
+      width:100%;
+      height:100vh;
+      @media #{$break-sm} {
+        height: 95vh;
+      }
+    }
+
+    .active,
+    .next.left,
+    .prev.right {
+      opacity: 1;
+    }
+
+    .next,
+    .prev,
+    .active.left,
+    .active.right {
+      left: 0;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .carousel-control {
+    z-index: 2;
+  }
+}
+
+.slide-bullets li {
+  width:initial;
+  height: initial;
+  text-indent:initial;
+  border:none;
+  border-radius:none;
+  background-color: transparent;
+  cursor:pointer;
+  width: 25vw;
+  &.active {
+    background-color:transparent;
+  }
+}
+.slide-wrap {
+  position:absolute;
+  bottom:0;
+  left:0;
+  width: 100vw;
+  z-index:99;
+  display: block;
+  background: linear-gradient(0deg, rgba(16,25,32,1) 0%, rgba(16,25,32,0) 100%);
+  .slide-bullets {
+    bottom: 0;
+    list-style-type: none !important;
+    width: 100vw;
+    left: 0;
+    padding:0px;
+    margin-left:0px;
+    display:flex;
+    @media #{$break-sm-xs} {
+      width: 60vw;
+      margin: 0 auto;
+      position:relative;
+    }
+    .slide-bullet {
+      position: relative;
+      color: #fff;
+      z-index: 100;
+      display: inline-block;
+      text-align:center;
+      text-transform:uppercase;
+      font-size:14px;
+      .rule {
+        width: 19vw;
+        height: 2px;
+        background: #fff;
+        border-radius: 25px;
+        position: absolute;
+        top: 16px;
+        left: 50%;
+        margin-left: 3vw;
+        @media #{$break-sm} {
+          display:none;
+        }
+      }
+      .bullet {
+        width: 35px;
+        height: 35px;
+        background: url(../img/ui/bullet.png) no-repeat;
+        background-size: contain;
+        display: block;
+        margin: 0 auto;
+        transition: all .3s ease-in-out;
+        @media #{$break-sm-xs} {
+          width: 20px;
+          height:20px;
+        }
+      }
+      .bullet-caption{
+        @media #{$break-sm-xs} {
+          display:none;
+          color:transparent;
+        }
+      }
+      &.active{
+        .bullet {
+          background: url(../img/ui/bullet-filled.png) no-repeat;
+          background-size: contain;
+          color:$black;
+        }
+      }
+    }
+  }
+}

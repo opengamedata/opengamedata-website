@@ -1,0 +1,480 @@
+.row {
+  margin-left:0px;
+  margin-right:0px;
+}
+
+.processbg{
+  position: absolute;
+  width: 100vw;
+  height: 100%;
+  -webkit-transition: opacity 1.0s ease-in-out;
+  -o-transition: opacity 1.0s ease-in-out;
+  transition: opacity 1.0s ease-in-out;
+  position: fixed;
+  top:0;
+  background: linear-gradient(to bottom, rgba(31, 46, 59, 1.0) 0%, rgba(0, 0, 0, 1.0) 100%);
+  opacity: 1;
+  &.one {
+    background: #101920;
+    &.bg1active {
+      opacity: 1;
+    }
+  }
+  &.two {
+    opacity: 0;
+    background: linear-gradient(to bottom, rgba(146, 205, 240, 1.0) 0%, rgba(76, 97, 168, 1.0) 100%);
+    background-attachment: fixed;
+    &.bg2active {
+      opacity: 1;
+    }
+  }
+  &.three {
+    opacity: 0;
+    background: linear-gradient(to bottom, rgba(164, 166, 204, 1.0) 0%, rgba(255, 255, 255, 1.0) 100%);
+
+    &.bg3active {
+      opacity: 1;
+    }
+  }
+  &.four {
+    opacity: 0;
+    background: linear-gradient(to bottom, rgba(31, 46, 59, 1.0) 0%, rgba(0, 0, 0, 1.0) 100%);
+    background-attachment: fixed;
+    &.bg4active {
+      opacity: 1;
+    }
+  }
+}
+
+.spacedust {
+  width: 512px;
+  height: 189px;
+  background: url(../img/illustrations/nebula.png) no-repeat;
+  background-size: 580px 189px;
+  position: absolute;
+  display: block;
+  right:-150px;
+  top: 10vh;
+  opacity: 1;
+  @media #{$break-sm} {
+    width: 150px;
+    height: 107px;
+    background-size: 300px 107px;
+  }
+  &.one {
+    left: -230px;
+    top: 75vh;
+    background-position: right center;
+    @media #{$break-sm} {
+      top: 45vh;
+    }
+  }
+  &.two {
+    right: -200px;
+    top: 10vh;
+  }
+}
+
+.starfield {
+  width: 50vw;
+  height: 20vh;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  &.top-pad  {
+    top:20px;
+  }
+  .star {
+    width: 17px;
+    height: 17px;
+    background: url(../img/illustrations/starfield-sprite.png) no-repeat;
+    background-size: 85px 17px;
+    display: block;
+    position: absolute;
+    &.black {
+      background: url(../img/illustrations/starfield-sprite-black.png) no-repeat;
+      background-size: 85px 17px;
+    }
+    &.star1 {
+      top: 10vh;
+      left: 10vw;
+    }
+    &.star2 {
+      background-position: -17px 0px;
+      top: 5vh;
+      left: 30vw;
+    }
+    &.star3 {
+      background-position: -35px 0px;
+      top: 20vh;
+      left: 25vw;
+    }
+    &.star4 {
+      background-position: -53px 0px;
+      top: 15vh;
+      right: 12vw;
+    }
+    &.star5 {
+      background-position: -70px 0px;
+      top: 35vh;
+      right: 10vw;
+    }
+  }
+  &.topright {
+    top: 0;
+    right: 0;
+  }
+  &.topleft {
+    top: 0;
+    left: 0;
+    .star1 {
+      top: 10vh;
+      left: 25vw;
+    }
+    .star2 {
+      top: 10vh;
+      left: 40vw;
+    }
+    .star3 {
+      top: 20vh;
+      right: 25vw;
+    }
+    .star4 {
+      top: 15vh;
+      left: 12vw;
+    }
+    .star5 {
+      top: 35vh;
+      left: 10vw;
+    }
+  }
+  &.bottomright {
+    bottom: 0;
+    right: 0;
+    @media #{$break-sm} {
+      opacity: 0;
+    }
+    .star1 {
+      top: 40vh;
+      left: 25vw;
+    }
+    .star2 {
+      top: 10vh;
+      left: 40vw;
+    }
+    .star3 {
+      top: 20vh;
+      left: 29vw;
+    }
+    .star4 {
+      top: 35vh;
+      left: 35vw;
+    }
+    .star5 {
+      top: 35vh;
+      left: 10vw;
+    }
+  }
+  &.bottomleft {
+    bottom: 0;
+    left: 0;
+    @media #{$break-sm} {
+      opacity: 0;
+    }
+    .star1 {
+      top: 40vh;
+      left: 8vw;
+    }
+    .star2 {
+      top: 20vh;
+      left: 5vw;
+    }
+    .star3 {
+      top: 30vh;
+      left: 15vw;
+    }
+    .star4 {
+      top: 35vh;
+      left: 35vw;
+    }
+    .star5 {
+      top: 15vh;
+      left: 20vw;
+    }
+  }
+}
+.our_process {
+  background-attachment:fixed;
+  .intro {
+    .intro-content {
+      width: 80vw;
+      height: auto;
+      text-align: center;
+      margin: 0 auto;
+      z-index: 5;
+      margin-top: 10vw;
+      p {
+        @media #{$break-sm-xs} {
+          text-align: left;
+          font-size:16px;
+        }
+      }
+      @media #{$break-lg} {
+        @include vertical-align;
+        width: 60vw;
+        margin-top: 0vw;
+      }
+      @media #{$break-sm} {
+        padding: 10vw;
+        width: 90vw;
+      }
+      img {
+        width: 130px;
+        height: auto;
+        margin-bottom: 5vh;
+        z-index: 25;
+        position: relative;
+        @media #{$break-sm} {
+          width: 90px;
+        }
+      }
+    }
+  }
+  .process {
+    height: 110vh;
+    position: relative;
+    overflow:hidden;
+    z-index: 10;
+    color: #fff;
+    margin: 0 auto;
+    @media #{$break-md} {
+      height: auto;
+      text-align: center;
+    }
+    .process_content {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100vh;
+      padding: 5vh 0;
+      @media #{$break-sm} {
+        height: auto;
+      }
+      @media #{$break-lg} {
+        @include vertical-align;
+      }
+    }
+    .info {
+      position: relative;
+      height: 100vh;
+      padding:5vw;
+      @media #{$break-sm} {
+        padding: 0vw 10vw;
+        height: auto;
+      }
+      h2 {
+        margin-left: 0;
+        font-weight: 400;
+        letter-spacing:2px;
+        margin-bottom:15px;
+        font-size:24px;
+        text-transform: uppercase;
+        line-height: 38px;
+        @media #{$break-sm} {
+          font-size: 18px;
+        }
+      }
+      p {
+        font-size: 14px;
+        letter-spacing: .08em;
+        line-height: 35px;
+        font-weight: 400;
+        margin-bottom:35px;
+        @media #{$break-md} {
+          font-size: 12px;
+          line-height: 30px;
+        }
+      }
+      .infowrap {
+        color: #fff;
+        @media #{$break-lg} {
+          @include vertical-align;
+        }
+      }
+    }
+    .illustrations {
+      position: relative;
+      width:50%;
+      height: 100vh;
+      padding:5vw;
+      @media #{$break-sm} {
+        height: auto;
+        width: 50%;
+        margin: 0 auto;
+        padding: 0vw;
+        margin-top: 6vw;
+      }
+      .spaceplane {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        @media #{$break-sm} {
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
+    }
+    &.process1 {
+      @media #{$break-sm} {
+        background: linear-gradient(to bottom, rgba(146, 205, 240, 1.0) 0%, rgba(76, 97, 168, 1.0) 100%);
+      }
+      .spaceplane {
+        background:url(../img/illustrations/spaceplane-blueprint.png) no-repeat;
+        background-size: 100% auto;
+        background-position: top center;
+      }
+      .blueprint-icon {
+        background:url(../img/illustrations/blueprint-sprite.png) no-repeat;
+        background-size: 171px 32px;
+        width: 29px;
+        height: 32px;
+        position: absolute;
+        display: block;
+        &.one {
+          top: 10vh;
+          left: 15vw;
+        }
+        &.two {
+          width: 40px;
+          top: 10vh;
+          right: 15vw;
+          background-position: -60px 0px;
+        }
+        &.three {
+          width: 45px;
+          top: 30vh;
+          right: 10vw;
+          background-position: -140px 0px;
+        }
+        &.four {
+          left: 10vh;
+          top: 24vw;
+          background-position: -101px 0px;
+          width: 40px;
+        }
+        &.five {
+          background-position: -30px 0px;
+          top: 0vh;
+          right: 25vw;
+        }
+      }
+    }
+    &.process2 {
+      @media #{$break-sm} {
+        background: linear-gradient(to bottom, rgba(164, 166, 204, 1.0) 0%, rgba(255, 255, 255, 1.0) 100%);
+      }
+      h2,p {
+        color: $black;
+      }
+      .spaceplane {
+        background:url(../img/illustrations/spaceplane-delivery.png) no-repeat;
+        background-size: 100% auto;
+        background-position: top center;
+        padding:5vw;
+      }
+      .infowrap {
+        @media #{$break-sm} {
+          padding-top: 50px;
+        }
+      }
+      .exhaustwrap {
+        position: relative;
+        transform: translate(0%, 90%);
+        display: block;
+        margin-top:-70px;
+        .exhaust {
+          width: 100%;
+          height: auto;
+          animation: burn 4s ease-in-out infinite;
+          position: absolute;
+          &.one {
+          left: 0;
+            &.late {
+              animation: burn 4s ease-in-out infinite;
+              animation-delay: -1.5s;
+            }
+          }
+          &.two {
+            right: 0;
+            &.late {
+              animation: burn 4s ease-in-out infinite;
+              animation-delay: -1.5s;
+            }
+          }
+        }
+      }
+    }
+    &.process3 {
+      @media #{$break-sm} {
+        background: linear-gradient(to bottom, rgba(31, 46, 59, 1.0) 0%, rgba(0, 0, 0, 1.0) 100%);
+      }
+      .spaceplane {
+        background:url(../img/illustrations/spaceplane.png) no-repeat;
+        background-size: 100% auto;
+        background-position: top center;
+      }
+    }
+  }
+}
+
+hr {
+  background: $yellow;
+  border:none;
+  outline:none;
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.floatslow {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-15px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+@keyframes float-horiz {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-20px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes burn {
+  0% {
+    transform: scale(1.4);
+    opacity: 0.0;
+  }
+  50% {
+    opacity: 1.0
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0.0;
+  }
+}

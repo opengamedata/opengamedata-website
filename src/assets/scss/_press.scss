@@ -1,0 +1,214 @@
+
+
+.press {
+  #mainwrapper {
+    overflow-x:initial;
+    background:#fff;
+  }
+  .page_hero {
+    background: $blue-black;
+    padding: 3vw 0vw;
+    position:relative;
+    a {
+      color:#EF8270;
+    }
+    @media #{$break-sm} {
+      flex-direction: column-reverse;
+      height: auto;
+      padding: 2vw;
+    }
+    .info {
+      color: #fff;
+      width: 60%;
+      padding: 8vw 5vw 8vw 8vw;
+      @media #{$break-sm} {
+        padding:3vw;
+        width:100%;
+        margin-bottom:40px;
+        text-align:center;
+      }
+      h1{
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 50px;
+        position:relative;
+        display:inline-block;
+        margin-bottom:25px;
+        z-index:1;
+        @media #{$break-sm} {
+          margin-top:60px;
+        }
+        &:before {
+          content: "";
+          width:105%;
+          height:17px;
+          background:$dark-yellow;
+          display:block;
+          position:absolute;
+          z-index:-1;
+          bottom:5px;
+          left:-8px;
+        }
+        @media #{$break-sm} {
+          font-size:40px;
+        }
+      }
+    }
+    .graphic {
+      width: 40%;
+      @media #{$break-sm} {
+        height: 40vw;
+        width:100%;
+        margin-top:20vw;
+      }
+      .astroblogger{
+        width: 20vw;
+        margin-left:5vw;
+        margin-top:3vw;
+        @media #{$break-sm} {
+          width:40vw;
+          margin:0 auto;
+          display:block;
+        }
+      }
+    }
+  }
+  .pub-nav-wrap {
+    @media #{$break-sm} {
+      display:none;
+    }
+  }
+  .pub-nav {
+    ul {
+      background: $ultralight_gray;
+      display:inline-block;
+      padding:35px 20px 20px 30px;
+      list-style:none;
+      border-radius:5px;
+      li {
+        margin-bottom:20px;
+        border-left: 4px solid #fff;
+        padding-left: 10px;
+        line-height: 25px;
+        &:hover {
+          border-left:4px solid $dark-yellow;
+        }
+        a {
+          color: $blue-black;
+          font-size:16px;
+          letter-spacing:0px;
+          text-transform:uppercase;
+        }
+      }
+    }
+  }
+  .press-toggles {
+    position:absolute;
+    margin-left: 8vw;
+    bottom:0;
+    left:0;
+    border-bottom: none;
+    @media #{$break-sm} {
+      margin-left:4vw;
+    }
+    ul {
+      list-style:none;
+      display:block;
+      padding-left:0;
+      margin-bottom:3px;
+      li {
+        display:inline;
+        text-transform: uppercase;
+        cursor: pointer;
+        &.active {
+          a {
+            color: $blue-black;
+            background: #fff;
+          }
+        }
+        a {
+          font-size:12px;
+          color: #fff;
+          text-decoration: none;
+          padding:20px;
+          &:hover {
+            text-decoration:none;
+          }
+          @media #{$break-sm} {
+            font-size:11px;
+          }
+        }
+      }
+    }
+  }
+  .tab-content{
+    padding-top:5vw;
+    margin-left: 6vw;
+    margin-right:6vw;
+    .pub-wrap {
+      padding: 20px 0px;
+      border-bottom:3px solid $ultralight_gray;
+    }
+    h2 {
+      font-family: 'Roboto', sans-serif;
+      font-size:30px;
+      font-weight:200;
+      margin-left: 0;
+      margin-bottom:10px;
+      padding-top:50px;
+      letter-spacing: 2px;
+      &:first-child {
+        margin-top:0;
+        padding-top:0;
+      }
+    }
+    h3 {
+      margin:40px 0px 10px 0px;
+    }
+    p {
+      margin-bottom:10px;
+    }
+    .playstats {
+      display:flex;
+      flex-direction: row;
+      .playstat {
+        height:200px;
+        width:33%;
+        background:$yellow;
+        margin:10px;
+        border-radius:10px;
+        text-align:center;
+        padding:2vw;
+        color:$black;
+        transition: all 0.1s ease-in-out;
+        &:hover {
+          transform:scale(1.03);
+        }
+        img {
+          height:40px;
+          margin-bottom:10px;
+        }
+        &:nth-child(1n){
+          background:$blue;
+        }
+        &:nth-child(2n){
+          background:$yellow;
+        }
+        &:nth-child(3n){
+          background:$light_red;
+        }
+        h3 {
+          font-family:roboto;
+          font-weight:700;
+          text-transform: uppercase;
+          font-size:50px;
+          margin:0;
+        }
+        p {
+          font-size:16px;
+          line-height:17px;
+        }
+      }
+    }
+  }
+}

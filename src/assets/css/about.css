@@ -1,0 +1,28 @@
+.map-markers {
+  text-align: center;
+  background-image: url(../large/map-markers.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: -5px; /* needed to get rid of space below owner image. WHY? */
+  padding: 0;
+}
+
+.the-owner {
+  width: 250px;
+  max-width: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+.gray-bg {
+  background-color: rgb(246,246,243);
+}
+
+h1 {
+  margin: 30px;
+}
+
+.text-left {
+  text-align: left;
+}

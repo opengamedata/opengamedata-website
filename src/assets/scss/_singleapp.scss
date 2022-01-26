@@ -1,0 +1,793 @@
+.singleapp {
+  .app-hero {
+    height: 100vh;
+    background: $black;
+    display:flex;
+    align-items: center;
+    .button {
+      margin-bottom:10px;
+    }
+    @media #{$break-sm} {
+      height:auto;
+      padding:15vw 0vw 15vw 0vw;
+    }
+    .grad {
+      position:absolute;
+      bottom:0;
+      left:0;
+      height:100vh;
+      width: 100vw;
+      display: block;
+      z-index:10;
+      background: -webkit-linear-gradient(rgba(16,25,32,0.2), rgba(16,25,32,1.0)); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(rgba(16,25,32,0.2), rgba(16,25,32,1.0)); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(rgba(16,25,32,0.2), rgba(16,25,32,1.0)); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(rgba(16,25,32,0.2), rgba(16,25,32,1.0)); /* Standard syntax */
+    }
+    .hero-content{
+      color: #fff;
+      width: 80vw;
+      margin-left: 10vw;
+      position:relative;
+      z-index:100;
+      .info-panel {
+        margin-bottom: 30px;
+        width: 100%;
+        border-bottom: 2px solid #fff;
+        position: relative;
+        @media #{$break-sm} {
+          display:none;
+        }
+        .logo-small {
+          position: absolute;
+          display: block;
+          width: 40px;
+          height: auto;
+          right: 0;
+          top: 5px;
+        }
+        .breadcrumbs {
+          padding-left: 0;
+          .breadcrumb-arrow {
+            width: 8px;
+            height: auto;
+            margin-top:-1px;
+            margin: 0px 10px;
+          }
+          li {
+            list-style: none;
+            display: inline;
+            text-transform: uppercase;
+            font-size: 14px;
+            @media #{$break-sm} {
+              font-size:11px;
+              font-weight:600;
+            }
+            a {
+              font-size: inherit;
+              color: #fff;
+              &:hover {
+                opacity: 0.7;
+              }
+            }
+          }
+        }
+      }
+      .app-info {
+        margin-bottom: 10px;
+        h1, p {
+          display: inline;
+          vertical-align: middle;
+        }
+        h1 {
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 50px;
+          padding-right: 20px;
+          border-right: 2px solid #fff;
+          display:inline-block;
+        }
+        p {
+          margin-left: 20px;
+          font-family: 'Crete Round', serif;
+          font-style:italic;
+          letter-spacing: 1px;
+          font-size: 24px;
+          width:60vw;
+          line-height:30px;
+          @media #{$break-sm} {
+            width:80vw;
+          }
+        }
+        .coming-soon{
+          padding:5px;
+          background:#fff;
+          color:$black;
+          border-radius:5px;
+          display:inline-block;
+
+        }
+        &.long-title{
+          h1,p {
+            display:inline-block;
+            margin:10px 0px 0px 0px;
+          }
+          h1 {
+            border-right:none;
+            margin-bottom:0px;
+          }
+          p {
+            margin-left: 0px;
+            margin-top:10px;
+          }
+        }
+      }
+      .app-description {
+          width: 50vw;
+          margin-bottom: 20px;
+          @media #{$break-sm} {
+            width:80vw;
+          }
+        }
+    }
+  }
+  .small-nav {
+    transform:translateY(0px);
+    opacity: 1;
+    position: fixed;
+    z-index: 500;
+  }
+
+  .app-about {
+    #glance {
+      ul {
+        background:$ultralight_gray;
+        padding:10px;
+        border-radius:10px;
+        li {
+          font-size:18px;
+          &::before {content: "•"; color: $yellow;}
+        }
+      }
+    }
+    @media #{$break-sm} {
+      padding-top:0px;
+    }
+    p{
+      margin-bottom:28px;
+    }
+    h2 {
+      text-transform: uppercase;
+      font-size: 25px;
+      padding-left:0;
+      margin-left: 0;
+      padding-top: 90px;
+      @media #{$break-sm} {
+        margin-top:20px;
+      }
+    }
+    .standards-block{
+      background: $ultralight_gray;
+      padding:2vw;
+      margin:2vw 0vw;
+      border-radius:5px;
+      p {
+        margin-bottom:0px;
+      }
+      .bold {
+        font-size:20px;
+      }
+      .standards-explanation{
+        font-style:italic;
+        letter-spacing:0px;
+        border-left: 2px solid #fff;
+        padding-left: 15px;
+      }
+    }
+    ul {
+      padding-left: 16px;
+      list-style:none;
+    }
+    li {
+      font-size: 15px;
+    }
+    .about-nav {
+      @media #{$break-sm} {
+        display:none;
+      }
+      ul {
+        background: $ultralight_gray;
+        display:inline-block;
+        padding:35px 20px 20px 30px;
+        list-style:none;
+        border-radius:5px;
+        li {
+          margin-bottom:20px;
+          border-left: 4px solid #fff;
+          padding-left: 10px;
+          line-height: 25px;
+          &:hover {
+            border-left:4px solid $light_red;
+          }
+          a {
+            color: $blue-black;
+            font-size:16px;
+            letter-spacing:0px;
+            text-transform:uppercase;
+          }
+        }
+      }
+    }
+    .about-rightpanel {
+      padding-left: 80px;
+      @media #{$break-sm} {
+        padding-left:0px;
+      }
+    }
+  }
+
+  .scroll-locked {
+    position: fixed;
+    top: 100px;
+    @media #{$break-sm} {
+      position: relative;
+      top: 0px;
+    }
+  }
+
+  .app-intro {
+    .intro-text {
+      h2 {
+        margin-left: 0px;
+        text-transform: uppercase;
+
+      }
+      padding: 5vw 5vw 5vw 1vw;
+    }
+  }
+
+  .play-button {
+    height:43px;
+    width:auto;
+    margin:5px;
+  }
+
+  /* Template for atomTouch
+  ---------------------------*/
+  &.atomtouch {
+    .app-hero{
+      background:url(../img/atomtouchbg.jpg) no-repeat;
+      background-size: cover;
+    }
+    #app-about {
+      padding-top: 0px;
+    }
+    #app-intro {
+      padding: 5vw 0vw 5vw 0vw;
+      background: $ultralight_gray;
+      text-align: center;
+      h2 {
+        text-transform: uppercase;
+      }
+      .fullscreen {
+        text-align: right;
+        margin-top: 10px;
+        img {
+          vertical-align: middle;
+        }
+      }
+    }
+    #content_play {
+      background:url(../img/atomtouchbg.jpg) no-repeat;
+      margin: 0 auto;
+      text-align: center;
+      span {
+        margin-top: 300px;
+      }
+    }
+  }
+
+  /* Template for Jo Wilder
+  ---------------------------*/
+
+  &.jowilder {
+    #app-intro {
+      padding: 5vw 0vw 5vw 0vw;
+      text-align: center;
+      .iframe-bg {
+        width:880px;
+        height:660px;
+        display:block;
+        margin:0px auto;
+        overflow:hidden;
+        border:0px;
+        background:url(../img/iframe_img.jpg) no-repeat;
+        background-size: cover;
+      }
+      h2 {
+        text-transform: uppercase;
+      }
+      .fullscreen {
+        text-align: right;
+        margin-top: 10px;
+        img {
+          vertical-align: middle;
+        }
+      }
+    }
+    #app-about {
+      h3 {
+        margin: 25px 0px 10px 0px;
+      }
+    }
+    .app-hero{
+      background:url(../img/hero-images/jowilder-bg.jpg) no-repeat;
+      background-size: cover;
+      background-position:right;
+    }
+    .info-panel {
+      border-bottom: 0px !important;
+    }
+    .app-title {
+      text-indent:-9999px;
+      background:url(../img/logos/jowilder.png) no-repeat;
+      background-size:cover;
+      border-right:0px !important;
+      width: 31vw;
+      height: 14vw;
+    }
+  }
+
+  /* Template for Lakeland
+  ---------------------------*/
+  &.lakeland {
+    #app-intro {
+      padding: 5vw 0vw 6vw 0vw;
+      text-align: center;
+      .iframe-bg {
+        width:880px;
+        height:660px;
+        display:block;
+        margin:0px auto;
+        overflow:hidden;
+        border:0px;
+        background-size: cover;
+      }
+      h2 {
+        text-transform: uppercase;
+      }
+      .fullscreen {
+        text-align: right;
+        margin-top: 10px;
+        img {
+          vertical-align: middle;
+        }
+      }
+    }
+    #app-about {
+      h3 {
+        margin: 25px 0px 10px 0px;
+      }
+    }
+    .app-hero{
+      background-image: linear-gradient(99deg, rgba(14,36,57,0.3) 0%, rgba(14,36,57,0.4) 100%), url('/assets/img/hero-images/lakeland.jpg');
+      background-size: cover;
+      background-position:right bottom;
+      @media #{$break-sm} {
+        background-image: linear-gradient(99deg, rgba(14,36,57,0.7) 0%, rgba(14,36,57,0.6) 100%), url('/assets/img/hero-images/lakeland.jpg');
+      }
+    }
+    .info-panel {
+      border-bottom: 0px !important;
+    }
+    .app-title {
+      text-indent:-9999px;
+      background:url(/assets/img/logos/lakeland-logo.png) no-repeat;
+      background-size:contain;
+      background-position: left;
+      border-right:0px !important;
+      width:700px;
+      height:200px;
+      @media #{$break-sm} {
+        width: auto;
+        height: 150px;
+      }
+    }
+  }
+
+  /* Template for StationMaine
+  ---------------------------*/
+  &.stationmaine {
+    #app-intro {
+      padding: 5vw 0vw 6vw 0vw;
+      text-align: center;
+      .iframe-bg {
+        width:880px;
+        height:660px;
+        display:block;
+        margin:0px auto;
+        overflow:hidden;
+        border:0px;
+        background-size: cover;
+      }
+      h2 {
+        text-transform: uppercase;
+      }
+      .fullscreen {
+        text-align: right;
+        margin-top: 10px;
+        img {
+          vertical-align: middle;
+        }
+      }
+    }
+    #app-about {
+      h3 {
+        margin: 25px 0px 10px 0px;
+      }
+    }
+    .app-hero{
+      background-image: linear-gradient(99deg, rgba(14,36,57,0.3) 0%, rgba(14,36,57,0.4) 100%), url('/assets/img/hero-images/stationmaine_hero.jpg');
+      background-size: cover;
+      background-position:right top;
+      @media #{$break-sm} {
+        background-image: linear-gradient(99deg, rgba(14,36,57,0.7) 0%, rgba(14,36,57,0.6) 100%), url('/assets/img/hero-images/stationmaine_hero.jpg');
+      }
+    }
+    .info-panel {
+      border-bottom: 0px !important;
+    }
+    .app-title {
+      text-indent:-9999px;
+      background:url(/assets/img/logos/stationmaine-logo.png) no-repeat;
+      background-size:contain;
+      background-position: left;
+      border-right:0px !important;
+      width:700px;
+      height:200px;
+      @media #{$break-sm} {
+        width: 90%;
+      }
+    }
+  }
+
+  /* Template for thermoVR
+  ---------------------------*/
+  &.thermovr {
+    #app-intro {
+      padding: 5vw 0vw 6vw 0vw;
+      text-align: center;
+      .iframe-bg {
+        width:880px;
+        height:660px;
+        display:block;
+        margin:0px auto;
+        overflow:hidden;
+        border:0px;
+        background-size: cover;
+      }
+      h2 {
+        text-transform: uppercase;
+      }
+      .fullscreen {
+        text-align: right;
+        margin-top: 10px;
+        img {
+          vertical-align: middle;
+        }
+      }
+    }
+    #app-about {
+      h3 {
+        margin: 25px 0px 10px 0px;
+      }
+    }
+    .app-hero{
+      background-image: linear-gradient(99deg, rgba(14,36,57,0.3) 0%, rgba(14,36,57,0.4) 100%), url('/assets/img/hero-images/thermovr-hero.jpg');
+      background-size: cover;
+      background-position:right bottom;
+      @media #{$break-sm} {
+        background-image: linear-gradient(99deg, rgba(14,36,57,0.7) 0%, rgba(14,36,57,0.6) 100%), url('/assets/img/hero-images/thermovr-hero.jpg');
+      }
+    }
+    .info-panel {
+      border-bottom: 0px !important;
+    }
+    .app-title {
+      text-indent:-9999px;
+      background:url(/assets/img/logos/colored/thermovr-logo.png) no-repeat;
+      background-size:contain;
+      background-position: left;
+      border-right:0px !important;
+      width:700px;
+      height:200px;
+      @media #{$break-sm} {
+        width: 90%;
+      }
+    }
+  }
+
+  /* Template for Forevor Mine
+  ---------------------------*/
+  &.forevermine {
+    #app-intro {
+      padding: 5vw 0vw 6vw 0vw;
+      text-align: center;
+      .iframe-bg {
+        width:880px;
+        height:660px;
+        display:block;
+        margin:0px auto;
+        overflow:hidden;
+        border:0px;
+        background:url(../img/mine-iframe.jpg) no-repeat;
+        background-size: cover;
+      }
+      h2 {
+        text-transform: uppercase;
+      }
+      .fullscreen {
+        text-align: right;
+        margin-top: 10px;
+        img {
+          vertical-align: middle;
+        }
+      }
+    }
+    #app-about {
+      h3 {
+        margin: 25px 0px 10px 0px;
+      }
+    }
+    .app-hero{
+      background:url(/assets/img/hero-images/forevermine.jpg) no-repeat;
+      background-size: cover;
+      background-position:right bottom;
+    }
+    .info-panel {
+      border-bottom: 0px !important;
+    }
+    .app-title {
+      text-indent:-9999px;
+      background:url(/assets/img/logos/forevermine-white.png) no-repeat;
+      background-size:contain;
+      background-position: left;
+      border-right:0px !important;
+      width: 335px;
+      height: 200px;
+    }
+  }
+
+  /* Template for Ice Cube
+  ---------------------------*/
+  &.icecube {
+    .app-hero{
+      background:url(/assets/img/hero-images/ice-cube.jpg) no-repeat;
+      background-size: cover;
+      background-position:center;
+    }
+  }
+  .app-about {
+    margin-bottom:0px;
+  }
+
+  /* Template for Alien Gardener
+  ---------------------------*/
+  &.aliengardener {
+    .app-hero{
+      background:url(/assets/img/hero-images/aliengardener.jpg) no-repeat;
+      background-size: cover;
+      background-position:center;
+    }
+  }
+  .app-about {
+    margin-bottom:0px;
+  }
+
+  /* Template for Aris
+  ---------------------------*/
+  &.aris {
+    .biglogo {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .app-hero{
+      background:url(/assets/img/hero-images/arishero.jpg) no-repeat;
+      background-size: cover;
+      background-position:center;
+    }
+    .app-about {
+      background: #2C0416;
+      color: #fff;
+      .about-rightpanel {
+        h2 {
+          color: #89FDFD;
+        }
+        @media #{$break-sm} {
+          padding-left:0px;
+        }
+      }
+      .app-video {
+        padding: 10vw;
+        text-align: center;
+        margin: 0 auto;
+        p {
+          font-family: 'courier', serif;
+          color: #fff;
+        }
+      }
+    }
+    .aris-learn {
+      .learn-card {
+        img {
+          width: 100%;
+          height: auto;
+        }
+        padding: 60px;
+        text-align: center;
+      }
+    }
+  }
+
+  .embed-wrap {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  .embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  /* Slider CSS
+  ---------------------------*/
+
+.glide {
+
+  $that: '.glide' !default;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &__wrapper {
+    overflow: hidden;
+  }
+
+  &__track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    touch-action: pan-Y;
+    overflow: hidden;
+    padding: 0;
+
+    &.dragging {
+      cursor: grabbing;
+      user-select: none;
+    }
+  }
+
+
+  &__slide {
+    width: 100%;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+
+    a {
+      user-select: none;
+      -webkit-user-drag: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+  }
+
+
+  &__arrows {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+
+  &__arrow {
+    cursor: pointer;
+  }
+
+  &__bullets {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
+  &--slider {
+
+    #{$that}__slide {
+      float: left;
+      clear: none;
+    }
+
+    #{$that}__arrow {}
+
+  }
+
+
+  &--carousel {
+
+    &#{$that}--vertical {
+
+      #{$that}__track {
+        overflow: visible;
+      }
+
+    }
+
+    #{$that}__slide {
+      float: left;
+      clear: none;
+    }
+
+  }
+
+
+  &--slideshow {
+
+    #{$that}__wrapper {
+      height: 100%;
+    }
+
+    #{$that}__slide {
+      height: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: -1;
+      // Flashing issue fix
+      -webkit-transform-style: preserve-3d;
+      -webkit-transform: translate3d(0px, 0px, 0px);
+
+      &.active {
+        z-index: 1;
+      }
+    }
+
+  }
+
+}
+.glide__bullets {
+  text-align: center;
+}
+.glide__bullet {
+  border-radius: 10px;
+  width: 15px;
+  height: 15px;
+  outline: none;
+  border-style: none;
+  border: 2px solid #efefef;
+  background-color: #fff;
+  margin: 5px;
+  &.active {
+    background-color: #efefef;
+  }
+}
+
+}

@@ -1,0 +1,512 @@
+
+
+.opengamedata {
+  #mainwrapper {
+    overflow-x:initial;
+    background:#fff;
+  }
+  .page_hero {
+    background: $blue-black;
+    padding: 3vw 0vw 0vw 0vw;
+    position:relative;
+    a {
+      color:$light_blue;
+      &:hover {
+        color:$yellow;
+      }
+    }
+    @media #{$break-sm} {
+      flex-direction: column-reverse;
+      height: auto;
+      padding: 2vw;
+    }
+    .info {
+      color: #fff;
+      width: 75%;
+      padding: 8vw 5vw 8vw 8vw;
+      @media #{$break-sm} {
+        padding:3vw;
+        width:100%;
+        margin-bottom:40px;
+        text-align:center;
+      }
+      h1{
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 50px;
+        position:relative;
+        display:inline-block;
+        margin-bottom:25px;
+        z-index:1;
+        @media #{$break-sm} {
+          margin-top:60px;
+        }
+        &:before {
+          content: "";
+          width:105%;
+          height:17px;
+          background:$light_blue;
+          display:block;
+          position:absolute;
+          z-index:-1;
+          bottom:5px;
+          left:-8px;
+        }
+        @media #{$break-sm} {
+          font-size:40px;
+        }
+      }
+    }
+    .graphic {
+      height: 100%;
+      @media #{$break-sm} {
+        height: 40vw;
+        width:100%;
+        margin-top:20vw;
+      }
+      .graph_img{
+        width: 35vw;
+        margin-left:5vw;
+        margin-top:3vw;
+        position:absolute;
+        right:0;
+        bottom:0;
+        @media #{$break-sm} {
+          width:40vw;
+          margin:0 auto;
+          display:block;
+        }
+      }
+    }
+  }
+  .pub-nav-wrap {
+    @media #{$break-sm} {
+      display:none;
+    }
+  }
+  .pub-nav {
+    h2 {
+      margin-bottom:80px;
+    }
+    ul {
+      background: $ultralight_gray;
+      display:inline-block;
+      padding:35px 20px 20px 30px;
+      list-style:none;
+      border-radius:5px;
+      li {
+        margin-bottom:20px;
+        border-left: 4px solid #fff;
+        padding-left: 10px;
+        line-height: 25px;
+        &:hover {
+          border-left:4px solid $dark-yellow;
+        }
+        a {
+          color: $blue-black;
+          font-size:16px;
+          letter-spacing:0px;
+          text-transform:uppercase;
+        }
+      }
+    }
+  }
+  .press-toggles {
+    position:absolute;
+    margin-left: 8vw;
+    bottom:0;
+    left:0;
+    border-bottom: none;
+    @media #{$break-sm} {
+      margin-left:4vw;
+    }
+    ul {
+      list-style:none;
+      display:block;
+      padding-left:0;
+      margin-bottom:3px;
+      li {
+        display:inline;
+        text-transform: uppercase;
+        cursor: pointer;
+        &.active {
+          a {
+            color: $blue-black;
+            background: #fff;
+          }
+        }
+        a {
+          font-size:12px;
+          color: #fff;
+          text-decoration: none;
+          padding:20px;
+          &:hover {
+            text-decoration:none;
+          }
+          @media #{$break-sm} {
+            font-size:11px;
+          }
+        }
+      }
+    }
+  }
+  .tab-content{
+    padding-top:5vw;
+    margin-left: 3vw;
+    margin-right:3vw;
+    .pub-wrap {
+      padding: 20px 0px;
+    }
+    h2 {
+      font-family: 'Roboto', sans-serif;
+      font-size:30px;
+      font-weight:200;
+      margin-left: 0;
+      margin-bottom:10px;
+      padding-top:50px;
+      letter-spacing: 2px;
+      &:first-child {
+        margin-top:0;
+        padding-top:0;
+      }
+    }
+    #session_list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 0px;
+      >div {
+        margin: 15px 0px;
+        border-radius:10px;
+        padding:15px;
+        color:$black;
+        box-shadow: 0 0 13px 0 rgba(0,0,0,0.10);
+        float:left;
+        display:inline;
+        position:relative;
+        .player_inactive {
+          background-color:#FF7C7C;
+          border-radius:15px;
+          padding:0px 10px;
+          color:#fff;
+          font-style:normal;
+          text-transform: uppercase;
+          position:absolute;
+          font-size:10px;
+          left:3%;
+          bottom:-10px;
+        }
+        >* {
+          display:inline;
+          align-items: center;
+          color:$gray;
+          margin-right:10px;
+          font-size:13px;
+          font-style: italic;
+        }
+        a {
+          color:$black;
+          font-family: 'Courier', 'courier-new', serif;
+          font-size:14px;
+          display:flex;
+          line-height:26px;
+          letter-spacing: 0px;
+          font-style: normal;
+        }
+        &:hover {
+          transform:scale(1.03);
+        }
+        img {
+          height:60px;
+          float:left;
+        }
+        h3 {
+          font-family:roboto;
+          font-weight:700;
+          text-transform: uppercase;
+          font-size:50px;
+          margin:0;
+        }
+        p {
+          font-size:16px;
+          line-height:17px;
+        }
+      }
+    }
+  }
+}
+
+.ui_column {
+  min-height:100vh;
+  border-right:2px solid $ultralight_gray;
+  padding:0vw 2vw;
+  p {
+    font-size:16px;
+  }
+  &:last-child{
+    border-right:0px;
+  }
+}
+
+.game_info {
+  background:$ultralight_gray;
+  padding:2vw;
+  border-radius:10px;
+  margin-bottom:20px;
+  .playstats {
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    .playstat {
+      height:200px;
+      width:28%;
+      background:$yellow;
+      margin:10px;
+      border-radius:10px;
+      text-align:center;
+      padding:2vw;
+      color:$black;
+      transition: all 0.1s ease-in-out;
+      .twoXone {
+        width:56%;
+      }
+      .oneXtwo {
+        height:400px;
+      }
+      .twoXtwo {
+        height:400px;
+        width:56%;
+      }
+      &:hover {
+        transform:scale(1.03);
+      }
+      img {
+        height:40px;
+        margin-bottom:10px;
+      }
+      &:nth-child(1n){
+        background:#eeeeee;
+      }
+      &:nth-child(2n){
+        background:#eeeeee;
+      }
+      &:nth-child(3n){
+        background:#eeeeee;
+      }
+      h3 {
+        font-family:roboto;
+        font-weight:700;
+        text-transform: uppercase;
+        font-size:50px;
+        margin:0;
+      }
+      p {
+        font-size:16px;
+        line-height:17px;
+      }
+    }
+  }
+  h3 {
+    margin:0px;
+  }
+  #rt_game_img, #game_img {
+    width:100%;
+    height:auto;
+    display:inline-block;
+    float:left;
+    border-radius:5px;
+  }
+}
+
+select {
+  border: none;
+  padding: 20px;
+  background: $light_gray;
+  border: 10px solid $light_gray;
+}
+
+
+/* Table styling
+-------------------------*/
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  font-size:14px;
+  margin-bottom:30px;
+  a {
+    color:$light_blue;
+  }
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+}
+table tr:first-child {
+  height: 60px;
+  background: #1F2E3B;
+  color:#fff;
+  th {
+    font-family: OpenSans-Regular;
+    font-weight:200;
+    font-size:16px;
+  }
+}
+table tbody tr {
+  height: 50px;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: left;
+}
+table td.l, table th.l {
+  text-align: right;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+
+
+.table100-head th{
+  font-family: OpenSans-Regular;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+tbody tr {
+  font-family: OpenSans-Regular;
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+.column1 {
+  width: 170px;
+  padding-left: 40px;
+}
+
+.column2 {
+  width: 170px;
+}
+
+.column3 {
+  width: 170px;
+}
+
+.column4 {
+  width: 110px;
+  text-align: right;
+}
+
+.column5 {
+  width: 170px;
+  text-align: right;
+}
+
+.column6 {
+  width: 280px;
+  text-align: right;
+  padding-right: 32px;
+}
+
+
+@media screen and (max-width: 992px) {
+  table {
+    display: block;
+  }
+  table > *, table tr, table td, table th {
+    display: block;
+  }
+  table thead {
+    display: none;
+  }
+  table tbody tr {
+    height: auto;
+    padding: 37px 0;
+  }
+  table tbody tr td {
+    padding-left: 40% !important;
+    margin-bottom: 24px;
+  }
+  table tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  table tbody tr td:before {
+    font-family: OpenSans-Regular;
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.2;
+    font-weight: unset;
+    position: absolute;
+    width: 40%;
+    left: 30px;
+    top: 0;
+  }
+  table tbody tr td:nth-child(1):before {
+    content: "Date";
+  }
+  table tbody tr td:nth-child(2):before {
+    content: "Order ID";
+  }
+  table tbody tr td:nth-child(3):before {
+    content: "Name";
+  }
+  table tbody tr td:nth-child(4):before {
+    content: "Price";
+  }
+  table tbody tr td:nth-child(5):before {
+    content: "Quantity";
+  }
+  table tbody tr td:nth-child(6):before {
+    content: "Total";
+  }
+
+  .column4,
+  .column5,
+  .column6 {
+    text-align: left;
+  }
+
+  .column4,
+  .column5,
+  .column6,
+  .column1,
+  .column2,
+  .column3 {
+    width: 100%;
+  }
+
+  tbody tr {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-table100 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}

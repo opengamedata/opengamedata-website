@@ -1,0 +1,116 @@
+/* Buttons
+------------------------------------------ */
+
+.button {
+  display: inline-block;
+  padding: 15px 15px;
+  font-family: futura-pt, sans-serif;
+  font-size: 18px;
+  line-height: 1.2em;
+  border: 1px solid $dark_gray;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: $black;
+  font-weight: 600;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  margin-right:15px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  &:hover { cursor: pointer; text-decoration: none; opacity: 0.9; }
+  &:active, &:visited, &:focus { text-decoration: none; outline: none; }
+  &:hover, &.filled {
+    background: $dark_gray; color: #fff;
+    i { color: #fff; }
+  }
+  &:focus { outline: none !important; box-shadow: none !important; -webkit-appearance: none !important; text-decoration: none; }
+  &.red {
+    color: $red; border-color: $red; background: transparent;
+    i { color: $red; }
+    &:hover, &.filled {
+      background: $red; color: #fff;
+      i { color: #fff; }
+    }
+  }
+
+  &.pink {
+    color: $pink; border-color: $pink; background: transparent;
+    i { color: $pink; }
+    &:hover, &.filled {
+      background: $pink; color: $black;
+      i { color: #fff; }
+    }
+  }
+  &.light-red {
+    color: $light_red; border-color: $light_red; background: transparent;
+    i { color: $light_red; }
+    &:hover, &.filled {
+      background: $light_red; color: #fff;
+      i { color: #fff; }
+    }
+  }
+  &.blue {
+    color: $blue; border-color: $blue; background: transparent;
+    i { color: $blue; }
+    &:hover, &.filled {
+      background: $blue; color: #fff;
+      i { color: #fff; }
+    }
+  }
+  &.yellow {
+    color: $yellow; border-color: $yellow; background: transparent;
+    i { color: $yellow; }
+    &:hover, &.filled {
+      background: $yellow; color: $black;
+      i { color: $black; }
+    }
+  }
+  &.light-blue {
+    color: $dark_blue; border-color: $dark_blue; background: transparent;
+    i { color: $dark_blue; }
+    &:hover, &.filled {
+      background: $dark_blue; color: #fff;
+      i { color: #fff; }
+    }
+  }
+  &.blue-black {
+    color: $blue-black; border-color: $blue-black; background: transparent;
+    i { color: $blue-black; }
+    &:hover, &.filled {
+      background: $black; color: #fff;
+      i { color: #fff; }
+    }
+  }
+  &.dark_gray {
+    color: $dark_gray; border-color: $dark_gray; background: transparent;
+    i { color: $dark_gray; }
+    &:hover, &.filled {
+      background: $dark_gray; color: #fff;
+      i { color: #fff; }
+    }
+  }
+  &.disabled {
+    color: $light_gray; border-color: $light_gray; background: transparent;
+    i { color: $light_gray; }
+    &.filled {
+      background: $light_gray; color: #fff;
+      i { color: #fff; }
+    }
+  }
+  &.white {
+    color: #fff; border-color: #fff; background: transparent;
+    i { color: #fff; }
+    &:hover, &.filled {
+      background: #fff; color: $black !important;
+      i { color: $black; }
+    }
+  }
+  &.small { letter-spacing:3px; min-width: auto; font-size: 14px; padding: 6px 15px; }
+  &.xsmall { min-width: auto; font-size: 12px; padding: 8px 13px; }
+  &.full-width { text-align: center; }
+  &.round { border-radius: 30px; }
+  &[disabled='disabled'] { opacity: 0.5; cursor: not-allowed; }
+}
