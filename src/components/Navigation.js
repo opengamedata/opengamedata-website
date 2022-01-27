@@ -13,7 +13,7 @@ export default function Navigation() {
                 <ul>
                     <li className="small-navlink"><Link to="/about">About</Link></li>
                     <li className="small-navlink"><Link to="/datasets">Datasets</Link></li>
-                    <li className="small-navlink"><Link to="/dashboard">Visulization</Link></li>
+                    <li className="small-navlink"><Link to="/dashboard">Visulizations</Link></li>
                 </ul>
             </div>
         </nav>
