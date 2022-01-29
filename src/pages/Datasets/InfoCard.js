@@ -1,5 +1,15 @@
+import { thumbs } from '../../constants'
 
+export default function InfoCard({ game }) {
+    const relativePath = ''
 
-export default function InfoCard(){
-    
+    return (
+        <div className="mt-8 bg-slate-800">
+            {/* <div></div> */}
+            <img src='/../../assets/img/thumbs/aqualab-thumb.jpg' />
+            <div>
+
+            </div>
+        </div>
+    )
 }

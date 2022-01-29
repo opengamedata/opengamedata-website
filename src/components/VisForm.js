@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Datetime from 'react-datetime';
 
+const requestTemplate = 'start_datetime=2022-01-01T12%3A02%3A15&end_datetime=2022-01-26T13%3A02%3A15&metrics=[JobName,JobStartCount,JobCompleteCount,JobTasksCompleted,JobCompletionTime,SessionCount]'
+
 export default function VisForm(props) {
     const [game, setGame] = useState(null);
     const [version, setVersion] = useState(null);
@@ -105,7 +107,7 @@ export default function VisForm(props) {
                                 <h4 className="input-group-text" >From</h4>
                             </div>
                             <input></input>
-                            {/* <Datetime /> */}
+                            <Datetime />
                         </div>
                     </div>
 
@@ -125,7 +127,7 @@ export default function VisForm(props) {
                 <button className="button black filled" onClick={formValidation}>
                     Visualize
                 </button>
-                
+
             </div>
         </div>
     )

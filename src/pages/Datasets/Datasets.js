@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Table from "./Table";
 import GameList from "./GameList";
+import InfoCard from "./InfoCard";
 
 export default function Datasets() {
 
@@ -31,18 +32,19 @@ export default function Datasets() {
 
 
     return (
-        <div className="container">
+        <div className="container px-10 pb-10">
 
-            <h2>choose a game</h2>
+            <h2 className="pt-5 pb-2 text-3xl font-medium">choose a game</h2>
             {fileList ?
-                <GameList fileList={fileList} setGame={setGame} /> : <></>
+                <GameList fileList={fileList} game={game} setGame={setGame} /> : <></>
             }
 
 
             {game ?
                 <>
-                    
-                    <h2>datasets</h2>
+                    <InfoCard game={game}/>
+
+                    <h2 className="pt-7 pb-2 text-3xl font-medium">datasets</h2>
                     <Table datasets={fileList[game]} />
                 </> : <></>
             }

@@ -1,8 +1,8 @@
 import { Routes, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.scss';
-import './assets/scss/styles_ver1.scss';
-import Navigation from './components/Navigation';
+// import './assets/scss/styles_ver1.scss';
+import Navigation from './components/navigation/Navigation';
 import About from './pages/About';
 import Datasets from './pages/Datasets/Datasets';
 import Dashboard from './pages/Dashboard';

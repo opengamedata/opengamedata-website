@@ -9,28 +9,22 @@ export default function Table(props) {
     const insertRows = () => {
         const rows = []
         Object.entries(props.datasets).forEach(([key, value]) => {
-            // console.log("aqualab", key)
-            // console.log(value)
-
             rows.push(<ExpandableRow key={key} identifier={key} entry={value} expand={focused === key} setFocused={setFocused} />)
         })
         return rows
     }
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">start</th>
-                    <th scope="col">end</th>
-                    <th scope="col">uploaded</th>
-                    {/* <th scope="col">version</th> */}
-                    <th scope="col">sessions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {insertRows()}
-            </tbody>
-        </table>
+        <div>
+            <div className="px-2 rounded-t-md bg-slate-800 grid grid-cols-4 gap-4">
+                <div className='p-2 font-bold text-white' scope="col">start</div>
+                <div className='p-2 font-bold text-white' scope="col">end</div>
+                <div className='p-2 font-bold text-white' scope="col">uploaded</div>
+                {/* <div className='p-1 font-bold text-white' scope="col">version</div> */}
+                <div className='p-2 font-bold text-white' scope="col">sessions</div>
+            </div>
+            {insertRows()}
+
+        </div>
     )
 }
