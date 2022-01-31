@@ -1,7 +1,8 @@
 
 import { useState } from 'react';
-import Datetime from 'react-datetime';
-import VisForm from '../components/VisForm';
+import Template from '../../components/views/Template';
+// import Settings from './Settings';
+import VisForm from './VisForm';
 
 const dummyData = {
 
@@ -13,11 +14,23 @@ export default function Dashboard() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const [initialized, setInitialized] = useState(false);
+    const [initialized, setInitialized] = useState(false); // in production: defalt to false 
+
 
     return (
+        <div className=' w-screen p-3 '>
+            {!initialized ?
+                <VisForm setInitialized={setInitialized} /> : <></>
+            }
 
-        <VisForm />
+            {initialized ?
+                <Template /> : <></>
+            }
+
+
+        </div>
+
+
 
     )
 

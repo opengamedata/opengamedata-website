@@ -5,7 +5,7 @@ import './App.scss';
 import Navigation from './components/navigation/Navigation';
 import About from './pages/About';
 import Datasets from './pages/Datasets/Datasets';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
