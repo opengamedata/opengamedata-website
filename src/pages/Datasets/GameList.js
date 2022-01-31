@@ -22,7 +22,7 @@ export default function GameList(props) {
 
     })
     return (
-        <div className="container flex-wrap ">
+        <div className="flex-wrap ">
             {games}
         </div>
     )

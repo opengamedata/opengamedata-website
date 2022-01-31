@@ -25,9 +25,9 @@ export default function ExpandableRow(props) {
             </div>
             {
                 props.expand ?
-                    <div className='flex justify-start px-1 pb-2'>
+                    <div className='flex space-x-2 justify-start px-1 pb-2'>
                         {props.entry.events_file ?
-                            <a className="" role="button" href={FILE_ENDPOINT + props.entry.events_file} download="blob">
+                            <a role="button" href={FILE_ENDPOINT + props.entry.events_file} download="blob">
                                 <SmallButton
                                     label={
                                         <span className='flex'>
@@ -38,7 +38,7 @@ export default function ExpandableRow(props) {
                                 />
                             </a> : <></>}
                         {props.entry.sessions_file ?
-                            <a className="button xsmall" role="button" href={FILE_ENDPOINT + props.entry.sessions_file} download="blob">
+                            <a role="button" href={FILE_ENDPOINT + props.entry.sessions_file} download="blob">
                                 <SmallButton
                                     label={
                                         <span className='flex'>
@@ -49,7 +49,7 @@ export default function ExpandableRow(props) {
                                 />
                             </a> : <></>}
                         {props.entry.population_file ?
-                            <a className="button xsmall" role="button" href={FILE_ENDPOINT + props.entry.population_file} download="blob">
+                            <a role="button" href={FILE_ENDPOINT + props.entry.population_file} download="blob">
                                 <SmallButton
                                     label={
                                         <span className='flex'>

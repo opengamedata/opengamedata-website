@@ -9,16 +9,19 @@ import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-    <div className='App'>
+    <>
       <Navigation />
-      <Routes>
-        <Route path="/" element={<About />} />
-        <Route path="about" element={<About />} />
-        <Route path="datasets" element={<Datasets />} />
-        <Route path="dashboard" element={<Dashboard />} />
-      </Routes>
+      <div className='App'>
 
-    </div>
+        <Routes>
+          <Route path="/" element={<About />} />
+          <Route path="about" element={<About />} />
+          <Route path="datasets" element={<Datasets />} />
+          <Route path="dashboard" element={<Dashboard />} />
+        </Routes>
+
+      </div>
+    </>
   );
 }
 

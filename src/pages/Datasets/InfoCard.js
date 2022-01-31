@@ -1,15 +1,40 @@
-import { thumbs } from '../../constants'
+import { thumbs, data_readmes, feature_readmes, game_links } from '../../constants'
 
 export default function InfoCard({ game }) {
     const relativePath = ''
 
     return (
-        <div className="mt-8 bg-slate-800">
+        <div className="mt-5 bg-slate-100 flex space-x-2">
             {/* <div></div> */}
-            <img src='/../../assets/img/thumbs/aqualab-thumb.jpg' />
-            <div>
-
+            {/* <img src='../assets/img/thumbs/aqualab-thumb.jpg' /> */}
+            <img src='https://via.placeholder.com/150' />
+            <div className='p-3'>
+                <p className='font-bold text-xl'>{game}</p>
+                <div>
+                    {data_readmes[game] ?
+                        <a href={data_readmes[game]}
+                            target="_blank"
+                            className='text-yellow-500 block hover:underline'>
+                            about the data
+                        </a> : <></>
+                    }
+                    {feature_readmes[game] ?
+                        <a href={feature_readmes[game]}
+                            target="_blank"
+                            className='text-yellow-500 block hover:underline'>
+                            about features
+                        </a> : <></>
+                    }
+                    {game_links[game] ?
+                        <a href={game_links[game]}
+                            target="_blank"
+                            className='text-yellow-500 block'>
+                            play {game.toLowerCase()}
+                        </a> : <></>
+                    }
+                </div>
             </div>
+
         </div>
     )
 }
