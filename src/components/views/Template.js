@@ -8,7 +8,7 @@ export default function Template({ data }) {
         <div className="">
 
             <div className="container">
-                some sort of chart
+                <div>some sort of chart</div>
             </div>
             <Settings />
         </div>
