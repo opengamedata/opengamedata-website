@@ -1,5 +1,5 @@
 import SmallButton from '../../components/buttons/SmallButton.js'
-import { FILE_ENDPOINT } from '../../constants.js'
+import { FILE_SERVER } from '../../constants.js'
 import { DownloadIcon } from '@heroicons/react/solid'
 
 export default function ExpandableRow(props) {
@@ -27,7 +27,7 @@ export default function ExpandableRow(props) {
                 props.expand ?
                     <div className='flex space-x-2 justify-start px-1 pb-2'>
                         {props.entry.events_file ?
-                            <a role="button" href={FILE_ENDPOINT + props.entry.events_file} download="blob">
+                            <a role="button" href={FILE_SERVER + '/' + props.entry.events_file} download="blob">
                                 <SmallButton
                                     label={
                                         <span className='flex'>
@@ -38,7 +38,7 @@ export default function ExpandableRow(props) {
                                 />
                             </a> : <></>}
                         {props.entry.sessions_file ?
-                            <a role="button" href={FILE_ENDPOINT + props.entry.sessions_file} download="blob">
+                            <a role="button" href={FILE_SERVER + '/' + props.entry.sessions_file} download="blob">
                                 <SmallButton
                                     label={
                                         <span className='flex'>
@@ -49,7 +49,7 @@ export default function ExpandableRow(props) {
                                 />
                             </a> : <></>}
                         {props.entry.population_file ?
-                            <a role="button" href={FILE_ENDPOINT + props.entry.population_file} download="blob">
+                            <a role="button" href={FILE_SERVER + '/' + props.entry.population_file} download="blob">
                                 <SmallButton
                                     label={
                                         <span className='flex'>

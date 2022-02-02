@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Table from "./Table";
 import GameList from "./GameList";
 import InfoCard from "./InfoCard";
+import { FILE_SERVER } from "../../constants";
 
 export default function Datasets() {
 
@@ -13,7 +14,7 @@ export default function Datasets() {
 
     // fetch json metadata of the list of files
     useEffect(() => {
-        fetch('https://opengamedata.fielddaylab.wisc.edu/data/file_list.json')
+        fetch(FILE_SERVER + '/data/file_list.json')
             .then(res => res.json())
             .then(
                 (result) => {
@@ -42,7 +43,7 @@ export default function Datasets() {
 
             {game ?
                 <>
-                    <InfoCard game={game}/>
+                    <InfoCard game={game} />
 
                     <h2 className="pt-7 pb-2 text-3xl font-medium">datasets</h2>
                     <Table datasets={fileList[game]} />

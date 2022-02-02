@@ -1,4 +1,6 @@
-export const FILE_ENDPOINT = 'https://opengamedata.fielddaylab.wisc.edu/';
+export const FILE_SERVER = 'https://opengamedata.fielddaylab.wisc.edu';
+
+export const API_PATH = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/'
 
 export const thumbs = {
     'AQUALAB': './assets/aqualab-thumb.jpg',
@@ -35,6 +37,7 @@ export const data_readmes = {
 }
 
 export const feature_readmes = {
+    'AQUALAB': 'https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md',
     'BACTERIA': 'https://opengamedata.fielddaylab.wisc.edu/data/BACTERIA/readme.md',
     'BALLOON': 'https://opengamedata.fielddaylab.wisc.edu/data/BALLOON/readme.md',
     'CRYSTAL': 'https://opengamedata.fielddaylab.wisc.edu/data/CRYSTAL/readme.md',

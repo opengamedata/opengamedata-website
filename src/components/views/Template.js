@@ -8,7 +8,7 @@ export default function Template({ data }) {
         <div className="">
 
             <div className="container">
-                <div>some sort of chart</div>
+                <div>{JSON.stringify(data)}</div>
             </div>
             <Settings />
         </div>

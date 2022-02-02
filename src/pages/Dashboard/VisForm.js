@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
+import { API_PATH } from '../../constants';
+import { RefreshIcon } from '@heroicons/react/solid'
 
-const requestTemplate = 'start_datetime=2022-01-01T12%3A02%3A15&end_datetime=2022-01-26T13%3A02%3A15&metrics=[JobName,JobStartCount,JobCompleteCount,JobTasksCompleted,JobCompletionTime,SessionCount]'
-const url = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/AQUALAB/metrics?'
 
-export default function VisForm({ setInitialized }) {
+export default function VisForm({ setInitialized, setData, fileList }) {
     const [game, setGame] = useState('');
     const [version, setVersion] = useState('');
     const [startDate, setstartDate] = useState('');
@@ -12,28 +12,10 @@ export default function VisForm({ setInitialized }) {
     const [minPlaytime, setMinPlaytime] = useState(0);
     const [maxPlaytime, setMaxPlaytime] = useState(0);
 
-    const [fileList, setFileList] = useState(null);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
-
-    // fetch json metadata of the list of files
-    useEffect(() => {
-        fetch('https://opengamedata.fielddaylab.wisc.edu/data/file_list.json')
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setFileList(result)
-                    setIsLoaded(true);
-                    // console.log(result)
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                    console.log(error)
-                }
-            )
-    }, [])
+    const [loading, setLoading] = useState(false)
 
 
     const gameList = () => {
@@ -46,11 +28,17 @@ export default function VisForm({ setInitialized }) {
         return games
     }
 
+    const versionList = () => {
+
+    }
+
     /* checks if form is properly filled */
     const formValidation = () => {
+        // console.log(game, version, startDate, endDate, minPlaytime, maxPlaytime)
+
         // if empty fields, prompt user to fill in the blanks & return
-        console.log(game, version, startDate, endDate, minPlaytime, maxPlaytime)
-        if (!(game && version && startDate && endDate && minPlaytime >= 0 && maxPlaytime)) {
+        // if (!(game && version && startDate && endDate && minPlaytime >= 0 && maxPlaytime)) {
+        if (!(game && startDate && endDate)) {
             // prompt user
             alert('make sure each field has a valid value')
             return
@@ -63,10 +51,12 @@ export default function VisForm({ setInitialized }) {
         }
 
         // if min playtime small than max playtime, raise warnings & return
+        /* 
         if (minPlaytime >= maxPlaytime) {
             alert('invalid total playtime')
             return
         }
+        */
 
         // else, post request - propagateData()
         propagateData()
@@ -74,11 +64,24 @@ export default function VisForm({ setInitialized }) {
 
     /* bundles input states and post to server to receive corresponding dataset*/
     const propagateData = () => {
+        // start loading animation
+        setLoading(true)
+
         // request dataset
+        const url = API_PATH + `${game}/metrics?start_datetime=${encodeURIComponent(startDate)}&end_datetime=${encodeURIComponent(endDate)}&metrics=[JobName,JobStartCount,JobCompleteCount,JobTasksCompleted,JobCompletionTime,SessionCount]`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setData(data)
 
+                // stop loading animation
+                setLoading(false)
+                // store response to parent component state
+                setInitialized(true)
+            })
+            .catch(error => console.error(error))
 
-        // store response to parent component state
-        setInitialized(true)
     }
 
 
@@ -86,12 +89,12 @@ export default function VisForm({ setInitialized }) {
 
 
     return (
-        <div className="container border p-10">
+        <div className="container border p-10 max-w-xl">
             <p className='text-3xl mb-7'>designer dashboard</p>
 
 
             <div className="container">
-                <div className="columns-2 mb-3">
+                <div className=" mb-3">
 
                     {/* game selection */}
                     <div className="col">
@@ -109,7 +112,7 @@ export default function VisForm({ setInitialized }) {
                     </div>
 
                     {/* version selection */}
-                    <div className="col">
+                    {/* <div className="col">
                         <div className="input-group">
                             <div className="mb-1">
                                 <h3 className='text-xl font-bold' >version</h3>
@@ -121,7 +124,7 @@ export default function VisForm({ setInitialized }) {
                                 <option value={'v0.0.1'}>v0.0.1</option>
                             </select>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="row"><h3 className='text-xl font-bold'>date</h3></div>
@@ -131,7 +134,7 @@ export default function VisForm({ setInitialized }) {
                         <div className="input-group-prepend">
                             <h4 className="text-sm" >From</h4>
                         </div>
-                        <input type='date' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
+                        <input type='datetime-local' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
                     </div>
 
                     {/* date-to selection */}
@@ -139,41 +142,45 @@ export default function VisForm({ setInitialized }) {
                         <div className="input-group-prepend">
                             <h4 className="text-sm" >To</h4>
                         </div>
-                        <input type='date' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
+                        <input type='datetime-local' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
                     </div>
                 </div>
 
-                <div className="row"><h3 className='text-xl font-bold'>total playtime (minutes)</h3></div>
+                {/* <div className="row"><h3 className='text-xl font-bold'>total playtime (minutes)</h3></div> */}
                 <div className="row columns-2 mb-5">
                     {/* min playtime selection */}
-                    <div className="col">
+                    {/* <div className="col">
                         <div className="input-group-prepend">
                             <h4 className="text-sm" >From</h4>
                         </div>
                         <input type='number' className='block w-full'
                             value={minPlaytime} onChange={(e) => setMinPlaytime(e.target.value >= 0 ? e.target.value : 0)}></input>
-                    </div>
+                    </div> */}
 
                     {/* max playtime selection */}
-                    <div className="col">
+                    {/* <div className="col">
                         <div className="input-group-prepend">
                             <h4 className="text-sm" >To</h4>
                         </div>
                         <input type='number' className='block w-full'
                             value={maxPlaytime} onChange={(e) => setMaxPlaytime(e.target.value >= 0 ? e.target.value : 0)}></input>
-                        {/* <Datetime /> */}
-                    </div>
+                    </div> */}
+                </div>
+
+                <div className='flex space-x-2 items-center'>
+                    <LargeButton
+                        className='cursor-progress'
+                        onClick={formValidation}
+                        label='Visualize'
+                    />
+                    {loading ?
+                        <RefreshIcon className='animate-spin h-8 w-8' />
+                        : <></>
+                    }
                 </div>
 
 
-                {/* <button className="button black filled" onClick={formValidation}>
-                    Visualize
-                </button> */}
 
-                <LargeButton
-                    onClick={formValidation}
-                    label='Visualize'
-                />
 
             </div>
         </div>
