@@ -1,21 +1,15 @@
 import { useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
-import { API_PATH } from '../../constants';
 import { RefreshIcon } from '@heroicons/react/solid'
 
 
-export default function VisForm({ setInitialized, setData, fileList }) {
+export default function VisForm({ fileList, loading, propagateData }) {
     const [game, setGame] = useState('');
     const [version, setVersion] = useState('');
     const [startDate, setstartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [minPlaytime, setMinPlaytime] = useState(0);
     const [maxPlaytime, setMaxPlaytime] = useState(0);
-
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    const [loading, setLoading] = useState(false)
 
 
     const gameList = () => {
@@ -58,34 +52,18 @@ export default function VisForm({ setInitialized, setData, fileList }) {
         }
         */
 
+        const metrics = {
+            game: game,
+            version: version,
+            startDate: startDate,
+            endDate: endDate,
+            minPlaytime: minPlaytime,
+            maxPlaytime: maxPlaytime
+        }
+
         // else, post request - propagateData()
-        propagateData()
+        propagateData(metrics)
     }
-
-    /* bundles input states and post to server to receive corresponding dataset*/
-    const propagateData = () => {
-        // start loading animation
-        setLoading(true)
-
-        // request dataset
-        const url = API_PATH + `${game}/metrics?start_datetime=${encodeURIComponent(startDate)}&end_datetime=${encodeURIComponent(endDate)}&metrics=[JobName,JobStartCount,JobCompleteCount,JobTasksCompleted,JobCompletionTime,SessionCount]`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                setData(data)
-
-                // stop loading animation
-                setLoading(false)
-                // store response to parent component state
-                setInitialized(true)
-            })
-            .catch(error => console.error(error))
-
-    }
-
-
-
 
 
     return (
