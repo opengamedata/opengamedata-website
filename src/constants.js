@@ -69,3 +69,44 @@ export const game_links = {
     'WAVES': 'https://theyardgames.org/game/waves.html',
     'WIND': 'https://theyardgames.org/game/wind.html'
 }
+
+// job11_JobCompleteCount: "0"
+// job11_JobCompletionTime: "0:00:00"
+// job11_JobName: "bayou-shrip-tastrophe"
+// job11_JobStartCount: "1"
+// job11_JobTasksCompleted: "0"
+
+export const dummyData = [
+    {
+        job: '1',
+        avgDuration: 300,
+        stdDuration: .4,
+        jobStarted: 36,
+        jobFinished: 30,
+        nextJobs: [['3', .2], ['2', .7], ['4', .1]]
+    },
+    {
+        job: '2',
+        avgDuration: 100,
+        stdDuration: .2,
+        jobStarted: 30,
+        jobFinished: 24,
+        nextJobs: [['3', .7], ['4', .2], ['exited', .1]]
+    },
+    {
+        job: '3',
+        avgDuration: 100,
+        stdDuration: .2,
+        jobStarted: 30,
+        jobFinished: 24,
+        nextJobs: [['4', .9], ['exited', .1]]
+    },
+    {
+        job: '4',
+        avgDuration: 300,
+        stdDuration: .4,
+        jobStarted: 36,
+        jobFinished: 24,
+        nextJobs: [['exited', 1]]
+    }
+]

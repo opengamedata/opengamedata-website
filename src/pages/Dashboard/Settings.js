@@ -93,6 +93,7 @@ export default function Settings({ propagateData, metrics }) {
                 :
                 <div>
                     <div>{startDate.replace('T', ' ')}</div>
+                    <div>to</div>
                     <div>{endDate.replace('T', ' ')}</div>
                 </div>
             }

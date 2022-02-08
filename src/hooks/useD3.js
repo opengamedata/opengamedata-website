@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as d3 from 'd3';
 
-export const useD3 = (renderChartFn, dependencies) => {
+export const useD3 = (renderChartFn, dependencies=[]) => {
     const ref = useRef();
 
     useEffect(() => {

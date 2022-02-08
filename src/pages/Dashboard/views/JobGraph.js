@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { useD3 } from "../../../hooks/useD3";
 
 
-export default function Template({ data }) {
+export default function JobGraph({ data }) {
     const diagram = useD3((svg) => {
         const circle = svg.insert('circle')
             .attr('cx', 10)

@@ -152,7 +152,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
                         label='Visualize'
                     />
                     {loading ?
-                        <RefreshIcon className='animate-spin h-8 w-8' />
+                        <><RefreshIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</>
                         : <></>
                     }
                 </div>

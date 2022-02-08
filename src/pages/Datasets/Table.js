@@ -17,11 +17,11 @@ export default function Table(props) {
     return (
         <div>
             <div className="px-2 rounded-t-md bg-slate-800 grid grid-cols-4 gap-4">
-                <div className='p-2 font-bold text-white' scope="col">start</div>
-                <div className='p-2 font-bold text-white' scope="col">end</div>
-                <div className='p-2 font-bold text-white' scope="col">uploaded</div>
-                {/* <div className='p-1 font-bold text-white' scope="col">version</div> */}
-                <div className='p-2 font-bold text-white' scope="col">sessions</div>
+                <div className='p-2 font-bold text-white'>start</div>
+                <div className='p-2 font-bold text-white'>end</div>
+                <div className='p-2 font-bold text-white'>uploaded</div>
+                {/* <div className='p-1 font-bold text-white'>version</div> */}
+                <div className='p-2 font-bold text-white'>sessions</div>
             </div>
             {insertRows()}
 

@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 import Template from './views/Template';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { FILE_SERVER, API_PATH } from '../../constants';
+import { FILE_SERVER, API_PATH, dummyData } from '../../constants';
+import TableView from './views/TableView';
+import JobGraph from './views/JobGraph';
 
 
 export default function Dashboard() {
@@ -28,6 +30,11 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
 
+    const [currentViews, setCurrentViews] = useState([
+        <JobGraph />,
+        <TableView />
+    ])
+
     // fetch json metadata of the list of files
     useEffect(() => {
         fetch(FILE_SERVER + '/data/file_list.json')
@@ -45,6 +52,11 @@ export default function Dashboard() {
                 }
             )
     }, [])
+
+    // manipulate raw data to a format to be used by the vis views
+    const reducer = (rawData) => {
+
+    }
 
     /* bundles input states and post to server to receive corresponding dataset*/
     const propagateData = (metrics) => {
@@ -87,7 +99,8 @@ export default function Dashboard() {
                         loading={loading}
                         propagateData={propagateData}
                     />
-                    <Template data={data} setData={setData} />
+                    <JobGraph data={dummyData} setData={setData} />
+                    <TableView data={dummyData} />
                 </>
             }
 
