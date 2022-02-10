@@ -99,8 +99,8 @@ export default function Dashboard() {
                         loading={loading}
                         propagateData={propagateData}
                     />
-                    <JobGraph data={dummyData} setData={setData} />
-                    <TableView data={dummyData} />
+                    <JobGraph data={data} setData={setData} />
+                    {/* <TableView data={dummyData} /> */}
                 </>
             }
 

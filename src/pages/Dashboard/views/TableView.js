@@ -10,16 +10,16 @@ export default function TableView({ data }) {
                 <div className='p-2 font-medium'>job finished</div>
                 <div className='p-2 font-medium'>next jobs</div>
             </div>
-            {data.map(({ job, avgDuration, stdDuration, jobStarted, jobFinished, nextJobs }) => {
+            {data.map((data) => {
                 return (
-                    <div key={job} className="px-2 border-b">
+                    <div key={data.job} className="px-2 border-b">
                         <div className="grid grid-cols-6 gap-4">
-                            <div className='p-2'>{job}</div>
-                            <div className='p-2'>{avgDuration} sec</div>
-                            <div className='p-2'>{stdDuration}</div>
-                            <div className='p-2'>{jobStarted}</div>
-                            <div className='p-2'>{jobFinished}</div>
-                            <div className='p-2'>{nextJobs.map(element => element[0]+' ')}</div>
+                            <div className='p-2'>{data.job}</div>
+                            <div className='p-2'>{data.avgDuration} sec</div>
+                            <div className='p-2'>{data.stdDuration}</div>
+                            <div className='p-2'>{data.jobStarted}</div>
+                            <div className='p-2'>{data.jobFinished}</div>
+                            <div className='p-2'>{data.nextJobs.map(element => element[0]+' ')}</div>
                         </div>
                     </div>)
             })}

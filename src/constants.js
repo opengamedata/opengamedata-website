@@ -110,3 +110,27 @@ export const dummyData = [
         nextJobs: [['exited', 1]]
     }
 ]
+
+export const reducedDummy = {
+    nodes: [ // represents jobs: {id: name of the job, group: average time taken (seconds)} 
+        { id: 'start', group: 1 },
+        { id: 'job 1', group: .5 },
+        { id: 'job 2', group: .3 },
+        { id: 'job 3', group: .3 },
+        { id: 'job 4', group: .3 },
+        { id: 'quit', group: 1 },
+    ],
+    links: [ // represents player transitions: {value: players who made this transition}
+        {source:'start', target: 'job 1', value: 10},
+        {source:'job 1', target: 'job 2', value: 1},
+        {source:'job 1', target: 'job 3', value: 1},
+        // {source:'job 1', target: 'job 4', value: 1},
+        {source:'job 1', target: 'quit', value: 1},
+        {source:'job 2', target: 'job 3', value: 1},
+        {source:'job 2', target: 'job 4', value: 1},
+        {source:'job 2', target: 'quit', value: 1},
+        {source:'job 3', target: 'job 4', value: 1},
+        {source:'job 3', target: 'quit', value: 1},
+        {source:'job 4', target: 'quit', value: 1},
+    ]
+}
