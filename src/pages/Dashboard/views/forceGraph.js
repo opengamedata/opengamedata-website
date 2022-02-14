@@ -23,12 +23,14 @@ function ForceGraph({
     linkStrokeOpacity = 0.6, // link stroke opacity
     linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
     linkStrokeLinecap = "round", // link stroke linecap
-    linkStrength = .02,
+    linkStrength,
+    linkDistance = 100,
     colors = d3.interpolateRdYlGn, // an array of color values, for the node groups
     width = 640, // outer width, in pixels
     height = 400, // outer height, in pixels
     invalidation, // when this promise resolves, stop the simulation
-    parent
+    parent,
+
 } = {}) {
     // Compute values.
     const N = d3.map(nodes, nodeId).map(intern);
@@ -56,7 +58,8 @@ function ForceGraph({
     const forceNode = d3.forceManyBody();
     const forceLink = d3.forceLink(links).id(({ index: i }) => N[i]);
     if (nodeStrength !== undefined) forceNode.strength(nodeStrength);
-    if (linkStrength !== undefined) forceLink.strength(linkStrength);
+    if (linkStrength !== undefined) forceLink.strength(linkStrength).distance(10);
+    if (linkDistance !== undefined) forceLink.distance(linkDistance);
 
     const simulation = d3.forceSimulation(nodes)
         .force("link", forceLink)
@@ -65,10 +68,11 @@ function ForceGraph({
         .on("tick", ticked);
 
     const svg = parent
-        .attr("width", width)
-        .attr("height", height)
         .attr("viewBox", [-width / 2, -height / 2, width, height])
-        .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+    // .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+
+    svg.selectAll('*').remove();
+
     // const svg = d3.create("svg")
     //     .attr("width", width)
     //     .attr("height", height)

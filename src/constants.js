@@ -113,19 +113,19 @@ export const dummyData = [
 
 export const reducedDummy = {
     nodes: [ // represents jobs: {id: name of the job, group: average time taken (seconds)} 
-        { id: 'start', group: 1 },
-        { id: 'job 1', group: .5 },
-        { id: 'job 2', group: .3 },
-        { id: 'job 3', group: .3 },
-        { id: 'job 4', group: .3 },
-        { id: 'quit', group: 1 },
+        { id: 'start', avgTime: 1 },
+        { id: 'job 1', avgTime: .71 },
+        { id: 'job 2', avgTime: .4 },
+        { id: 'job 3', avgTime: .3 },
+        { id: 'job 4', avgTime: .1 },
+        { id: 'quit', avgTime: 1 },
     ],
     links: [ // represents player transitions: {value: players who made this transition}
         {source:'start', target: 'job 1', value: 10},
         {source:'job 1', target: 'job 2', value: 1},
-        {source:'job 1', target: 'job 3', value: 1},
+        // {source:'job 1', target: 'job 3', value: 1},
         // {source:'job 1', target: 'job 4', value: 1},
-        {source:'job 1', target: 'quit', value: 1},
+        // {source:'job 1', target: 'quit', value: 1},
         {source:'job 2', target: 'job 3', value: 1},
         {source:'job 2', target: 'job 4', value: 1},
         {source:'job 2', target: 'quit', value: 1},

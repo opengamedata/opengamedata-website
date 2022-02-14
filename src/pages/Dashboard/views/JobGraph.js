@@ -2,16 +2,18 @@ import * as d3 from "d3";
 import { reducedDummy } from "../../../constants";
 import { useD3 } from "../../../hooks/useD3";
 import ForceGraph from "./forceGraph";
+import { useEffect } from "react";
 
 
 export default function JobGraph({ data }) {
 
-    // console.log(data)
-    
+    // useEffect(() => {
+    //     console.log('reload')
+    // }, [])
 
     const ref = useD3((svg) => {
         // const circle = svg.selectAll('circle')
-        //     .data([1, 2, 3])
+        //     .data([1, 2, 3,4])
         //     .enter()
         //     .insert('circle')
         //     .attr('cx', d => 30 * d)
@@ -22,24 +24,24 @@ export default function JobGraph({ data }) {
 
         const chart = ForceGraph(reducedDummy, {
             nodeId: d => d.id,
-            nodeGroup: d => d.group,
-            nodeTitle: d => `${d.id}\n${d.group}`,
+            nodeGroup: d => d.avgTime,
+            nodeTitle: d => `name: ${d.id}\navg.playtime: ${d.avgTime}`,
             linkStrokeWidth: l => Math.sqrt(l.value),
-            width: 1000,
-            height: 600,
+            // width: 500,
+            // height: 300,
             // invalidation // a promise to stop the simulation when the cell is re-run
             parent: svg
         })
 
         // const json = circle.append('p').text(JSON.stringify(data))
 
-    }, [data, reducedDummy])
+    }, [data])
 
     return (
         <>
             <svg
                 ref={ref}
-                className="h-96 w-full mx-0"
+                className="w-full h-full mx-0"
             >
             </svg>
         </>
