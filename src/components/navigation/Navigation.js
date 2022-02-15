@@ -4,7 +4,7 @@ export default function Navigation() {
 
 
     return (
-        <nav className="w-screen flex justify-between shadow-md sticky top-0 bg-white">
+        <nav className="w-screen flex justify-between shadow-sm sticky top-0 bg-white">
             {/* <div> */}
             <NavLink
                 className="px-5  py-3"

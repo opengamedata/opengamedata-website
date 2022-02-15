@@ -3,20 +3,20 @@ export const FILE_SERVER = 'https://opengamedata.fielddaylab.wisc.edu';
 export const API_PATH = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/'
 
 export const thumbs = {
-    'AQUALAB': './assets/aqualab-thumb.jpg',
-    'BACTERIA': './assets/bacteria-thumb.png',
-    'BALLOON': './assets/balloon-thumb.png',
-    'CRYSTAL': './assets/crystal-thumb.png',
-    'CYCLE_CARBON': './assets/cycle-carbon-thumb.png',
-    'CYCLE_NITROGEN': './assets/cycle-nitrogen-thumb.png',
-    'CYCLE_WATER': './assets/cycle-water-thumb.png',
-    'EARTHQUAKE': './assets/earthquake-thumb.png',
-    'JOWILDER': './assets/jowilder-thumb.jpg',
-    'LAKELAND': './assets/lakeland-thumb.jpg',
-    'MAGNET': './assets/magnet-thumb.png',
-    'WAVES': './assets/waves-thumb.jpg',
-    'WIND': './assets/wind-thumb.png',
-    'SHADOWSPECT': './assets/shadowspect-thumb.jpg'
+    'AQUALAB': './img/thumbs/aqualab-thumb.jpg',
+    'BACTERIA': './img/thumbs/bacteria-thumb.png',
+    'BALLOON': './img/thumbs/balloon-thumb.png',
+    'CRYSTAL': './img/thumbs/crystal-thumb.png',
+    'CYCLE_CARBON': './img/thumbs/cycle-carbon-thumb.png',
+    'CYCLE_NITROGEN': './img/thumbs/cycle-nitrogen-thumb.png',
+    'CYCLE_WATER': './img/thumbs/cycle-water-thumb.png',
+    'EARTHQUAKE': './img/thumbs/earthquake-thumb.png',
+    'JOWILDER': './img/thumbs/jowilder-thumb.jpg',
+    'LAKELAND': './img/thumbs/lakeland-thumb.jpg',
+    'MAGNET': './img/thumbs/magnet-thumb.png',
+    'WAVES': './img/thumbs/waves-thumb.jpg',
+    'WIND': './img/thumbs/wind-thumb.png',
+    'SHADOWSPECT': './img/thumbs/shadowspect-thumb.jpg'
 }
 
 export const data_readmes = {

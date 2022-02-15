@@ -1,13 +1,10 @@
 import { thumbs, data_readmes, feature_readmes, game_links } from '../../constants'
 
 export default function InfoCard({ game }) {
-    const relativePath = ''
 
     return (
         <div className="mt-5 bg-slate-100 flex space-x-2">
-            {/* <div></div> */}
-            {/* <img src='../assets/img/thumbs/aqualab-thumb.jpg' /> */}
-            <img src='https://via.placeholder.com/150' />
+            <img className='w-48 h-36 rounded-l' src={thumbs[game]} />
             <div className='p-3'>
                 <p className='font-bold text-xl'>{game}</p>
                 <div>
