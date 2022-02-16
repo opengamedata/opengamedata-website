@@ -33,7 +33,7 @@ export default function Datasets() {
 
 
     return (
-        <div className="max-w-xl px-5 pb-10 container">
+        <div className="max-w-2xl px-5 pb-10 container">
 
             <h2 className="pt-5 pb-2 text-3xl font-medium">choose a game</h2>
             {fileList ?

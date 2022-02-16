@@ -1,4 +1,6 @@
 import * as d3 from 'd3'
+// import from ''
+
 
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
@@ -19,6 +21,7 @@ function ForceGraph({
     nodeStrength,
     linkSource = ({ source }) => source, // given d in links, returns a node identifier string
     linkTarget = ({ target }) => target, // given d in links, returns a node identifier string
+    linkTitle,
     linkStroke = "#999", // link stroke color
     linkStrokeOpacity = 0.6, // link stroke opacity
     linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
@@ -41,6 +44,8 @@ function ForceGraph({
     const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
     const W = typeof linkStrokeWidth !== "function" ? null : d3.map(links, linkStrokeWidth);
     const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
+    if (linkTitle === undefined) linkTitle = (_, i) => LS[i];
+    const TP = linkTitle == null ? null : d3.map(links, linkTitle) // tooltips
 
 
     // Replace the input nodes and links with mutable objects for the simulation.
@@ -61,11 +66,6 @@ function ForceGraph({
     if (linkStrength !== undefined) forceLink.strength(linkStrength).distance(10);
     if (linkDistance !== undefined) forceLink.distance(linkDistance);
 
-    const simulation = d3.forceSimulation(nodes)
-        .force("link", forceLink)
-        .force("charge", forceNode)
-        .force("center", d3.forceCenter())
-        .on("tick", ticked);
 
     const svg = parent
         .attr("viewBox", [-width / 2, -height / 2, width, height])
@@ -73,20 +73,36 @@ function ForceGraph({
 
     svg.selectAll('*').remove();
 
-    // const svg = d3.create("svg")
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .attr("viewBox", [-width / 2, -height / 2, width, height])
-    //     .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+    svg.append('defs').append('marker')
+        .attr('id', 'arrowhead')
+        .attr('viewBox', '-0 -5 10 10')
+        .attr('refX', 8 * nodeRadius)
+        .attr('refY', 0)
+        .attr('orient', 'auto')
+        .attr('markerUnits', 'userSpaceOnUse')
+        .attr('markerWidth', nodeRadius)
+        .attr('markerHeight', nodeRadius)
+        .attr('xoverflow', 'visible')
+        .append('svg:path')
+        .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+        .attr('fill', '#888')
+        .style('stroke', 'none');
 
     const link = svg.append("g")
         .attr("stroke", typeof linkStroke !== "function" ? linkStroke : null)
         .attr("stroke-opacity", linkStrokeOpacity)
-        .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null)
         .attr("stroke-linecap", linkStrokeLinecap)
         .selectAll("line")
         .data(links)
-        .join("line");
+        .join("line")
+        .attr('marker-end', 'url(#arrowhead)')
+        .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null);
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", forceLink)
+        .force("charge", forceNode)
+        .force("center", d3.forceCenter())
+        .on("tick", ticked);
 
     const node = svg.append("g")
         .attr("fill", nodeFill)
@@ -99,8 +115,22 @@ function ForceGraph({
         .attr("r", nodeRadius)
         .call(drag(simulation));
 
+    const text = svg.append('g')
+        .selectAll('text')
+        .data(nodes)
+        .join('text')
+        .text((d) => d.id)
+        .attr('font-size', 16)
+        .attr('stroke', 'white')
+        .attr('stroke-width', .4)
+        .attr('fill', 'black')
+    // .attr('user-select', 'none')
+
+
+
     if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
+    if (TP) link.append('title').text(({ index: i }) => TP[i]);
     if (G) node.attr("fill", ({ index: i }) => color(G[i]));
     if (T) node.append("title").text(({ index: i }) => T[i]);
     if (invalidation != null) invalidation.then(() => simulation.stop());
@@ -118,8 +148,11 @@ function ForceGraph({
 
         node
             .attr("cx", d => d.x)
-            .attr("cy", d => d.y)
-            ;
+            .attr("cy", d => d.y);
+
+        text
+            .attr("x", d => d.x + nodeRadius)
+            .attr("y", d => d.y);
     }
 
     function drag(simulation) {

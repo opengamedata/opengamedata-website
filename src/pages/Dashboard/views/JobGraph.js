@@ -25,8 +25,9 @@ export default function JobGraph({ data }) {
         const chart = ForceGraph(reducedDummy, {
             nodeId: d => d.id,
             nodeGroup: d => d.avgTime,
-            nodeTitle: d => `name: ${d.id}\navg.playtime: ${d.avgTime}`,
+            nodeTitle: d => `name: ${d.id}\navg. playtime: ${d.avgTime}`,
             linkStrokeWidth: l => Math.sqrt(l.value),
+            linkTitle: l => l.value,
             // width: 500,
             // height: 300,
             // invalidation // a promise to stop the simulation when the cell is re-run

@@ -3,7 +3,7 @@ import { thumbs, data_readmes, feature_readmes, game_links } from '../../constan
 export default function InfoCard({ game }) {
 
     return (
-        <div className="mt-5 bg-slate-100 flex space-x-2">
+        <div className="mt-5 bg-white shadow-sm flex space-x-2">
             <img className='w-48 h-36 rounded-l' src={thumbs[game]} />
             <div className='p-3'>
                 <p className='font-bold text-xl'>{game}</p>

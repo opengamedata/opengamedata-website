@@ -113,24 +113,24 @@ export const dummyData = [
 
 export const reducedDummy = {
     nodes: [ // represents jobs: {id: name of the job, group: average time taken (seconds)} 
-        { id: 'start', avgTime: 1 },
+        { id: 'start', avgTime: -.1 },
         { id: 'job 1', avgTime: .71 },
         { id: 'job 2', avgTime: .4 },
         { id: 'job 3', avgTime: .3 },
         { id: 'job 4', avgTime: .1 },
-        { id: 'quit', avgTime: 1 },
+        { id: 'quit', avgTime: -10 },
     ],
     links: [ // represents player transitions: {value: players who made this transition}
-        {source:'start', target: 'job 1', value: 10},
-        {source:'job 1', target: 'job 2', value: 1},
-        // {source:'job 1', target: 'job 3', value: 1},
+        {source:'start', target: 'job 1', value: 110},
+        {source:'job 1', target: 'job 2', value: 70},
+        {source:'job 1', target: 'job 3', value: 40},
         // {source:'job 1', target: 'job 4', value: 1},
         // {source:'job 1', target: 'quit', value: 1},
-        {source:'job 2', target: 'job 3', value: 1},
-        {source:'job 2', target: 'job 4', value: 1},
-        {source:'job 2', target: 'quit', value: 1},
-        {source:'job 3', target: 'job 4', value: 1},
-        {source:'job 3', target: 'quit', value: 1},
-        {source:'job 4', target: 'quit', value: 1},
+        {source:'job 2', target: 'job 3', value: 40},
+        {source:'job 2', target: 'job 4', value: 20},
+        {source:'job 2', target: 'quit', value: 10},
+        {source:'job 3', target: 'job 4', value: 80},
+        // {source:'job 3', target: 'quit', value: 1},
+        {source:'job 4', target: 'quit', value: 100},
     ]
 }

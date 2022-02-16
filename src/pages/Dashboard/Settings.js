@@ -49,7 +49,7 @@ export default function Settings({ propagateData, metrics }) {
     }, [adjustMode])
 
     return (
-        <div className=" bg-white fixed top-15 left-3 p-2 w-content border shadow-sm">
+        <div className=" bg-white fixed top-14 left-3 p-3 w-content border shadow-sm">
             <div className='flex justify-between mb-2'>
                 <div>
                     <span className='font-medium text-lg'>{game}&nbsp;</span>

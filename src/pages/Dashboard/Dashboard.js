@@ -85,7 +85,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className='w-screen p-3 bg-stone-100'>
+        <div className='w-screen h-full p-3'>
             {!initialized ?
                 <VisForm
                     fileList={fileList}
