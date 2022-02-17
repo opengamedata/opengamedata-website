@@ -67,7 +67,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
 
 
     return (
-        <div className="bg-white container shadow-sm p-10 max-w-xl">
+        <div className="bg-white container shadow-sm p-10 max-w-xl mt-10">
             <p className='text-3xl mb-7'>designer dashboard</p>
 
 

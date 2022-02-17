@@ -70,11 +70,6 @@ export const game_links = {
     'WIND': 'https://theyardgames.org/game/wind.html'
 }
 
-// job11_JobCompleteCount: "0"
-// job11_JobCompletionTime: "0:00:00"
-// job11_JobName: "bayou-shrip-tastrophe"
-// job11_JobStartCount: "1"
-// job11_JobTasksCompleted: "0"
 
 export const dummyData = [
     {
@@ -121,16 +116,16 @@ export const reducedDummy = {
         { id: 'quit', avgTime: -10 },
     ],
     links: [ // represents player transitions: {value: players who made this transition}
-        {source:'start', target: 'job 1', value: 110},
-        {source:'job 1', target: 'job 2', value: 70},
-        {source:'job 1', target: 'job 3', value: 40},
+        { source: 'start', target: 'job 1', value: 110 },
+        { source: 'job 1', target: 'job 2', value: 70 },
+        { source: 'job 1', target: 'job 3', value: 40 },
         // {source:'job 1', target: 'job 4', value: 1},
         // {source:'job 1', target: 'quit', value: 1},
-        {source:'job 2', target: 'job 3', value: 40},
-        {source:'job 2', target: 'job 4', value: 20},
-        {source:'job 2', target: 'quit', value: 10},
-        {source:'job 3', target: 'job 4', value: 80},
+        { source: 'job 2', target: 'job 3', value: 40 },
+        { source: 'job 2', target: 'job 4', value: 20 },
+        { source: 'job 2', target: 'quit', value: 10 },
+        { source: 'job 3', target: 'job 4', value: 80 },
         // {source:'job 3', target: 'quit', value: 1},
-        {source:'job 4', target: 'quit', value: 100},
+        { source: 'job 4', target: 'quit', value: 100 },
     ]
 }

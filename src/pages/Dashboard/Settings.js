@@ -1,9 +1,9 @@
 
-import { AdjustmentsIcon, XIcon } from '@heroicons/react/solid'
+import { AdjustmentsIcon, XIcon, RefreshIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import LargeButton from '../../components/buttons/LargeButton'
 
-export default function Settings({ propagateData, metrics }) {
+export default function Settings({ propagateData, loading, metrics }) {
 
     // vis metrics
     const [game, setGame] = useState('');
@@ -84,11 +84,19 @@ export default function Settings({ propagateData, metrics }) {
                             </div>
                         </div>
                     </div>
-                    <LargeButton
-                        // action={adjust}
-                        onClick={adjust}
-                        label='visualize'
-                    />
+
+
+                    <div className='flex space-x-2 items-center'>
+                        <LargeButton
+                            // action={adjust}
+                            onClick={adjust}
+                            label='visualize'
+                        />
+                        {loading ?
+                            <><RefreshIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
+                            : <></>
+                        }
+                    </div>
                 </div>
                 :
                 <div>

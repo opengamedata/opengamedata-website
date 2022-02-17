@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Navigation />
-      <div className='App h-screen w-screen pt-16  bg-stone-100'>
+      <div className='App h-screen w-screen pt-12  bg-stone-100'>
 
         <Routes>
           <Route path="/" element={<About />} />

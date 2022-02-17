@@ -15,7 +15,7 @@ export default function Table(props) {
     }
 
     return (
-        <div>
+        <div className="shadow-md">
             <div className="px-2 rounded-t-md bg-slate-800 grid grid-cols-4 gap-4">
                 <div className='p-2 font-bold text-white'>start</div>
                 <div className='p-2 font-bold text-white'>end</div>

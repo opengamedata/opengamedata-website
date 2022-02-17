@@ -7,7 +7,7 @@ export default function Navigation() {
         <nav className="w-screen flex justify-between shadow-sm fixed top-0 bg-white">
             {/* <div> */}
             <NavLink
-                className="px-5  py-3"
+                className="px-5 py-3 tracking-tight font-bold"
                 to="/">Open Game Data</NavLink>
             {/* </div> */}
             <div className="flex">

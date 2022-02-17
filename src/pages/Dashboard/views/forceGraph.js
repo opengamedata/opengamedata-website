@@ -15,9 +15,9 @@ function ForceGraph({
     nodeTitle, // given d in nodes, a title string
     nodeFill = "currentColor", // node stroke fill (if not using a group color encoding)
     nodeStroke = "#fff", // node stroke color
-    nodeStrokeWidth = 3, // node stroke width, in pixels
+    nodeStrokeWidth = 2, // node stroke width, in pixels
     nodeStrokeOpacity = 1, // node stroke opacity
-    nodeRadius = 10, // node radius, in pixels
+    nodeRadius = 5, // node radius, in pixels
     nodeStrength,
     linkSource = ({ source }) => source, // given d in links, returns a node identifier string
     linkTarget = ({ target }) => target, // given d in links, returns a node identifier string
@@ -120,9 +120,9 @@ function ForceGraph({
         .data(nodes)
         .join('text')
         .text((d) => d.id)
-        .attr('font-size', 16)
+        .attr('font-size', 8)
         .attr('stroke', 'white')
-        .attr('stroke-width', .4)
+        .attr('stroke-width', .2)
         .attr('fill', 'black')
     // .attr('user-select', 'none')
 

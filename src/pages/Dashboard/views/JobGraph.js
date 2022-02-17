@@ -12,22 +12,13 @@ export default function JobGraph({ data }) {
     // }, [])
 
     const ref = useD3((svg) => {
-        // const circle = svg.selectAll('circle')
-        //     .data([1, 2, 3,4])
-        //     .enter()
-        //     .insert('circle')
-        //     .attr('cx', d => 30 * d)
-        //     .attr('cy', 250) // position encoding on job number
-        //     .attr('r', 10) // ? size encoding on job complete ratio
-        //     .attr('fill', 'pink') // color encoding on playtime
 
-
-        const chart = ForceGraph(reducedDummy, {
+        const chart = ForceGraph(data, {
             nodeId: d => d.id,
-            nodeGroup: d => d.avgTime,
-            nodeTitle: d => `name: ${d.id}\navg. playtime: ${d.avgTime}`,
-            linkStrokeWidth: l => Math.sqrt(l.value),
-            linkTitle: l => l.value,
+            nodeGroup: d => d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount),
+            nodeTitle: d => `${d.id}: ${d.JobName}`,
+            // linkStrokeWidth: l => Math.sqrt(l.value),
+            // linkTitle: l => l.value,
             // width: 500,
             // height: 300,
             // invalidation // a promise to stop the simulation when the cell is re-run

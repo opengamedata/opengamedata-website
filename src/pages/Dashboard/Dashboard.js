@@ -53,12 +53,55 @@ export default function Dashboard() {
             )
     }, [])
 
-    // manipulate raw data to a format to be used by the vis views
-    const reducer = (rawData) => {
+    /* manipulate raw data to a format to be used by the vis views */
+    const convert = (rawData) => {
+
+        // job0_JobCompleteCount: "20"
+        // job0_JobName: "kelp-welcome"
+        // job0_JobStartCount: "37"
+        // job1_JobCompleteCount: "22"
+        // job1_JobName: "kelp-urchin-barren"
+        // job1_JobStartCount: "28"
+        // job2_JobCompleteCount: "47"
+        // job2_JobName: "kelp-save-urchin-barren"
+        // job2_JobStartCount: "53"
+        // job3_JobCompleteCount: "1"
+        // job3_JobName: "kelp-bull-kelp-forest"
+        // job3_JobStartCount: "1"
+
+        const n = [] // { id: 'start', avgTime: -.1 },
+        const l = [] // { source: 'start', target: 'job 1', value: 110 },
+
+        const meta = {
+
+        }
+
+        let nodeBuckets = {}
+
+        for (const [key, value] of Object.entries(rawData)) {
+            if (key === 'TopJobDestinations') continue
+
+            const [k, metric] = key.split('_')
+            // console.log(`${k}'s ${metric}: ${value}`);
+
+            if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = { id: k }
+
+            if (metric === 'TopJobDestinations') {
+
+            }
+            else {
+                nodeBuckets[k][metric] = value
+            }
+
+        }
+
+        console.log(nodeBuckets)
+
+        return { nodes: Object.values(nodeBuckets), links: l, meta: '' }
 
     }
 
-    /* bundles input states and post to server to receive corresponding dataset*/
+    /* bundles input states and post to server then receives corresponding dataset*/
     const propagateData = (metrics) => {
         // start loading animation
         setLoading(true)
@@ -66,26 +109,33 @@ export default function Dashboard() {
         // request dataset
         const url = API_PATH +
             `${metrics.game}/metrics?start_datetime=${encodeURIComponent(metrics.startDate)}&end_datetime=${encodeURIComponent(metrics.endDate)}` +
-            `&metrics=[JobName,JobStartCount,JobCompleteCount,JobTasksCompleted,JobCompletionTime,SessionCount]`
+            `&metrics=[JobName,JobStartCount,JobCompleteCount,TopJobDestinations]`
         fetch(url)
-            .then(res => res.json())
+            .then(res =>  res.json())
             .then(data => {
+                if (data.status !== 'SUCCESS') throw data.msg
+
                 setMetrics(metrics)
 
                 console.log(data)
-                setData(data.val)
+                setData(convert(data.val))
 
                 // stop loading animation
                 setLoading(false)
                 // store response to parent component state
                 setInitialized(true)
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error)
+                setLoading(false)
+
+                alert(error)
+            })
 
     }
 
     return (
-        <div className='w-screen h-full p-3'>
+        <div className='w-screen h-full'>
             {!initialized ?
                 <VisForm
                     fileList={fileList}
