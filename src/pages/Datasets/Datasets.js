@@ -33,9 +33,9 @@ export default function Datasets() {
 
 
     return (
-        <div className="max-w-2xl px-5 pb-10 container">
+        <div className="max-w-2xl px-5  pt-20 container">
 
-            <h2 className="pt-5 pb-2 text-3xl font-medium">choose a game</h2>
+            <h2 className="pb-2 text-4xl font-bold">choose a game</h2>
             {fileList ?
                 <GameList fileList={fileList} game={game} setGame={setGame} /> : <></>
             }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
-import { RefreshIcon } from '@heroicons/react/solid'
+import { CogIcon } from '@heroicons/react/solid'
 
 
 export default function VisForm({ fileList, loading, propagateData }) {
@@ -152,7 +152,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
                         label='Visualize'
                     />
                     {loading ?
-                        <><RefreshIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</>
+                        <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</>
                         : <></>
                     }
                 </div>

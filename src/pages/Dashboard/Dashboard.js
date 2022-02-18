@@ -70,14 +70,16 @@ export default function Dashboard() {
         // job3_JobStartCount: "1"
 
         const n = [] // { id: 'start', avgTime: -.1 },
-        const l = [] // { source: 'start', target: 'job 1', value: 110 },
 
         const meta = {
 
         }
 
-        let nodeBuckets = {}
-
+        // nodes
+        let nodeBuckets = {
+            "job-1": {id:'job-1',JobName:'headless'},
+            "jobNone": {id:'jobNone',JobName:'start'}
+        }
         for (const [key, value] of Object.entries(rawData)) {
             if (key === 'TopJobDestinations') continue
 
@@ -92,8 +94,22 @@ export default function Dashboard() {
             else {
                 nodeBuckets[k][metric] = value
             }
+        }
+
+        // {'0': [(1, 18), (3, 1), (5, 1), (2, 1)], '1': [(14, 13), (9, 2), (10, 1), (11, 1)], '2': [(4, 27), (14, 19), (5, 10), (0, 2), (9, 2)], '3': [(6, 3), (2, 2), (12, 1), (15, 1), (10, 1)], '4': [(7, 67), (18, 40), (0, 27), (12, 3), (14, 1)], '5': [(2, 65), (6, 4), (9, 4), (10, 1), (0, 1)], '6': [(5, 10), (3, 9), (0, 9), (2, 6), (9, 2)], '7': [(18, 56), (6, 5), (12, 4), (5, 2), (2, 2)], '8': [(4, 124)], '9': [(10, 3), (13, 1), (11, 1)], '10': [(13, 7), (16, 1), (5, 1)], '11': [(10, 4)], '12': [(7, 11), (6, 6), (5, 4), (2, 3), (11, 1)], '13': [(12, 2), (16, 1)], '14': [(9, 13), (10, 5), (4, 2), (11, 2), (3, 1)], '-1': [(12, 16), (6, 16), (1, 14), (0, 10), (7, 10)], 'None': [(7, 7), (3, 4), (18, 4), (14, 2), (12, 2)], '15': [(11, 1)], '16': [(10, 1)], '17': [(11, 1)], '18': [(12, 74), (7, 3)]}
+
+        // links
+        let l = [] // { source: 'start', target: 'job 1', value: 110 }
+        const rawLinks = JSON.parse(rawData.TopJobDestinations.replaceAll('\'', '\"').replaceAll('(', '[').replaceAll(')', ']'))
+        for (const [key, value] of Object.entries(rawLinks)) {
+            console.log('link', key, value)
+
+            value.forEach(target => {
+                l.push({ source: `job${key}`, target: `job${target[0]}`, value: target[1] })
+            });
 
         }
+
 
         console.log(nodeBuckets)
 
@@ -109,9 +125,9 @@ export default function Dashboard() {
         // request dataset
         const url = API_PATH +
             `${metrics.game}/metrics?start_datetime=${encodeURIComponent(metrics.startDate)}&end_datetime=${encodeURIComponent(metrics.endDate)}` +
-            `&metrics=[JobName,JobStartCount,JobCompleteCount,TopJobDestinations]`
+            `&metrics=[JobName,JobStartCount,JobCompleteCount,JobsAttempted,TopJobDestinations]`
         fetch(url)
-            .then(res =>  res.json())
+            .then(res => res.json())
             .then(data => {
                 if (data.status !== 'SUCCESS') throw data.msg
 

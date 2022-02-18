@@ -1,5 +1,5 @@
 
-import { AdjustmentsIcon, XIcon, RefreshIcon } from '@heroicons/react/solid'
+import { AdjustmentsIcon, XIcon, CogIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import LargeButton from '../../components/buttons/LargeButton'
 
@@ -93,7 +93,7 @@ export default function Settings({ propagateData, loading, metrics }) {
                             label='visualize'
                         />
                         {loading ?
-                            <><RefreshIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
+                            <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
                             : <></>
                         }
                     </div>
