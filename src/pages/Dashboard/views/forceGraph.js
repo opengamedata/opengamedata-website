@@ -119,7 +119,7 @@ function ForceGraph({
         .selectAll('text')
         .data(nodes)
         .join('text')
-        .text((d) => d.id)
+        .text(({ index: i }) => T[i])
         .attr('font-size', 8)
         .attr('stroke', 'white')
         .attr('stroke-width', .2)
@@ -132,7 +132,7 @@ function ForceGraph({
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
     if (TP) link.append('title').text(({ index: i }) => TP[i]);
     if (G) node.attr("fill", ({ index: i }) => color(G[i]));
-    if (T) node.append("title").text(({ index: i }) => T[i]);
+    if (T) node.append("title").text(({ index: i }) => N[i]);
     if (invalidation != null) invalidation.then(() => simulation.stop());
 
     function intern(value) {
