@@ -16,9 +16,10 @@ export default function JobGraph({ data }) {
         const chart = ForceGraph(data, {
             nodeId: d => d.id,
             nodeGroup: d => d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount),
-            nodeTitle: d => `${d.id}: ${d.JobName}`,
-            // linkStrokeWidth: l => Math.sqrt(l.value),
-            // linkTitle: l => l.value,
+            nodeTitle: d => d.JobName,
+            // linkStrokeWidth: l => l.value,
+            linkStrokeWidth: l => Math.sqrt(l.value),
+            linkTitle: l => `${l.value} players moved from ${l.source} to ${l.target}`,
             // width: 500,
             // height: 300,
             // invalidation // a promise to stop the simulation when the cell is re-run
