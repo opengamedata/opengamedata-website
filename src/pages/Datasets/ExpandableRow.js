@@ -15,7 +15,7 @@ export default function ExpandableRow(props) {
     }
 
     return (
-        <div className="px-2 odd:bg-slate-100 even:bg-white last:rounded-b-md hover:bg-slate-300 transition duration-300">
+        <div className="px-2 odd:bg-stone-100 even:bg-white last:rounded-b-md hover:bg-stone-300 transition duration-300">
             <div className="grid grid-cols-4 gap-4" onClick={toggleRow}>
                 <div className='p-2'>{props.entry.start_date ? props.entry.start_date : '-'}</div>
                 <div className='p-2'>{props.entry.end_date ? props.entry.end_date : '-'}</div>

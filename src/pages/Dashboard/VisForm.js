@@ -67,11 +67,17 @@ export default function VisForm({ fileList, loading, propagateData }) {
 
 
     return (
-        <div className="bg-white container shadow-sm p-10 max-w-xl mt-10">
-            <p className='text-3xl mb-7'>designer dashboard</p>
+        <div className='container flex mt-16'>
 
+            <div className='max-w-xl mb-10 pr-10 '>
+                <p className='mb-3 text-4xl font-bold'>Designer Dashboard</p>
+                <p>
+                    A visualization tool that allows you to intuitively interpret the datasets collected from gameplays. 
+                    Pick a game and a time range to begin.
+                </p>
+            </div>
 
-            <div className="container">
+            <div className="bg-white mb-10 shadow-sm px-7 py-7 max-w-xl">
                 <div className=" mb-3">
 
                     {/* game selection */}
@@ -125,7 +131,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
                 </div>
 
                 {/* <div className="row"><h3 className='text-xl font-bold'>total playtime (minutes)</h3></div> */}
-                <div className="row columns-2 mb-5">
+                <div className="row columns-2 mb-3">
                     {/* min playtime selection */}
                     {/* <div className="col">
                         <div className="input-group-prepend">
@@ -157,10 +163,9 @@ export default function VisForm({ fileList, loading, propagateData }) {
                     }
                 </div>
 
-
-
-
             </div>
+
         </div>
+
     )
 }

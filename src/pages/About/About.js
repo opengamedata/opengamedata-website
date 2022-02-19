@@ -7,12 +7,18 @@ export default function About() {
         <div className="container pt-16 flex flex-wrap">
             {/* <JobGraph data={dummyData} /> */}
             <div className="mb-10 pr-10 max-w-xl">
-                <p className="font-bold text-4xl mb-3">About Open Game Data</p>
+                <p className="font-bold text-4xl mb-3">Open Game Data</p>
 
                 <p>
                     These anonymous data are provided in service of future educational data mining research.
-                    They are made available under the Creative Commons CCO 1.0 Universal license.
-                    Source code for this website and related data processing is available on github.
+                    They are made available under the <a
+                        className="text-yellow-600"
+                        href="https://creativecommons.org/publicdomain/zero/1.0/"
+                        target="_blank">Creative Commons CCO 1.0 Universal license</a>.
+                    Source code for this website and related data processing is available on <a
+                        className="text-yellow-600"
+                        href="https://github.com/opengamedata"
+                        target="_blank">github</a>.
                 </p>
             </div>
 
@@ -23,7 +29,7 @@ export default function About() {
                     <br />
                     <br />
                     The processed CSV contains calculated features from each game play session and organizes them all in one row. These features are described in the game's readme.md file in the opengamedata repository.
-                    You can find them once you have chosen a game at the <Link to="/datasets">Datasets tab</Link>
+                    You can find them once you have chosen a game at the <Link className="text-yellow-600" to="/datasets">Datasets tab</Link>.
                     <br />
                     <br />
                     For simple educational data mining purposes, the processed files can be used as examples to predict behaviors such as quitting or performance on an embedded assessment.

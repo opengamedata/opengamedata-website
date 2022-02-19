@@ -59,6 +59,17 @@ export default function Dashboard() {
 
         }
 
+        // job0_JobName: "kelp-urchin-barren-predict"
+        // job0_JobStartCount: "37"
+
+        // job0_JobsAttempted: "0"
+        // job0_JobsAttempted__avg_time_complete: "267.2608695652174"
+        // job0_JobsAttempted__job_name: "kelp-urchin-barren-predict"
+        // job0_JobsAttempted__num_completes: "23"
+        // job0_JobsAttempted__num_starts: "37"
+        // job0_JobsAttempted__percent_complete: "38.333333333333336"
+        // job0_JobsAttempted__std_dev_complete: "154.25487096811986"
+
         // nodes { id: 'start', avgTime: -.1 }
         let nodeBuckets = {
             // "job-1": { id: 'job-1', JobName: 'unknown origin' },
@@ -82,7 +93,7 @@ export default function Dashboard() {
 
 
         // links { source: 'start', target: 'job 1', value: 110 }
-        let l = [] 
+        let l = []
         const rawLinks = JSON.parse(rawData.TopJobDestinations.replaceAll('\'', '\"').replaceAll('(', '[').replaceAll(')', ']'))
         for (const [key, value] of Object.entries(rawLinks)) {
             console.log('link', key, value)
@@ -140,7 +151,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className='w-screen h-full'>
+        <div className='w-screen'>
             {!initialized ?
                 <VisForm
                     fileList={fileList}

@@ -17,7 +17,8 @@ export default function JobGraph({ data }) {
             nodeId: d => d.id,
             nodeGroup: d => d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount),
             nodeTitle: d => d.JobName,
-            // linkStrokeWidth: l => l.value,
+            nodeDetails: d => `${d.JobCompleteCount} of ${d.JobStartCount} (${(100 * d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount)).toFixed(2)}%) players completed this job`,
+
             linkStrokeWidth: l => Math.sqrt(l.value),
             linkTitle: l => `${l.value} players moved from ${l.source} to ${l.target}`,
             // width: 500,

@@ -37,7 +37,7 @@ export default function Navigation() {
                         ease-in-out
                         hover:text-yellow-300
                         hover:bg-slate-800
-                        " to="/dashboard">Visulizations</NavLink>
+                        " to="/dashboard">Dashboard</NavLink>
             </div>
         </nav>
     )

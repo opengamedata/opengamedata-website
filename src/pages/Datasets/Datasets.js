@@ -33,9 +33,9 @@ export default function Datasets() {
 
 
     return (
-        <div className="max-w-2xl px-5  pt-20 container">
+        <div className="max-w-2xl px-5 py-16 container">
 
-            <h2 className="pb-2 text-4xl font-bold">choose a game</h2>
+            <h2 className="pb-3 text-4xl font-bold">Choose a Game</h2>
             {fileList ?
                 <GameList fileList={fileList} game={game} setGame={setGame} /> : <></>
             }
@@ -45,7 +45,7 @@ export default function Datasets() {
                 <>
                     <InfoCard game={game} />
 
-                    <h2 className="pt-7 pb-2 text-3xl font-medium">datasets</h2>
+                    <h2 className="pt-7 pb-2 text-3xl font-medium">Datasets</h2>
                     <Table datasets={fileList[game]} />
                 </> : <></>
             }

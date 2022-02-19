@@ -13,6 +13,7 @@ function ForceGraph({
     nodeGroup, // given d in nodes, returns an (ordinal) value for color
     nodeGroups, // an array of ordinal values representing the node groups
     nodeTitle, // given d in nodes, a title string
+    nodeDetails,
     nodeFill = "currentColor", // node stroke fill (if not using a group color encoding)
     nodeStroke = "#fff", // node stroke color
     nodeStrokeWidth = 2, // node stroke width, in pixels
@@ -26,7 +27,7 @@ function ForceGraph({
     linkStrokeOpacity = 0.6, // link stroke opacity
     linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
     linkStrokeLinecap = "round", // link stroke linecap
-    linkStrength,
+    linkStrength = .1,
     linkDistance = 100,
     colors = d3.interpolateRdYlGn, // an array of color values, for the node groups
     width = 640, // outer width, in pixels
@@ -41,6 +42,8 @@ function ForceGraph({
     const LT = d3.map(links, linkTarget).map(intern);
     if (nodeTitle === undefined) nodeTitle = (_, i) => N[i];
     const T = nodeTitle == null ? null : d3.map(nodes, nodeTitle);
+    if (nodeDetails === undefined) nodeDetails = (_, i) => N[i];
+    const D = nodeDetails == null ? null : d3.map(nodes, nodeDetails);
     const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
     const W = typeof linkStrokeWidth !== "function" ? null : d3.map(links, linkStrokeWidth);
     const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
@@ -132,7 +135,7 @@ function ForceGraph({
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
     if (TP) link.append('title').text(({ index: i }) => TP[i]);
     if (G) node.attr("fill", ({ index: i }) => color(G[i]));
-    if (T) node.append("title").text(({ index: i }) => N[i]);
+    if (T) node.append("title").text(({ index: i }) => D[i]);
     if (invalidation != null) invalidation.then(() => simulation.stop());
 
     function intern(value) {
