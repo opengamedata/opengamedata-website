@@ -70,9 +70,9 @@ export default function VisForm({ fileList, loading, propagateData }) {
         <div className='container flex mt-16'>
 
             <div className='max-w-xl mb-10 pr-10 '>
-                <p className='mb-3 text-4xl font-bold'>Designer Dashboard</p>
+                <p className='mb-3 text-4xl font-light'>Designer Dashboard</p>
                 <p>
-                    A visualization tool that allows you to intuitively interpret the datasets collected from gameplays. 
+                    A visualization tool for you to intuitively interpret the datasets collected from gameplays. 
                     Pick a game and a time range to begin.
                 </p>
             </div>
@@ -89,7 +89,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
                             <select className="form-select block w-full"
                                 value={game} onChange={(e) => setGame(e.target.value)}
                             >
-                                <option>Choose...</option>
+                                <option> </option>
                                 {fileList ? gameList() : <></>}
                             </select>
                         </div>

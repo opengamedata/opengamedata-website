@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Navigation />
-      <div className='App h-screen w-screen pt-12  bg-stone-100'>
+      <div className='App h-screen w-screen pt-12 bg-gradient-to-br from-white via-stone-50 to-stone-200'>
 
         <Routes>
           <Route path="/" element={<About />} />
