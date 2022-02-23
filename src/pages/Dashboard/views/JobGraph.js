@@ -18,11 +18,12 @@ export default function JobGraph({ data }) {
             nodeGroup: d => d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount),
             nodeTitle: d => d.JobName,
             nodeDetails: d => `${d.JobCompleteCount} of ${d.JobStartCount} (${(100 * d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount)).toFixed(2)}%) players completed this job`,
-
+            // nodeRadius: d=> d.time,
             linkStrokeWidth: l => Math.sqrt(l.value),
-            linkTitle: l => `${l.value} players moved from ${l.source} to ${l.target}`,
-            // width: 500,
-            // height: 300,
+            linkTitle: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
+            // linkStrength: .1,
+            linkDistance: 50,
+            nodeStrength: -5,
             // invalidation // a promise to stop the simulation when the cell is re-run
             parent: svg
         })
@@ -35,7 +36,7 @@ export default function JobGraph({ data }) {
         <>
             <svg
                 ref={ref}
-                className="w-full h-full mx-0"
+                className="w-full mx-0"
             >
             </svg>
         </>

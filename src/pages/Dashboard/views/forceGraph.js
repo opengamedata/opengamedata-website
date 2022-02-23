@@ -19,7 +19,7 @@ function ForceGraph({
     nodeStrokeWidth = 2, // node stroke width, in pixels
     nodeStrokeOpacity = 1, // node stroke opacity
     nodeRadius = 5, // node radius, in pixels
-    nodeStrength = .1,
+    nodeStrength,
     linkSource = ({ source }) => source, // given d in links, returns a node identifier string
     linkTarget = ({ target }) => target, // given d in links, returns a node identifier string
     linkTitle,
@@ -27,11 +27,11 @@ function ForceGraph({
     linkStrokeOpacity = 0.6, // link stroke opacity
     linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
     linkStrokeLinecap = "round", // link stroke linecap
-    linkStrength = .1,
-    linkDistance = 100,
+    linkStrength,
+    linkDistance,
     colors = d3.interpolateRdYlGn, // an array of color values, for the node groups
-    width = 640, // outer width, in pixels
-    height = 400, // outer height, in pixels
+    width = 600, // outer width, in pixels
+    height = 600, // outer height, in pixels
     invalidation, // when this promise resolves, stop the simulation
     parent,
 
@@ -181,6 +181,19 @@ function ForceGraph({
             .on("drag", dragged)
             .on("end", dragended);
     }
+
+    function handleZoom(e) {
+        // apply transform to the chart
+
+        text.attr('transform', e.transform);
+        node.attr('transform', e.transform);
+        link.attr('transform', e.transform);
+    }
+
+    let zoom = d3.zoom()
+        .on('zoom', handleZoom);
+
+    svg.call(zoom);
 
     return Object.assign(svg.node(), { scales: { color } });
 }

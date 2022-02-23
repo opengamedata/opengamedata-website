@@ -56,7 +56,7 @@ export default function Dashboard() {
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
         const meta = {
-
+            SessionCount: rawData.SessionCount
         }
 
         // job0_JobName: "kelp-urchin-barren-predict"
@@ -71,10 +71,7 @@ export default function Dashboard() {
         // job0_JobsAttempted__std_dev_complete: "154.25487096811986"
 
         // nodes { id: 'start', avgTime: -.1 }
-        let nodeBuckets = {
-            // "job-1": { id: 'job-1', JobName: 'unknown origin' },
-            // "jobNone": { id: 'start', JobName: 'start' }
-        }
+        let nodeBuckets = {}
         for (const [key, value] of Object.entries(rawData)) {
             if (key === 'TopJobDestinations' || key === 'SessionCount') continue
 
@@ -83,30 +80,29 @@ export default function Dashboard() {
 
             if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = { id: k }
 
-            if (metric === 'TopJobDestinations') {
+            if (key === 'JobsAttempted') {
+                console.log('attempted:', key, value)
+            }
 
-            }
-            else {
-                nodeBuckets[k][metric] = value
-            }
+            nodeBuckets[k][metric] = value
         }
-
 
         // links { source: 'start', target: 'job 1', value: 110 }
         let l = []
         const rawLinks = JSON.parse(rawData.TopJobDestinations.replaceAll('\'', '\"').replaceAll('(', '[').replaceAll(')', ']'))
         for (const [key, value] of Object.entries(rawLinks)) {
-            console.log('link', key, value)
+            // console.log('link', key, value)
 
             value.forEach(target => {
                 l.push({
                     source: key === 'None' ? 'start' : `job${key}`,
+                    sourceName: nodeBuckets[`job${key}`].JobName,
                     target: target[0] === 'None' ? 'start' : `job${target[0]}`,
+                    targetName: nodeBuckets[`job${target[0]}`].JobName,
                     value: target[1]
                 })
             });
         }
-
 
         console.log(nodeBuckets)
 
