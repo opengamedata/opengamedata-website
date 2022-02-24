@@ -106,7 +106,7 @@ export default function Dashboard() {
 
         console.log(nodeBuckets)
 
-        return { nodes: Object.values(nodeBuckets), links: l, meta: '' }
+        return { nodes: Object.values(nodeBuckets), links: l, meta: meta }
 
     }
 

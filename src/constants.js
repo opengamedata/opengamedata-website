@@ -124,5 +124,8 @@ export const reducedDummy = {
         { source: 'job 2', target: 'quit ', sourceName: 'job 2', targetName: 'quit ', value: 2 },
         { source: 'job 3', target: 'job 4', sourceName: 'job 3', targetName: 'job 4', value: 43 },
         { source: 'job 4', target: 'quit ', sourceName: 'job 4', targetName: 'quit ', value: 8 },
-    ]
+    ],
+    meta:{
+        SessionCount: 10
+    }
 }

@@ -6,7 +6,7 @@ import Navigation from './components/navigation/Navigation';
 import About from './pages/About/About';
 import Datasets from './pages/Datasets/Datasets';
 import Dashboard from './pages/Dashboard/Dashboard';
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (

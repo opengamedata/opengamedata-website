@@ -21,9 +21,9 @@ export default function JobGraph({ data }) {
             // nodeRadius: d=> d.time,
             linkStrokeWidth: l => Math.sqrt(l.value),
             linkTitle: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
-            // linkStrength: .1,
-            linkDistance:100,
-            nodeStrength: -5,
+            linkStrength: 1,
+            linkDistance: 100,
+            nodeStrength: -1000,
             // invalidation // a promise to stop the simulation when the cell is re-run
             parent: svg
         })
@@ -34,11 +34,10 @@ export default function JobGraph({ data }) {
 
     return (
         <>
-            <svg
-                ref={ref}
-                className="w-full mx-0"
-            >
-            </svg>
+            <svg ref={ref} className="w-full" ></svg>
+            <div className="fixed bottom-3 left-3 font-light text-sm">
+                <p className="">Session Count: {data.meta.SessionCount} </p>
+            </div>
         </>
 
 

@@ -5,7 +5,7 @@ export const useD3 = (renderChartFn, dependencies=[]) => {
     const ref = useRef();
 
     useEffect(() => {
-        console.log('hook triggered')
+        // console.log('hook triggered')
         renderChartFn(d3.select(ref.current));
         return () => {};
       }, dependencies);

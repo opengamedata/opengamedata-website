@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function About() {
     return (
         <div className="container pt-16 flex flex-wrap">
-            {/* <JobGraph data={reducedDummy} /> */}
+            <JobGraph data={reducedDummy} />
             <div className="mb-10 pr-10 max-w-xl">
                 {/* <p className="font-light text-4xl mb-3">Open Game Data</p> */}
 

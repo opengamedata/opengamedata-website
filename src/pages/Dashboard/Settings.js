@@ -48,17 +48,21 @@ export default function Settings({ propagateData, loading, metrics }) {
         setMaxPlaytime(metrics.maxPlaytime)
     }, [adjustMode])
 
+    useEffect(()=>{
+        if(!loading) setAdejustMode(false)
+    },[loading])
+
     return (
         <div className=" bg-white fixed top-14 left-3 p-3 w-content border shadow-sm">
             <div className='flex justify-between mb-2'>
                 <div>
-                    <span className='font-medium text-lg'>{game}&nbsp;</span>
+                    <span className='font-medium '>{game}&nbsp;</span>
                     {/* <span>version</span> */}
                 </div>
                 {adjustMode ?
-                    <XIcon className="cursor-pointer h-7 w-7" onClick={() => setAdejustMode(false)} />
+                    !loading ? <XIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(false)} />:<></>
                     :
-                    <AdjustmentsIcon className="cursor-pointer h-7 w-7" onClick={() => setAdejustMode(true)} />
+                    <AdjustmentsIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(true)} />
                 }
             </div>
 
@@ -100,9 +104,9 @@ export default function Settings({ propagateData, loading, metrics }) {
                 </div>
                 :
                 <div>
-                    <div>{startDate.replace('T', ' ')}</div>
-                    <div>to</div>
-                    <div>{endDate.replace('T', ' ')}</div>
+                    <div className='text-sm'>{startDate.replace('T', ' ')}</div>
+                    <div className='text-sm'>to</div>
+                    <div className='text-sm'>{endDate.replace('T', ' ')}</div>
                 </div>
             }
 
