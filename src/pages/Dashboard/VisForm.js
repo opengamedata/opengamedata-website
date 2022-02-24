@@ -72,7 +72,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
             <div className='max-w-xl mb-10 pr-10 '>
                 <p className='mb-3 text-4xl font-light'>Designer Dashboard</p>
                 <p>
-                    A visualization tool for you to intuitively interpret the datasets collected from gameplays. 
+                    A visualization tool for you to intuitively interpret the datasets collected from gameplays.
                     Pick a game and a time range to begin.
                 </p>
             </div>
@@ -83,8 +83,8 @@ export default function VisForm({ fileList, loading, propagateData }) {
                     {/* game selection */}
                     <div className="col">
                         <div className="input-group">
-                            <div className="mb-1">
-                                <span className='text-xl font-bold' >game</span>
+                            <div className="mb-2">
+                                <span className='text-xl font-light' >Game</span>
                             </div>
                             <select className="form-select block w-full"
                                 value={game} onChange={(e) => setGame(e.target.value)}
@@ -111,22 +111,21 @@ export default function VisForm({ fileList, loading, propagateData }) {
                     </div> */}
                 </div>
 
-                <div className="row"><h3 className='text-xl font-bold'>date</h3></div>
+                <div className="row"><h3 className='text-xl font-light mb-2'>Date</h3></div>
                 <div className="columns-2  mb-5">
                     {/* date-from selection */}
                     <div className="col">
-                        <div className="input-group-prepend">
-                            <h4 className="text-sm" >From</h4>
-                        </div>
                         <input type='datetime-local' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
+                        <h4 className="text-sm" >From</h4>
+
                     </div>
 
                     {/* date-to selection */}
                     <div className="col">
-                        <div className="input-group-prepend">
-                            <h4 className="text-sm" >To</h4>
-                        </div>
                         <input type='datetime-local' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
+                        <h4 className="text-sm" >To</h4>
+
+
                     </div>
                 </div>
 
@@ -134,7 +133,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
                 <div className="row columns-2 mb-3">
                     {/* min playtime selection */}
                     {/* <div className="col">
-                        <div className="input-group-prepend">
+                        <div className="">
                             <h4 className="text-sm" >From</h4>
                         </div>
                         <input type='number' className='block w-full'
@@ -143,7 +142,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
 
                     {/* max playtime selection */}
                     {/* <div className="col">
-                        <div className="input-group-prepend">
+                        <div className="">
                             <h4 className="text-sm" >To</h4>
                         </div>
                         <input type='number' className='block w-full'

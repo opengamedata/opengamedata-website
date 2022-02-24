@@ -22,7 +22,7 @@ export default function JobGraph({ data }) {
             linkStrokeWidth: l => Math.sqrt(l.value),
             linkTitle: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
             // linkStrength: .1,
-            linkDistance: 50,
+            linkDistance:100,
             nodeStrength: -5,
             // invalidation // a promise to stop the simulation when the cell is re-run
             parent: svg
