@@ -59,9 +59,6 @@ export default function Dashboard() {
             SessionCount: rawData.SessionCount
         }
 
-        // job0_JobName: "kelp-urchin-barren-predict"
-        // job0_JobStartCount: "37"
-
         // job0_JobsAttempted: "0"
         // job0_JobsAttempted__avg_time_complete: "267.2608695652174"
         // job0_JobsAttempted__job_name: "kelp-urchin-barren-predict"
