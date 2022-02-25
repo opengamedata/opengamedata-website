@@ -131,7 +131,7 @@ function ForceGraph({
     // .attr('user-select', 'none')
 
 
-    console.log(node.attr('r', (i) => { console.log(i) }))
+    // console.log(node.attr('r', (i) => { console.log(i) }))
     console.log(R)
     if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
@@ -157,7 +157,7 @@ function ForceGraph({
             .attr("cy", d => d.y);
 
         text
-            .attr("x", d => d.x + 10)
+            .attr("x", ({ index: i, x: x }) => x + R[i] + 3)
             .attr("y", d => d.y);
     }
 
