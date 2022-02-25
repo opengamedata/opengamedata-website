@@ -55,19 +55,16 @@ export default function Dashboard() {
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
+
+        // metadata
         const meta = {
-            SessionCount: rawData.SessionCount
+            SessionCount: rawData.SessionCount,
+            maxAvgTime: 0,
+            minAvgTime: Infinity
         }
 
-        // job0_JobsAttempted: "0"
-        // job0_JobsAttempted__avg_time_complete: "267.2608695652174"
-        // job0_JobsAttempted__job_name: "kelp-urchin-barren-predict"
-        // job0_JobsAttempted__num_completes: "23"
-        // job0_JobsAttempted__num_starts: "37"
-        // job0_JobsAttempted__percent_complete: "38.333333333333336"
-        // job0_JobsAttempted__std_dev_complete: "154.25487096811986"
 
-        // nodes { id: 'start', avgTime: -.1 }
+        // nodes
         let nodeBuckets = {}
         for (const [key, value] of Object.entries(rawData)) {
             if (key === 'TopJobDestinations' || key === 'SessionCount') continue
@@ -77,14 +74,17 @@ export default function Dashboard() {
 
             if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = { id: k }
 
-            if (key === 'JobsAttempted') {
-                console.log('attempted:', key, value)
+            if (metric === 'JobsAttempted-avg-time-complete') {
+                if (parseFloat(value) > meta.maxAvgTime) meta.maxAvgTime = parseFloat(value)
+                if (parseFloat(value) < meta.minAvgTime) meta.minAvgTime = parseFloat(value)
             }
 
             nodeBuckets[k][metric] = value
         }
 
-        // links { source: 'start', target: 'job 1', value: 110 }
+        console.log(meta.maxAvgTime, meta.minAvgTime)
+
+        // links
         let l = []
         const rawLinks = JSON.parse(rawData.TopJobDestinations.replaceAll('\'', '\"').replaceAll('(', '[').replaceAll(')', ']'))
         for (const [key, value] of Object.entries(rawLinks)) {

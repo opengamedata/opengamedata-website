@@ -7,9 +7,9 @@ import { useEffect } from "react";
 
 export default function JobGraph({ data }) {
 
-    // useEffect(() => {
-    //     console.log('reload')
-    // }, [])
+    const projectRadius = d3.scaleLinear()
+        .domain([data.meta.minAvgTime, data.meta.maxAvgTime])
+        .range([3, 10])
 
     const ref = useD3((svg) => {
 
@@ -17,8 +17,15 @@ export default function JobGraph({ data }) {
             nodeId: d => d.id,
             nodeGroup: d => d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount),
             nodeTitle: d => d.JobName,
-            nodeDetails: d => `${d.JobCompleteCount} of ${d.JobStartCount} (${(100 * d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount)).toFixed(2)}%) players completed this job`,
-            // nodeRadius: d=> d.time,
+            nodeDetails: d => `${d.JobCompleteCount} of ${d.JobStartCount} (${(100 * d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount)).toFixed(2)}%) players completed this job
+average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed(2)}
+standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
+            nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
+            // nodeRadius: d => 7,
+            // nodeRadius: d => {
+            //     console.log(d['JobsAttempted-avg-time-complete'])
+            //     return d['JobsAttempted-avg-time-complete']
+            // },
             linkStrokeWidth: l => Math.sqrt(l.value),
             linkTitle: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
             linkStrength: 1,
@@ -27,10 +34,9 @@ export default function JobGraph({ data }) {
             // invalidation // a promise to stop the simulation when the cell is re-run
             parent: svg
         })
-
-        // const json = circle.append('p').text(JSON.stringify(data))
-
     }, [data])
+
+
 
     return (
         <>

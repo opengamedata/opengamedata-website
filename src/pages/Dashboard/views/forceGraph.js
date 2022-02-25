@@ -43,6 +43,9 @@ function ForceGraph({
     if (nodeDetails === undefined) nodeDetails = (_, i) => N[i];
     const D = nodeDetails == null ? null : d3.map(nodes, nodeDetails);
     const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
+    if (!nodeRadius) nodeRadius = (_, i) => N[i]
+    const R = nodeRadius == null ? null : d3.map(nodes, nodeRadius)
+
     const W = typeof linkStrokeWidth !== "function" ? null : d3.map(links, linkStrokeWidth);
     const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
     if (linkTitle === undefined) linkTitle = (_, i) => LS[i];
@@ -77,12 +80,12 @@ function ForceGraph({
     svg.append('defs').append('marker')
         .attr('id', 'arrowhead')
         .attr('viewBox', '-0 -5 10 10')
-        .attr('refX', 8 * nodeRadius)
+        .attr('refX', 40)
         .attr('refY', 0)
         .attr('orient', 'auto')
         .attr('markerUnits', 'userSpaceOnUse')
-        .attr('markerWidth', nodeRadius)
-        .attr('markerHeight', nodeRadius)
+        .attr('markerWidth', 10)
+        .attr('markerHeight', 10)
         .attr('xoverflow', 'visible')
         .append('svg:path')
         .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
@@ -113,7 +116,7 @@ function ForceGraph({
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-        .attr("r", nodeRadius)
+        .attr("r", 5)
         .call(drag(simulation));
 
     const text = svg.append('g')
@@ -124,15 +127,17 @@ function ForceGraph({
         .attr('font-size', 8)
         .attr('stroke', 'white')
         .attr('stroke-width', .2)
-        .attr('fill', 'black')
+        .attr('fill', 'black');
     // .attr('user-select', 'none')
 
 
-
+    console.log(node.attr('r', (i) => { console.log(i) }))
+    console.log(R)
     if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
     if (TP) link.append('title').text(({ index: i }) => TP[i]);
     if (G) node.attr("fill", ({ index: i }) => color(G[i]));
+    if (R) node.attr('r', ({ index: i }) => R[i]);
     if (T) node.append("title").text(({ index: i }) => D[i]);
     if (invalidation != null) invalidation.then(() => simulation.stop());
 
@@ -152,7 +157,7 @@ function ForceGraph({
             .attr("cy", d => d.y);
 
         text
-            .attr("x", d => d.x + nodeRadius)
+            .attr("x", d => d.x + 10)
             .attr("y", d => d.y);
     }
 

@@ -108,12 +108,12 @@ export const dummyData = [
 
 export const reducedDummy = {
     nodes: [ // represents jobs: {id: name of the job, group: average time taken (seconds)} 
-        { id: 'start', JobName: 'start', JobStartCount: 100, JobCompleteCount: 0, },
-        { id: 'job 1', JobName: 'job 1', JobStartCount: 100, JobCompleteCount: 100, },
-        { id: 'job 2', JobName: 'job 2', JobStartCount: 100, JobCompleteCount: 80, },
-        { id: 'job 3', JobName: 'job 3', JobStartCount: 100, JobCompleteCount: 30, },
-        { id: 'job 4', JobName: 'job 4', JobStartCount: 100, JobCompleteCount: 10, },
-        { id: 'quit ', JobName: 'quit', JobStartCount: 100, JobCompleteCount: 0, },
+        { id: 'start', JobName: 'start', JobStartCount: 100, JobCompleteCount: 0, 'JobsAttempted-avg-time-complete': 180, 'JobsAttempted-std-dev-complete': .5 },
+        { id: 'job 1', JobName: 'job 1', JobStartCount: 100, JobCompleteCount: 100, 'JobsAttempted-avg-time-complete': 380, 'JobsAttempted-std-dev-complete': .5 },
+        { id: 'job 2', JobName: 'job 2', JobStartCount: 100, JobCompleteCount: 80, 'JobsAttempted-avg-time-complete': 780, 'JobsAttempted-std-dev-complete': .5 },
+        { id: 'job 3', JobName: 'job 3', JobStartCount: 100, JobCompleteCount: 30, 'JobsAttempted-avg-time-complete': 580, 'JobsAttempted-std-dev-complete': .5 },
+        { id: 'job 4', JobName: 'job 4', JobStartCount: 100, JobCompleteCount: 10, 'JobsAttempted-avg-time-complete': 480, 'JobsAttempted-std-dev-complete': .5 },
+        { id: 'quit ', JobName: 'quit', JobStartCount: 100, JobCompleteCount: 0, 'JobsAttempted-avg-time-complete': 180, 'JobsAttempted-std-dev-complete': .5 },
     ],
     links: [ // represents player transitions: {value: players who made this transition}
         { source: 'start', target: 'job 1', sourceName: 'start', targetName: 'job 1', value: 110 },
@@ -126,6 +126,8 @@ export const reducedDummy = {
         { source: 'job 4', target: 'quit ', sourceName: 'job 4', targetName: 'quit ', value: 8 },
     ],
     meta:{
-        SessionCount: 10
+        SessionCount: 10,
+        maxAvgTime: 1000,
+        minAvgTime: 130
     }
 }
