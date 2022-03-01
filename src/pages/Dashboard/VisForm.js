@@ -72,7 +72,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
             <div className='max-w-xl mb-10 pr-10 '>
                 <p className='mb-3 text-4xl font-light'>Designer Dashboard</p>
                 <p>
-                    A visualization tool for you to intuitively interpret the datasets collected from gameplays.
+                    A visualization tool for you to intuitively interpret data collected from gameplays.
                     Pick a game and a time range to begin.
                 </p>
             </div>
@@ -115,14 +115,14 @@ export default function VisForm({ fileList, loading, propagateData }) {
                 <div className="columns-2  mb-5">
                     {/* date-from selection */}
                     <div className="col">
-                        <input type='datetime-local' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
+                        <input type='date' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
                         <h4 className="text-sm" >From</h4>
 
                     </div>
 
                     {/* date-to selection */}
                     <div className="col">
-                        <input type='datetime-local' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
+                        <input type='date' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
                         <h4 className="text-sm" >To</h4>
 
 
@@ -151,14 +151,15 @@ export default function VisForm({ fileList, loading, propagateData }) {
                 </div>
 
                 <div className='flex space-x-2 items-center'>
-                    <LargeButton
+
+                    {loading ?
+                        <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</>
+                        : 
+                        <LargeButton
                         className='cursor-progress'
                         onClick={formValidation}
                         label='Visualize'
-                    />
-                    {loading ?
-                        <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</>
-                        : <></>
+                        />
                     }
                 </div>
 

@@ -4,21 +4,28 @@ import { useD3 } from "../../../hooks/useD3";
 import ForceGraph from "./forceGraph";
 import { useEffect } from "react";
 
-
+/**
+ * force directed graph component for Aqualab job-level data
+ * @param {Object} data parsed data object 
+ * @returns 
+ */
 export default function JobGraph({ data }) {
 
+    /**
+     * function that maps average complete time to radius
+     */
     const projectRadius = d3.scaleLinear()
         .domain([data.meta.minAvgTime, data.meta.maxAvgTime])
-        .range([3, 10])
+        .range([3, 20])
 
     const ref = useD3((svg) => {
 
         const chart = ForceGraph(data, {
             nodeId: d => d.id,
-            nodeGroup: d => d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount),
-            nodeTitle: d => d.JobName,
-            nodeDetails: d => `${d.JobCompleteCount} of ${d.JobStartCount} (${(100 * d.JobCompleteCount / (d.JobStartCount === '0' ? 1 : d.JobStartCount)).toFixed(2)}%) players completed this job
-average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed(2)}
+            nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
+            nodeTitle: d => d['JobsAttempted-job-name'],
+            nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed this job
+average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s
 standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
             nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
             // nodeRadius: d => 7,
@@ -27,7 +34,7 @@ standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)
             //     return d['JobsAttempted-avg-time-complete']
             // },
             linkStrokeWidth: l => Math.sqrt(l.value),
-            linkTitle: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
+            linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
             linkStrength: 1,
             linkDistance: 100,
             nodeStrength: -1000,

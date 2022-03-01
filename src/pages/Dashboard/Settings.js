@@ -76,7 +76,7 @@ export default function Settings({ propagateData, loading, metrics }) {
                                 <div className="input-group-prepend">
                                     <h4 className="text-sm" >From</h4>
                                 </div>
-                                <input type='datetime-local' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
+                                <input type='date' className='block w-full' value={startDate} onChange={(e) => setstartDate(e.target.value)}></input>
                             </div>
 
                             {/* date-to selection */}
@@ -84,21 +84,22 @@ export default function Settings({ propagateData, loading, metrics }) {
                                 <div className="input-group-prepend">
                                     <h4 className="text-sm" >To</h4>
                                 </div>
-                                <input type='datetime-local' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
+                                <input type='date' className='block w-full' value={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
                             </div>
                         </div>
                     </div>
 
 
                     <div className='flex space-x-2 items-center'>
-                        <LargeButton
+
+                        {loading ?
+                            <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
+                            : 
+                            <LargeButton
                             // action={adjust}
                             onClick={adjust}
                             label='visualize'
-                        />
-                        {loading ?
-                            <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
-                            : <></>
+                            />
                         }
                     </div>
                 </div>

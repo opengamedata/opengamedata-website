@@ -63,7 +63,6 @@ export default function Dashboard() {
             minAvgTime: Infinity
         }
 
-
         // nodes
         let nodeBuckets = {}
         for (const [key, value] of Object.entries(rawData)) {
@@ -81,8 +80,6 @@ export default function Dashboard() {
 
             nodeBuckets[k][metric] = value
         }
-
-        console.log(meta.maxAvgTime, meta.minAvgTime)
 
         // links
         let l = []
@@ -112,34 +109,57 @@ export default function Dashboard() {
         // start loading animation
         setLoading(true)
 
-        // request dataset
-        const url = API_PATH +
-            `${metrics.game}/metrics?start_datetime=${encodeURIComponent(metrics.startDate)}&end_datetime=${encodeURIComponent(metrics.endDate)}` +
-            `&metrics=[JobName,JobStartCount,JobCompleteCount,JobsAttempted,TopJobDestinations]`
+        // setup query params
+        const queryStr = `${metrics.game}/metrics?start_datetime=${encodeURIComponent(metrics.startDate)}T00:00&end_datetime=${encodeURIComponent(metrics.endDate)}T23:59` +
+            `&metrics=[JobsAttempted,TopJobDestinations]`
 
-        console.log('fetching:', url)
 
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                if (data.status !== 'SUCCESS') throw data.msg
+        // sessionStorage.clear()
 
-                setMetrics(metrics)
+        // if query found in storage, retreive JSON
+        const localData = sessionStorage.getItem(queryStr)
+        console.log(localData)
+        if (localData) {
+            setMetrics(metrics)
+            setData(convert(JSON.parse(localData))) 
 
-                console.log(data)
-                setData(convert(data.val))
+            // stop loading animation
+            setLoading(false)
+            // store response to parent component state
+            setInitialized(true)
+        }
+        // if not found in storage, request dataset
+        else {
+            const url = API_PATH + queryStr
+            console.log('fetching:', url)
 
-                // stop loading animation
-                setLoading(false)
-                // store response to parent component state
-                setInitialized(true)
-            })
-            .catch(error => {
-                console.error(error)
-                setLoading(false)
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status !== 'SUCCESS') throw data.msg
 
-                alert(error)
-            })
+                    setMetrics(metrics)
+
+                    console.log(data)
+
+                    // store data locally
+                    sessionStorage.setItem(queryStr, JSON.stringify(data.val))
+
+                    // set data state
+                    setData(convert(data.val))
+
+                    // stop loading animation
+                    setLoading(false)
+                    // store response to parent component state
+                    setInitialized(true)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setLoading(false)
+
+                    alert(error)
+                })
+        }
 
     }
 

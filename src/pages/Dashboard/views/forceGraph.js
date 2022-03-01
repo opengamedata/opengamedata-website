@@ -11,16 +11,16 @@ function ForceGraph({
     nodeGroup, // given d in nodes, returns an (ordinal) value for color
     nodeGroups, // an array of ordinal values representing the node groups
     nodeTitle, // given d in nodes, a title string
-    nodeDetails,
+    nodeDetail, // text displayed when hover over node d
     nodeFill = "currentColor", // node stroke fill (if not using a group color encoding)
     nodeStroke = "#fff", // node stroke color
     nodeStrokeWidth = 2, // node stroke width, in pixels
     nodeStrokeOpacity = 1, // node stroke opacity
     nodeRadius = 5, // node radius, in pixels
-    nodeStrength,
+    nodeStrength, // force (charge) among nodes
     linkSource = ({ source }) => source, // given d in links, returns a node identifier string
     linkTarget = ({ target }) => target, // given d in links, returns a node identifier string
-    linkTitle,
+    linkDetail, // text displayed when hover over link d
     linkStroke = "#999", // link stroke color
     linkStrokeOpacity = 0.6, // link stroke opacity
     linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
@@ -40,16 +40,16 @@ function ForceGraph({
     const LT = d3.map(links, linkTarget).map(intern);
     if (nodeTitle === undefined) nodeTitle = (_, i) => N[i];
     const T = nodeTitle == null ? null : d3.map(nodes, nodeTitle);
-    if (nodeDetails === undefined) nodeDetails = (_, i) => N[i];
-    const D = nodeDetails == null ? null : d3.map(nodes, nodeDetails);
+    if (nodeDetail === undefined) nodeDetail = (_, i) => N[i];
+    const D = nodeDetail == null ? null : d3.map(nodes, nodeDetail);
     const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
     if (!nodeRadius) nodeRadius = (_, i) => N[i]
     const R = nodeRadius == null ? null : d3.map(nodes, nodeRadius)
 
     const W = typeof linkStrokeWidth !== "function" ? null : d3.map(links, linkStrokeWidth);
     const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
-    if (linkTitle === undefined) linkTitle = (_, i) => LS[i];
-    const TP = linkTitle == null ? null : d3.map(links, linkTitle) // tooltips
+    if (linkDetail === undefined) linkDetail = (_, i) => LS[i];
+    const TP = linkDetail == null ? null : d3.map(links, linkDetail) // tooltips
 
 
     // Replace the input nodes and links with mutable objects for the simulation.
@@ -131,8 +131,6 @@ function ForceGraph({
     // .attr('user-select', 'none')
 
 
-    // console.log(node.attr('r', (i) => { console.log(i) }))
-    console.log(R)
     if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
     if (TP) link.append('title').text(({ index: i }) => TP[i]);
@@ -187,7 +185,6 @@ function ForceGraph({
 
     function handleZoom(e) {
         // apply transform to the chart
-
         text.attr('transform', e.transform);
         node.attr('transform', e.transform);
         link.attr('transform', e.transform);
