@@ -28,8 +28,8 @@ function ForceGraph({
     linkStrength,
     linkDistance,
     colors = d3.interpolateRdYlGn, // an array of color values, for the node groups
-    width = 800, // outer width, in pixels
-    height = 450, // outer height, in pixels
+    width = 1600, // outer width, in pixels
+    height = 900, // outer height, in pixels
     invalidation, // when this promise resolves, stop the simulation
     parent,
 

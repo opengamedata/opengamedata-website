@@ -104,7 +104,20 @@ export default function Dashboard() {
 
     }
 
-    /* bundles input states and post to server then receives corresponding dataset*/
+
+    /**
+     * bundles input states and post to server then receives corresponding dataset
+     * 
+     * 
+     * 
+     * the function constructs a query string which is used in to ways:
+     * 1. if data was previously fetched from the backend, it serves as the storage key for quick data retrieval from the browser's localStorage
+     * 2. as the query parameter for fetching data from the backend
+     * 
+     * @param {*} metrics user-input metrics are passed in from VisForm or Settings
+     * 
+     * 
+     */
     const propagateData = (metrics) => {
         // start loading animation
         setLoading(true)
@@ -114,10 +127,10 @@ export default function Dashboard() {
             `&metrics=[JobsAttempted,TopJobDestinations]`
 
 
-        // sessionStorage.clear()
+        // localStorage.clear()
 
         // if query found in storage, retreive JSON
-        const localData = sessionStorage.getItem(queryStr)
+        const localData = localStorage.getItem(queryStr)
         console.log(localData)
         if (localData) {
             setMetrics(metrics)
@@ -143,7 +156,7 @@ export default function Dashboard() {
                     console.log(data)
 
                     // store data locally
-                    sessionStorage.setItem(queryStr, JSON.stringify(data.val))
+                    localStorage.setItem(queryStr, JSON.stringify(data.val))
 
                     // set data state
                     setData(convert(data.val))
