@@ -80,7 +80,7 @@ function ForceGraph({
     svg.append('defs').append('marker')
         .attr('id', 'arrowhead')
         .attr('viewBox', '-0 -5 10 10')
-        .attr('refX', 40)
+        .attr('refX', 30)
         .attr('refY', 0)
         .attr('orient', 'auto')
         .attr('markerUnits', 'userSpaceOnUse')

@@ -1,9 +1,8 @@
 
 import { useState, useEffect } from 'react';
-import Template from './views/Template';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { FILE_SERVER, API_PATH } from '../../constants';
+import { API_PATH } from '../../constants';
 import TableView from './views/TableView';
 import JobGraph from './views/JobGraph';
 
@@ -36,22 +35,22 @@ export default function Dashboard() {
     ])
 
     // fetch json metadata of the list of files
-    useEffect(() => {
-        fetch(FILE_SERVER + '/data/file_list.json')
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setFileList(result)
-                    setIsLoaded(true);
-                    // console.log(result)
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                    console.log(error)
-                }
-            )
-    }, [])
+    // useEffect(() => {
+    //     fetch(FILE_SERVER + '/data/file_list.json')
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 setFileList(result)
+    //                 setIsLoaded(true);
+    //                 // console.log(result)
+    //             },
+    //             (error) => {
+    //                 setIsLoaded(true);
+    //                 setError(error);
+    //                 console.log(error)
+    //             }
+    //         )
+    // }, [])
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
@@ -90,15 +89,15 @@ export default function Dashboard() {
             value.forEach(target => {
                 l.push({
                     source: key === 'None' ? 'start' : `job${key}`,
-                    sourceName: nodeBuckets[`job${key}`].JobName,
+                    sourceName: nodeBuckets[`job${key}`]['JobsAttempted-job-name'],
                     target: target[0] === 'None' ? 'start' : `job${target[0]}`,
-                    targetName: nodeBuckets[`job${target[0]}`].JobName,
+                    targetName: nodeBuckets[`job${target[0]}`]['JobsAttempted-job-name'],
                     value: target[1]
                 })
             });
         }
 
-        console.log(nodeBuckets)
+        // console.log(nodeBuckets)
 
         return { nodes: Object.values(nodeBuckets), links: l, meta: meta }
 
@@ -180,7 +179,6 @@ export default function Dashboard() {
         <div className='w-screen'>
             {!initialized ?
                 <VisForm
-                    fileList={fileList}
                     loading={loading}
                     propagateData={propagateData}
                 />

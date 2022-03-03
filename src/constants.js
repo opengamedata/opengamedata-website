@@ -70,6 +70,7 @@ export const game_links = {
     'WIND': 'https://theyardgames.org/game/wind.html'
 }
 
+export const visGames = ['AQUALAB', 'PENGUIN']
 
 export const dummyData = [
     {
@@ -119,6 +120,7 @@ export const reducedDummy = {
         { source: 'start', target: 'job 1', sourceName: 'start', targetName: 'job 1', value: 110 },
         { source: 'job 1', target: 'job 2', sourceName: 'job 1', targetName: 'job 2', value: 70 },
         { source: 'job 1', target: 'job 3', sourceName: 'job 1', targetName: 'job 3', value: 6 },
+        { source: 'job 3', target: 'job 1', sourceName: 'job 3', targetName: 'job 1', value: 6 },
         { source: 'job 2', target: 'job 3', sourceName: 'job 2', targetName: 'job 3', value: 40 },
         { source: 'job 2', target: 'job 4', sourceName: 'job 2', targetName: 'job 4', value: 1 },
         { source: 'job 2', target: 'quit ', sourceName: 'job 2', targetName: 'quit ', value: 2 },

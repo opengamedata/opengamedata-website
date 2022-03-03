@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
 import { CogIcon } from '@heroicons/react/solid'
+import { visGames } from '../../constants';
 
 
-export default function VisForm({ fileList, loading, propagateData }) {
+export default function VisForm({ loading, propagateData }) {
     const [game, setGame] = useState('');
     const [version, setVersion] = useState('');
     const [startDate, setstartDate] = useState('');
@@ -14,7 +15,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
 
     const gameList = () => {
         const games = []
-        Object.keys(fileList).forEach((k) => {
+        visGames.forEach((k) => {
             games.push(
                 <option key={k} value={k}>{k}</option>
             )
@@ -90,7 +91,7 @@ export default function VisForm({ fileList, loading, propagateData }) {
                                 value={game} onChange={(e) => setGame(e.target.value)}
                             >
                                 <option> </option>
-                                {fileList ? gameList() : <></>}
+                                {gameList()}
                             </select>
                         </div>
                     </div>
