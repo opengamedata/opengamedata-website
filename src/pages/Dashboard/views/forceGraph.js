@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { select } from 'd3';
 
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
@@ -60,20 +61,18 @@ function ForceGraph({
     if (G && nodeGroups === undefined) nodeGroups = d3.sort(G);
 
     // Construct the scales.
-    // const color = nodeGroup == null ? null : d3.scaleOrdinal(nodeGroups, colors);
     const color = nodeGroup == null ? null : d3.scaleSequential(colors);
 
     // Construct the forces.
     const forceNode = d3.forceManyBody();
     const forceLink = d3.forceLink(links).id(({ index: i }) => N[i]);
     if (nodeStrength !== undefined) forceNode.strength(nodeStrength);
-    if (linkStrength !== undefined) forceLink.strength(linkStrength).distance(10);
+    if (linkStrength !== undefined) forceLink.strength(linkStrength);
     if (linkDistance !== undefined) forceLink.distance(linkDistance);
 
 
     const svg = parent
         .attr("viewBox", [-width / 2, -height / 2, width, height])
-    // .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
 
     svg.selectAll('*').remove();
 
@@ -81,7 +80,7 @@ function ForceGraph({
         .attr('id', 'arrowhead')
         .attr('viewBox', '-0 -5 10 10')
         .attr('refX', 30)
-        .attr('refY', 0)
+        .attr('refY', -1.5)
         .attr('orient', 'auto')
         .attr('markerUnits', 'userSpaceOnUse')
         .attr('markerWidth', 10)
@@ -96,9 +95,10 @@ function ForceGraph({
         .attr("stroke", typeof linkStroke !== "function" ? linkStroke : null)
         .attr("stroke-opacity", linkStrokeOpacity)
         .attr("stroke-linecap", linkStrokeLinecap)
-        .selectAll("line")
+        .attr("fill", 'transparent')
+        .selectAll("path")
         .data(links)
-        .join("line")
+        .join("path")
         .attr('marker-end', 'url(#arrowhead)')
         .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null);
 
@@ -117,7 +117,17 @@ function ForceGraph({
         .data(nodes)
         .join("circle")
         .attr("r", 5)
-        .call(drag(simulation));
+        .call(drag(simulation))
+
+    console.log(node)
+
+    node
+        .select('circle')
+        .on('click', (e) => {
+            console.log(e)
+            d3.select(this)
+                .attr('fill', 'black')
+        });
 
     const text = svg.append('g')
         .selectAll('text')
@@ -143,12 +153,29 @@ function ForceGraph({
         return value !== null && typeof value === "object" ? value.valueOf() : value;
     }
 
+    function positionLink(d) {
+        const offset = 10;
+
+        const midpoint_x = (d.source.x + d.target.x) / 2;
+        const midpoint_y = (d.source.y + d.target.y) / 2;
+
+        const dx = (d.target.x - d.source.x);
+        const dy = (d.target.y - d.source.y);
+
+        const normalise = Math.sqrt((dx * dx) + (dy * dy));
+
+        const offSetX = midpoint_x + offset * (dy / normalise);
+        const offSetY = midpoint_y - offset * (dx / normalise);
+
+        return "M" + d.source.x + "," + d.source.y +
+            "S" + offSetX + "," + offSetY +
+            " " + d.target.x + "," + d.target.y;
+    }
+
     function ticked() {
-        link
-            .attr("x1", d => d.source.x)
-            .attr("y1", d => d.source.y)
-            .attr("x2", d => d.target.x)
-            .attr("y2", d => d.target.y);
+
+        link.attr("d", positionLink)
+
 
         node
             .attr("cx", d => d.x)
@@ -190,7 +217,7 @@ function ForceGraph({
         link.attr('transform', e.transform);
     }
 
-    let zoom = d3.zoom()
+    const zoom = d3.zoom()
         .on('zoom', handleZoom);
 
     svg.call(zoom);

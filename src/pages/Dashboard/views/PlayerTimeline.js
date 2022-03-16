@@ -1,22 +1,9 @@
 import * as d3 from "d3";
-import { selectAll } from "d3";
 import { useD3 } from "../../../hooks/useD3";
 
-const mockData = JSON.parse('{"type": "GET", "val": {"cols": ["TopJobDestinations"], "vals": [[{"8": [[4, 1]], "4": [[7, 1]], "7": [[18, 1]]}]]}, "msg": "SUCCESS: Generated features for the given session", "status": "SUCCESS"}')
 
-// **session_id** = Column '*session_id*'  
-// **app_id** = null  
-// **timestamp** = Column '*timestamp*'  
-// **event_name** = Column '*event_name*'  
-// **event_data** = Column '*event_params*'  
-// **app_version** = null  
-// **time_offset** = null  
-// **user_id** = Column '*user_id*'  
-// **user_data** = null  
-// **game_state** = null  
-// **event_sequence_index** = null 
 
-export default function SessionTimeline({ rawData }) {
+export default function PlayerTimeline({ rawData }) {
 
     // const data = convert(rawData)
     // const data = convert(mockData)
@@ -38,19 +25,21 @@ export default function SessionTimeline({ rawData }) {
 
         svg.attr("viewBox", [-width / 20, -height / 2, width, height])
 
+        // baseline
         svg.append('line')
             .attr('x1', 0)
             .attr('x2', data[data.length - 1]['timeStamp'] * 10)
             .attr('stroke', 'grey')
         // .attr('stroke-width', 3)
 
+        // wrapper for event representations
         const sequence = svg
             .append('g')
             .classed('wrapper', true)
 
+        // event representation
         const event = sequence
             .selectAll('g')
-            // .data(data)
             .data(data)
             .enter()
             .append('g')
@@ -62,6 +51,7 @@ export default function SessionTimeline({ rawData }) {
                     .attr('stroke', 'black')
                     .attr('stroke-width', .3)
 
+                // attach event details
                 d3.select(this)
                     .selectAll('.details')
                     .data(d => d.extra) // replace with dynamic data
@@ -69,8 +59,8 @@ export default function SessionTimeline({ rawData }) {
                     .append('text')
                     .classed('details', true)
                     .text(d => d)
-                    .attr('dy', (d, i) => `${i + .2}em`)
-                    .attr('transform', `translate(0,${3 * dotSize})`)
+                    .attr('dy', (d, i) => `${i * 1.3}em`)
+                    .attr('transform', `translate(${-dotSize},${3 * dotSize})`)
                     .attr('font-size', 5)
             })
             .on('mouseout', function handleUnhover(e, d) {
@@ -88,10 +78,18 @@ export default function SessionTimeline({ rawData }) {
             .attr('r', dotSize)
             .attr('fill', '#fdd835')
 
+        // event name
         event.append('text')
             .classed('title', true)
             .text(({ name }) => name) // replace with dynamic data
             .attr('transform', `rotate(-45) translate(${dotSize * 1.5})`)
+            .attr('font-size', 5)
+
+        // event duration
+        event.append('text')
+            .classed('duration', true)
+            .text(({ duration }) => `${duration}s`) // replace with dynamic data
+            .attr('transform', ` translate(${dotSize * 2},${dotSize * 1.5})`)
             .attr('font-size', 5)
 
         // zoom behavior
@@ -102,10 +100,8 @@ export default function SessionTimeline({ rawData }) {
             d3.select('svg line')
                 .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k})`);
         }
-
         let zoom = d3.zoom()
             .on('zoom', handleZoom);
-
         svg
             .call(zoom);
 

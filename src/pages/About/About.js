@@ -1,11 +1,18 @@
-import JobGraph from "../Dashboard/views/JobGraph";
-import { reducedDummy } from "../../constants";
 import { Link } from "react-router-dom";
+import PlayerTimeline from "../Dashboard/views/PlayerTimeline";
+import JobGraph from "../Dashboard/views/JobGraph";
 
 export default function About() {
     return (
         <div className="container pt-16 flex flex-wrap">
-            <JobGraph data={reducedDummy} />
+            {
+                {
+                    'JobGraph':
+                        <JobGraph />,
+                    'PlayerTimeline':
+                        <PlayerTimeline />
+                }['PlayerTimeline']
+            }
             <div className="mb-10 pr-10 max-w-xl">
                 {/* <p className="font-light text-4xl mb-3">Open Game Data</p> */}
 
