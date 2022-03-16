@@ -2,6 +2,8 @@ import * as d3 from "d3";
 import { useEffect, useState } from "react";
 import { reducedDummy } from "../../../dummies";
 import { useD3 } from "../../../hooks/useD3";
+import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
+import LoadingBlur from "../../../components/LoadingBlur";
 
 /**
  * force directed graph component for Aqualab job-level data
@@ -14,6 +16,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
     // const data = convert(rawData)
 
     const [linkMode, setLinkMode] = useState(1)
+    const [showLegend, setShowLegend] = useState(false)
 
     const toTaskGraph = (viewMetrics) => {
         console.log(viewMetrics)
@@ -40,9 +43,9 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             nodeId: d => d.id,
             nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
             nodeTitle: d => d['JobsAttempted-job-name'],
-            nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed this job
- average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s
- standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
+            nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed this job\n` +
+                `average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
+                `standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
             nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
             linkStrokeWidth: l => Math.sqrt(l.value),
             linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
@@ -355,8 +358,9 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
     return (
         <>
+            <LoadingBlur loading={loading} />
             <svg ref={ref} className="w-full border-b" ></svg>
-            <div className="fixed bottom-3 left-3 font-light text-sm">
+            <div className="fixed bottom-3 right-3 font-light text-sm">
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
@@ -369,7 +373,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                                     checked={linkMode === '1'}
                                     onChange={(e) => { setLinkMode(e.currentTarget.value) }}
                                     value="1" />
-                                <span className="ml-2">finished the Job</span>
+                                <span className="ml-2">finished the job</span>
                             </label>
                         </div>
                         <div>
@@ -381,7 +385,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                                     checked={linkMode === '2'}
                                     onChange={(e) => { setLinkMode(e.currentTarget.value) }}
                                     value="2" />
-                                <span className="ml-2">left a job</span>
+                                <span className="ml-2">left the job</span>
                             </label>
                         </div>
                         <div>
@@ -400,11 +404,40 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                 </fieldset>
                 <p className="mt-2">Session Count: {data.meta.SessionCount} </p>
             </div>
-            {loading ?
-                <div className="w-screen h-screen z-1 backdrop-blur-md"></div>
-                :
-                <></>
-            }
+            <div className="fixed bottom-3 left-3 font-light ">
+                {showLegend &&
+                    <div className="pb-2 backdrop-blur">
+                        <p className="font-bold">Understanding the Graph</p>
+                        <p>
+                            Each <span className="font-semibold">node</span> represents a <span className="font-semibold">job</span>, and the <span className="font-semibold">links</span> between nodes denote <span className="font-semibold">player progression</span>.
+                        </p>
+                        <p>
+
+                            The <ColorSwatchIcon className="w-5 h-5 inline mr-1" /><span className="font-semibold">node color</span> signifies the <span className="font-semibold">% percentage of job completion</span>.
+                        </p>
+                        <p>
+
+                            The <ViewBoardsIcon className="w-5 h-5 inline mr-1" /><span className="font-semibold">link width</span> signifies the <span className="font-semibold"># number of players taking a path</span>. Use the radio buttons on the right to change the link type.
+                        </p>
+                        <p>
+                            <CloudIcon className="w-5 h-5 inline mr-1" />
+                            <span className="font-semibold">Hover</span> over nodes and links to reveal more details.
+                        </p>
+                        <p>
+                            <CursorClickIcon className="w-5 h-5 inline mr-1" />
+                            <span className="font-semibold">Click on a job</span> to see a graph of tasks within the job.
+                        </p>
+                        <p>
+                            <CursorClickIcon className="w-5 h-5 inline mr-1" />
+                            <span className="font-semibold">Click on a link</span> to see the list of players who took this path.
+                        </p>
+                    </div>
+                }
+                <QuestionMarkCircleIcon
+                    className="text-slate-500 cursor-pointer h-10 w-10"
+                    onMouseEnter={() => { setShowLegend(true) }}
+                    onMouseLeave={() => { setShowLegend(false) }} />
+            </div>
         </>
 
 

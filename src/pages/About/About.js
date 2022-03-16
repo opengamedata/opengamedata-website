@@ -8,10 +8,11 @@ export default function About() {
             {
                 {
                     'JobGraph':
-                        <JobGraph />,
+                        <JobGraph
+                            loading={false} />,
                     'PlayerTimeline':
                         <PlayerTimeline />
-                }['PlayerTimeline']
+                }['JobGraph']
             }
             <div className="mb-10 pr-10 max-w-xl">
                 {/* <p className="font-light text-4xl mb-3">Open Game Data</p> */}
