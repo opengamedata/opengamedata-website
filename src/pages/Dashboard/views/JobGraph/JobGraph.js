@@ -22,7 +22,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
 
-        console.log(rawData)
+        // console.log(rawData)
 
         // metadata
         const meta = {
@@ -51,12 +51,12 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             else nodeBuckets[k][metric] = value
         }
 
-        console.log(nodeBuckets)
+        // console.log(nodeBuckets)
 
         // links
         let l = []
         const rawLinks = JSON.parse(rawData[linkMode].replaceAll('\\', ''))
-        console.log(linkMode, rawLinks)
+        // console.log(linkMode, rawLinks)
 
         switch (linkMode) {
             case 'TopJobCompletionDestinations':
@@ -98,21 +98,17 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
 
             case 'ActiveJobs':
-                for (const [sourceKey, sourcePlayers] of Object.entries(rawLinks)) {
-                    for (const targetKey of Object.keys(rawLinks)) {
-                        // console.log(sourceKey, targetKey)
 
-                        if (sourceKey === targetKey) continue
+                const activeJobs = Object.keys(rawLinks)
+                for (let i = 1; i < activeJobs.length; i++) {
+                    const target = activeJobs[i];
 
-                        l.push({
-                            source: sourceKey,
-                            sourceName: sourceKey,
-                            target: targetKey,
-                            targetName: targetKey,
-                            value: sourcePlayers.length,
-                            players: sourcePlayers
-                        })
-                    }
+                    l.push({
+                        source: activeJobs[0],
+                        sourceName: activeJobs[0],
+                        target: target,
+                        targetName: target
+                    })
                 }
 
                 break;
@@ -128,13 +124,13 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
         if (linkMode === 'ActiveJobs')
             relevantNodes.forEach(n => {
-                console.log(rawLinks)
+                // console.log(rawLinks)
                 n.players = rawLinks[n.id]
             });
-        console.log('relevantNodes', relevantNodes)
+
+        // console.log('relevantNodes', relevantNodes)
 
         return { nodes: relevantNodes, links: l, meta: meta }
-        // return { nodes: Object.values(nodeBuckets), links: l, meta: meta }
 
     }
 
@@ -147,14 +143,27 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
     }
 
-    const showPlayersList = (viewMetrics) => {
+    const toPlayerTimeline = (viewMetrics) => {
         console.log(viewMetrics)
 
-        if (linkMode === 'ActiveJobs') {
+    }
 
+    const showPlayersList = (link) => {
+        console.log(link)
+
+        if (linkMode === 'ActiveJobs') {
+            const players = data.nodes.find(n => n.id === link.id).players
+            // console.log('players', players)
+            const title = `${link.id} (${players.length} in progress)`
+            setPlayerList({ title: title, players })
         }
         else {
-
+            console.log(data.links)
+            const players = data.links.find(l => l.source === link.source.id && l.target === link.target.id).players
+            console.log('players', players)
+            const title = `${link.source.id} ➔ ${link.target.id} 
+                            (${players.length} ${linkMode === 'TopJobSwitchDestinations' ? 'switched' : 'completed'})`
+            setPlayerList({ title: title, players })
         }
     }
 
@@ -284,8 +293,8 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         svg.append('defs').append('marker')
             .attr('id', 'arrowhead')
             .attr('viewBox', '-0 -5 10 10')
-            .attr('refX', outLinks ? 10 : 30)
-            .attr('refY', outLinks ? 0 : -1.5)
+            .attr('refX', outLinks ? 8 : 30)
+            .attr('refY', outLinks ? 0 : -1)
             .attr('orient', 'auto')
             .attr('markerUnits', 'userSpaceOnUse')
             .attr('markerWidth', 10)
@@ -490,7 +499,10 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             <svg ref={ref} className="w-full border-b" />
 
             {playersList ?
-                <PlayersList data={playersList} /> :
+                <PlayersList
+                    data={playersList}
+                    toPlayerTimeline={toPlayerTimeline}
+                /> :
                 <></>
             }
 
