@@ -1,6 +1,7 @@
 export const FILE_SERVER = 'https://opengamedata.fielddaylab.wisc.edu';
 
-export const API_PATH = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/game/'
+export const API_ORIGIN = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/'
+
 
 export const game_list = [
     'AQUALAB',

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { API_PATH } from '../../constants';
+import { API_ORIGIN } from '../../constants';
 import TableView from './views/JobGraph/PlayersList';
 import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/PlayerTimeline';
@@ -32,20 +32,78 @@ export default function Dashboard() {
 
 
 
-    const updateGlobalMetrics = () => {
-        let queryStr = ''
-
-
-    }
-
-    const updateViewMetrics = (view, viewMetrics) => {
-        let queryStr = ''
-
-        switch (view) {
+    const updateGlobalMetrics = (newMetrics) => {
+        let searchParams, urlPath
+        switch (currentView) {
             case 'JobGraph':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
+                    end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
+                    metrics: '[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]'
+                })
+
+                urlPath = `game/${newMetrics.game}/metrics`
 
                 break;
             case 'PlayerTimeline':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    metrics: 'EventList'
+                })
+
+                urlPath = `game/${newMetrics.game}/player/${viewMetrics.player}/metrics`
+
+                break;
+
+            case 'TaskGraph':
+                // construct url path and params
+
+                // searchParams = new URLSearchParams({
+                //     start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
+                //     end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
+                //     metrics: '[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]'
+                // })
+
+                // urlPath = `game/${newMetrics.game}/metrics`
+
+                break;
+            default:
+                break;
+        }
+
+
+        const url = new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
+
+        // fetch by url
+        propagateData(url.toString())
+
+        setMetrics(newMetrics)
+    }
+
+    const updateViewMetrics = (view, newViewMetrics) => {
+        console.log(newViewMetrics)
+
+        let searchParams, urlPath
+        switch (view) {
+            case 'JobGraph':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    start_datetime: encodeURIComponent(metrics.startDate) + 'T00:00',
+                    end_datetime: encodeURIComponent(metrics.endDate) + 'T23:59',
+                    metrics: '[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]'
+                })
+
+                urlPath = `game/${metrics.game}/metrics`
+
+                break;
+            case 'PlayerTimeline':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    metrics: 'EventList'
+                })
+
+                urlPath = `game/${metrics.game}/player/${newViewMetrics.player}/metrics`
 
                 break;
 
@@ -53,6 +111,13 @@ export default function Dashboard() {
                 break;
         }
 
+
+        const url = new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
+
+        // fetch by url
+        propagateData(url.toString())
+
+        setViewMetrics(newViewMetrics)
         if (view !== currentView) setCurrentView(view)
     }
 
@@ -67,31 +132,27 @@ export default function Dashboard() {
      * 
      * 
      */
-    const propagateData = (metrics, query) => {
+    const propagateData = (url) => {
+
+        // localStorage.clear() // DEBUG
+
         // start loading animation
         setLoading(true)
 
-        // setup query params
-        const queryStr = query ? query : `${metrics.game}/metrics?start_datetime=${encodeURIComponent(metrics.startDate)}T00:00&end_datetime=${encodeURIComponent(metrics.endDate)}T23:59` +
-            `&metrics=[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]`
-
-        // localStorage.clear()
 
         // if query found in storage, retreive JSON
-        const localData = localStorage.getItem(queryStr)
+        const localData = localStorage.getItem(url)
         // console.log(localData)
         if (localData) {
-            setMetrics(metrics)
             setData(JSON.parse(localData)) 
 
-            // stop loading animation
-            setLoading(false)
             // store response to parent component state
             setInitialized(true)
+            // stop loading animation
+            setLoading(false)
         }
         // if not found in storage, request dataset
         else {
-            const url = API_PATH + queryStr
             console.log('fetching:', url)
 
             fetch(url)
@@ -99,24 +160,22 @@ export default function Dashboard() {
                 .then(data => {
                     if (data.status !== 'SUCCESS') throw data.msg
 
-                    setMetrics(metrics)
-
                     console.log(data)
 
                     // store data locally
-                    localStorage.setItem(queryStr, JSON.stringify(data.val))
+                    localStorage.setItem(url, JSON.stringify(data.val))
 
                     // set data state
                     setData(data.val)
 
-                    // stop loading animation
-                    setLoading(false)
                     // store response to parent component state
                     setInitialized(true)
+
+                    // stop loading animation
+                    setLoading(false)
                 })
                 .catch(error => {
                     console.error(error)
-                    setLoading(false)
 
                     alert(error)
                 })
@@ -128,7 +187,6 @@ export default function Dashboard() {
             {!initialized ?
                 <VisForm
                     loading={loading}
-                    propagateData={propagateData}
                     updateGlobalMetrics={updateGlobalMetrics}
                 />
                 :
@@ -136,7 +194,6 @@ export default function Dashboard() {
                     <Settings
                         metrics={metrics}
                         loading={loading}
-                        propagateData={propagateData}
                         updateGlobalMetrics={updateGlobalMetrics}
                     />
                     {

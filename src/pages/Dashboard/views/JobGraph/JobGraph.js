@@ -144,23 +144,19 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
     }
 
     const toPlayerTimeline = (viewMetrics) => {
-        console.log(viewMetrics)
+        updateViewMetrics('PlayerTimeline', viewMetrics)
+        // updateViewMetrics('PlayerTimeline', viewMetrics)
 
     }
 
     const showPlayersList = (link) => {
-        console.log(link)
-
         if (linkMode === 'ActiveJobs') {
             const players = data.nodes.find(n => n.id === link.id).players
-            // console.log('players', players)
             const title = `${link.id} (${players.length} in progress)`
             setPlayerList({ title: title, players })
         }
         else {
-            console.log(data.links)
             const players = data.links.find(l => l.source === link.source.id && l.target === link.target.id).players
-            console.log('players', players)
             const title = `${link.source.id} ➔ ${link.target.id} 
                             (${players.length} ${linkMode === 'TopJobSwitchDestinations' ? 'switched' : 'completed'})`
             setPlayerList({ title: title, players })
@@ -240,8 +236,8 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         linkStrength,
         linkDistance,
         colors = d3.interpolateRdYlGn, // an array of color values, for the node groups
-        width = 1600, // outer width, in pixels
-        height = 900, // outer height, in pixels
+        width = window.innerWidth, // outer width, in pixels
+        height = window.innerHeight, // outer height, in pixels
         invalidation, // when this promise resolves, stop the simulation
         parent,
 
@@ -341,8 +337,6 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
         function handleLinkClick(e, d) {
             showPlayersList(d)
-
-            // list of sessions associated with the link
         }
 
 
@@ -501,7 +495,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             {playersList ?
                 <PlayersList
                     data={playersList}
-                    toPlayerTimeline={toPlayerTimeline}
+                    redirect={toPlayerTimeline}
                 /> :
                 <></>
             }

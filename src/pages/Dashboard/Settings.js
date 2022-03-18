@@ -3,7 +3,7 @@ import { AdjustmentsIcon, XIcon, CogIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import LargeButton from '../../components/buttons/LargeButton'
 
-export default function Settings({ propagateData, loading, metrics }) {
+export default function Settings({ loading, metrics, updateGlobalMetrics }) {
 
     // vis metrics
     const [game, setGame] = useState('');
@@ -33,8 +33,7 @@ export default function Settings({ propagateData, loading, metrics }) {
             maxPlaytime: maxPlaytime
         }
 
-        propagateData(metrics)
-
+        updateGlobalMetrics(metrics)
         // switch back to brief
         // setAdejustMode(false)
     }

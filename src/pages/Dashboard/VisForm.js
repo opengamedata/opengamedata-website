@@ -4,7 +4,7 @@ import { CogIcon } from '@heroicons/react/solid'
 import { visGames } from '../../constants';
 
 
-export default function VisForm({ loading, propagateData }) {
+export default function VisForm({ loading, updateGlobalMetrics }) {
     const [game, setGame] = useState('');
     const [version, setVersion] = useState('');
     const [startDate, setstartDate] = useState('');
@@ -63,7 +63,9 @@ export default function VisForm({ loading, propagateData }) {
         }
 
         // else, post request - propagateData()
-        propagateData(metrics)
+        // propagateData(metrics)
+        updateGlobalMetrics(metrics)
+
     }
 
 
