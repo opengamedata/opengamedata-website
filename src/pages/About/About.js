@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PlayerTimeline from "../Dashboard/views/PlayerTimeline";
-import JobGraph from "../Dashboard/views/JobGraph";
+import JobGraph from "../Dashboard/views/JobGraph/JobGraph";
 
 export default function About() {
     return (

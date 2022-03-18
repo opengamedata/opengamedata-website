@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
 import { API_PATH } from '../../constants';
-import TableView from './views/PlayersList';
-import JobGraph from './views/JobGraph';
+import TableView from './views/JobGraph/PlayersList';
+import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/PlayerTimeline';
 
 
@@ -73,13 +73,13 @@ export default function Dashboard() {
 
         // setup query params
         const queryStr = query ? query : `${metrics.game}/metrics?start_datetime=${encodeURIComponent(metrics.startDate)}T00:00&end_datetime=${encodeURIComponent(metrics.endDate)}T23:59` +
-            `&metrics=[JobsAttempted,TopJobDestinations]`
+            `&metrics=[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]`
 
-        localStorage.clear()
+        // localStorage.clear()
 
         // if query found in storage, retreive JSON
         const localData = localStorage.getItem(queryStr)
-        console.log(localData)
+        // console.log(localData)
         if (localData) {
             setMetrics(metrics)
             setData(JSON.parse(localData)) 

@@ -54,7 +54,7 @@ export const reducedDummy = {
         { source: 'job 4', target: 'quit ', sourceName: 'job 4', targetName: 'quit ', value: 8 },
     ],
     meta: {
-        SessionCount: 10,
+        PlayerCount: 10,
         maxAvgTime: 1000,
         minAvgTime: 130
     }

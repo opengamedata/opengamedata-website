@@ -1,9 +1,10 @@
 import * as d3 from "d3";
 import { useEffect, useState } from "react";
-import { reducedDummy } from "../../../dummies";
-import { useD3 } from "../../../hooks/useD3";
+import { reducedDummy } from "../../../../dummies";
+import { useD3 } from "../../../../hooks/useD3";
 import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
-import LoadingBlur from "../../../components/LoadingBlur";
+import LoadingBlur from "../../../../components/LoadingBlur";
+import PlayersList from "./PlayersList";
 
 /**
  * force directed graph component for Aqualab job-level data
@@ -12,19 +13,149 @@ import LoadingBlur from "../../../components/LoadingBlur";
  */
 export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
-    const data = reducedDummy
-    // const data = convert(rawData)
 
-    const [linkMode, setLinkMode] = useState(1)
+
+    const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [showLegend, setShowLegend] = useState(false)
+    const [playersList, setPlayerList] = useState()
+
+    /* manipulate raw data to a format to be used by the vis views */
+    const convert = (rawData) => {
+
+        console.log(rawData)
+
+        // metadata
+        const meta = {
+            PlayerCount: rawData.PlayerCount,
+            maxAvgTime: 0,
+            minAvgTime: Infinity
+        }
+
+        // nodes
+        let nodeBuckets = {}
+        for (const [key, value] of Object.entries(rawData)) {
+            if (key.substring(0, 3) !== 'job') continue
+
+            const [k, metric] = key.split('_')
+            // console.log(`${k}'s ${metric}: ${value}`);
+
+            if (metric === 'JobsAttempted-avg-time-complete') {
+                if (parseFloat(value) > meta.maxAvgTime) meta.maxAvgTime = parseFloat(value)
+                if (parseFloat(value) < meta.minAvgTime) meta.minAvgTime = parseFloat(value)
+            }
+
+            if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = {} // create node pbject
+
+            if (metric === 'JobsAttempted-job-name') nodeBuckets[k].id = value // store job name as node id
+            else if (metric === 'JobsAttempted') continue
+            else nodeBuckets[k][metric] = value
+        }
+
+        console.log(nodeBuckets)
+
+        // links
+        let l = []
+        const rawLinks = JSON.parse(rawData[linkMode].replaceAll('\\', ''))
+        console.log(linkMode, rawLinks)
+
+        switch (linkMode) {
+            case 'TopJobCompletionDestinations':
+
+                for (const [sourceKey, targets] of Object.entries(rawLinks)) {
+                    for (const [targetKey, players] of Object.entries(targets)) {
+                        l.push({
+                            source: sourceKey,
+                            sourceName: sourceKey,
+                            target: targetKey,
+                            targetName: targetKey,
+                            value: players.length,
+                            players: players
+                        })
+                    }
+                }
+                break;
+
+
+            case 'TopJobSwitchDestinations':
+
+                for (const [sourceKey, targets] of Object.entries(rawLinks)) {
+                    for (const [targetKey, players] of Object.entries(targets)) {
+
+                        if (sourceKey === targetKey) continue // omit self-pointing jobs
+
+                        l.push({
+                            source: sourceKey,
+                            sourceName: sourceKey,
+                            target: targetKey,
+                            targetName: targetKey,
+                            value: players.length,
+                            players: players
+                        })
+                    }
+                }
+
+                break;
+
+
+            case 'ActiveJobs':
+                for (const [sourceKey, sourcePlayers] of Object.entries(rawLinks)) {
+                    for (const targetKey of Object.keys(rawLinks)) {
+                        // console.log(sourceKey, targetKey)
+
+                        if (sourceKey === targetKey) continue
+
+                        l.push({
+                            source: sourceKey,
+                            sourceName: sourceKey,
+                            target: targetKey,
+                            targetName: targetKey,
+                            value: sourcePlayers.length,
+                            players: sourcePlayers
+                        })
+                    }
+                }
+
+                break;
+
+            default:
+                alert('Something went wrong. Plase refresh the page and try again')
+                break;
+        }
+
+        // filter out nodes w/ no edges
+        const relevantNodes = Object.values(nodeBuckets).filter(({ id }) => l.map(link => link.source).includes(id) || l.map(link => link.target).includes(id))
+
+
+        if (linkMode === 'ActiveJobs')
+            relevantNodes.forEach(n => {
+                console.log(rawLinks)
+                n.players = rawLinks[n.id]
+            });
+        console.log('relevantNodes', relevantNodes)
+
+        return { nodes: relevantNodes, links: l, meta: meta }
+        // return { nodes: Object.values(nodeBuckets), links: l, meta: meta }
+
+    }
+
+
+    // const data = reducedDummy
+    const data = convert(rawData)
 
     const toTaskGraph = (viewMetrics) => {
         console.log(viewMetrics)
 
     }
 
-    const toPlayerTimeLine = (viewMetrics) => {
+    const showPlayersList = (viewMetrics) => {
         console.log(viewMetrics)
+
+        if (linkMode === 'ActiveJobs') {
+
+        }
+        else {
+
+        }
     }
 
     /**
@@ -42,7 +173,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         const chart = ForceGraph(data, {
             nodeId: d => d.id,
             nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
-            nodeTitle: d => d['JobsAttempted-job-name'],
+            nodeTitle: d => d.id,
             nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed this job\n` +
                 `average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
                 `standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
@@ -52,65 +183,21 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             linkStrength: 1,
             linkDistance: 100,
             nodeStrength: -1000,
+            linkStroke: linkMode === 'ActiveJobs' ? "#fff0" : "#999", // link stroke color, no color when showing jobs in progress
+            outLinks: linkMode === 'ActiveJobs',
+            outLinkWidth: linkMode === 'ActiveJobs' ? d => Math.sqrt(d.players.length) : null,
+            outLinkDetail: linkMode === 'ActiveJobs' ? d => `${d.players.length} players in progress` : null,
             parent: svg,
             nodeClick: ''
         })
-    }, [data])
+    }, [data, linkMode])
 
 
 
 
 
 
-    /* manipulate raw data to a format to be used by the vis views */
-    const convert = (rawData) => {
 
-        // metadata
-        const meta = {
-            SessionCount: rawData.SessionCount,
-            maxAvgTime: 0,
-            minAvgTime: Infinity
-        }
-
-        // nodes
-        let nodeBuckets = {}
-        for (const [key, value] of Object.entries(rawData)) {
-            if (key === 'TopJobDestinations' || key === 'SessionCount') continue
-
-            const [k, metric] = key.split('_')
-            console.log(`${k}'s ${metric}: ${value}`);
-
-            if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = { id: k }
-
-            if (metric === 'JobsAttempted-avg-time-complete') {
-                if (parseFloat(value) > meta.maxAvgTime) meta.maxAvgTime = parseFloat(value)
-                if (parseFloat(value) < meta.minAvgTime) meta.minAvgTime = parseFloat(value)
-            }
-
-            nodeBuckets[k][metric] = value
-        }
-
-        // links
-        let l = []
-        const rawLinks = JSON.parse(rawData.TopJobDestinations.replaceAll('\'', '\"').replaceAll('(', '[').replaceAll(')', ']'))
-        for (const [key, value] of Object.entries(rawLinks)) {
-            // console.log('link', key, value)
-
-            value.forEach(target => {
-                l.push({
-                    source: key === 'None' ? 'start' : `job${key}`,
-                    sourceName: nodeBuckets[`job${key}`]['JobsAttempted-job-name'],
-                    target: target[0] === 'None' ? 'start' : `job${target[0]}`,
-                    targetName: nodeBuckets[`job${target[0]}`]['JobsAttempted-job-name'],
-                    value: target[1]
-                })
-            });
-        }
-        // console.log(nodeBuckets)
-
-        return { nodes: Object.values(nodeBuckets), links: l, meta: meta }
-
-    }
 
 
     // Copyright 2021 Observable, Inc.
@@ -134,7 +221,10 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         linkSource = ({ source }) => source, // given d in links, returns a node identifier string
         linkTarget = ({ target }) => target, // given d in links, returns a node identifier string
         linkDetail, // text displayed when hover over link d
-        linkStroke = "#999", // link stroke color
+        linkStroke, // link stroke color, no color when showing jobs in progress
+        outLinks,
+        outLinkWidth,
+        outLinkDetail,
         linkStrokeOpacity = 0.6, // link stroke opacity
         linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
         linkStrokeLinecap = "round", // link stroke linecap
@@ -146,7 +236,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         invalidation, // when this promise resolves, stop the simulation
         parent,
 
-        } = {}) {
+    } = {}) {
         // Compute values.
         const N = d3.map(nodes, nodeId).map(intern);
         const LS = d3.map(links, linkSource).map(intern);
@@ -154,7 +244,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         if (nodeTitle === undefined) nodeTitle = (_, i) => N[i];
         const T = nodeTitle == null ? null : d3.map(nodes, nodeTitle);
         if (nodeDetail === undefined) nodeDetail = (_, i) => N[i];
-        const D = nodeDetail == null ? null : d3.map(nodes, nodeDetail);
+        const ND = nodeDetail == null ? null : d3.map(nodes, nodeDetail);
         const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
         if (!nodeRadius) nodeRadius = (_, i) => N[i]
         const R = nodeRadius == null ? null : d3.map(nodes, nodeRadius)
@@ -162,8 +252,11 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         const W = typeof linkStrokeWidth !== "function" ? null : d3.map(links, linkStrokeWidth);
         const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
         if (linkDetail === undefined) linkDetail = (_, i) => LS[i];
-        const TP = linkDetail == null ? null : d3.map(links, linkDetail) // tooltips
+        const LD = linkDetail == null ? null : d3.map(links, linkDetail) // tooltips
 
+        const OW = typeof outLinkWidth !== "function" ? null : d3.map(nodes, outLinkWidth);     // outLink width
+        if (outLinkDetail === undefined) outLinkDetail = (_, i) => N[i];
+        const OD = outLinkDetail == null ? null : d3.map(nodes, outLinkDetail);
 
         // Replace the input nodes and links with mutable objects for the simulation.
         nodes = d3.map(nodes, (_, i) => ({ id: N[i] }));
@@ -191,8 +284,8 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
         svg.append('defs').append('marker')
             .attr('id', 'arrowhead')
             .attr('viewBox', '-0 -5 10 10')
-            .attr('refX', 30)
-            .attr('refY', -1.5)
+            .attr('refX', outLinks ? 10 : 30)
+            .attr('refY', outLinks ? 0 : -1.5)
             .attr('orient', 'auto')
             .attr('markerUnits', 'userSpaceOnUse')
             .attr('markerWidth', 10)
@@ -212,14 +305,33 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             .selectAll("path")
             .data(links)
             .join("path")
-            .attr('marker-end', 'url(#arrowhead)')
             .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null)
-            .on('click', handleLinkClick)
-            .on('mouseover', handleNodeHover)
-            .on('mouseout', handleNodeUnhover);
+
+
+        let outEdge
+        if (outLinks) {
+            outEdge = svg.append('g')
+                .selectAll('line')
+                .data(nodes)
+                .join('line')
+                // .attr('pathLength', 50)
+                .attr('stroke', '#999')
+                .attr('stroke-width', 5)
+                .attr("stroke-opacity", linkStrokeOpacity)
+                .attr('marker-end', 'url(#arrowhead)')
+                .on('click', handleLinkClick)
+                .on('mouseover', handleNodeHover)
+                .on('mouseout', handleNodeUnhover);
+        }
+        else {
+            link.attr('marker-end', 'url(#arrowhead)')
+                .on('click', handleLinkClick)
+                .on('mouseover', handleNodeHover)
+                .on('mouseout', handleNodeUnhover);
+        }
 
         function handleLinkClick(e, d) {
-            toPlayerTimeLine(d)
+            showPlayersList(d)
 
             // list of sessions associated with the link
         }
@@ -262,6 +374,8 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                 .classed('cursor-pointer', false)
         }
 
+
+
         // node names
         const text = svg.append('g')
             .selectAll('text')
@@ -269,18 +383,24 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             .join('text')
             .text(({ index: i }) => T[i])
             .attr('font-size', 8)
-            .attr('stroke', 'white')
-            .attr('stroke-width', .2)
+            // .attr('stroke', 'white')
+            // .attr('stroke-width', .2)
             .attr('fill', 'black')
+
+
 
 
         if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
         if (L) link.attr("stroke", ({ index: i }) => L[i]);
-        if (TP) link.append('title').text(({ index: i }) => TP[i]);
+        if (LD) link.append('title').text(({ index: i }) => LD[i]);
         if (G) node.attr("fill", ({ index: i }) => color(G[i]));
         if (R) node.attr('r', ({ index: i }) => R[i]);
-        if (T) node.append("title").text(({ index: i }) => D[i]);
+        if (T) node.append("title").text(({ index: i }) => ND[i]);
+        if (OW) outEdge.attr("stroke-width", ({ index: i }) => OW[i]);
+        if (OW) outEdge.append("title").text(({ index: i }) => OD[i]);
+
         if (invalidation != null) invalidation.then(() => simulation.stop());
+
 
         function intern(value) {
             return value !== null && typeof value === "object" ? value.valueOf() : value;
@@ -315,6 +435,13 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             text
                 .attr("x", ({ index: i, x: x }) => x + R[i] + 3)
                 .attr("y", d => d.y);
+
+            if (outLinks)
+                outEdge
+                    .attr("x1", ({ x }) => x)
+                    .attr("y1", d => d.y)
+                    .attr("x2", ({ x }) => x + 25)
+                    .attr("y2", d => d.y + 25)
         }
 
         function drag(simulation) {
@@ -346,6 +473,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
             text.attr('transform', e.transform);
             node.attr('transform', e.transform);
             link.attr('transform', e.transform);
+            if (outLinks) outEdge.attr('transform', e.transform);
         }
 
         const zoom = d3.zoom()
@@ -359,7 +487,13 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
     return (
         <>
             <LoadingBlur loading={loading} />
-            <svg ref={ref} className="w-full border-b" ></svg>
+            <svg ref={ref} className="w-full border-b" />
+
+            {playersList ?
+                <PlayersList data={playersList} /> :
+                <></>
+            }
+
             <div className="fixed bottom-3 right-3 font-light text-sm">
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
@@ -370,9 +504,9 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                                     className="form-radio"
                                     type="radio"
                                     name="radio-direct"
-                                    checked={linkMode === '1'}
+                                    checked={linkMode === 'TopJobCompletionDestinations'}
                                     onChange={(e) => { setLinkMode(e.currentTarget.value) }}
-                                    value="1" />
+                                    value="TopJobCompletionDestinations" />
                                 <span className="ml-2">finished the job</span>
                             </label>
                         </div>
@@ -382,9 +516,9 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                                     className="form-radio"
                                     type="radio"
                                     name="radio-direct"
-                                    checked={linkMode === '2'}
+                                    checked={linkMode === 'TopJobSwitchDestinations'}
                                     onChange={(e) => { setLinkMode(e.currentTarget.value) }}
-                                    value="2" />
+                                    value="TopJobSwitchDestinations" />
                                 <span className="ml-2">left the job</span>
                             </label>
                         </div>
@@ -394,15 +528,15 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                                     className="form-radio"
                                     type="radio"
                                     name="radio-direct"
-                                    checked={linkMode === '3'}
+                                    checked={linkMode === 'ActiveJobs'}
                                     onChange={(e) => { setLinkMode(e.currentTarget.value) }}
-                                    value="3" />
+                                    value="ActiveJobs" />
                                 <span className="ml-2">still in progress</span>
                             </label>
                         </div>
                     </div>
                 </fieldset>
-                <p className="mt-2">Session Count: {data.meta.SessionCount} </p>
+                <p className="mt-2">Player Count: {data.meta.PlayerCount} </p>
             </div>
             <div className="fixed bottom-3 left-3 font-light ">
                 {showLegend &&
