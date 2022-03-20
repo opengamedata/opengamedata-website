@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { color } from "d3";
 import { useD3 } from "../../../hooks/useD3";
 
 
@@ -26,8 +27,7 @@ export default function PlayerTimeline({ rawData }) {
         // scale according to shortest duration (so that its length stays at 100)
         const sacleFactorY = 100 / data.meta.minDuration
 
-        const colors = d3.schemeTableau10
-
+        const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
         svg.attr("viewBox", [-width / 20, -height / 2, width, height])
         svg.selectAll('*').remove();
@@ -81,7 +81,7 @@ export default function PlayerTimeline({ rawData }) {
         // draw node
         event.append('circle')
             .attr('r', dotSize)
-            .attr('fill', '#fdd835')
+            .attr('fill', ({ type }) => color(type))
 
         // event name
         event.append('text')
@@ -124,7 +124,7 @@ export default function PlayerTimeline({ rawData }) {
             </div>
             <svg
                 ref={diagram}
-                className="w-full mx-0 border"
+                className="w-full mx-0"
             />
         </>
 
@@ -155,8 +155,8 @@ function convert(rawData) {
     // calculate derived values
     const startTime = events[0].timestamp
     let minDuration = Infinity
+    const typeList = new Set()
     for (let i = 0; i < events.length; i++) {
-
 
         // calculate duration
         let duration = 0
@@ -167,6 +167,10 @@ function convert(rawData) {
 
         // normalize timestamps
         events[i].timestamp = events[i].timestamp - startTime
+
+        // construct list of types
+        typeList.add(events[i].type)
+
         // add extra features
         let extra = []
         for (const [k, v] of Object.entries(rawEvents[i])) {
@@ -180,7 +184,7 @@ function convert(rawData) {
     meta.startTime = events[0].date
     meta.endTime = events[events.length - 1].date
     meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
-
+    meta.types = typeList
 
 
     console.log()
