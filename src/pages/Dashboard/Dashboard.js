@@ -228,7 +228,7 @@ export default function Dashboard() {
                         updateGlobalMetrics={updateGlobalMetrics}
                     />
                     <LoadingBlur loading={loading} />
-                    {!loading &&
+                    {data &&
                         {
                             'JobGraph':
                                 <JobGraph

@@ -22,7 +22,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
 
-        // console.log(rawData)
+        console.log('rawData', rawData)
 
         // metadata
         const meta = {
