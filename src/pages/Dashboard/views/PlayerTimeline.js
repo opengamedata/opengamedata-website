@@ -111,7 +111,7 @@ export default function PlayerTimeline({ rawData }) {
 
     }, [data])
 
-    return (
+    return rawData && (
         <>
             <div className="fixed bottom-5 left-8">
                 <p className='mb-3 text-4xl font-light'>Player {data.meta.playerID}</p>

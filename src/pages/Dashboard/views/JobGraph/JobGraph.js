@@ -145,7 +145,6 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
     const toPlayerTimeline = (viewMetrics) => {
         updateViewMetrics('PlayerTimeline', viewMetrics)
-        // updateViewMetrics('PlayerTimeline', viewMetrics)
 
     }
 
@@ -489,7 +488,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
 
     return (
         <>
-            <LoadingBlur loading={loading} />
+            {/* <LoadingBlur loading={loading} /> */}
             <svg ref={ref} className="w-full border-b" />
 
             {playersList ?

@@ -6,6 +6,7 @@ import { API_ORIGIN } from '../../constants';
 import TableView from './views/JobGraph/PlayersList';
 import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/PlayerTimeline';
+import LoadingBlur from '../../components/LoadingBlur';
 
 
 export default function Dashboard() {
@@ -33,6 +34,8 @@ export default function Dashboard() {
 
 
     const updateGlobalMetrics = (newMetrics) => {
+        console.log(newMetrics)
+
         let searchParams, urlPath
         switch (currentView) {
             case 'JobGraph':
@@ -76,13 +79,15 @@ export default function Dashboard() {
         const url = new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
 
         // fetch by url
-        propagateData(url.toString())
+        propagateData(url.toString(), () => {
 
-        setMetrics(newMetrics)
+            setMetrics(newMetrics)
+        })
+
     }
 
     const updateViewMetrics = (view, newViewMetrics) => {
-        console.log(newViewMetrics)
+        // console.log(newViewMetrics)
 
         let searchParams, urlPath
         switch (view) {
@@ -115,10 +120,16 @@ export default function Dashboard() {
         const url = new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
 
         // fetch by url
-        propagateData(url.toString())
+        propagateData(url.toString(), () => {
+            setViewMetrics(newViewMetrics)
+            console.log('newViewMetrics', newViewMetrics)
+            // setTimeout(() => {
 
-        setViewMetrics(newViewMetrics)
-        if (view !== currentView) setCurrentView(view)
+            if (view !== currentView) setCurrentView(view)
+            // }, 1000);
+        })
+
+
     }
 
     /**
@@ -132,7 +143,9 @@ export default function Dashboard() {
      * 
      * 
      */
-    const propagateData = (url) => {
+    const propagateData = (url, fetchCallback) => {
+        // flush current dataset
+        setData(null)
 
         // localStorage.clear() // DEBUG
 
@@ -144,7 +157,15 @@ export default function Dashboard() {
         const localData = localStorage.getItem(url)
         // console.log(localData)
         if (localData) {
+
+
+
+            fetchCallback()
+
             setData(JSON.parse(localData)) 
+
+            console.log(localData)
+
 
             // store response to parent component state
             setInitialized(true)
@@ -165,11 +186,21 @@ export default function Dashboard() {
                     // store data locally
                     localStorage.setItem(url, JSON.stringify(data.val))
 
+
+
+                    fetchCallback()
+
                     // set data state
                     setData(data.val)
 
+
+
+
+
+
                     // store response to parent component state
                     setInitialized(true)
+
 
                     // stop loading animation
                     setLoading(false)
@@ -196,7 +227,8 @@ export default function Dashboard() {
                         loading={loading}
                         updateGlobalMetrics={updateGlobalMetrics}
                     />
-                    {
+                    <LoadingBlur loading={loading} />
+                    {!loading &&
                         {
                             'JobGraph':
                                 <JobGraph
@@ -206,7 +238,8 @@ export default function Dashboard() {
                                     loading={loading} />,
                             'PlayerTimeline':
                                 <PlayerTimeline
-                                    rawData={data} />
+                                    rawData={data}
+                                    loading={loading} />
                         }[currentView]
                     }
                 </>
