@@ -34,7 +34,7 @@ export default function Dashboard() {
 
 
     const updateGlobalMetrics = (newMetrics) => {
-        console.log(newMetrics)
+        // console.log(newMetrics)
 
         let searchParams, urlPath
         switch (currentView) {
@@ -59,18 +59,6 @@ export default function Dashboard() {
 
                 break;
 
-            case 'TaskGraph':
-                // construct url path and params
-
-                // searchParams = new URLSearchParams({
-                //     start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
-                //     end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
-                //     metrics: '[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]'
-                // })
-
-                // urlPath = `game/${newMetrics.game}/metrics`
-
-                break;
             default:
                 break;
         }
@@ -122,11 +110,9 @@ export default function Dashboard() {
         // fetch by url
         propagateData(url.toString(), () => {
             setViewMetrics(newViewMetrics)
-            console.log('newViewMetrics', newViewMetrics)
-            // setTimeout(() => {
+            // console.log('newViewMetrics', newViewMetrics)
 
             if (view !== currentView) setCurrentView(view)
-            // }, 1000);
         })
 
 
@@ -164,7 +150,7 @@ export default function Dashboard() {
 
             setData(JSON.parse(localData)) 
 
-            console.log(localData)
+            // console.log(localData)
 
 
             // store response to parent component state
@@ -186,21 +172,13 @@ export default function Dashboard() {
                     // store data locally
                     localStorage.setItem(url, JSON.stringify(data.val))
 
-
-
                     fetchCallback()
 
                     // set data state
                     setData(data.val)
 
-
-
-
-
-
                     // store response to parent component state
                     setInitialized(true)
-
 
                     // stop loading animation
                     setLoading(false)

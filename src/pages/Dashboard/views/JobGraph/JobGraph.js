@@ -1,9 +1,7 @@
 import * as d3 from "d3";
 import { useEffect, useState } from "react";
-import { reducedDummy } from "../../../../dummies";
 import { useD3 } from "../../../../hooks/useD3";
 import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
-import LoadingBlur from "../../../../components/LoadingBlur";
 import PlayersList from "./PlayersList";
 
 /**
@@ -11,7 +9,7 @@ import PlayersList from "./PlayersList";
  * @param {Object} data parsed data object 
  * @returns 
  */
-export default function JobGraph({ rawData, loading, updateViewMetrics }) {
+export default function JobGraph({ rawData, updateViewMetrics }) {
 
 
 
@@ -22,7 +20,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
 
-        console.log('rawData', rawData)
+        // console.log('rawData', rawData)
 
         // metadata
         const meta = {
@@ -81,7 +79,7 @@ export default function JobGraph({ rawData, loading, updateViewMetrics }) {
                 for (const [sourceKey, targets] of Object.entries(rawLinks)) {
                     for (const [targetKey, players] of Object.entries(targets)) {
 
-                        if (sourceKey === targetKey) continue // omit self-pointing jobs
+                        // if (sourceKey === targetKey) continue // omit self-pointing jobs
 
                         l.push({
                             source: sourceKey,

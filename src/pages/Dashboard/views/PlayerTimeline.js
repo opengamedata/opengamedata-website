@@ -1,24 +1,22 @@
 import * as d3 from "d3";
-import { color } from "d3";
+import { useState, useEffect } from 'react';
 import { useD3 } from "../../../hooks/useD3";
 
 
 export default function PlayerTimeline({ rawData }) {
 
-    const data = convert(rawData)
+    const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
+    const [data, setData] = useState(convert(rawData))
+    // const data = convert(rawData)
 
-    // console.log(rawData)
-    console.log(convert(rawData))
+    useEffect(() => {
+        setEventTypesDisplayed(data.meta.types)
+    }, [])
 
-    // const data = [
-    //     { name: 'jump', timestamp: '0', duration: 10, extra: ['jobID', '7ft', 'sessionID'] },
-    //     { name: 'dive', timestamp: '10', duration: 4, extra: ['jobID', '300m', 'sessionID'] },
-    //     { name: 'swim', timestamp: '14', duration: 4, extra: ['jobID', 'freestyle', 'sessionID'] },
-    //     { name: 'run', timestamp: '18', duration: 10, extra: ['jobID', '100m', 'sessionID'] },
-    //     { name: 'run', timestamp: '28', duration: 15, extra: ['jobID', '100m', 'sessionID'] },
-    //     { name: 'run', timestamp: '43', duration: 35, extra: ['jobID', '100m', 'sessionID'] },
-    //     { name: 'run', timestamp: '78', duration: 0, extra: ['jobID', '100m', 'sessionID'] },
-    // ]
+    useEffect(() => {
+        if (eventTypesDisplayed instanceof Set)
+            setData(filter(convert(rawData), eventTypesDisplayed))
+    }, [eventTypesDisplayed])
 
     const diagram = useD3((svg) => {
         const width = window.innerWidth
@@ -35,7 +33,7 @@ export default function PlayerTimeline({ rawData }) {
         // baseline
         svg.append('line')
             .attr('x1', 0)
-            .attr('x2', data.events[data.events.length - 1].timestamp * sacleFactorY)
+            .attr('x2', (data.meta.totalTime) * sacleFactorY)
             .attr('stroke', 'grey')
             .attr('stroke-width', dotSize / 5)
 
@@ -94,7 +92,7 @@ export default function PlayerTimeline({ rawData }) {
         event.append('text')
             .classed('duration', true)
             .text(({ duration }) => `${duration}s`) // replace with dynamic data
-            .attr('transform', ` translate(${dotSize * 2},${dotSize * 1.5})`)
+            .attr('transform', ({ duration }) => `translate(${duration * sacleFactorY / 2 - dotSize / 2},${dotSize * 1.5})`)
             .attr('font-size', dotSize)
 
         // zoom behavior
@@ -111,8 +109,37 @@ export default function PlayerTimeline({ rawData }) {
 
     }, [data])
 
+
+    const filterControl = () => {
+        const listOfEvents = [...data.meta.types].map((e) => (
+            <div key={e}>
+                <label>
+                    <input
+                        className="form-checkbox"
+                        type="checkbox"
+                        checked={eventTypesDisplayed.has(e)}
+                        onChange={() => {
+                            if (eventTypesDisplayed.has(e) && eventTypesDisplayed.size > 1) setEventTypesDisplayed(new Set([...eventTypesDisplayed].filter(d => d !== e)))
+                            else {
+                                const newList = [...eventTypesDisplayed]
+                                newList.push(e)
+                                setEventTypesDisplayed(new Set(newList))
+                            }
+                        }}
+                    />
+                    <span> {e}</span>
+                </label>
+            </div>
+        ))
+        return listOfEvents
+    }
+
     return rawData && (
         <>
+            <svg
+                ref={diagram}
+                className="w-full mx-0"
+            />
             <div className="fixed bottom-5 left-8">
                 <p className='mb-3 text-4xl font-light'>Player {data.meta.playerID}</p>
                 <p className="font-light">
@@ -122,10 +149,12 @@ export default function PlayerTimeline({ rawData }) {
                     Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
                 </p>
             </div>
-            <svg
-                ref={diagram}
-                className="w-full mx-0"
-            />
+            <fieldset className="fixed bottom-5 right-8 font-light">
+                <legend className="">Show event types of:</legend>
+                <div className="mt-2">
+                    {eventTypesDisplayed instanceof Set && filterControl()}
+                </div>
+            </fieldset>
         </>
 
 
@@ -189,4 +218,28 @@ function convert(rawData) {
 
     console.log()
     return { meta, events }
+}
+
+function filter(data, filterParams) {
+
+    console.log(data)
+    console.log(filterParams)
+
+    const filteredEvents = data.events.filter(({ type }) => filterParams.has(type))
+
+    let minDuration = Infinity
+    for (let i = 0; i < filteredEvents.length - 1; i++) {
+        const e = filteredEvents[i];
+
+        const d = filteredEvents[i + 1].timestamp - e.timestamp
+        if (d < minDuration) minDuration = d
+        e.duration = d
+
+        console.log(e)
+    }
+
+    data.meta.minDuration = minDuration
+    data.events = filteredEvents
+
+    return data
 }
