@@ -88,4 +88,4 @@ export const game_links = {
     'WIND': 'https://theyardgames.org/game/wind.html'
 }
 
-export const visGames = ['AQUALAB', 'PENGUIN', 'SHIPWRECK']
+export const visGames = ['AQUALAB', 'PENGUIN', 'SHIPWRECKS']
