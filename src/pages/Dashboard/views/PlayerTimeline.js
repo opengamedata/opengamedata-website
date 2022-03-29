@@ -1,9 +1,10 @@
 import * as d3 from "d3";
 import { useState, useEffect } from 'react';
+import LargeButton from "../../../components/buttons/LargeButton";
 import { useD3 } from "../../../hooks/useD3";
 
 
-export default function PlayerTimeline({ rawData }) {
+export default function PlayerTimeline({ rawData, updateViewMetrics }) {
 
     const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
     const [data, setData] = useState(convert(rawData))
@@ -141,6 +142,11 @@ export default function PlayerTimeline({ rawData }) {
                 className="w-full mx-0"
             />
             <div className="fixed bottom-5 left-8">
+                <LargeButton
+                    selected={false}
+                    onClick={() => { updateViewMetrics('JobGraph') }}
+                    label='← BACK TO JOB GRAPH'
+                />
                 <p className='mb-3 text-4xl font-light'>Player {data.meta.playerID}</p>
                 <p className="font-light">
                     From <span className="font-bold">{data.meta.startTime}</span> to <span className="font-bold">{data.meta.endTime}</span>
@@ -148,7 +154,13 @@ export default function PlayerTimeline({ rawData }) {
                 <p className="font-light">
                     Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
                 </p>
+                {/* <LargeButton
+                    selected={false}
+                    onClick={() => { }}
+                    label='← BACK'
+                /> */}
             </div>
+
             <fieldset className="fixed bottom-5 right-8 font-light">
                 <legend className="">Show event types of:</legend>
                 <div className="mt-2">

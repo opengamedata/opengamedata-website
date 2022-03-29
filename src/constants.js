@@ -18,6 +18,7 @@ export const game_list = [
     'WAVES',
     'WIND',
     'SHADOWSPECT',
+    'SHIPWRECKS'
 ]
 
 export const thumbs = {
@@ -34,7 +35,8 @@ export const thumbs = {
     'MAGNET': './img/thumbs/magnet.png',
     'WAVES': './img/thumbs/wave.jpeg',
     'WIND': './img/thumbs/wind.png',
-    'SHADOWSPECT': './img/thumbs/shadowspect-thumb.jpg'
+    'SHADOWSPECT': './img/thumbs/shadowspect.png',
+    'SHIPWRECKS': './img/thumbs/shipwrecks.jpeg'
 }
 
 export const data_readmes = {
@@ -51,7 +53,8 @@ export const data_readmes = {
     'MAGNET': 'https://github.com/fielddaylab/magnetism/blob/master/readme.md',
     'WAVES': 'https://github.com/fielddaylab/waves/blob/master/README.md',
     'WIND': 'https://github.com/fielddaylab/wind/blob/master/readme.md',
-    'SHADOWSPECT': 'https://github.com/fielddaylab/shadowspect/blob/master/readme.md'
+    'SHADOWSPECT': 'https://github.com/fielddaylab/shadowspect/blob/master/readme.md',
+    'SHIPWRECKS': 'https://github.com/fielddaylab/shipwrecks/blob/master/readme.md'
 }
 
 export const feature_readmes = {
@@ -68,7 +71,8 @@ export const feature_readmes = {
     'MAGNET': 'https://opengamedata.fielddaylab.wisc.edu/data/MAGNET/readme.md',
     'WAVES': 'https://opengamedata.fielddaylab.wisc.edu/data/WAVES/readme.md',
     'WIND': 'https://opengamedata.fielddaylab.wisc.edu/data/WIND/readme.md',
-    'SHADOWSPECT': 'https://opengamedata.fielddaylab.wisc.edu/data/SHADOWSPECT/readme.md'
+    'SHADOWSPECT': 'https://opengamedata.fielddaylab.wisc.edu/data/SHADOWSPECT/readme.md',
+    'SHIPWRECKS': 'https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md'
 }
 
 export const game_links = {
@@ -85,7 +89,8 @@ export const game_links = {
     'MAGNET': 'https://theyardgames.org/game/magnetism.html',
     'SHADOWSPECT': 'http://shadowspect.org/',
     'WAVES': 'https://theyardgames.org/game/waves.html',
-    'WIND': 'https://theyardgames.org/game/wind.html'
+    'WIND': 'https://theyardgames.org/game/wind.html',
+    'SHIPWRECKS': 'https://pbswisconsineducation.org/emerald/play-the-game/'
 }
 
-export const visGames = ['AQUALAB', 'PENGUIN', 'SHIPWRECK']
+export const visGames = ['AQUALAB', 'PENGUIN', 'SHIPWRECKS']

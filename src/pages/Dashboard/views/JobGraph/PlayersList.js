@@ -7,7 +7,7 @@ export default function PlayersList({ data, redirect }) {
                 {/* <div className='p-2 font-medium'>Time taken</div>
                 <div className='p-2 font-medium'>Outcome</div> */}
             </div>
-            <div className="h-96 overflow-y-scroll">
+            <div className=" h-96 overflow-y-scroll">
                 {data.players.map((player, i) => {
                 return (
                     <div key={player + i} className="px-2 py-1 border-b bg-white" onClick={() => redirect({ player: player })}>

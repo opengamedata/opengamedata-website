@@ -192,7 +192,7 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
             parent: svg,
             nodeClick: ''
         })
-    }, [data, linkMode])
+    }, [linkMode])
 
 
 
@@ -541,9 +541,9 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
                 </fieldset>
                 <p className="mt-2">Player Count: {data.meta.PlayerCount} </p>
             </div>
-            <div className="fixed bottom-3 left-3 font-light ">
+            <div className="fixed bottom-5 left-8 font-light">
                 {showLegend &&
-                    <div className="pb-2 backdrop-blur">
+                    <div className="pb-5 pr-5 backdrop-blur">
                         <p className="font-bold">Understanding the Graph</p>
                         <p>
                             Each <span className="font-semibold">node</span> represents a <span className="font-semibold">job</span>, and the <span className="font-semibold">links</span> between nodes denote <span className="font-semibold">player progression</span>.
@@ -570,10 +570,14 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
                         </p>
                     </div>
                 }
-                <QuestionMarkCircleIcon
-                    className="text-slate-500 cursor-pointer h-10 w-10"
-                    onMouseEnter={() => { setShowLegend(true) }}
-                    onMouseLeave={() => { setShowLegend(false) }} />
+                <div className="flex space-x-2 items-center">
+                    <p className="text-4xl font-light">Job Graph</p>
+                    <QuestionMarkCircleIcon
+                        className="text-slate-500 h-8 w-8"
+                        onMouseEnter={() => { setShowLegend(true) }}
+                        onMouseLeave={() => { setShowLegend(false) }}
+                    />
+                </div>
             </div>
         </>
 

@@ -211,13 +211,11 @@ export default function Dashboard() {
                             'JobGraph':
                                 <JobGraph
                                     rawData={data}
-                                    updateViewMetrics={updateViewMetrics}
-
-                                    loading={loading} />,
+                                updateViewMetrics={updateViewMetrics} />,
                             'PlayerTimeline':
                                 <PlayerTimeline
                                     rawData={data}
-                                    loading={loading} />
+                                    updateViewMetrics={updateViewMetrics} />
                         }[currentView]
                     }
                 </>
