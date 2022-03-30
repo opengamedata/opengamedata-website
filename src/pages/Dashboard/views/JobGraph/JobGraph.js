@@ -32,7 +32,7 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
         // nodes
         let nodeBuckets = {}
         for (const [key, value] of Object.entries(rawData)) {
-            if (key.substring(0, 3) !== 'job') continue
+            if (key.substring(0, 3) !== 'job' && key.substring(0, 7) !== 'mission') continue
 
             const [k, metric] = key.split('_')
             // console.log(`${k}'s ${metric}: ${value}`);
