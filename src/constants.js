@@ -54,7 +54,7 @@ export const data_readmes = {
     'WAVES': 'https://github.com/fielddaylab/waves/blob/master/README.md',
     'WIND': 'https://github.com/fielddaylab/wind/blob/master/readme.md',
     'SHADOWSPECT': 'https://github.com/fielddaylab/shadowspect/blob/master/readme.md',
-    'SHIPWRECKS': 'https://github.com/fielddaylab/shipwrecks/blob/master/readme.md'
+    'SHIPWRECKS': 'https://github.com/fielddaylab/lost_emerald/blob/master/README.md'
 }
 
 export const feature_readmes = {

@@ -185,7 +185,7 @@ export default function Dashboard() {
                 })
                 .catch(error => {
                     console.error(error)
-
+                    setLoading(false)
                     alert(error)
                 })
         }
