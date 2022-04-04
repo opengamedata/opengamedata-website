@@ -76,7 +76,7 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
                 for (const [sourceKey, targets] of Object.entries(rawLinks)) {
                     for (const [targetKey, players] of Object.entries(targets)) {
 
-                        // if (sourceKey === targetKey) continue // omit self-pointing jobs
+                        if (sourceKey === targetKey) continue // omit self-pointing jobs
 
                         l.push({
                             source: sourceKey,

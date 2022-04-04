@@ -96,7 +96,10 @@ export default function Dashboard() {
                     metrics: '[EventList]'
                 })
 
-                urlPath = `game/${metrics.game}/player/${newViewMetrics.player}/metrics`
+                urlPath = metrics.game === 'AQUALAB' ?
+                    `game/${metrics.game}/player/${newViewMetrics.player}/metrics`
+                    :
+                    `game/${metrics.game}/session/${newViewMetrics.player}/metrics`
 
                 break;
 
