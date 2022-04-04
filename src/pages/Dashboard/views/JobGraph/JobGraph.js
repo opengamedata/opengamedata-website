@@ -10,9 +10,6 @@ import PlayersList from "./PlayersList";
  * @returns 
  */
 export default function JobGraph({ rawData, updateViewMetrics }) {
-
-
-
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [showLegend, setShowLegend] = useState(false)
     const [playersList, setPlayerList] = useState()
@@ -176,9 +173,9 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
             nodeId: d => d.id,
             nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
             nodeTitle: d => d.id,
-            nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed this job\n` +
-                `average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
-                `standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
+            nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed\n` +
+                `Average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
+                `Standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
             nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
             linkStrokeWidth: l => Math.sqrt(l.value),
             linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,

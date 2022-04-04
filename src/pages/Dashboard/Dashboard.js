@@ -93,7 +93,7 @@ export default function Dashboard() {
             case 'PlayerTimeline':
                 // construct url path and params
                 searchParams = new URLSearchParams({
-                    metrics: 'EventList'
+                    metrics: '[EventList]'
                 })
 
                 urlPath = `game/${metrics.game}/player/${newViewMetrics.player}/metrics`
@@ -220,12 +220,6 @@ export default function Dashboard() {
                     }
                 </>
             }
-
-
         </div>
-
-
-
     )
-
 }

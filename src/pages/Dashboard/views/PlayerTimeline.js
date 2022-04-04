@@ -232,26 +232,31 @@ function convert(rawData) {
     return { meta, events }
 }
 
+/**
+ * filter events by event type
+ * @param {*} data 
+ * @param {*} filterParams list of event types to be included
+ * @returns filtered data
+ */
 function filter(data, filterParams) {
 
-    console.log(data)
-    console.log(filterParams)
-
+    // select objects of specified event type
     const filteredEvents = data.events.filter(({ type }) => filterParams.has(type))
 
+
     let minDuration = Infinity
+    // update time elapsed in-between events
     for (let i = 0; i < filteredEvents.length - 1; i++) {
         const e = filteredEvents[i];
 
         const d = filteredEvents[i + 1].timestamp - e.timestamp
         if (d < minDuration) minDuration = d
         e.duration = d
-
-        console.log(e)
     }
-
+    // update min duration
     data.meta.minDuration = minDuration
-    data.events = filteredEvents
 
+
+    data.events = filteredEvents
     return data
 }
