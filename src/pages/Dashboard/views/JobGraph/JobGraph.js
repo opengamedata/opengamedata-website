@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { useD3 } from "../../../../hooks/useD3";
 import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
 import PlayersList from "./PlayersList";
+import { urlSearchMetrics } from "../../../../constants";
 
 /**
  * force directed graph component for Aqualab job-level data
  * @param {Object} data parsed data object 
  * @returns 
  */
-export default function JobGraph({ rawData, updateViewMetrics }) {
+export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [showLegend, setShowLegend] = useState(false)
     const [playersList, setPlayerList] = useState()
@@ -58,6 +59,9 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
 
                 for (const [sourceKey, targets] of Object.entries(rawLinks)) {
                     for (const [targetKey, players] of Object.entries(targets)) {
+
+                        if (sourceKey === targetKey) continue // omit self-pointing jobs
+
                         l.push({
                             source: sourceKey,
                             sourceName: sourceKey,
@@ -498,42 +502,48 @@ export default function JobGraph({ rawData, updateViewMetrics }) {
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
-                        <div>
-                            <label className="inline-flex items-center">
-                                <input
-                                    className="form-radio"
-                                    type="radio"
-                                    name="radio-direct"
-                                    checked={linkMode === 'TopJobCompletionDestinations'}
-                                    onChange={(e) => { setLinkMode(e.currentTarget.value) }}
-                                    value="TopJobCompletionDestinations" />
-                                <span className="ml-2">finished the job</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label className="inline-flex items-center">
-                                <input
-                                    className="form-radio"
-                                    type="radio"
-                                    name="radio-direct"
-                                    checked={linkMode === 'TopJobSwitchDestinations'}
-                                    onChange={(e) => { setLinkMode(e.currentTarget.value) }}
-                                    value="TopJobSwitchDestinations" />
-                                <span className="ml-2">left the job</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label className="inline-flex items-center">
-                                <input
-                                    className="form-radio"
-                                    type="radio"
-                                    name="radio-direct"
-                                    checked={linkMode === 'ActiveJobs'}
-                                    onChange={(e) => { setLinkMode(e.currentTarget.value) }}
-                                    value="ActiveJobs" />
-                                <span className="ml-2">still in progress</span>
-                            </label>
-                        </div>
+                        {urlSearchMetrics[metrics.game].includes('TopJobCompletionDestinations') &&
+                            <div>
+                                <label className="inline-flex items-center">
+                                    <input
+                                        className="form-radio"
+                                        type="radio"
+                                        name="radio-direct"
+                                        checked={linkMode === 'TopJobCompletionDestinations'}
+                                        onChange={(e) => { setLinkMode(e.currentTarget.value) }}
+                                        value="TopJobCompletionDestinations" />
+                                    <span className="ml-2">finished the job</span>
+                                </label>
+                            </div>
+                        }
+                        {urlSearchMetrics[metrics.game].includes('TopJobSwitchDestinations') &&
+                            <div>
+                                <label className="inline-flex items-center">
+                                    <input
+                                        className="form-radio"
+                                        type="radio"
+                                        name="radio-direct"
+                                        checked={linkMode === 'TopJobSwitchDestinations'}
+                                        onChange={(e) => { setLinkMode(e.currentTarget.value) }}
+                                        value="TopJobSwitchDestinations" />
+                                    <span className="ml-2">left the job</span>
+                                </label>
+                            </div>
+                        }
+                        {urlSearchMetrics[metrics.game].includes('ActiveJobs') &&
+                            <div>
+                                <label className="inline-flex items-center">
+                                    <input
+                                        className="form-radio"
+                                        type="radio"
+                                        name="radio-direct"
+                                        checked={linkMode === 'ActiveJobs'}
+                                        onChange={(e) => { setLinkMode(e.currentTarget.value) }}
+                                        value="ActiveJobs" />
+                                    <span className="ml-2">still in progress</span>
+                                </label>
+                            </div>
+                        }
                     </div>
                 </fieldset>
                 <p className="mt-2">Player Count: {data.meta.PlayerCount} </p>

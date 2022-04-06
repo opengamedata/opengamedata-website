@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { API_ORIGIN } from '../../constants';
+import { API_ORIGIN, timelineUrlPath, urlSearchMetrics } from '../../constants';
 import TableView from './views/JobGraph/PlayersList';
 import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/PlayerTimeline';
@@ -43,7 +43,7 @@ export default function Dashboard() {
                 searchParams = new URLSearchParams({
                     start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
                     end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
-                    metrics: '[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]'
+                    metrics: `[${urlSearchMetrics[newMetrics.game].toString()}]`
                 })
 
                 urlPath = `game/${newMetrics.game}/metrics`
@@ -55,7 +55,8 @@ export default function Dashboard() {
                     metrics: 'EventList'
                 })
 
-                urlPath = `game/${newMetrics.game}/player/${viewMetrics.player}/metrics`
+                urlPath = `game/${newMetrics.game}/${timelineUrlPath[newMetrics.game]}/${viewMetrics.player}/metrics`
+
 
                 break;
 
@@ -84,7 +85,7 @@ export default function Dashboard() {
                 searchParams = new URLSearchParams({
                     start_datetime: encodeURIComponent(metrics.startDate) + 'T00:00',
                     end_datetime: encodeURIComponent(metrics.endDate) + 'T23:59',
-                    metrics: '[TopJobCompletionDestinations,TopJobSwitchDestinations,ActiveJobs,JobsAttempted]'
+                    metrics: `[${urlSearchMetrics[metrics.game].toString()}]`
                 })
 
                 urlPath = `game/${metrics.game}/metrics`
@@ -96,10 +97,7 @@ export default function Dashboard() {
                     metrics: '[EventList]'
                 })
 
-                urlPath = metrics.game === 'AQUALAB' ?
-                    `game/${metrics.game}/player/${newViewMetrics.player}/metrics`
-                    :
-                    `game/${metrics.game}/session/${newViewMetrics.player}/metrics`
+                urlPath = `game/${metrics.game}/${timelineUrlPath[metrics.game]}/${newViewMetrics.player}/metrics`
 
                 break;
 
@@ -214,6 +212,7 @@ export default function Dashboard() {
                             'JobGraph':
                                 <JobGraph
                                     rawData={data}
+                                    metrics={metrics}
                                 updateViewMetrics={updateViewMetrics} />,
                             'PlayerTimeline':
                                 <PlayerTimeline
