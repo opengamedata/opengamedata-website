@@ -19,6 +19,10 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
             setData(filter(convert(rawData), eventTypesDisplayed))
     }, [eventTypesDisplayed])
 
+
+    /**
+     * draw the timeline
+     */
     const diagram = useD3((svg) => {
         const width = window.innerWidth
         const height = window.innerHeight
@@ -75,8 +79,6 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
                 d3.select(this).selectAll('.details').remove()
             })
 
-
-
         // draw node
         event.append('circle')
             .attr('r', dotSize)
@@ -110,7 +112,9 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
 
     }, [data])
 
-
+    /**
+     * genrates the options (radio buttons) for the event type filter
+     */
     const filterControl = () => {
         const listOfEvents = [...data.meta.types].map((e) => (
             <div key={e}>
@@ -135,44 +139,44 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
         return listOfEvents
     }
 
-    return rawData && (
+    return (
         <>
-            <svg
-                ref={diagram}
-                className="w-full mx-0"
-            />
-            <div className="fixed bottom-5 left-8">
-                <LargeButton
-                    selected={false}
-                    onClick={() => { updateViewMetrics('JobGraph') }}
-                    label='← BACK TO JOB GRAPH'
+            {rawData && <>
+                <svg
+                    ref={diagram}
+                    className="w-full mx-0"
                 />
-                <p className='mb-3 text-4xl font-light'>Player {data.meta.playerID}</p>
-                <p className="font-light">
-                    From <span className="font-bold">{data.meta.startTime}</span> to <span className="font-bold">{data.meta.endTime}</span>
-                </p>
-                <p className="font-light">
-                    Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
-                </p>
-                {/* <LargeButton
-                    selected={false}
-                    onClick={() => { }}
-                    label='← BACK'
-                /> */}
-            </div>
-
-            <fieldset className="fixed bottom-5 right-8 font-light">
-                <legend className="">Show event types of:</legend>
-                <div className="mt-2">
-                    {eventTypesDisplayed instanceof Set && filterControl()}
+                <div className="fixed bottom-5 left-8">
+                    <LargeButton
+                        selected={false}
+                        onClick={() => { updateViewMetrics('JobGraph') }}
+                        label='← BACK TO JOB GRAPH'
+                    />
+                    <p className='mb-3 text-4xl font-light'>Player {data.meta.playerID}</p>
+                    <p className="font-light">
+                        From <span className="font-bold">{data.meta.startTime}</span> to <span className="font-bold">{data.meta.endTime}</span>
+                    </p>
+                    <p className="font-light">
+                        Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
+                    </p>
                 </div>
-            </fieldset>
+
+                <fieldset className="fixed bottom-5 right-8 font-light">
+                    <legend className="">Show event types of:</legend>
+                    <div className="mt-2">
+                        {eventTypesDisplayed instanceof Set && filterControl()}
+                    </div>
+                </fieldset>
+            </>}
         </>
-
-
     )
 }
 
+/**
+ * converts raw data from the server to a chart-understandable format
+ * @param {*} rawData 
+ * @returns converted data
+ */
 function convert(rawData) {
     const rawEvents = rawData.vals[0]
 
@@ -203,7 +207,6 @@ function convert(rawData) {
         let duration = 0
         if (i < events.length - 1) duration = events[i + 1].timestamp - events[i].timestamp
         events[i].duration = duration
-
         if (duration > 0 && duration < minDuration) minDuration = duration // update minimum duration
 
         // normalize timestamps
@@ -212,7 +215,7 @@ function convert(rawData) {
         // construct list of types
         typeList.add(events[i].type)
 
-        // add extra features
+        // lump extra features to one field
         let extra = []
         for (const [k, v] of Object.entries(rawEvents[i])) {
             if (!['job_name', 'name', 'timestamp', 'user_id'].includes(k))
@@ -245,7 +248,7 @@ function filter(data, filterParams) {
 
 
     let minDuration = Infinity
-    // update time elapsed in-between events
+    // recalculate time elapsed in between filtered events
     for (let i = 0; i < filteredEvents.length - 1; i++) {
         const e = filteredEvents[i];
 
@@ -253,7 +256,7 @@ function filter(data, filterParams) {
         if (d < minDuration) minDuration = d
         e.duration = d
     }
-    // update min duration
+    // recalculate min duration
     data.meta.minDuration = minDuration
 
 

@@ -6,8 +6,8 @@ import PlayersList from "./PlayersList";
 import { urlSearchMetrics } from "../../../../constants";
 
 /**
- * force directed graph component for Aqualab job-level data
- * @param {Object} data parsed data object 
+ * force directed graph component for job/mission level data
+ * @param {Object} data raw data JSON object 
  * @returns 
  */
 export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
@@ -132,20 +132,8 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         return { nodes: relevantNodes, links: l, meta: meta }
 
     }
-
-
-    // const data = reducedDummy
     const data = convert(rawData)
 
-    const toTaskGraph = (viewMetrics) => {
-        console.log(viewMetrics)
-
-    }
-
-    const toPlayerTimeline = (viewMetrics) => {
-        updateViewMetrics('PlayerTimeline', viewMetrics)
-
-    }
 
     const showPlayersList = (link) => {
         if (linkMode === 'ActiveJobs') {
@@ -162,17 +150,30 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
     }
 
     /**
-     * function that maps average complete time to radius
+    * redirect function
+    * this function is passed to PlayersList
+    * when user selects a player/session, they will be taken to that player/session's timeline
+    */
+    const toPlayerTimeline = (viewMetrics) => {
+        updateViewMetrics('PlayerTimeline', viewMetrics)
+
+    }
+
+    // const toTaskGraph = (viewMetrics) => {
+    //     console.log(viewMetrics)
+    // }
+
+    /**
+     * utility function that maps average complete time to node radius
      */
     const projectRadius = d3.scaleLinear()
         .domain([data.meta.minAvgTime, data.meta.maxAvgTime])
         .range([3, 20])
 
     /**
-     * draws the force directed graph on aqualab jobs
+     * draw the force directed graph on jobs/missions
      */
     const ref = useD3((svg) => {
-
         const chart = ForceGraph(data, {
             nodeId: d => d.id,
             nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
@@ -193,7 +194,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             parent: svg,
             nodeClick: ''
         })
-    }, [linkMode])
+    }, [linkMode]) // dependency -> linkMode: refresh graph when linkMode changes
 
 
 
@@ -202,6 +203,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
 
 
+    // Definition of directed force diagram used in our visualization
 
     // Copyright 2021 Observable, Inc.
     // Released under the ISC license.
@@ -240,6 +242,11 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         parent,
 
     } = {}) {
+
+        function intern(value) {
+            return value !== null && typeof value === "object" ? value.valueOf() : value;
+        }
+
         // Compute values.
         const N = d3.map(nodes, nodeId).map(intern);
         const LS = d3.map(links, linkSource).map(intern);
@@ -284,6 +291,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
         svg.selectAll('*').remove();
 
+        // definition of arrowheads that marks the direction of a link
         svg.append('defs').append('marker')
             .attr('id', 'arrowhead')
             .attr('viewBox', '-0 -5 10 10')
@@ -310,7 +318,8 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             .join("path")
             .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null)
 
-
+        // attach arrowheads to end of paths
+        // when linkMode is set to activeJobs, attach to outEdges 
         let outEdge
         if (outLinks) {
             outEdge = svg.append('g')
@@ -326,18 +335,18 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 .on('mouseover', handleNodeHover)
                 .on('mouseout', handleNodeUnhover);
         }
+
         else {
             link.attr('marker-end', 'url(#arrowhead)')
                 .on('click', handleLinkClick)
                 .on('mouseover', handleNodeHover)
                 .on('mouseout', handleNodeUnhover);
         }
-
         function handleLinkClick(e, d) {
             showPlayersList(d)
         }
 
-
+        // simulates attraction and repulsion among nodes and links
         const simulation = d3.forceSimulation(nodes)
             .force("link", forceLink)
             .force("charge", forceNode)
@@ -355,14 +364,13 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             .join("circle")
             .attr("r", 5)
             .call(drag(simulation))
-            .on('click', handleNodeClick)
+            // .on('click', handleNodeClick)
             .on('mouseover', handleNodeHover)
             .on('mouseout', handleNodeUnhover);
 
-
-        function handleNodeClick(e, d) {
-            toTaskGraph(d.id)
-        };
+        // function handleNodeClick(e, d) {
+        //     toTaskGraph(d.id)
+        // };
 
         function handleNodeHover(e, d) {
             d3.select(this)
@@ -375,9 +383,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 .classed('cursor-pointer', false)
         }
 
-
-
-        // node names
+        // node name labels
         const text = svg.append('g')
             .selectAll('text')
             .data(nodes)
@@ -403,10 +409,6 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         if (invalidation != null) invalidation.then(() => simulation.stop());
 
 
-        function intern(value) {
-            return value !== null && typeof value === "object" ? value.valueOf() : value;
-        }
-
         function positionLink(d) {
             const offset = 10;
 
@@ -426,6 +428,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 " " + d.target.x + "," + d.target.y;
         }
 
+        // update the coordinates of each graphical element
         function ticked() {
             link.attr("d", positionLink)
 
@@ -445,6 +448,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                     .attr("y2", d => d.y + 25)
         }
 
+        // drag behavior for nodes
         function drag(simulation) {
             function dragstarted(event) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -469,14 +473,14 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 .on("end", dragended);
         }
 
+        // pan and zoom
         function handleZoom(e) {
-            // apply transform to the chart
+            // apply transform to chart
             text.attr('transform', e.transform);
             node.attr('transform', e.transform);
             link.attr('transform', e.transform);
             if (outLinks) outEdge.attr('transform', e.transform);
         }
-
         const zoom = d3.zoom()
             .on('zoom', handleZoom);
 
@@ -487,7 +491,6 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
     return (
         <>
-            {/* <LoadingBlur loading={loading} /> */}
             <svg ref={ref} className="w-full border-b" />
 
             {playersList ?
@@ -498,7 +501,10 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 <></>
             }
 
+            {/* bottom right section: path type and player count */}
             <div className="fixed bottom-3 right-3 font-light text-sm">
+
+                {/* path type 3-way selection */}
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
@@ -546,8 +552,12 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                         }
                     </div>
                 </fieldset>
+
                 <p className="mt-2">Player Count: {data.meta.PlayerCount} </p>
+
             </div>
+
+            {/* bottom left section: chart legend */}
             <div className="fixed bottom-5 left-8 font-light">
                 {showLegend &&
                     <div className="pb-5 pr-5 backdrop-blur">
@@ -556,11 +566,9 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                             Each <span className="font-semibold">node</span> represents a <span className="font-semibold">job</span>, and the <span className="font-semibold">links</span> between nodes denote <span className="font-semibold">player progression</span>.
                         </p>
                         <p>
-
                             The <ColorSwatchIcon className="w-5 h-5 inline mr-1" /><span className="font-semibold">node color</span> signifies the <span className="font-semibold">% percentage of job completion</span>.
                         </p>
                         <p>
-
                             The <ViewBoardsIcon className="w-5 h-5 inline mr-1" /><span className="font-semibold">link width</span> signifies the <span className="font-semibold"># number of players taking a path</span>. Use the radio buttons on the right to change the link type.
                         </p>
                         <p>
