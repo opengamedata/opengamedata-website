@@ -178,9 +178,10 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
  * @returns converted data
  */
 function convert(rawData) {
-    const rawEvents = rawData.vals[0]
+    const rawEvents = JSON.parse(rawData.vals[0])
 
-    // console.log(rawEvents)
+    console.log(rawData)
+    console.log(rawEvents)
 
     // extract primary values
     const meta = {
@@ -230,8 +231,6 @@ function convert(rawData) {
     meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
     meta.types = typeList
 
-
-    console.log()
     return { meta, events }
 }
 
