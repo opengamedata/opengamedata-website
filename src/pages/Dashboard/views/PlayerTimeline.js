@@ -10,10 +10,12 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
     const [data, setData] = useState(convert(rawData))
     // const data = convert(rawData)
 
+    // register types of events found for this user
     useEffect(() => {
         setEventTypesDisplayed(data.meta.types)
     }, [])
 
+    // re-filter data when user changes the event types to be displayed
     useEffect(() => {
         if (eventTypesDisplayed instanceof Set)
             setData(filter(convert(rawData), eventTypesDisplayed))
@@ -27,8 +29,9 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
         const width = window.innerWidth
         const height = window.innerHeight
         const dotSize = 20
+
         // scale according to shortest duration (so that its length stays at 100)
-        const sacleFactorY = 100 / data.meta.minDuration
+        const sacleFactorY = 50 / (data.meta.minDuration)
 
         const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
@@ -100,10 +103,19 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
 
         // zoom behavior
         function handleZoom(e) {
-            d3.select('svg g')
-                .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k})`);
+            // pan behavior
+            d3.select('.wrapper')
+                // .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k})`);
+                .attr('transform', `translate(${e.transform.x})`)
+
+            // zoom
+            d3.selectAll('.event')
+                .filter(function () { return !this.classList.contains('duration') })
+                .attr('transform', ({ timestamp }, i) => `translate(${sacleFactorY * timestamp * e.transform.k})`)
+            d3.selectAll('.duration')
+                .attr('transform', ({ duration }) => `translate(${(duration * sacleFactorY / 2 - dotSize / 2) * e.transform.k},${dotSize * 1.5})`)
             d3.select('svg line')
-                .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k})`);
+                .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k} 1)`);
         }
         let zoom = d3.zoom()
             .on('zoom', handleZoom);
@@ -159,6 +171,9 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
                     <p className="font-light">
                         Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
                     </p>
+                    <p className="font-light">
+                        Session count: <span className="font-bold">{data.meta.sessionCount}</span>
+                    </p>
                 </div>
 
                 <fieldset className="fixed bottom-5 right-8 font-light">
@@ -181,11 +196,12 @@ function convert(rawData) {
     const rawEvents = JSON.parse(rawData.vals[0])
 
     console.log(rawData)
-    console.log(rawEvents)
+    // console.log(rawEvents)
 
     // extract primary values
     const meta = {
-        playerID: rawEvents[0].user_id
+        playerID: rawEvents[0].user_id,
+        sessionCount: rawData.vals[1]
     }
     const events = rawEvents.map((e) => {
         // console.log(e)
@@ -193,7 +209,8 @@ function convert(rawData) {
             name: e.job_name,
             type: e.name,
             timestamp: ((new Date(e.timestamp)).getTime() / 1000).toFixed(0),
-            date: (new Date(e.timestamp)).toLocaleString()
+            date: (new Date(e.timestamp)).toLocaleString(),
+            sessionID: e.session_id
         }
     })
 
@@ -201,6 +218,7 @@ function convert(rawData) {
     // calculate derived values
     const startTime = events[0].timestamp
     let minDuration = Infinity
+    // let minDuration = 1000000
     const typeList = new Set()
     for (let i = 0; i < events.length; i++) {
 
@@ -231,6 +249,8 @@ function convert(rawData) {
     meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
     meta.types = typeList
 
+    console.log(meta, events)
+
     return { meta, events }
 }
 
@@ -247,12 +267,13 @@ function filter(data, filterParams) {
 
 
     let minDuration = Infinity
+    // let minDuration = 1000000
     // recalculate time elapsed in between filtered events
     for (let i = 0; i < filteredEvents.length - 1; i++) {
         const e = filteredEvents[i];
 
         const d = filteredEvents[i + 1].timestamp - e.timestamp
-        if (d < minDuration) minDuration = d
+        if (d > 0 && d < minDuration) minDuration = d
         e.duration = d
     }
     // recalculate min duration
