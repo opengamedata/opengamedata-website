@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom";
-import PlayerTimeline from "../Dashboard/views/PlayerTimeline";
-import JobGraph from "../Dashboard/views/JobGraph/JobGraph";
 
 export default function About() {
     return (
@@ -22,10 +19,12 @@ export default function About() {
                     They are made available under the <a
                         className="text-yellow-600"
                         href="https://creativecommons.org/publicdomain/zero/1.0/"
+                        rel="noreferrer"
                         target="_blank">Creative Commons CCO 1.0 Universal license</a>.
                     Source code for this website and related data processing is available on <a
                         className="text-yellow-600"
                         href="https://github.com/opengamedata"
+                        rel="noreferrer"
                         target="_blank">github</a>.
                 </p>
             </div>

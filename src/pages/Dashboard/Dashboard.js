@@ -1,11 +1,10 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
 import { API_ORIGIN, timelineUrlPath, urlSearchMetrics } from '../../constants';
-import TableView from './views/JobGraph/PlayersList';
 import JobGraph from './views/JobGraph/JobGraph';
-import PlayerTimeline from './views/PlayerTimeline';
+import PlayerTimeline from './views/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
 
 
