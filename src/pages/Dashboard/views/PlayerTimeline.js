@@ -31,7 +31,7 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
         const dotSize = 20
 
         // scale according to shortest duration (so that its length stays at 100)
-        const sacleFactorY = 50 / (data.meta.minDuration)
+        const sacleFactorX = 10 / (data.meta.minDuration)
 
         const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
@@ -41,7 +41,7 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
         // baseline
         svg.append('line')
             .attr('x1', 0)
-            .attr('x2', (data.meta.totalTime) * sacleFactorY)
+            .attr('x2', (data.meta.totalTime) * sacleFactorX)
             .attr('stroke', 'grey')
             .attr('stroke-width', dotSize / 5)
 
@@ -56,7 +56,7 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
             .data(data.events)
             .join('g')
             .classed('event', true)
-            .attr('transform', ({ timestamp }, i) => `translate(${sacleFactorY * timestamp})`)
+            .attr('transform', ({ timestamp }, i) => `translate(${sacleFactorX * timestamp})`)
             .on('mouseover', function handleHover(e, d) {
                 d3.select(this).select('circle')
                     // .transition()
@@ -98,7 +98,7 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
         event.append('text')
             .classed('duration', true)
             .text(({ duration }) => `${duration}s`) // replace with dynamic data
-            .attr('transform', ({ duration }) => `translate(${duration * sacleFactorY / 2 - dotSize / 2},${dotSize * 1.5})`)
+            .attr('transform', ({ duration }) => `translate(${duration * sacleFactorX / 2 - dotSize / 2},${dotSize * 1.5})`)
             .attr('font-size', dotSize)
 
         // zoom behavior
@@ -110,10 +110,10 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
 
             // zoom
             d3.selectAll('.event')
-                .filter(function () { return !this.classList.contains('duration') })
-                .attr('transform', ({ timestamp }, i) => `translate(${sacleFactorY * timestamp * e.transform.k})`)
+                // .filter(function () { return !this.classList.contains('duration') })
+                .attr('transform', ({ timestamp }, i) => `translate(${sacleFactorX * timestamp * e.transform.k})`)
             d3.selectAll('.duration')
-                .attr('transform', ({ duration }) => `translate(${(duration * sacleFactorY / 2 - dotSize / 2) * e.transform.k},${dotSize * 1.5})`)
+                .attr('transform', ({ duration }) => `translate(${(duration * sacleFactorX / 2 - dotSize / 2) * e.transform.k},${dotSize * 1.5})`)
             d3.select('svg line')
                 .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k} 1)`);
         }
