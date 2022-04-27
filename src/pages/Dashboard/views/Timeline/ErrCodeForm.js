@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { XIcon } from '@heroicons/react/solid'
-import SmallButton from '../../../../components/buttons/SmallButton'
+import LongButton from '../../../../components/buttons/LongButton'
 import { API_ORIGIN } from '../../../../constants';
 
 export default function ErrCodeForm({ metrics, event, setFormVisible }) {
@@ -11,17 +11,25 @@ export default function ErrCodeForm({ metrics, event, setFormVisible }) {
     const [notesInput, setNotesInput] = useState('')
     const [saving, setSaving] = useState(false)
 
+    const [newCodeToggle, setNewCodeToggle] = useState(false)
+    const [newCodeInput, setNewCodeInput] = useState('')
+
     useEffect(() => {
+        fetchErrorTypes()
+    }, [])
+
+    const fetchErrorTypes = () => {
         fetch(`${API_ORIGIN}/coding/game/${metrics.game}/codes`)
             .then(res => res.json())
             .then(data => {
                 console.log(data.val)
                 setErrorTypes(data.val)
             })
-    }, [])
+    }
 
     const formValidation = () => {
         // check for valid err code
+
 
         // check for non-empty coder name
 
@@ -30,23 +38,32 @@ export default function ErrCodeForm({ metrics, event, setFormVisible }) {
     }
 
     const submit = () => {
-        // 
-        fetch(`${API_ORIGIN}/coding/game/${metrics.game}/player/<player_id>/session/<session_id>/index/<index>/code/${codeInput}`,
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    code: codeInput,
-                    coder: coderInput,
-                    note: notesInput
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
+        console.log(codeInput)
 
-        // if POST succeeds
-        setNotesInput('')
+        // fetch(`${API_ORIGIN}/coding/game/${metrics.game}/player/<player_id>/session/<session_id>/index/<index>/code/${codeInput}`,
+        //     {
+        //         method: 'POST',
+        //         body: JSON.stringify({
+        //             code: newCodeToggle ? newCodeInput : codeInput,
+        //             coder: coderInput,
+        //             note: notesInput
+        //         })
+        //     })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log(data)
+
+                    // update list of error codes
+                    // fetchErrorTypes()
+
+        //         // if POST succeeds
+        //         setNotesInput('')
+
+        //     })
+        //     .catch(err => {
+        //         alert(err)
+
+        //     })
 
         setTimeout(() => {
             setFormVisible(false)
@@ -74,13 +91,28 @@ export default function ErrCodeForm({ metrics, event, setFormVisible }) {
                         <div className="input-group-prepend">
                             <h4 className="text-sm" >Error Code</h4>
                         </div>
-                        {/* <input type='text' className='block w-full' value={codeInput} onChange={(e) => setCodeInput(e.target.value)}></input> */}
-                        <select className='form-select block w-full mt-1' value={codeInput} onChange={(e) => setCodeInput(e.target.value)}>
-                            {errTypes && errTypes.map((type, i) =>
-                                <option key={i} value={type}>
-                                    {type}
-                                </option>)}
-                        </select>
+
+                        {!newCodeToggle ?
+                            <div >
+                                <select className='form-select block w-full mt-1' value={codeInput} onChange={(e) => setCodeInput(e.target.value)}>
+                                    {errTypes && errTypes.map((type, i) =>
+                                        <option key={i} value={type}>
+                                            {type}
+                                        </option>)}
+                                </select>
+                                <LongButton
+                                    label='+ new'
+                                    action={() => { setNewCodeToggle(true) }}
+                                />
+                            </div>
+                            :
+                            <input
+                                type='text'
+                                className='block w-full'
+                                value={newCodeInput}
+                                onChange={(e) => setNewCodeInput(e.target.value)}
+                            />
+                        } 
                     </div>
 
                     {/* coder entry */}
@@ -102,9 +134,10 @@ export default function ErrCodeForm({ metrics, event, setFormVisible }) {
             </div>
 
             <div className='flex'>
-                <SmallButton
+                <LongButton
                     label='Save'
                     action={submit}
+                    selected
                 />
                 {saving && <h4 className="text-sm" >Saving</h4>}
             </div>
