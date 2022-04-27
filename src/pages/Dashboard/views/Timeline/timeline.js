@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-export default function timeline(svg, data) {
+export default function timeline(svg, data, eventOnClick) {
 
     const width = window.innerWidth
     const height = window.innerHeight
@@ -33,17 +33,20 @@ export default function timeline(svg, data) {
         .data(data.events)
         .join('g')
         .classed('event', true)
-        .attr('transform', ({ timestamp }, i) => `translate(${sacleFactorX * timestamp})`)
+        .attr('transform', ({ timestamp, duration, name }, i) => {
+            // console.log(name, duration)
+            return `translate(${sacleFactorX * timestamp},${duration === 0 ? -dotSize * 1.5 : 0})`
+        }
+        )
         .on('mouseover', function handleHover(e, d) {
             d3.select(this).select('circle')
-                // .transition()
                 .attr('stroke', 'black')
                 .attr('stroke-width', 2)
 
             // attach event details
             d3.select(this)
                 .selectAll('.details')
-                .data(d => d.extra) // replace with dynamic data
+                .data(d => d.extra)
                 .join('text')
                 .classed('details', true)
                 .text(d => d)
@@ -59,6 +62,9 @@ export default function timeline(svg, data) {
 
             d3.select(this).selectAll('.details').remove()
         })
+        .on('click', function handleClick(e, d) {
+            eventOnClick(d)
+        })
 
     // draw node
     event.append('circle')
@@ -71,14 +77,15 @@ export default function timeline(svg, data) {
     event.append('text')
         .classed('title', true)
         .text(({ name, type }) => `${type} @ ${name}`) // replace with dynamic data
-        .attr('transform', `rotate(-45) translate(${dotSize * 1.5})`)
+        .attr('transform', `rotate(-30) translate(${dotSize * 1.2})`)
         .attr('font-size', dotSize)
 
     // event duration
     event.append('text')
         .classed('duration', true)
-        .text(({ duration }) => `${duration}s`) // replace with dynamic data
-        .attr('transform', ({ duration }) => `translate(${duration * sacleFactorX / 2 - dotSize / 2 + durationLabelOffset} ${dotSize * 1.5})`)
+        .text(({ duration }) => duration === 0 ? '' : `${duration}s`) // replace with dynamic data
+        .attr('transform', ({ duration }) =>
+            `translate(${duration * sacleFactorX / 2 - dotSize / 2 + durationLabelOffset} ${dotSize * 1.5})`)
         .attr('font-size', dotSize)
 
     // zoom behavior
@@ -91,9 +98,11 @@ export default function timeline(svg, data) {
         // zoom
         d3.selectAll('.event')
             // .filter(function () { return !this.classList.contains('duration') })
-            .attr('transform', ({ timestamp }) => `translate(${sacleFactorX * timestamp * e.transform.k})`)
+            .attr('transform', ({ timestamp, duration }) =>
+                `translate(${sacleFactorX * timestamp * e.transform.k},${duration === 0 ? -dotSize * 1.5 : 0})`)
         d3.selectAll('.duration')
-            .attr('transform', ({ duration }) => `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * e.transform.k - dotSize / 2},${dotSize * 1.5})`)
+            .attr('transform', ({ duration }) =>
+                `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * e.transform.k - dotSize / 2},${dotSize * 1.5})`)
         d3.select('svg line')
             .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k} 1)`);
     }

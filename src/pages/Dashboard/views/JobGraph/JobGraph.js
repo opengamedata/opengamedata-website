@@ -14,6 +14,11 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [showLegend, setShowLegend] = useState(false)
     const [playersList, setPlayerList] = useState()
+    const [data, setData] = useState(null)
+
+    useEffect(() => {
+        setData(convert(rawData))
+    }, [rawData])
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
@@ -132,7 +137,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         return { nodes: relevantNodes, links: l, meta: meta }
 
     }
-    const data = convert(rawData)
+    // const data = convert(rawData)
 
 
     const showPlayersList = (link) => {
@@ -163,38 +168,42 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
     //     console.log(viewMetrics)
     // }
 
-    /**
-     * utility function that maps average complete time to node radius
-     */
-    const projectRadius = d3.scaleLinear()
-        .domain([data.meta.minAvgTime, data.meta.maxAvgTime])
-        .range([3, 20])
+
 
     /**
      * draw the force directed graph on jobs/missions
      */
     const ref = useD3((svg) => {
-        const chart = ForceGraph(data, {
-            nodeId: d => d.id,
-            nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
-            nodeTitle: d => d.id,
-            nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed\n` +
-                `Average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
-                `Standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
-            nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
-            linkStrokeWidth: l => Math.sqrt(l.value),
-            linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
-            linkStrength: 1,
-            linkDistance: 100,
-            nodeStrength: -1000,
-            linkStroke: linkMode === 'ActiveJobs' ? "#fff0" : "#999", // link stroke color, no color when showing jobs in progress
-            outLinks: linkMode === 'ActiveJobs',
-            outLinkWidth: linkMode === 'ActiveJobs' ? d => Math.sqrt(d.players.length) : null,
-            outLinkDetail: linkMode === 'ActiveJobs' ? d => `${d.players.length} players in progress` : null,
-            parent: svg,
-            nodeClick: ''
-        })
-    }, [linkMode]) // dependency -> linkMode: refresh graph when linkMode changes
+        if (data) {
+            /**
+                * utility function that maps average complete time to node radius
+            */
+            const projectRadius = d3.scaleLinear()
+                .domain([data.meta.minAvgTime, data.meta.maxAvgTime])
+                .range([3, 20])
+
+            const chart = ForceGraph(data, {
+                nodeId: d => d.id,
+                nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
+                nodeTitle: d => d.id,
+                nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed\n` +
+                    `Average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
+                    `Standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
+                nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
+                linkStrokeWidth: l => Math.sqrt(l.value),
+                linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
+                linkStrength: 1,
+                linkDistance: 100,
+                nodeStrength: -1000,
+                linkStroke: linkMode === 'ActiveJobs' ? "#fff0" : "#999", // link stroke color, no color when showing jobs in progress
+                outLinks: linkMode === 'ActiveJobs',
+                outLinkWidth: linkMode === 'ActiveJobs' ? d => Math.sqrt(d.players.length) : null,
+                outLinkDetail: linkMode === 'ActiveJobs' ? d => `${d.players.length} players in progress` : null,
+                parent: svg,
+                nodeClick: ''
+            })
+        }
+    }, [linkMode, data]) // dependency -> linkMode: refresh graph when linkMode changes
 
 
 
@@ -553,7 +562,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                     </div>
                 </fieldset>
 
-                <p className="mt-2">Player Count: {data.meta.PlayerCount} </p>
+                <p className="mt-2">Player Count: {data && data.meta.PlayerCount} </p>
 
             </div>
 

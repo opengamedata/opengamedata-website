@@ -1,7 +1,7 @@
 
 export default function About() {
     return (
-        <div className="container pt-16 flex flex-wrap">
+        <div className="container pt-16">
             {/* {
                 {
                     'JobGraph':
@@ -11,7 +11,7 @@ export default function About() {
                         <PlayerTimeline />
                 }['JobGraph']
             } */}
-            <div className="mb-10 pr-10 max-w-xl">
+            <div className="mb-10 mx-10 pr-10 max-w-xl ">
                 {/* <p className="font-light text-4xl mb-3">Open Game Data</p> */}
 
                 <p>

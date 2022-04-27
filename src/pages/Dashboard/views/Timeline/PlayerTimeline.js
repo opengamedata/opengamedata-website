@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import LargeButton from "../../../../components/buttons/LargeButton";
 import { useD3 } from "../../../../hooks/useD3";
+import ErrCodeForm from './ErrCodeForm';
 import timeline from "./timeline";
 
 
-export default function PlayerTimeline({ rawData, updateViewMetrics }) {
+export default function PlayerTimeline({ metrics, rawData, updateViewMetrics }) {
+    const [formVisible, setFormVisible] = useState(false) // In porduction: set to false 
+    const [selectedEvent, setSelectedEvent] = useState(null)
 
     const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
     const [data, setData] = useState(convert(rawData))
@@ -14,18 +17,26 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
         setEventTypesDisplayed(data.meta.types)
     }, [])
 
+
+
     // re-filter data when user changes the event types to be displayed
     useEffect(() => {
         if (eventTypesDisplayed instanceof Set)
             setData(filter(convert(rawData), eventTypesDisplayed))
     }, [eventTypesDisplayed])
 
+    const eventOnClick = (event) => {
+        console.log(event)
+        setSelectedEvent(event)
+        setFormVisible(true)
+    }
+
     /**
      * draws the timeline
      */
     const diagram = useD3((svg) => {
 
-        timeline(svg, data)
+        timeline(svg, data, eventOnClick)
 
     }, [data])
 
@@ -91,6 +102,15 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
                         {eventTypesDisplayed instanceof Set && filterControl()}
                     </div>
                 </fieldset>
+
+                {/* error code event tagging  */}
+                {formVisible &&
+                    <ErrCodeForm
+                        metrics={metrics}
+                        setFormVisible={setFormVisible}
+                        event={selectedEvent}
+                    />
+                }
             </>}
         </>
     )
@@ -104,7 +124,7 @@ export default function PlayerTimeline({ rawData, updateViewMetrics }) {
 function convert(rawData) {
     const rawEvents = JSON.parse(rawData.vals[0])
 
-    console.log(rawData)
+    // console.log(rawData)
     // console.log(rawEvents)
 
     // extract primary values
@@ -158,7 +178,7 @@ function convert(rawData) {
     meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
     meta.types = typeList
 
-    console.log(meta, events)
+    // console.log(meta, events)
 
     return { meta, events }
 }

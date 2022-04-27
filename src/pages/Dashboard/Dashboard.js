@@ -6,6 +6,7 @@ import { API_ORIGIN, timelineUrlPath, urlSearchMetrics } from '../../constants';
 import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
+import LargeButton from '../../components/buttons/LargeButton';
 
 
 export default function Dashboard() {
@@ -138,6 +139,7 @@ export default function Dashboard() {
         // start loading animation
         setLoading(true)
 
+        // console.log(url)
 
         // if query found in storage, retreive JSON
         const localData = localStorage.getItem(url)
@@ -193,6 +195,19 @@ export default function Dashboard() {
 
     return (
         <div className='w-screen'>
+
+            {/* For DEBUG purpose, remove in production */}
+            <div className='fixed top-0 right-1/2 z-10'>
+                <LargeButton
+                    label='clear cache'
+                    onClick={() => {
+                        localStorage.clear()
+                        alert('localStorage reset')
+                    }}
+                />
+            </div>
+
+
             {!initialized ?
                 <VisForm
                     loading={loading}
@@ -200,11 +215,13 @@ export default function Dashboard() {
                 />
                 :
                 <>
+                    {currentView === 'JobGraph' &&
                     <Settings
                         metrics={metrics}
                         loading={loading}
                         updateGlobalMetrics={updateGlobalMetrics}
                     />
+                    }
                     <LoadingBlur loading={loading} />
                     {data &&
                         {
@@ -216,6 +233,7 @@ export default function Dashboard() {
                             'PlayerTimeline':
                                 <PlayerTimeline
                                     rawData={data}
+                                    metrics={metrics}
                                     updateViewMetrics={updateViewMetrics} />
                         }[currentView]
                     }

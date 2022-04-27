@@ -1,0 +1,113 @@
+import { useState, useEffect } from 'react';
+import { XIcon } from '@heroicons/react/solid'
+import SmallButton from '../../../../components/buttons/SmallButton'
+import { API_ORIGIN } from '../../../../constants';
+
+export default function ErrCodeForm({ metrics, event, setFormVisible }) {
+    const [errTypes, setErrorTypes] = useState([])
+
+    const [codeInput, setCodeInput] = useState('')
+    const [coderInput, setCoderInput] = useState('')
+    const [notesInput, setNotesInput] = useState('')
+    const [saving, setSaving] = useState(false)
+
+    useEffect(() => {
+        fetch(`${API_ORIGIN}/coding/game/${metrics.game}/codes`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.val)
+                setErrorTypes(data.val)
+            })
+    }, [])
+
+    const formValidation = () => {
+        // check for valid err code
+
+        // check for non-empty coder name
+
+
+        return true
+    }
+
+    const submit = () => {
+        // 
+        fetch(`${API_ORIGIN}/coding/game/${metrics.game}/player/<player_id>/session/<session_id>/index/<index>/code/${codeInput}`,
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    code: codeInput,
+                    coder: coderInput,
+                    note: notesInput
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+
+        // if POST succeeds
+        setNotesInput('')
+
+        setTimeout(() => {
+            setFormVisible(false)
+        }, 1000);
+    }
+
+
+    return (
+        <div className=" bg-white fixed top-14 right-3 p-3 w-content border shadow-sm">
+
+            <div className="flex justify-between">
+                <h3 className='text-md'>Error Tagging</h3>
+                <XIcon className="cursor-pointer h-5 w-5" onClick={() => setFormVisible(false)} />
+            </div>
+
+            <div>
+                <h3 className='text-lg font-bold'>{event.type}</h3>
+                <h3 className='text-lg font-bold'>@{event.name}</h3>
+            </div>
+
+            <div className="row">
+                <div className="mb-5">
+                    {/* err code entry */}
+                    <div className="col mb-2">
+                        <div className="input-group-prepend">
+                            <h4 className="text-sm" >Error Code</h4>
+                        </div>
+                        {/* <input type='text' className='block w-full' value={codeInput} onChange={(e) => setCodeInput(e.target.value)}></input> */}
+                        <select className='form-select block w-full mt-1' value={codeInput} onChange={(e) => setCodeInput(e.target.value)}>
+                            {errTypes && errTypes.map((type, i) =>
+                                <option key={i} value={type}>
+                                    {type}
+                                </option>)}
+                        </select>
+                    </div>
+
+                    {/* coder entry */}
+                    <div className="col mb-2">
+                        <div className="input-group-prepend">
+                            <h4 className="text-sm" >Coder</h4>
+                        </div>
+                        <input type='text' className='block w-full' value={coderInput} onChange={(e) => setCoderInput(e.target.value)}></input>
+                    </div>
+
+                    {/* notes entry */}
+                    <div className="col">
+                        <div className="input-group-prepend">
+                            <h4 className="text-sm" >Notes</h4>
+                        </div>
+                        <textarea className='block w-full' value={notesInput} onChange={(e) => setNotesInput(e.target.value)}></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div className='flex'>
+                <SmallButton
+                    label='Save'
+                    action={submit}
+                />
+                {saving && <h4 className="text-sm" >Saving</h4>}
+            </div>
+        </div>
+    )
+}

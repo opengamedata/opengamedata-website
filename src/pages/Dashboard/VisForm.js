@@ -70,9 +70,9 @@ export default function VisForm({ loading, updateGlobalMetrics }) {
 
 
     return (
-        <div className='container flex mt-16'>
+        <div className='container flex flex-wrap mt-16'>
 
-            <div className='max-w-xl mb-10 pr-10 '>
+            <div className='max-w-xl mb-10 mx-5'>
                 <p className='mb-3 text-4xl font-light'>Designer Dashboard</p>
                 <p>
                     A visualization tool for you to intuitively interpret data collected from gameplays.
@@ -80,7 +80,7 @@ export default function VisForm({ loading, updateGlobalMetrics }) {
                 </p>
             </div>
 
-            <div className="bg-white mb-10 shadow-sm px-7 py-7 max-w-xl">
+            <div className="bg-white mb-10 mx-5 shadow-sm px-7 py-7 max-w-xl">
                 <div className=" mb-3">
 
                     {/* game selection */}
