@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import LargeButton from "../../../../components/buttons/LargeButton";
 import { useD3 } from "../../../../hooks/useD3";
-import ErrCodeForm from './ErrCodeForm';
+import CodeForm from './CodeForm';
 import timeline from "./timeline";
 
 
-export default function PlayerTimeline({ metrics, rawData, updateViewMetrics }) {
+export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateViewMetrics }) {
     const [formVisible, setFormVisible] = useState(false) // In porduction: set to false 
     const [selectedEvent, setSelectedEvent] = useState(null)
 
     const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
     const [data, setData] = useState(convert(rawData))
+
+    // constrols maximum number of rows of the filter control grid
+    const gridRows = 8
 
     // register types of events found for this user
     useEffect(() => {
@@ -98,15 +101,16 @@ export default function PlayerTimeline({ metrics, rawData, updateViewMetrics }) 
                 {/* chart settings */}
                 <fieldset className="fixed bottom-5 right-8 font-light">
                     <legend className="">Show event types of:</legend>
-                    <div className="mt-2">
+                    <div className={`mt-2 grid grid-rows-[repeat(${gridRows},_minmax(0,_1fr))] grid-flow-col gap-1`}>
                         {eventTypesDisplayed instanceof Set && filterControl()}
                     </div>
                 </fieldset>
 
                 {/* error code event tagging  */}
                 {formVisible &&
-                    <ErrCodeForm
+                    <CodeForm
                         metrics={metrics}
+                    viewMetrics={viewMetrics}
                         setFormVisible={setFormVisible}
                         event={selectedEvent}
                     />

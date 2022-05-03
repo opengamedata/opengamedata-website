@@ -32,7 +32,10 @@ export default function Dashboard() {
 
 
 
-
+    /**
+     * updates global metrics as seen in the metrics state above
+     * @param {*} newMetrics 
+     */
     const updateGlobalMetrics = (newMetrics) => {
         // console.log(newMetrics)
 
@@ -75,6 +78,13 @@ export default function Dashboard() {
 
     }
 
+    /**
+     * Update view-specific metrics
+     * for job graph: {}
+     * for player timeline: {player}
+     * @param {*} view 
+     * @param {*} newViewMetrics 
+     */
     const updateViewMetrics = (view, newViewMetrics) => {
         // console.log(newViewMetrics)
 
@@ -234,6 +244,7 @@ export default function Dashboard() {
                                 <PlayerTimeline
                                     rawData={data}
                                     metrics={metrics}
+                                    viewMetrics={viewMetrics}
                                     updateViewMetrics={updateViewMetrics} />
                         }[currentView]
                     }
