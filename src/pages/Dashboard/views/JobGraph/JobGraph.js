@@ -164,10 +164,6 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
     }
 
-    // const toTaskGraph = (viewMetrics) => {
-    //     console.log(viewMetrics)
-    // }
-
 
 
     /**

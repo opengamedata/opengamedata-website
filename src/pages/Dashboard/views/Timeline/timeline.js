@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import * as d3 from 'd3';
 
 export default function timeline(svg, data, eventOnClick) {
 
@@ -12,7 +12,7 @@ export default function timeline(svg, data, eventOnClick) {
 
     const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
-    svg.attr("viewBox", [-width / 20, -height / 2, width, height])
+    svg.attr('viewBox', [-width / 20, -height / 2, width, height])
     svg.selectAll('*').remove();
 
     // baseline
@@ -79,6 +79,7 @@ export default function timeline(svg, data, eventOnClick) {
         .text(({ name, type }) => `${type} @ ${name}`) // replace with dynamic data
         .attr('transform', `rotate(-30) translate(${dotSize * 1.2})`)
         .attr('font-size', dotSize)
+        .attr('fill', '#0000')
 
     // event duration
     event.append('text')
@@ -90,21 +91,30 @@ export default function timeline(svg, data, eventOnClick) {
 
     // zoom behavior
     function handleZoom(e) {
+        const zoomLv = e.transform.k
+        const panLv = e.transform.x
+
         // pan behavior
         d3.select('.wrapper')
-            // .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k})`);
-            .attr('transform', `translate(${e.transform.x})`)
+            .attr('transform', `translate(${panLv})`)
 
-        // zoom
+        // zoom behavior
         d3.selectAll('.event')
             // .filter(function () { return !this.classList.contains('duration') })
             .attr('transform', ({ timestamp, duration }) =>
-                `translate(${sacleFactorX * timestamp * e.transform.k},${duration === 0 ? -dotSize * 1.5 : 0})`)
+                `translate(${sacleFactorX * timestamp * zoomLv},${duration === 0 ? -dotSize * 1.5 : 0})`)
         d3.selectAll('.duration')
             .attr('transform', ({ duration }) =>
-                `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * e.transform.k - dotSize / 2},${dotSize * 1.5})`)
+                `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * zoomLv - dotSize / 2},${dotSize * 1.5})`)
+            .transition()
+            .duration(200)
+            .attr('fill', zoomLv >= sacleFactorX * 2 ? '#000' : '#0000')
+        d3.selectAll('.title')
+            .transition()
+            .duration(200)
+            .attr('fill', zoomLv >= sacleFactorX * 2 ? '#000' : '#0000')
         d3.select('svg line')
-            .attr('transform', `translate(${e.transform.x}) scale(${e.transform.k} 1)`);
+            .attr('transform', `translate(${panLv}) scale(${zoomLv} 1)`);
     }
     let zoom = d3.zoom()
         .on('zoom', handleZoom);
