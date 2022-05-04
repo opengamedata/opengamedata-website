@@ -5,7 +5,9 @@ export default function timeline(svg, data, eventOnClick) {
     const width = window.innerWidth
     const height = window.innerHeight
     const dotSize = 20
-    const durationLabelOffset = 0
+    const durationLabelOffsetX = 0
+    const durationLabelOffsetY = 2
+    const sessionGap = 100
 
     // scale according to shortest duration (so that its length stays at 100)
     const sacleFactorX = 5 / (data.meta.minDuration)
@@ -18,7 +20,7 @@ export default function timeline(svg, data, eventOnClick) {
     // baseline
     svg.append('line')
         .attr('x1', 0)
-        .attr('x2', (data.meta.totalTime) * sacleFactorX)
+        .attr('x2', (data.meta.totalDuration + (data.meta.sessionCount - 1) * sessionGap) * sacleFactorX)
         .attr('stroke', 'grey')
         .attr('stroke-width', dotSize / 5)
 
@@ -33,10 +35,12 @@ export default function timeline(svg, data, eventOnClick) {
         .data(data.events)
         .join('g')
         .classed('event', true)
-        .attr('transform', ({ timestamp, duration, name }, i) => {
-            // console.log(name, duration)
+        .attr('transform', ({ timestamp, duration, sessionChange }, i) => {
+            console.log(i, timestamp)
+            console.log(data.events[i])
             return `translate(${sacleFactorX * timestamp},${duration === 0 ? -dotSize * 1.5 : 0})`
         }
+
         )
         .on('mouseover', function handleHover(e, d) {
             d3.select(this).select('circle')
@@ -84,10 +88,11 @@ export default function timeline(svg, data, eventOnClick) {
     // event duration
     event.append('text')
         .classed('duration', true)
-        .text(({ duration }) => duration === 0 ? '' : `${duration}s`) // replace with dynamic data
-        .attr('transform', ({ duration }) =>
-            `translate(${duration * sacleFactorX / 2 - dotSize / 2 + durationLabelOffset} ${dotSize * 1.5})`)
+        .text(({ duration, sessionChange }) => sessionChange === 'end' ? 'new session' : `${duration}s`)
+        .attr('transform', ({ duration, sessionChange }) =>
+            `translate(${(sessionChange === 'end' ? sessionGap : duration) * sacleFactorX / 2 - dotSize / 2 + durationLabelOffsetX},${dotSize * durationLabelOffsetY})`)
         .attr('font-size', dotSize)
+        .attr('fill', ({ sessionChange }) => sessionChange === 'end' ? '#000' : '#0000')
 
     // zoom behavior
     function handleZoom(e) {
@@ -101,18 +106,19 @@ export default function timeline(svg, data, eventOnClick) {
         // zoom behavior
         d3.selectAll('.event')
             // .filter(function () { return !this.classList.contains('duration') })
-            .attr('transform', ({ timestamp, duration }) =>
+            .attr('transform', ({ timestamp, duration }, i) =>
                 `translate(${sacleFactorX * timestamp * zoomLv},${duration === 0 ? -dotSize * 1.5 : 0})`)
         d3.selectAll('.duration')
-            .attr('transform', ({ duration }) =>
-                `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * zoomLv - dotSize / 2},${dotSize * 1.5})`)
+            .attr('transform', ({ duration, sessionChange }) =>
+                `translate(${((sessionChange === 'end' ? sessionGap : duration) * sacleFactorX / 2 + durationLabelOffsetX) * zoomLv - dotSize / 2},
+                ${dotSize * durationLabelOffsetY})`)
             .transition()
             .duration(200)
-            .attr('fill', zoomLv >= sacleFactorX * 2 ? '#000' : '#0000')
+            .attr('fill', ({ sessionChange }) => sessionChange === 'end' || zoomLv >= sacleFactorX * 4 ? '#000' : '#0000')
         d3.selectAll('.title')
             .transition()
             .duration(200)
-            .attr('fill', zoomLv >= sacleFactorX * 2 ? '#000' : '#0000')
+            .attr('fill', zoomLv >= sacleFactorX * 4 ? '#000' : '#0000')
         d3.select('svg line')
             .attr('transform', `translate(${panLv}) scale(${zoomLv} 1)`);
     }

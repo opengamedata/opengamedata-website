@@ -13,7 +13,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
     const [data, setData] = useState(convert(rawData))
 
     // constrols maximum number of rows of the filter control grid
-    const gridRows = 8
+    const gridRows = 12
 
     // register types of events found for this user
     useEffect(() => {
@@ -91,7 +91,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                         From <span className="font-bold">{data.meta.startTime}</span> to <span className="font-bold">{data.meta.endTime}</span>
                     </p>
                     <p className="font-light">
-                        Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
+                        Total time taken: <span className="font-bold">{data.meta.totalDuration}s</span>
                     </p>
                     <p className="font-light">
                         Session count: <span className="font-bold">{data.meta.sessionCount}</span>
@@ -101,7 +101,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                 {/* chart settings */}
                 <fieldset className="fixed bottom-5 right-8 font-light">
                     <legend className="">Show event types of:</legend>
-                    <div className={`mt-2 grid grid-rows-[repeat(${gridRows},_minmax(0,_1fr))] grid-flow-col gap-1`}>
+                    <div className={`mt-2 grid grid-rows-[repeat(${gridRows},_minmax(0,_1fr))] grid-flow-row gap-1`}>
                         {eventTypesDisplayed instanceof Set && filterControl()}
                     </div>
                 </fieldset>
@@ -143,48 +143,92 @@ function convert(rawData) {
             type: e.name,
             timestamp: ((new Date(e.timestamp)).getTime() / 1000).toFixed(0),
             date: (new Date(e.timestamp)).toLocaleString(),
-            sessionID: e.session_id
+            sessionID: e.session_id,
+            sessionChange: false
         }
     })
+
+    // 0:
+    // job_name: "no-active-job"
+    // name: "scene_changed"
+    // scene_name: "Ship"
+    // session_id: "1648844601"
+    // timestamp: "2022-04-01T20:29:54"
+    // user_id: "CheekyCurve"
+
+    let timestamps = {}
+    rawEvents.forEach((e, i) => {
+        const timestamp = ((new Date(e.timestamp)).getTime() / 1000).toFixed(0)
+
+        // if timestamp already in the data structure
+        if (timestamp in timestamps) {
+            if (typeof timestamps[timestamp] === 'number') timestamps[timestamp] = [timestamps[timestamp]]
+
+            timestamps[timestamp].push(i)
+        }
+        else timestamps[timestamp] = i
+    });
 
 
     // calculate derived values
     const startTime = events[0].timestamp
     let minDuration = Infinity
-    // let minDuration = 1000000
+    let maxDuration = 0
     const typeList = new Set()
+    let totalDuration = 0
+
+    let currentSession = events[0].sessionID
+    let sessionIndex = 0
+    let sessionOffset = 0
     for (let i = 0; i < events.length; i++) {
 
         // calculate duration
         let duration = 0
         if (i < events.length - 1) duration = events[i + 1].timestamp - events[i].timestamp
         events[i].duration = duration
-        if (duration > 0 && duration < minDuration) minDuration = duration // update minimum duration
+        totalDuration += duration
+        if (duration > 0 && duration < minDuration) minDuration = duration // update minimum duration    
+        if (duration > maxDuration) maxDuration = duration // update minimum duration    
+
+        // if session change detected, mark event
+        if (events[i].sessionID !== currentSession) {
+            // console.log(i,events[i].session,session)
+            totalDuration -= events[i - 1].duration
+            events[i - 1].sessionChange = 'end'
+            events[i].sessionChange = 'start'
+            currentSession = events[i].sessionID
+
+            sessionIndex++
+            sessionOffset += events[i - 1].duration
+        }
 
         // normalize timestamps
-        events[i].timestamp = events[i].timestamp - startTime
+        const sessionGap = 100
+        events[i].timestamp = events[i].timestamp - startTime - sessionOffset + sessionIndex * sessionGap
 
         // construct list of types
         typeList.add(events[i].type)
 
         // lump extra features to one field
         let extra = []
-        for (const [k, v] of Object.entries(rawEvents[i])) {
-            if (!['job_name', 'name', 'timestamp', 'user_id'].includes(k))
+        // extra.push(events[i].date)
+        for (const [k, v] of Object.entries(events[i])) {
+            if (!['timestamp', 'sessionChange'].includes(k))
                 extra.push(`${k}: ${v}`)
         }
         events[i].extra = extra
     }
 
     meta.minDuration = minDuration
+    meta.maxDuration = maxDuration
     meta.startTime = events[0].date
     meta.endTime = events[events.length - 1].date
-    meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
+    meta.totalDuration = totalDuration
     meta.types = typeList
 
     // console.log(meta, events)
 
-    return { meta, events }
+    return { meta, events, timestamps }
 }
 
 /**
