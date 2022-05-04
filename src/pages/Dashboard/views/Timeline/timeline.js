@@ -88,6 +88,7 @@ export default function timeline(svg, data, eventOnClick) {
         .attr('transform', ({ duration }) =>
             `translate(${duration * sacleFactorX / 2 - dotSize / 2 + durationLabelOffset} ${dotSize * 1.5})`)
         .attr('font-size', dotSize)
+        .attr('fill', '#0000')
 
     // zoom behavior
     function handleZoom(e) {

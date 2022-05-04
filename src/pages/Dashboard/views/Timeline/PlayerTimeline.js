@@ -13,7 +13,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
     const [data, setData] = useState(convert(rawData))
 
     // constrols maximum number of rows of the filter control grid
-    const gridRows = 8
+    const gridRows = 12
 
     // register types of events found for this user
     useEffect(() => {
@@ -101,7 +101,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                 {/* chart settings */}
                 <fieldset className="fixed bottom-5 right-8 font-light">
                     <legend className="">Show event types of:</legend>
-                    <div className={`mt-2 grid grid-rows-[repeat(${gridRows},_minmax(0,_1fr))] grid-flow-col gap-1`}>
+                    <div className={`mt-2 grid grid-rows-[repeat(${gridRows},_minmax(0,_1fr))] grid-flow-row gap-1`}>
                         {eventTypesDisplayed instanceof Set && filterControl()}
                     </div>
                 </fieldset>
