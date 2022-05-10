@@ -41,7 +41,16 @@ export default function VisForm({ loading, updateGlobalMetrics }) {
 
         // if start date later than end date, raise warnings & return
         if (startDate > endDate) {
-            alert('invalid data range')
+            alert('invalid date range')
+            return
+        }
+
+        // if end date later than yesterday, raise warnings & return
+        const today = new Date();
+        const queryEnd = new Date(endDate)
+        console.log(today, queryEnd)
+        if (today.getUTCDate() - queryEnd.getUTCDate() <= 1) {
+            alert('select an end date that\'s prior to yesterday')
             return
         }
 
