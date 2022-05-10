@@ -93,20 +93,20 @@ export const game_links = {
     'SHIPWRECKS': 'https://pbswisconsineducation.org/emerald/play-the-game/'
 }
 
-export const visGames = ['AQUALAB', 'SHIPWRECKS']
+export const vis_games = ['AQUALAB', 'SHIPWRECKS']
 
 
-export const urlSearchMetrics = {
+export const url_search_metrics = {
     'AQUALAB': ['TopJobCompletionDestinations', 'TopJobSwitchDestinations', 'ActiveJobs', 'JobsAttempted'],
     'SHIPWRECKS': ['TopJobCompletionDestinations', 'ActiveJobs', 'JobsAttempted'],
 }
 
-export const timelineUrlPath = {
+export const timeline_url_path = {
     'AQUALAB': 'player',
     'SHIPWRECKS': 'session'
 }
 
-export const initialTimelineFilterOptions = {
+export const initial_timeline_filter_options = {
     'AQUALAB': ['switch_job', 'complete_task', 'complete_job', 'accept_job'],
     'SHIPWRECKS': []
 }

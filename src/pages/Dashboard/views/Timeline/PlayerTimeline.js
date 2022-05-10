@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import LargeButton from "../../../../components/buttons/LargeButton";
-import { initialTimelineFilterOptions } from '../../../../constants';
+import { initial_timeline_filter_options } from '../../../../constants';
 import { useD3 } from "../../../../hooks/useD3";
 import CodeForm from './CodeForm';
 import timeline from "./timeline";
@@ -18,7 +18,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
     useEffect(() => {
 
         let initialTypes = new Set()
-        initialTimelineFilterOptions[metrics.game].forEach(type => {
+        initial_timeline_filter_options[metrics.game].forEach(type => {
             if (data.meta.types.has(type)) initialTypes.add(type)
         });
 

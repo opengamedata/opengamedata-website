@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useD3 } from "../../../../hooks/useD3";
 import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
 import PlayersList from "./PlayersList";
-import { urlSearchMetrics } from "../../../../constants";
+import { url_search_metrics } from "../../../../constants";
 
 /**
  * force directed graph component for job/mission level data
@@ -539,7 +539,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
-                        {urlSearchMetrics[metrics.game].includes('TopJobCompletionDestinations') &&
+                        {url_search_metrics[metrics.game].includes('TopJobCompletionDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -553,7 +553,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                                 </label>
                             </div>
                         }
-                        {urlSearchMetrics[metrics.game].includes('TopJobSwitchDestinations') &&
+                        {url_search_metrics[metrics.game].includes('TopJobSwitchDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -567,7 +567,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                                 </label>
                             </div>
                         }
-                        {urlSearchMetrics[metrics.game].includes('ActiveJobs') &&
+                        {url_search_metrics[metrics.game].includes('ActiveJobs') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input

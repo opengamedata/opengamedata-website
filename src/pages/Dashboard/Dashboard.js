@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { API_ORIGIN, timelineUrlPath, urlSearchMetrics } from '../../constants';
+import { API_ORIGIN, timeline_url_path, url_search_metrics } from '../../constants';
 import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
@@ -46,7 +46,7 @@ export default function Dashboard() {
                 searchParams = new URLSearchParams({
                     start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
                     end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
-                    metrics: `[${urlSearchMetrics[newMetrics.game].toString()}]`
+                    metrics: `[${url_search_metrics[newMetrics.game].toString()}]`
                 })
 
                 urlPath = `game/${newMetrics.game}/metrics`
@@ -58,7 +58,7 @@ export default function Dashboard() {
                     metrics: 'EventList'
                 })
 
-                urlPath = `game/${newMetrics.game}/${timelineUrlPath[newMetrics.game]}/${viewMetrics.player}/metrics`
+                urlPath = `game/${newMetrics.game}/${timeline_url_path[newMetrics.game]}/${viewMetrics.player}/metrics`
 
 
                 break;
@@ -95,7 +95,7 @@ export default function Dashboard() {
                 searchParams = new URLSearchParams({
                     start_datetime: encodeURIComponent(metrics.startDate) + 'T00:00',
                     end_datetime: encodeURIComponent(metrics.endDate) + 'T23:59',
-                    metrics: `[${urlSearchMetrics[metrics.game].toString()}]`
+                    metrics: `[${url_search_metrics[metrics.game].toString()}]`
                 })
 
                 urlPath = `game/${metrics.game}/metrics`
@@ -107,7 +107,7 @@ export default function Dashboard() {
                     metrics: '[EventList]'
                 })
 
-                urlPath = `game/${metrics.game}/${timelineUrlPath[metrics.game]}/${newViewMetrics.player}/metrics`
+                urlPath = `game/${metrics.game}/${timeline_url_path[metrics.game]}/${newViewMetrics.player}/metrics`
 
                 break;
 

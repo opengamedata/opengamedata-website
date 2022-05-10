@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
 import { CogIcon } from '@heroicons/react/solid'
-import { visGames } from '../../constants';
+import { vis_games } from '../../constants';
 
 
 export default function VisForm({ loading, updateGlobalMetrics }) {
@@ -15,7 +15,7 @@ export default function VisForm({ loading, updateGlobalMetrics }) {
 
     const gameList = () => {
         const games = []
-        visGames.forEach((k) => {
+        vis_games.forEach((k) => {
             games.push(
                 <option key={k} value={k}>{k}</option>
             )
