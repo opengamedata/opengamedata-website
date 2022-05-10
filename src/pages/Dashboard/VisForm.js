@@ -49,7 +49,8 @@ export default function VisForm({ loading, updateGlobalMetrics }) {
         const today = new Date();
         const queryEnd = new Date(endDate)
         // console.log(today, queryEnd)
-        if (today.getUTCDate() - queryEnd.getUTCDate() <= 1) {
+        // console.log(today - queryEnd)
+        if (today - queryEnd <= 1000 * 60 * 60 * 24) {
             alert('select an end date that\'s prior to yesterday')
             return
         }
