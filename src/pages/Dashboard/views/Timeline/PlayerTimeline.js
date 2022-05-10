@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import LargeButton from "../../../../components/buttons/LargeButton";
-import { initial_timeline_filter_options } from '../../../../constants';
+import { initial_timeline_filter_options, color_20 } from '../../../../constants';
 import { useD3 } from "../../../../hooks/useD3";
 import CodeForm from './CodeForm';
 import timeline from "./timeline";
 
 
 export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateViewMetrics }) {
-    const [formVisible, setFormVisible] = useState(false) // In porduction: set to false 
-    const [selectedEvent, setSelectedEvent] = useState(null)
+    const [formVisible, setFormVisible] = useState(false)
+    const [selectedEventForTagging, setSelectedEventForTagging] = useState(null)
 
     const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
     const [data, setData] = useState(convert(rawData))
@@ -16,16 +16,13 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
 
     // register types of events found for this user
     useEffect(() => {
-
         let initialTypes = new Set()
         initial_timeline_filter_options[metrics.game].forEach(type => {
-            if (data.meta.types.has(type)) initialTypes.add(type)
+            if (Object.hasOwn(data.meta.types, type)) initialTypes.add(type)
         });
 
         setEventTypesDisplayed(initialTypes)
     }, [])
-
-
 
     // re-filter data when user changes the event types to be displayed
     useEffect(() => {
@@ -33,9 +30,10 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
             setData(filter(convert(rawData), eventTypesDisplayed))
     }, [eventTypesDisplayed])
 
+
     const eventOnClick = (event) => {
-        console.log(event)
-        setSelectedEvent(event)
+        // console.log(event)
+        setSelectedEventForTagging(event)
         setFormVisible(true)
     }
 
@@ -52,26 +50,29 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
      * genrates the options (radio buttons) for the event type filter
      */
     const filterControl = () => {
-        const listOfEvents = [...data.meta.types].map((e) => (
-            <div key={e}>
-                <label className='text-xs font-light'>
-                    <input
-                        className="form-checkbox"
-                        type="checkbox"
-                        checked={eventTypesDisplayed.has(e)}
-                        onChange={() => {
-                            if (eventTypesDisplayed.has(e) && eventTypesDisplayed.size > 1) setEventTypesDisplayed(new Set([...eventTypesDisplayed].filter(d => d !== e)))
-                            else {
-                                const newList = [...eventTypesDisplayed]
-                                newList.push(e)
-                                setEventTypesDisplayed(new Set(newList))
-                            }
-                        }}
+        const listOfEvents = Object.entries(data.meta.types).map(([type, color]) => {
+            const inputStyle = () => `form-checkbox checked:bg-[${color}]`
+            return (
+                <div key={type}>
+                    <label className='text-xs font-light '>
+                        <input className='form-checkbox'
+                            style={eventTypesDisplayed.has(type) ? { backgroundColor: color } : {}}
+                            type="checkbox"
+                            checked={eventTypesDisplayed.has(type)}
+                            onChange={() => {
+                                if (eventTypesDisplayed.has(type) && eventTypesDisplayed.size > 1) setEventTypesDisplayed(new Set([...eventTypesDisplayed].filter(d => d !== type)))
+                                else {
+                                    const newList = [...eventTypesDisplayed]
+                                    newList.push(type)
+                                    setEventTypesDisplayed(new Set(newList))
+                                }
+                            }}
                     />
-                    <span> {e}</span>
+                        <span> {type}</span>
                 </label>
-            </div>
-        ))
+                </div>
+            )
+        })
         return listOfEvents
     }
 
@@ -117,7 +118,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                     metrics={metrics}
                     viewMetrics={viewMetrics}
                     setFormVisible={setFormVisible}
-                    event={selectedEvent}
+                    event={selectedEventForTagging}
                 />
                 }
             </>}
@@ -152,6 +153,22 @@ function convert(rawData) {
         }
     })
 
+    // a dictionary-like stucture that stores timestamp -> event(s) mappings
+    let timestamps = {}
+    rawEvents.forEach((e, i) => {
+        const timestamp = ((new Date(e.timestamp)).getTime() / 1000).toFixed(0)
+
+        // if timestamp already in the dictionary 
+        if (timestamp in timestamps) {
+
+            if (typeof timestamps[timestamp] === 'number') timestamps[timestamp] = [timestamps[timestamp]]
+
+            timestamps[timestamp].push(i)
+        }
+        // base case: add timestamp to dictionary
+        else timestamps[timestamp] = i
+    });
+
 
     // calculate derived values
     const startTime = events[0].timestamp
@@ -181,15 +198,25 @@ function convert(rawData) {
         events[i].extra = extra
     }
 
+    // assign colors to types
+    const types = {}
+    let count = 0
+    typeList.forEach((t) => {
+        types[t] = color_20[count % color_20.length]
+        count++
+    });
+
+
     meta.minDuration = minDuration
     meta.startTime = events[0].date
     meta.endTime = events[events.length - 1].date
     meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
-    meta.types = typeList
+    meta.types = types
 
     // console.log(meta, events)
+    // console.log(types)
 
-    return { meta, events }
+    return { meta, events, timestamps }
 }
 
 /**

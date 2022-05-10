@@ -126,3 +126,6 @@ export const initial_timeline_filter_options = {
     'AQUALAB': ['switch_job', 'complete_task', 'complete_job', 'accept_job'],
     'SHIPWRECKS': [] // TODO when backend implemented EventList for this game, consult team about what to include
 }
+
+export const color_20 = ["#0cc0aa", "#fc2c44", "#70ce57", "#fb57f9", "#2cf52b", "#c972bd", "#e5ea53", "#f6248f", "#d8fbc9", "#e56c56", "#77d1fd", "#ad7947", "#2282f5", "#f6bb86", "#846dff", "#798a58", "#f7c5f1", "#458da6", "#fbbd13", "#8d7ca6"]
+export const color_16 = ["#75eab6", "#f92e5d", "#0ca82e", "#fa63d5", "#b3e61c", "#8b6fed", "#51f310", "#d47389", "#05957a", "#f17e45", "#3588d1", "#fbd127", "#bbc3fe", "#799d10", "#4bd6fd", "#957e84"]

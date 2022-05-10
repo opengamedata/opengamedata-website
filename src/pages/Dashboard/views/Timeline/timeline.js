@@ -10,7 +10,7 @@ export default function timeline(svg, data, eventOnClick) {
     // scale according to shortest duration (so that its length stays at 100)
     const sacleFactorX = 5 / (data.meta.minDuration)
 
-    const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
+    // const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
     svg.attr('viewBox', [-width / 20, -height / 2, width, height])
     svg.selectAll('*').remove();
@@ -71,7 +71,7 @@ export default function timeline(svg, data, eventOnClick) {
         .attr('r', dotSize)
         .attr('stroke', 'white')
         .attr('stroke-width', 1)
-        .attr('fill', ({ type }) => color(type))
+        .attr('fill', ({ type }) => data.meta.types[type])
 
     // event name
     event.append('text')
