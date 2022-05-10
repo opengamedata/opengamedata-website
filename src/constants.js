@@ -105,3 +105,8 @@ export const timelineUrlPath = {
     'AQUALAB': 'player',
     'SHIPWRECKS': 'session'
 }
+
+export const initialTimelineFilterOptions = {
+    'AQUALAB': ['switch_job', 'complete_task', 'complete_job', 'accept_job'],
+    'SHIPWRECKS': []
+}
