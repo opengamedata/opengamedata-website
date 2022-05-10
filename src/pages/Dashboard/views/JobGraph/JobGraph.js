@@ -50,6 +50,11 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             if (metric === 'JobsAttempted-job-name') nodeBuckets[k].id = value // store job name as node id
             else if (metric === 'JobsAttempted') continue
             else nodeBuckets[k][metric] = value
+
+            // parse job difficulty json
+            if (metric === 'JobsAttempted-job-difficulties') {
+                nodeBuckets[k][metric] = JSON.parse(nodeBuckets[k][metric])
+            }
         }
 
         // console.log(nodeBuckets)
@@ -178,13 +183,34 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 .domain([data.meta.minAvgTime, data.meta.maxAvgTime])
                 .range([3, 20])
 
+            const getNodeDetails = (d) => {
+                const generic = `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed\n` +
+                    `Average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
+                    `Standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`
+
+                let jobSpecific = ''
+                switch (metrics.game) {
+                    case 'AQUALAB':
+                        jobSpecific = '\n' +
+                            `Experimentation: ${d['JobsAttempted-job-difficulties'] ? d['JobsAttempted-job-difficulties'].experimentation : 'N/A'}\n` +
+                            `Modeling: ${d['JobsAttempted-job-difficulties'] ? d['JobsAttempted-job-difficulties'].modeling : 'N/A'}\n` +
+                            `Argumentation: ${d['JobsAttempted-job-difficulties'] ? d['JobsAttempted-job-difficulties'].argumentation : 'N/A'}`
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return generic + jobSpecific
+                // job difficulty
+
+            }
+
             const chart = ForceGraph(data, {
                 nodeId: d => d.id,
                 nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
                 nodeTitle: d => d.id,
-                nodeDetail: d => `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed\n` +
-                    `Average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
-                    `Standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`,
+                nodeDetail: d => getNodeDetails(d),
                 nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
                 linkStrokeWidth: l => Math.sqrt(l.value),
                 linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
