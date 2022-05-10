@@ -1,8 +1,11 @@
+
+/**
+ * For dataset download
+ */
+// the server that hosts all the downloadable datasets
 export const FILE_SERVER = 'https://opengamedata.fielddaylab.wisc.edu';
 
-export const API_ORIGIN = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/'
-
-
+// list of games with downloadable datasets
 export const game_list = [
     'AQUALAB',
     'BACTERIA',
@@ -21,6 +24,7 @@ export const game_list = [
     'SHIPWRECKS'
 ]
 
+// thumbnail image paths
 export const thumbs = {
     'AQUALAB': './img/thumbs/aqualab.jpeg',
     'BACTERIA': './img/thumbs/bacteria.jpeg',
@@ -39,6 +43,7 @@ export const thumbs = {
     'SHIPWRECKS': './img/thumbs/shipwrecks.jpeg'
 }
 
+// links to the documentations on the datasets 
 export const data_readmes = {
     'AQUALAB': 'https://github.com/fielddaylab/aqualab/blob/develop/README.md',
     'BACTERIA': 'https://github.com/fielddaylab/bacteria/blob/master/readme.md',
@@ -57,6 +62,7 @@ export const data_readmes = {
     'SHIPWRECKS': 'https://github.com/fielddaylab/lost_emerald/blob/master/README.md'
 }
 
+// links to the documentations on the features of datasets 
 export const feature_readmes = {
     'AQUALAB': 'https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md',
     'BACTERIA': 'https://opengamedata.fielddaylab.wisc.edu/data/BACTERIA/readme.md',
@@ -75,6 +81,7 @@ export const feature_readmes = {
     'SHIPWRECKS': 'https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md'
 }
 
+// links to actual games
 export const game_links = {
     'AQUALAB': 'https://fielddaylab.wisc.edu/play/aqualab/ci/develop',
     'BACTERIA': 'https://theyardgames.org/game/bacteria/',
@@ -93,20 +100,29 @@ export const game_links = {
     'SHIPWRECKS': 'https://pbswisconsineducation.org/emerald/play-the-game/'
 }
 
+/**
+ * For Vis Dashboard
+ */
+// open game data core
+export const API_ORIGIN = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamedata.wsgi/'
+
+// list of games that can be visualized in the Dashboard (used in VisForm)
 export const vis_games = ['AQUALAB', 'SHIPWRECKS']
 
-
+// list of API call params for each game
 export const url_search_metrics = {
     'AQUALAB': ['TopJobCompletionDestinations', 'TopJobSwitchDestinations', 'ActiveJobs', 'JobsAttempted'],
     'SHIPWRECKS': ['TopJobCompletionDestinations', 'ActiveJobs', 'JobsAttempted'],
 }
 
+// when fetching timeline from the graph, what type of timeline each game supports (either 'player' or 'session')
 export const timeline_url_path = {
     'AQUALAB': 'player',
     'SHIPWRECKS': 'session'
 }
 
+// specifies what event types to display when timeline is initialized
 export const initial_timeline_filter_options = {
     'AQUALAB': ['switch_job', 'complete_task', 'complete_job', 'accept_job'],
-    'SHIPWRECKS': []
+    'SHIPWRECKS': [] // TODO when backend implemented EventList for this game, consult team about what to include
 }
