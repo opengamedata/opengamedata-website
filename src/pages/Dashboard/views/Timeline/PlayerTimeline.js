@@ -20,7 +20,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
 
     // register types of events found for this user
     useEffect(() => {
-        let initialTypes = new Set()
+        const initialTypes = new Set()
         initial_timeline_filter_options[metrics.game].forEach(type => {
             if (Object.hasOwn(data.meta.types, type)) initialTypes.add(type)
         });
@@ -169,12 +169,13 @@ function convert(rawData) {
         // construct list of types
         typeList.add(events[i].type)
 
-        // lump extra features to one field
+        // lump extra features into one field
         let extra = []
         for (const [k, v] of Object.entries(rawEvents[i])) {
             if (!['user_id', 'index'].includes(k)) // put what you don't want to show in this array
                 extra.push(`${k}: ${v}`)
         }
+        extra.push(`duration: ${duration}`)
         events[i].extra = extra
     }
 

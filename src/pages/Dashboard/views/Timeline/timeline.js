@@ -15,8 +15,9 @@ export default function timeline(
 
     // scale according to shortest duration (so that its length stays at 100)
     const sacleFactorX = 5 / (data.meta.minDuration)
-    const zoomUpperLimit = sacleFactorX * 3
-    const textFadeThreshold = sacleFactorX 
+    const zoomInnerLimit = sacleFactorX * 3
+    const zoomOuterLimit = 0
+    const textFadeThreshold = sacleFactorX / 4
 
     // const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
@@ -136,7 +137,7 @@ export default function timeline(
 
     let zoom = d3.zoom()
         .on('zoom', handleZoom)
-        .scaleExtent([0, zoomUpperLimit])
+        .scaleExtent([zoomOuterLimit, zoomInnerLimit])
         .on('end', recordZoom);
     svg
         .call(zoom);
