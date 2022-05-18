@@ -3,6 +3,7 @@ import LargeButton from "../../../../components/buttons/LargeButton";
 import { initial_timeline_filter_options, color_20 } from '../../../../constants';
 import { useD3 } from "../../../../hooks/useD3";
 import CodeForm from './CodeForm';
+import EventFilterCtrl from './EventFilterCtrl';
 import timeline from "./timeline";
 
 
@@ -12,6 +13,9 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
 
     const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
     const [data, setData] = useState(convert(rawData))
+
+    const [timelineZoom, setZoom] = useState(1)
+    const [timelinePan, setPan] = useState(0)
 
 
     // register types of events found for this user
@@ -42,39 +46,16 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
      */
     const diagram = useD3((svg) => {
 
-        timeline(svg, data, eventOnClick)
+        timeline(
+            svg,
+            data,
+            eventOnClick,
+            timelineZoom, timelinePan,
+            setZoom, setPan)
 
     }, [data])
 
-    /**
-     * genrates the options (radio buttons) for the event type filter
-     */
-    const filterControl = () => {
-        const listOfEvents = Object.entries(data.meta.types).map(([type, color]) => {
-            const inputStyle = () => `form-checkbox checked:bg-[${color}]`
-            return (
-                <div key={type}>
-                    <label className='text-xs font-light '>
-                        <input className='form-checkbox'
-                            style={eventTypesDisplayed.has(type) ? { backgroundColor: color } : {}}
-                            type="checkbox"
-                            checked={eventTypesDisplayed.has(type)}
-                            onChange={() => {
-                                if (eventTypesDisplayed.has(type) && eventTypesDisplayed.size > 1) setEventTypesDisplayed(new Set([...eventTypesDisplayed].filter(d => d !== type)))
-                                else {
-                                    const newList = [...eventTypesDisplayed]
-                                    newList.push(type)
-                                    setEventTypesDisplayed(new Set(newList))
-                                }
-                            }}
-                    />
-                        <span> {type}</span>
-                </label>
-                </div>
-            )
-        })
-        return listOfEvents
-    }
+
 
     return (
         <>
@@ -105,12 +86,11 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                 </div>
 
                 {/* chart settings */}
-                <fieldset className="fixed bottom-5 right-8 font-light">
-                    <legend className="">Show event types of:</legend>
-                    <div className="mt-2 grid xl:grid-cols-6 lg:grid-cols-3 grid-flow-row gap-1">
-                        {eventTypesDisplayed instanceof Set && filterControl()}
-                    </div>
-                </fieldset>
+                <EventFilterCtrl
+                    data={data}
+                    eventTypesDisplayed={eventTypesDisplayed}
+                    setEventTypesDisplayed={setEventTypesDisplayed}
+                />
 
                 {/* error code event tagging  */}
                 {formVisible &&
@@ -192,7 +172,7 @@ function convert(rawData) {
         // lump extra features to one field
         let extra = []
         for (const [k, v] of Object.entries(rawEvents[i])) {
-            if (!['job_name', 'name', 'timestamp', 'user_id'].includes(k))
+            if (!['user_id', 'index'].includes(k)) // put what you don't want to show in this array
                 extra.push(`${k}: ${v}`)
         }
         events[i].extra = extra
