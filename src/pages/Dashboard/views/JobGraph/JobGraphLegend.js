@@ -24,10 +24,6 @@ export default function JobGraphLegend() {
                     </p>
                     <p>
                         <CursorClickIcon className="w-5 h-5 inline mr-1" />
-                        <span className="font-semibold">Click on a job</span> to see a graph of tasks within the job.
-                    </p>
-                    <p>
-                        <CursorClickIcon className="w-5 h-5 inline mr-1" />
                         <span className="font-semibold">Click on a link</span> to see the list of players who took this path.
                     </p>
                 </div>

@@ -1,12 +1,14 @@
 import * as d3 from 'd3'
 import { select } from 'd3';
 
+    // Definition of directed force diagram used in our visualization
+
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
 // modified from https://observablehq.com/@d3/force-directed-graph
 function ForceGraph({
     nodes, // an iterable of node objects (typically [{id}, …])
-    links // an iterable of link objects (typically [{source, target}, …])
+    links, // an iterable of link objects (typically [{source, target}, …])
 }, {
     nodeId = d => d.id, // given d in nodes, returns a unique identifier (string)
     nodeGroup, // given d in nodes, returns an (ordinal) value for color
@@ -22,19 +24,29 @@ function ForceGraph({
     linkSource = ({ source }) => source, // given d in links, returns a node identifier string
     linkTarget = ({ target }) => target, // given d in links, returns a node identifier string
     linkDetail, // text displayed when hover over link d
-    linkStroke = "#999", // link stroke color
+    linkStroke, // link stroke color, no color when showing jobs in progress
+    outLinks,
+    outLinkWidth,
+    outLinkDetail,
     linkStrokeOpacity = 0.6, // link stroke opacity
     linkStrokeWidth = 1.5, // given d in links, returns a stroke width in pixels
     linkStrokeLinecap = "round", // link stroke linecap
     linkStrength,
     linkDistance,
     colors = d3.interpolateRdYlGn, // an array of color values, for the node groups
-    width = 1600, // outer width, in pixels
-    height = 900, // outer height, in pixels
+    width = window.innerWidth, // outer width, in pixels
+    height = window.innerHeight, // outer height, in pixels
     invalidation, // when this promise resolves, stop the simulation
     parent,
 
-} = {}) {
+    } = {},
+    showPlayersList
+) {
+
+    function intern(value) {
+        return value !== null && typeof value === "object" ? value.valueOf() : value;
+    }
+
     // Compute values.
     const N = d3.map(nodes, nodeId).map(intern);
     const LS = d3.map(links, linkSource).map(intern);
@@ -42,7 +54,7 @@ function ForceGraph({
     if (nodeTitle === undefined) nodeTitle = (_, i) => N[i];
     const T = nodeTitle == null ? null : d3.map(nodes, nodeTitle);
     if (nodeDetail === undefined) nodeDetail = (_, i) => N[i];
-    const D = nodeDetail == null ? null : d3.map(nodes, nodeDetail);
+    const ND = nodeDetail == null ? null : d3.map(nodes, nodeDetail);
     const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
     if (!nodeRadius) nodeRadius = (_, i) => N[i]
     const R = nodeRadius == null ? null : d3.map(nodes, nodeRadius)
@@ -50,8 +62,11 @@ function ForceGraph({
     const W = typeof linkStrokeWidth !== "function" ? null : d3.map(links, linkStrokeWidth);
     const L = typeof linkStroke !== "function" ? null : d3.map(links, linkStroke);
     if (linkDetail === undefined) linkDetail = (_, i) => LS[i];
-    const TP = linkDetail == null ? null : d3.map(links, linkDetail) // tooltips
+    const LD = linkDetail == null ? null : d3.map(links, linkDetail) // tooltips
 
+    const OW = typeof outLinkWidth !== "function" ? null : d3.map(nodes, outLinkWidth);     // outLink width
+    if (outLinkDetail === undefined) outLinkDetail = (_, i) => N[i];
+    const OD = outLinkDetail == null ? null : d3.map(nodes, outLinkDetail);
 
     // Replace the input nodes and links with mutable objects for the simulation.
     nodes = d3.map(nodes, (_, i) => ({ id: N[i] }));
@@ -60,7 +75,7 @@ function ForceGraph({
     // Compute default domains.
     if (G && nodeGroups === undefined) nodeGroups = d3.sort(G);
 
-    // Construct the scales.
+    // Construct color scales.
     const color = nodeGroup == null ? null : d3.scaleSequential(colors);
 
     // Construct the forces.
@@ -76,11 +91,12 @@ function ForceGraph({
 
     svg.selectAll('*').remove();
 
-    svg.append('defs').append('marker')
+    // definition of arrowheads that marks the direction of a link
+    const arrow = svg.append('defs').append('marker')
         .attr('id', 'arrowhead')
         .attr('viewBox', '-0 -5 10 10')
-        .attr('refX', 30)
-        .attr('refY', -1.5)
+        .attr('refX', outLinks ? 8 : 30)
+        .attr('refY', outLinks ? 0 : -1)
         .attr('orient', 'auto')
         .attr('markerUnits', 'userSpaceOnUse')
         .attr('markerWidth', 10)
@@ -88,9 +104,10 @@ function ForceGraph({
         .attr('xoverflow', 'visible')
         .append('svg:path')
         .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-        .attr('fill', '#888')
+        .attr('fill', typeof linkStroke !== "function" ? linkStroke : '#999')
         .style('stroke', 'none');
 
+        // links - visual representation of player progression
     const link = svg.append("g")
         .attr("stroke", typeof linkStroke !== "function" ? linkStroke : null)
         .attr("stroke-opacity", linkStrokeOpacity)
@@ -99,15 +116,44 @@ function ForceGraph({
         .selectAll("path")
         .data(links)
         .join("path")
-        .attr('marker-end', 'url(#arrowhead)')
-        .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null);
+        .attr("stroke-width", typeof linkStrokeWidth !== "function" ? linkStrokeWidth : null)
 
+    // attach arrowheads to end of paths
+    // when linkMode is set to activeJobs, attach to outEdges 
+    let outEdge
+    if (outLinks) {
+        outEdge = svg.append('g')
+            .selectAll('line')
+            .data(nodes)
+            .join('line')
+            // .attr('pathLength', 50)
+            .attr('stroke', '#999')
+            .attr('stroke-width', 5)
+            .attr("stroke-opacity", linkStrokeOpacity)
+            .attr('marker-end', 'url(#arrowhead)')
+            .on('click', handleLinkClick)
+            .on('mouseover', handleNodeHover)
+            .on('mouseout', handleNodeUnhover);
+    }
+
+    else {
+        link.attr('marker-end', 'url(#arrowhead)')
+            .on('click', handleLinkClick)
+            .on('mouseover', handleNodeHover)
+            .on('mouseout', handleNodeUnhover);
+    }
+    function handleLinkClick(e, d) {
+        showPlayersList(d)
+    }
+
+        // simulates attraction and repulsion among nodes and links
     const simulation = d3.forceSimulation(nodes)
         .force("link", forceLink)
         .force("charge", forceNode)
         .force("center", d3.forceCenter())
         .on("tick", ticked);
 
+        // nodes - visual representation of jobs 
     const node = svg.append("g")
         .attr("fill", nodeFill)
         .attr("stroke", nodeStroke)
@@ -118,40 +164,50 @@ function ForceGraph({
         .join("circle")
         .attr("r", 5)
         .call(drag(simulation))
+        // .on('click', handleNodeClick)
+        .on('mouseover', handleNodeHover)
+        .on('mouseout', handleNodeUnhover);
 
-    console.log(node)
+        // function handleNodeClick(e, d) {
+        //     toTaskGraph(d.id)
+        // };
 
-    node
-        .select('circle')
-        .on('click', (e) => {
-            console.log(e)
-            d3.select(this)
-                .attr('fill', 'black')
-        });
+    function handleNodeHover(e, d) {
+        d3.select(this)
+            .classed('cursor-pointer', true)
 
+        // display node details
+    }
+    function handleNodeUnhover(e, d) {
+        d3.select(this)
+            .classed('cursor-pointer', false)
+    }
+
+        // node name labels
     const text = svg.append('g')
         .selectAll('text')
         .data(nodes)
         .join('text')
         .text(({ index: i }) => T[i])
         .attr('font-size', 8)
-        .attr('stroke', 'white')
-        .attr('stroke-width', .2)
-        .attr('fill', 'black');
-    // .attr('user-select', 'none')
+        // .attr('stroke', 'white')
+        // .attr('stroke-width', .2)
+        .attr('fill', 'black')
+
+
 
 
     if (W) link.attr("stroke-width", ({ index: i }) => W[i]);
     if (L) link.attr("stroke", ({ index: i }) => L[i]);
-    if (TP) link.append('title').text(({ index: i }) => TP[i]);
+    if (LD) link.append('title').text(({ index: i }) => LD[i]);
     if (G) node.attr("fill", ({ index: i }) => color(G[i]));
     if (R) node.attr('r', ({ index: i }) => R[i]);
-    if (T) node.append("title").text(({ index: i }) => D[i]);
+    if (T) node.append("title").text(({ index: i }) => ND[i]);
+    if (OW) outEdge.attr("stroke-width", ({ index: i }) => OW[i]);
+    if (OW) outEdge.append("title").text(({ index: i }) => OD[i]);
+
     if (invalidation != null) invalidation.then(() => simulation.stop());
 
-    function intern(value) {
-        return value !== null && typeof value === "object" ? value.valueOf() : value;
-    }
 
     function positionLink(d) {
         const offset = 10;
@@ -172,10 +228,9 @@ function ForceGraph({
             " " + d.target.x + "," + d.target.y;
     }
 
+        // update the coordinates of each graphical element
     function ticked() {
-
         link.attr("d", positionLink)
-
 
         node
             .attr("cx", d => d.x)
@@ -184,8 +239,16 @@ function ForceGraph({
         text
             .attr("x", ({ index: i, x: x }) => x + R[i] + 3)
             .attr("y", d => d.y);
+
+        if (outLinks)
+            outEdge
+                .attr("x1", ({ x }) => x)
+                .attr("y1", d => d.y)
+                .attr("x2", ({ x }) => x + 25)
+                .attr("y2", d => d.y + 25)
     }
 
+        // drag behavior for nodes
     function drag(simulation) {
         function dragstarted(event) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -210,13 +273,14 @@ function ForceGraph({
             .on("end", dragended);
     }
 
+        // pan and zoom
     function handleZoom(e) {
-        // apply transform to the chart
+        // apply transform to chart
         text.attr('transform', e.transform);
         node.attr('transform', e.transform);
         link.attr('transform', e.transform);
+        if (outLinks) outEdge.attr('transform', e.transform);
     }
-
     const zoom = d3.zoom()
         .on('zoom', handleZoom);
 
