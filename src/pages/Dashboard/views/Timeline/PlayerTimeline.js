@@ -8,11 +8,14 @@ import timeline from "./timeline";
 
 
 export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateViewMetrics }) {
+
+    const convertedData = convert(rawData)
+
     const [formVisible, setFormVisible] = useState(false)
     const [selectedEventForTagging, setSelectedEventForTagging] = useState(null)
 
     const [eventTypesDisplayed, setEventTypesDisplayed] = useState(null)
-    const [data, setData] = useState(convert(rawData))
+    const [data, setData] = useState()
 
     const [timelineZoom, setZoom] = useState(1)
     const [timelinePan, setPan] = useState(0)
@@ -22,7 +25,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
     useEffect(() => {
         const initialTypes = new Set()
         initial_timeline_filter_options[metrics.game].forEach(type => {
-            if (Object.hasOwn(data.meta.types, type)) initialTypes.add(type)
+            if (Object.hasOwn(convertedData.meta.types, type)) initialTypes.add(type)
         });
 
         setEventTypesDisplayed(initialTypes)
@@ -31,7 +34,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
     // re-filter data when user changes the event types to be displayed
     useEffect(() => {
         if (eventTypesDisplayed instanceof Set)
-            setData(filter(convert(rawData), eventTypesDisplayed))
+            setData(filter(convertedData, eventTypesDisplayed))
     }, [eventTypesDisplayed])
 
 
@@ -45,7 +48,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
      * draws the timeline
      */
     const diagram = useD3((svg) => {
-
+        if (data)
         timeline(
             svg,
             data,
@@ -73,21 +76,21 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                         onClick={() => { updateViewMetrics('JobGraph') }}
                         label='← BACK TO JOB GRAPH'
                     />
-                    <p className='mb-3 text-4xl font-light'>Player {data.meta.playerID}</p>
+                    <p className='mb-3 text-4xl font-light'>Player {convertedData.meta.playerID}</p>
                     <p className="font-light">
-                        From <span className="font-bold">{data.meta.startTime}</span> to <span className="font-bold">{data.meta.endTime}</span>
+                        From <span className="font-bold">{convertedData.meta.startTime}</span> to <span className="font-bold">{convertedData.meta.endTime}</span>
                     </p>
                     <p className="font-light">
-                        Total time taken: <span className="font-bold">{data.meta.totalTime}s</span>
+                        Total time taken: <span className="font-bold">{convertedData.meta.totalTime}s</span>
                     </p>
                     <p className="font-light">
-                        Session count: <span className="font-bold">{data.meta.sessionCount}</span>
+                        Session count: <span className="font-bold">{convertedData.meta.sessionCount}</span>
                     </p>
                 </div>
 
                 {/* chart settings */}
                 <EventFilterCtrl
-                    data={data}
+                    data={convertedData}
                     eventTypesDisplayed={eventTypesDisplayed}
                     setEventTypesDisplayed={setEventTypesDisplayed}
                 />
@@ -116,6 +119,7 @@ function convert(rawData) {
 
     // console.log(rawData)
     // console.log(rawEvents)
+    // console.log(rawEvents[0])
 
     // extract primary values
     const meta = {
