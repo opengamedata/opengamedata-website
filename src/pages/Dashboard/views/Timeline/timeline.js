@@ -130,7 +130,7 @@ export default function timeline(
     }
 
     function recordZoom(e) {
-        console.log(zoomLv, panLv)
+        // console.log(zoomLv, panLv)
         setZoom(zoomLv)
         setPan(panLv)
     }

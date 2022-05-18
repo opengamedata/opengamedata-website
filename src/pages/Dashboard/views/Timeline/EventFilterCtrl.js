@@ -37,10 +37,10 @@ export default function EventFilterCtrl({ data, eventTypesDisplayed, setEventTyp
     return (expanded ?
         <div className='fixed bottom-0 right-0 bg-white py-5 px-8 rounded-md shadow-sm'>
             <fieldset className='font-light' >
-                <div className='flex justify-between'>
+                <div className='flex justify-between items-center'>
                     <legend className=''>Show event types of:</legend>
                     <ChevronDownIcon
-                        className='h-8 w-8 cursor-pointer'
+                        className='h-6 w-6 cursor-pointer'
                         onClick={() => { setExpanded(false) }}
                     />
                 </div>
@@ -52,11 +52,11 @@ export default function EventFilterCtrl({ data, eventTypesDisplayed, setEventTyp
         </div>
         :
         <div
-            className='fixed bottom-0 right-0 py-5 px-8 flex justify-between cursor-pointer'
+            className='fixed bottom-0 right-0 py-5 px-8 flex justify-between items-center cursor-pointer'
             onClick={() => { setExpanded(true) }}
         >
             <legend className='font-medium underline'>Event Filter</legend>
-            {/* <ChevronUpIcon className='h-6 w-6' /> */}
+            <ChevronUpIcon className='h-6 w-6' />
         </div>
 
     )
