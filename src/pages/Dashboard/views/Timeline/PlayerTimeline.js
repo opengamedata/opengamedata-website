@@ -210,19 +210,15 @@ function filter(data, filterParams) {
     // select objects of specified event type
     const filteredEvents = data.events.filter(({ type }) => filterParams.has(type))
 
-
-    let minDuration = Infinity
-    // let minDuration = 1000000
     // recalculate time elapsed in between filtered events
     for (let i = 0; i < filteredEvents.length - 1; i++) {
         const e = filteredEvents[i];
 
         const d = filteredEvents[i + 1].timestamp - e.timestamp
-        if (d > 0 && d < minDuration) minDuration = d
         e.duration = d
     }
-    // recalculate min duration
-    data.meta.minDuration = minDuration
+
+    // (removed) recalculate min duration
 
 
     data.events = filteredEvents
