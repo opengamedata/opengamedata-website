@@ -15,7 +15,8 @@ export default function timeline(
 
     // scale according to shortest duration (so that its length stays at 100)
     const sacleFactorX = 5 / (data.meta.minDuration)
-    const zoomUpperLimit = sacleFactorX * 10
+    const zoomUpperLimit = sacleFactorX * 3
+    const textFadeThreshold = sacleFactorX 
 
     // const color = d3.scaleOrdinal(data.meta.types, d3.schemeTableau10)
 
@@ -87,7 +88,7 @@ export default function timeline(
         .text(({ name, type }) => `${type} @ ${name}`) // replace with dynamic data
         .attr('transform', `rotate(-30) translate(${dotSize * 1.2})`)
         .attr('font-size', dotSize)
-        .attr('fill', '#0000')
+        .attr('fill', timelineZoom >= textFadeThreshold ? '#000' : '#0000')
 
     // event duration
     event.append('text')
@@ -96,7 +97,7 @@ export default function timeline(
         .attr('transform', ({ duration }) =>
             `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * timelineZoom - dotSize / 2},${dotSize * 1.5})`)
         .attr('font-size', dotSize)
-        .attr('fill', '#0000')
+        .attr('fill', timelineZoom >= textFadeThreshold ? '#000' : '#0000')
 
     // zoom behavior
     let zoomLv, panLv
@@ -118,11 +119,11 @@ export default function timeline(
                 `translate(${(duration * sacleFactorX / 2 + durationLabelOffset) * zoomLv - dotSize / 2},${dotSize * 1.5})`)
             .transition()
             .duration(200)
-            .attr('fill', zoomLv >= sacleFactorX * 2 ? '#000' : '#0000')
+            .attr('fill', zoomLv >= textFadeThreshold ? '#000' : '#0000')
         d3.selectAll('.title')
             .transition()
             .duration(200)
-            .attr('fill', zoomLv >= sacleFactorX * 2 ? '#000' : '#0000')
+            .attr('fill', zoomLv >= textFadeThreshold ? '#000' : '#0000')
         d3.select('svg line')
             .attr('transform', `translate(${panLv}) scale(${zoomLv} 1)`);
     }
