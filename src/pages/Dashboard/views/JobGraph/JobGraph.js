@@ -18,7 +18,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
     useEffect(() => {
         setData(convert(rawData))
-    }, [rawData])
+    }, [rawData, linkMode])
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
@@ -62,7 +62,6 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         // links
         let l = []
         const rawLinks = JSON.parse(rawData[linkMode].replaceAll('\\', ''))
-        // console.log(linkMode, rawLinks)
 
         switch (linkMode) {
             case 'TopJobCompletionDestinations':
@@ -225,7 +224,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 nodeClick: ''
             })
         }
-    }, [linkMode, data]) // dependency -> linkMode: refresh graph when linkMode changes
+    }, [data]) // dependency -> data: change in linkMode will trigger data recalculation (@useEffect)
 
 
 
