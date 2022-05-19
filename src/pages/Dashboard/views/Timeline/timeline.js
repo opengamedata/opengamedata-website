@@ -44,7 +44,7 @@ export default function timeline(
         .data(data.events)
         .join('g')
         .classed('event', true)
-        .attr('transform', ({ timestamp, duration, name }, i) =>
+        .attr('transform', ({ timestamp, duration }, i) =>
             `translate(${sacleFactorX * timestamp * timelineZoom},${duration === 0 ? -dotSize * 1.5 : 0})`
         )
         .on('mouseover', function handleHover(e, d) {
@@ -86,7 +86,7 @@ export default function timeline(
     // event name
     event.append('text')
         .classed('title', true)
-        .text(({ name, type }) => `${type} @ ${name}`) // replace with dynamic data
+        .text(({ detail, type }) => `${type} @ ${detail}`) // replace with dynamic data
         .attr('transform', `rotate(-30) translate(${dotSize * 1.2})`)
         .attr('font-size', dotSize)
         .attr('fill', timelineZoom >= textFadeThreshold ? '#000' : '#0000')

@@ -129,7 +129,8 @@ function convert(rawData) {
     const events = rawEvents.map((e) => {
         // console.log(e)
         return {
-            name: e.job_name,
+            level: e.job_name,
+            detail: e.event_primary_detail,
             type: e.name,
             timestamp: ((new Date(e.timestamp)).getTime() / 1000).toFixed(0),
             date: (new Date(e.timestamp)).toLocaleString(),
