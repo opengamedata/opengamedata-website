@@ -257,6 +257,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                     redirect={toPlayerTimeline}
                     playerHighlight={playerHighlight}
                     setHighlight={setHighlight}
+                    setPlayerList={setPlayerList}
                 /> :
                 <></>
             }
@@ -313,12 +314,14 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                     </div>
                 </fieldset>
 
-                <p className="mt-2">Player Count: {data && data.meta.PlayerCount} </p>
+                {/* <p className="mt-2">Player Count: {data && data.meta.PlayerCount} </p> */}
 
             </div>
 
             {/* bottom left section: chart legend */}
-            <JobGraphLegend />
+            <JobGraphLegend
+                populationSummary={{ dog: 'meow' }}
+            />
 
         </>
 
