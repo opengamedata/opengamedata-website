@@ -153,17 +153,17 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
 
     const showPlayersList = (link) => {
+        let players, title
         if (linkMode === 'ActiveJobs') {
-            const players = data.nodes.find(n => n.id === link.id).players
-            const title = `${link.id} (${players.length} in progress)`
-            setPlayerList({ title, players })
+            players = data.nodes.find(n => n.id === link.id).players
+            title = `${link.id} (${players.length} in progress)`
         }
         else {
-            const players = data.links.find(l => l.source === link.source.id && l.target === link.target.id).players
-            const title = `${link.source.id}\n` + `➔ ${link.target.id}\n` +
-                `(${players.length} ${linkMode === 'TopJobSwitchDestinations' ? 'switched' : 'completed'})`
-            setPlayerList({ title, players })
+            players = data.links.find(l => l.source === link.source.id && l.target === link.target.id).players
+            title = `${link.source.id}\n` + `➔ ${link.target.id}\n` +
+                `(${players.length} ${linkMode === 'TopJobSwitchDestinations' ? 'switched' : 'completed'})`          
         }
+        setPlayerList({ players, title })
     }
 
     /**
