@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
 
-export default function JobGraphLegend() {
+export default function JobGraphLegend({ populationSummary }) {
     const [showLegend, setShowLegend] = useState(false)
 
     return (
@@ -36,6 +36,12 @@ export default function JobGraphLegend() {
                     onMouseLeave={() => { setShowLegend(false) }}
                 />
             </div>
+            {
+                Object.entries(populationSummary).map(([key, value]) =>
+                    <p key={key} className="font-light">
+                        {key}: <span className="font-bold">{value}</span>
+                    </p>)
+            }
         </div>
     )
 }
