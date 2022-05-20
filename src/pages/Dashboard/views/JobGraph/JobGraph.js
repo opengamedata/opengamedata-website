@@ -35,6 +35,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         // metadata
         const meta = {
             playerSummary: JSON.parse(rawData.PlayerSummary.replaceAll('\\', '')),
+            populationSummary: JSON.parse(rawData.PopulationSummary.replaceAll('\\', '').replaceAll('_', ' ')),
             maxAvgTime: 0,
             minAvgTime: Infinity
         }
@@ -320,9 +321,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             </div>
 
             {/* bottom left section: chart legend */}
-            <JobGraphLegend
-                populationSummary={{ dog: 'meow' }}
-            />
+            {data && <JobGraphLegend populationSummary={data.meta.populationSummary} />}
 
         </>
 
