@@ -202,9 +202,9 @@ function convert(rawData) {
     // console.log(meta)
     // console.log(events)
     // console.log(types)
-    console.log(timestamps)
+    // console.log(timestamps)
 
-    return { meta, events, timestamps }
+    return { meta, events, timestamps: Object.entries(timestamps) }
 }
 
 /**

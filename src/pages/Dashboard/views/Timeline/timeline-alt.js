@@ -38,6 +38,7 @@ export default function timeline(
         .classed('event-wrapper', true)
         .attr('transform', `translate(${timelinePan})`)
 
+    // console.log(Object.entries(data.timestamps))
 
     const timestamp = sequence
         .selectAll('g')
@@ -45,8 +46,8 @@ export default function timeline(
         .join('g')
         .classed('timestamp', true)
         .attr('transform', function (d, i) {
-            const tstamp = Object.keys(d)[0]
-            console.log(tstamp)
+            const tstamp = d[0]
+            console.log(d)
 
             return `translate(${sacleFactorX * tstamp * timelineZoom},0)`
         })
@@ -76,8 +77,11 @@ export default function timeline(
         })
 
     timestamp.selectAll('circle')
-        .data()
-
+        .data(d => d[1])
+        .join('circle')
+        .attr('transform', (d, i) =>
+            `translate(0,${i * dotSize})`
+        )
 
     // event representation
     const event = sequence
@@ -85,33 +89,35 @@ export default function timeline(
         .data(data.events)
         .join('g')
         .classed('event', true)
-        .attr('transform', ({ timestamp, duration }, i) =>
-            `translate(${sacleFactorX * timestamp * timelineZoom},0)`
+        .attr('transform', ({ timestamp, duration }, i) => {
+            // console.log(timestamp)
+            return `translate(${sacleFactorX * timestamp * timelineZoom},0)`
+        }
         )
-        .on('mouseover', function handleHover(e, d) {
-            d3.select(this).select('circle')
-                .attr('stroke', 'black')
-                .attr('stroke-width', 2)
+        // .on('mouseover', function handleHover(e, d) {
+        //     d3.select(this).select('circle')
+        //         .attr('stroke', 'black')
+        //         .attr('stroke-width', 2)
 
-            // attach event details
-            d3.select(this)
-                .selectAll('.details')
-                .data(d => d.extra)
-                .join('text')
-                .classed('details', true)
-                .text(d => d)
-                .attr('dy', (d, i) => `${i * 1.3}em`)
-                .attr('transform', `translate(${-dotSize},${2 * dotSize})`)
-                .attr('font-size', dotSize / 1.5)
-        })
-        .on('mouseout', function handleUnhover(e, d) {
-            d3.select(this).select('circle')
-                // .transition()
-                .attr('stroke', 'white')
-                .attr('stroke-width', 1)
+        //     // attach event details
+        //     d3.select(this)
+        //         .selectAll('.details')
+        //         .data(d => d.extra)
+        //         .join('text')
+        //         .classed('details', true)
+        //         .text(d => d)
+        //         .attr('dy', (d, i) => `${i * 1.3}em`)
+        //         .attr('transform', `translate(${-dotSize},${2 * dotSize})`)
+        //         .attr('font-size', dotSize / 1.5)
+        // })
+        // .on('mouseout', function handleUnhover(e, d) {
+        //     d3.select(this).select('circle')
+        //         // .transition()
+        //         .attr('stroke', 'white')
+        //         .attr('stroke-width', 1)
 
-            d3.select(this).selectAll('.details').remove()
-        })
+        //     d3.select(this).selectAll('.details').remove()
+        // })
         .on('click', function handleClick(e, d) {
 
             eventOnClick(d)
