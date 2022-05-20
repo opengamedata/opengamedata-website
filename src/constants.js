@@ -111,8 +111,28 @@ export const vis_games = ['AQUALAB', 'SHIPWRECKS']
 
 // list of API call params for each game
 export const url_search_metrics = {
-    'AQUALAB': ['TopJobCompletionDestinations', 'ActiveJobs', 'JobsAttempted', 'TopJobSwitchDestinations', 'PlayerSummary', 'PopulationSummary'],
-    'SHIPWRECKS': ['TopJobCompletionDestinations', 'ActiveJobs', 'JobsAttempted', 'PlayerSummary', 'PopulationSummary'],
+    'AQUALAB': [
+        'TopJobCompletionDestinations',
+        'ActiveJobs',
+        'JobsAttempted',
+        'TopJobSwitchDestinations',
+        'PlayerSummary',
+        'PopulationSummary',
+
+        'JobsCompleted',
+        'SessionID',
+        'SessionDuration'
+    ],
+    'SHIPWRECKS': ['TopJobCompletionDestinations',
+        'ActiveJobs',
+        'JobsAttempted',
+        'PlayerSummary',
+        'PopulationSummary',
+
+        'JobsCompleted',
+        'SessionID',
+        'SessionDuration'
+    ],
 }
 
 // when fetching timeline from the graph, what type of timeline each game supports (either 'player' or 'session')
