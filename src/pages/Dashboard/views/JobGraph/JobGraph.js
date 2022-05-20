@@ -25,9 +25,9 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
         setPlayerList(null)
     }, [rawData, linkMode])
 
-    useEffect(() => {
-        console.log(data)
-    }, [data])
+    // useEffect(() => {
+    //     console.log(data)
+    // }, [data])
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {

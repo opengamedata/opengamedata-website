@@ -199,8 +199,10 @@ function convert(rawData) {
     meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
     meta.types = types
 
-    // console.log(meta, events)
+    // console.log(meta)
+    // console.log(events)
     // console.log(types)
+    console.log(timestamps)
 
     return { meta, events, timestamps }
 }

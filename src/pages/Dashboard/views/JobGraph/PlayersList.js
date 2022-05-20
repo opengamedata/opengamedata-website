@@ -2,7 +2,7 @@ import { EyeIcon, XIcon } from "@heroicons/react/solid"
 
 export default function PlayersList({ data, redirect, playerHighlight, setHighlight, setPlayerList, playerSummary }) {
 
-    console.log(playerSummary)
+    // console.log(playerSummary)
     return (
         <div className="fixed top-14 right-3 w-auto">
             <div className="p-2 flex items-center space-x-2 justify-between">
