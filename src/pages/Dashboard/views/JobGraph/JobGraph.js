@@ -34,7 +34,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
         // metadata
         const meta = {
-            PlayerCount: rawData.PlayerCount,
+            playerSummary: JSON.parse(rawData.PlayerSummary.replaceAll('\\', '')),
             maxAvgTime: 0,
             minAvgTime: Infinity
         }
@@ -254,6 +254,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             {playersList ?
                 <PlayersList
                     data={playersList}
+                    playerSummary={data.meta.playerSummary}
                     redirect={toPlayerTimeline}
                     playerHighlight={playerHighlight}
                     setHighlight={setHighlight}
