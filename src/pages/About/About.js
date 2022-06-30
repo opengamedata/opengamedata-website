@@ -15,6 +15,7 @@ export default function About() {
                 {/* <p className="font-light text-4xl mb-3">Open Game Data</p> */}
 
                 <p>
+                    v0.1.0
                     These anonymous data are provided in service of future educational data mining research.
                     They are made available under the <a
                         className="text-yellow-600"
