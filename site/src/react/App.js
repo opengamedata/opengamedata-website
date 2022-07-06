@@ -4,7 +4,7 @@ import './App.scss';
 // import './assets/scss/styles_ver1.scss';
 import Navigation from './components/navigation/Navigation';
 import About from './pages/About/About';
-import Datasets from './pages/Datasets/Datasets';
+// import Datasets from './pages/Datasets/Datasets';
 import Dashboard from './pages/Dashboard/Dashboard';
 import NotFound from "./pages/NotFound/NotFound";
 
