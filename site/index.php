@@ -62,7 +62,7 @@
         <!-- Designer dashboard tab
         ------------------------>
         <div role="tabpanel" class="tab-pane fade in" id="designer">
-          <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/opengamedata/src/designer_dash.php"; include_once($path); ?>
+          <?php $path = $_SERVER['DOCUMENT_ROOT']; $path .= "/opengamedata-testing/src/designer_dash.php"; include_once($path); ?>
         </div>
       </div>
     </section>
