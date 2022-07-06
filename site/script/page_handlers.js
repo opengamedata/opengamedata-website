@@ -152,7 +152,7 @@ function toLocalISO(date) {
 
 function change_games(game_name) {
   files_table.Update(game_files[game_name]);
-  document.getElementById('game_id').innerHTML = game_name;
+  // document.getElementById('game_id').innerHTML = game_name;
   document.getElementById('game_title').innerHTML = game_name;
   document.getElementById('game_title_2').innerHTML = game_name;
   document.getElementById('game_title_3').innerHTML = game_name;
