@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
 import { API_ORIGIN, timeline_url_path, url_search_metrics } from '../../constants';
@@ -224,7 +223,7 @@ export default function Dashboard() {
                     updateGlobalMetrics={updateGlobalMetrics}
                 />
                 :
-                <>
+                <Fragment>
                     {currentView === 'JobGraph' &&
                     <Settings
                         metrics={metrics}
@@ -248,7 +247,7 @@ export default function Dashboard() {
                                     updateViewMetrics={updateViewMetrics} />
                         }[currentView]
                     }
-                </>
+                </Fragment>
             }
         </div>
     )

@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Routes, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.scss';
@@ -10,7 +11,7 @@ import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (
-    <>
+    <Fragment>
       <Navigation />
       <div className='App h-screen w-screen pt-12 bg-gradient-to-br from-white via-stone-50 to-stone-200'>
 
@@ -23,7 +24,7 @@ function App() {
         </Routes>
 
       </div>
-    </>
+    </Fragment>
   );
 }
 

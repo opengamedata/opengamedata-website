@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useD3 } from "../../../../hooks/useD3";
 import PlayersList from "./PlayersList";
 import { url_search_metrics } from "../../../../constants";
@@ -251,7 +251,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
 
     // render component
     return (
-        <>
+        <Fragment>
             <svg ref={ref} className="w-full border-b" />
 
             {playersList ?
@@ -263,7 +263,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                     setHighlight={setHighlight}
                     setPlayerList={setPlayerList}
                 /> :
-                <></>
+                <Fragment></Fragment>
             }
 
             {/* bottom right section: path type and player count */}
@@ -325,7 +325,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             {/* bottom left section: chart legend */}
             {data && <JobGraphLegend populationSummary={data.meta.populationSummary} />}
 
-        </>
+        </Fragment>
 
 
     )
