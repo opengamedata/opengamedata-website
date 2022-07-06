@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<About />} />
           <Route path="about" element={<About />} />
-          <Route path="datasets" element={<Datasets />} />
+          {/* <Route path="datasets" element={<Datasets />} /> */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

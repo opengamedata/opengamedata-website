@@ -12,23 +12,11 @@
 	<option value="WAVES">Waves</option>
 </select> -->
 <div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column">
-	<span id="game_id">Aqualab</span> Game Data Dashboard<br>
-	Start:
-	<input type="datetime-local" id="ipt_starttime" min="2020-11-01T00:00">
-	End:
-	<input type="datetime-local" id="ipt_endtime" min="2020-11-01T00:00">
-	<div class="row" id="aggregate_row" hidden>
-		<div class="playstats" style="height: 100%; overflow-x:scroll">
-			<table id="aggregate_table"></table>
-		</div>
-	</div>
-	<div class="row" id="percount_row" hidden>
-		<div class="playstats" style="height: 100%; overflow-x:scroll">
-			<table id="percount_table"></table>
-		</div>
-		<button type="button" id="refresh_designer" onclick="UpdateData()">Refresh Data</button>
-	</div>
 </div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="react/index.js" type="text/babel"></script>
 <!-- <style>
 	table {
 		border: 1px solid black;
