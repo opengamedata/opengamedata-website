@@ -45,12 +45,12 @@ function onload()
   }
 
   // Set up the Designer Dashboard page
-  let ipt_starttime = document.getElementById('ipt_starttime');
-  let ipt_endtime = document.getElementById('ipt_endtime');
-  let start_dt = new Date(Date.now() - 1000*60*60); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
-  let end_dt = new Date();
-  ipt_starttime.value = toLocalISO(start_dt);
-  ipt_endtime.value   = toLocalISO(end_dt);
+  // let ipt_starttime = document.getElementById('ipt_starttime');
+  // let ipt_endtime = document.getElementById('ipt_endtime');
+  // let start_dt = new Date(Date.now() - 1000*60*60); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
+  // let end_dt = new Date();
+  // ipt_starttime.value = toLocalISO(start_dt);
+  // ipt_endtime.value   = toLocalISO(end_dt);
   // below, the simpler way of doing things, if we ever switch to using GMT.
   // ipt_starttime.value = new Date(Date.now() - 1000*60*60).toISOString().slice(0,16); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
   // ipt_endtime.value = new Date().toISOString().slice(0,16);
@@ -93,10 +93,10 @@ function onload()
     SIMULATION_RUNNING = false;
     console.log("Simulation mode paused.");
   };
-  document.getElementById("refresh_designer").onclick = function() {
-    let game_name = document.getElementById("game_title").innerText;
+  // document.getElementById("refresh_designer").onclick = function() {
+  //   let game_name = document.getElementById("game_title").innerText;
     // pop_dashboard.Update(true);
-  };
+  // };
   // document.getElementById("btn_id_gen").onclick = function() {
   //   try {
   //     let classroom_id_box = document.getElementById("classroom_id");
