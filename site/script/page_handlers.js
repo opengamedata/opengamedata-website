@@ -6,7 +6,7 @@ var SIMULATION_RUNNING = false;
 var SIM_TIME = 0;
 var PRINT_TRACE = true;
 var pl_dashboard = null;
-var pop_dashboard = null;
+// var pop_dashboard = null;
 var files_table = null;
 var sess_list = null;
 
@@ -54,7 +54,7 @@ function onload()
   // below, the simpler way of doing things, if we ever switch to using GMT.
   // ipt_starttime.value = new Date(Date.now() - 1000*60*60).toISOString().slice(0,16); // 1000 ms/start_dt * 60 start_dt/m * 60 m/hr = 1 hour of ms.
   // ipt_endtime.value = new Date().toISOString().slice(0,16);
-  pop_dashboard = new PopulationDashboard();
+  // pop_dashboard = new PopulationDashboard();
 
   // Set up onclick and onupdate events.
   document.getElementById("require_pid").onclick = function() {
@@ -95,7 +95,7 @@ function onload()
   };
   document.getElementById("refresh_designer").onclick = function() {
     let game_name = document.getElementById("game_title").innerText;
-    pop_dashboard.Update(true);
+    // pop_dashboard.Update(true);
   };
   // document.getElementById("btn_id_gen").onclick = function() {
   //   try {
@@ -173,7 +173,7 @@ function change_games(game_name) {
   {
     rt_change_games(game_name, sess_list, pl_dashboard);
   }
-  pop_dashboard.ChangeGames(game_name);
+  // pop_dashboard.ChangeGames(game_name);
 }
 
 function generate_gamelist() {
