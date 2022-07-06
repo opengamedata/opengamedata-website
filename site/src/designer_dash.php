@@ -11,12 +11,13 @@
 	<option value="AQUALAB">Aqualab</option>
 	<option value="WAVES">Waves</option>
 </select> -->
-<div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column">
+<div>React-based dashboard:</div>
+<div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column" id=dashroot>
 </div>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-<script src="react/index.js" type="text/babel"></script>
+<script src="src/react/index.js" type="text/babel"></script>
 <!-- <style>
 	table {
 		border: 1px solid black;
