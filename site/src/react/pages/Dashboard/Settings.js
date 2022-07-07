@@ -1,6 +1,6 @@
 
 import { AdjustmentsIcon, XIcon, CogIcon } from '@heroicons/react/solid'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import LargeButton from '../../components/buttons/LargeButton'
 
 export default function Settings({ loading, metrics, updateGlobalMetrics }) {
@@ -59,7 +59,7 @@ export default function Settings({ loading, metrics, updateGlobalMetrics }) {
                     {/* <span>version</span> */}
                 </div>
                 {adjustMode ?
-                    !loading ? <XIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(false)} />:<></>
+                    !loading ? <XIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(false)} />:<Fragment></Fragment>
                     :
                     <AdjustmentsIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(true)} />
                 }
@@ -92,7 +92,7 @@ export default function Settings({ loading, metrics, updateGlobalMetrics }) {
                     <div className='flex space-x-2 items-center'>
 
                         {loading ?
-                            <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
+                            <Fragment><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</Fragment>
                             : 
                             <LargeButton
                             // action={adjust}

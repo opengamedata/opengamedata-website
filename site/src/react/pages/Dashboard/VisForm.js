@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
 import { CogIcon } from '@heroicons/react/solid'
 import { vis_games } from '../../constants';
@@ -166,7 +166,7 @@ export default function VisForm({ loading, updateGlobalMetrics }) {
                 <div className='flex space-x-2 items-center'>
 
                     {loading ?
-                        <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</>
+                        <Fragment><CogIcon className='animate-spin h-8 w-8' /> &nbsp;This might take a while...</Fragment>
                         : 
                         <LargeButton
                         className='cursor-progress'

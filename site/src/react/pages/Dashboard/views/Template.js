@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import * as d3 from "d3";
 import { useD3 } from "../../../hooks/useD3";
 
@@ -14,13 +15,13 @@ export default function Template({ data }) {
     }, [data])
 
     return (
-        <>
+        <Fragment>
             <svg
                 ref={diagram}
                 className="h-96 w-full mx-0"
             >
             </svg>
-        </>
+        </Fragment>
 
 
     )

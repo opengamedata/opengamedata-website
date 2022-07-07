@@ -1,4 +1,4 @@
-
+import { Fragment } from 'react'
 import { CogIcon } from '@heroicons/react/solid'
 export default function LoadingBlur({ loading }) {
 
@@ -8,6 +8,6 @@ export default function LoadingBlur({ loading }) {
             <p className="text-3xl font-light">Loading...</p>
         </div>
         :
-        <></>
+        <Fragment></Fragment>
 
 }

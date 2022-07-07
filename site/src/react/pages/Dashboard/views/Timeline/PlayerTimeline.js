@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import LargeButton from "../../../../components/buttons/LargeButton";
 import { initial_timeline_filter_options, color_20 } from '../../../../constants';
 import { useD3 } from "../../../../hooks/useD3";
@@ -61,8 +61,8 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
 
 
     return (
-        <>
-            {rawData && <>
+        <Fragment>
+            {rawData && <Fragment>
                 {/* chart */}
                 <svg
                     ref={diagram}
@@ -104,8 +104,8 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
                     event={selectedEventForTagging}
                 />
                 }
-            </>}
-        </>
+            </Fragment>}
+        </Fragment>
     )
 }
 

@@ -14,6 +14,7 @@ function App() {
     <Fragment>
       <Navigation />
       <div className='App h-screen w-screen pt-12 bg-gradient-to-br from-white via-stone-50 to-stone-200'>
+        <div>A div inside App.js</div>
 
         <Routes>
           <Route path="/" element={<About />} />
