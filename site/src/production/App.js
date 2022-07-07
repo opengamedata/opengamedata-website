@@ -18,6 +18,11 @@ function App() {
       'div',
       { className: 'App h-screen w-screen pt-12 bg-gradient-to-br from-white via-stone-50 to-stone-200' },
       React.createElement(
+        'div',
+        null,
+        'A div inside App.js'
+      ),
+      React.createElement(
         Routes,
         null,
         React.createElement(Route, { path: '/', element: React.createElement(About, null) }),
