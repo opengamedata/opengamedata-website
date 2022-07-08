@@ -1,5 +1,5 @@
 {
-  "name": "ogd-react",
+  "name": "Designer Dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,6 +8,8 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "d3": "^7.3.0",
     "d3-selection-multi": "^1.0.1",
     "react": "^17.0.2",
@@ -45,5 +47,9 @@
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.17"
-  }
+  },
+  "description": "Designer dashboard",
+  "main": "src/react/index.js",
+  "author": "",
+  "license": "MIT"
 }
