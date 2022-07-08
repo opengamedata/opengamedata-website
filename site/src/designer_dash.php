@@ -11,8 +11,10 @@
 	<option value="AQUALAB">Aqualab</option>
 	<option value="WAVES">Waves</option>
 </select> -->
-<div>React-based dashboard:</div>
-<div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column" id=dashroot>
+<div class="col-xl-10 col-md-9 col-sm-8 col-xs-10 ui_column">
+	<div>Designer Dashboard is viewable on the experimental site:
+		<a src="https://fielddaylab.wisc.edu/opengamedata-testing/">https://fielddaylab.wisc.edu/opengamedata-testing/</a>
+	</div>
 </div>
 <!-- <style>
 	table {
