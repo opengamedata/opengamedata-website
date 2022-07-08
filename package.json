@@ -45,5 +45,17 @@
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.17"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opengamedata/opengamedata-frontend.git"
+  },
+  "author": "Yuheng Chen, Luke Swanson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/opengamedata/opengamedata-frontend/issues"
+  },
+  "homepage": "https://github.com/opengamedata/opengamedata-frontend#readme"
 }
