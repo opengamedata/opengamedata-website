@@ -9,16 +9,17 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
+  let base = 'opengamedata-testing/'
   return (
     <>
       <Navigation />
       <div className='App h-screen w-screen pt-12 bg-gradient-to-br from-white via-stone-50 to-stone-200'>
 
         <Routes>
-          <Route path="/" element={<About />} />
-          <Route path="about" element={<About />} />
-          <Route path="datasets" element={<Datasets />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path={base} element={<About />} />
+          <Route path={base+"about"} element={<About />} />
+          <Route path={base+"datasets"} element={<Datasets />} />
+          <Route path={base+"dashboard"} element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 
 export default function Navigation() {
-
+    let base = 'opengamedata-testing/'
 
     return (
         <nav className="w-screen flex justify-between fixed top-0 bg-white">
+            <base href={base}></base>
             <NavLink className="px-5 py-3 tracking-wide font-light" to="/">
                 Open Game Data
             </NavLink>
@@ -20,7 +21,7 @@ export default function Navigation() {
                         ease-in-out
                         hover:text-yellow-300
                         hover:bg-slate-800
-                        " to="/about">ABOUT</NavLink>
+                        " to={base+"about"}>ABOUT</NavLink>
                 <NavLink className="
                         font-light
                         tracking-wide
@@ -31,7 +32,7 @@ export default function Navigation() {
                         ease-in-out
                         hover:text-yellow-300
                         hover:bg-slate-800
-                        " to="/datasets">DATASETS</NavLink>
+                        " to={base+"./datasets"}>DATASETS</NavLink>
                 <NavLink className="
                         font-light
                         tracking-wide
@@ -42,7 +43,7 @@ export default function Navigation() {
                         ease-in-out
                         hover:text-yellow-300
                         hover:bg-slate-800
-                        " to="/dashboard">DASHBOARD</NavLink>
+                        " to={base+"./dashboard"}>DASHBOARD</NavLink>
             </div>
         </nav>
     )
