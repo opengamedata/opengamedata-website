@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { API_ORIGIN, timeline_url_path, url_search_metrics } from '../../constants';
+import { API_ORIGIN, timeline_url_path, requested_extractors } from '../../constants';
 import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
@@ -46,7 +46,7 @@ export default function Dashboard() {
                 searchParams = new URLSearchParams({
                     start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
                     end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
-                    metrics: `[${url_search_metrics[newMetrics.game].toString()}]`
+                    metrics: `[${requested_extractors[newMetrics.game].toString()}]`
                 })
 
                 urlPath = `game/${newMetrics.game}/metrics`
@@ -95,7 +95,7 @@ export default function Dashboard() {
                 searchParams = new URLSearchParams({
                     start_datetime: encodeURIComponent(metrics.startDate) + 'T00:00',
                     end_datetime: encodeURIComponent(metrics.endDate) + 'T23:59',
-                    metrics: `[${url_search_metrics[metrics.game].toString()}]`
+                    metrics: `[${requested_extractors[metrics.game].toString()}]`
                 })
 
                 urlPath = `game/${metrics.game}/metrics`

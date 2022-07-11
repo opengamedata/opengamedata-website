@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { useEffect, useState } from "react";
 import { useD3 } from "../../../../hooks/useD3";
 import PlayersList from "./PlayersList";
-import { url_search_metrics } from "../../../../constants";
+import { requested_extractors } from "../../../../constants";
 import ForceGraph from './forceGraph'
 import JobGraphLegend from "./JobGraphLegend";
 
@@ -273,7 +273,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
-                        {url_search_metrics[metrics.game].includes('TopJobCompletionDestinations') &&
+                        {requested_extractors[metrics.game].includes('TopJobCompletionDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -287,7 +287,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                                 </label>
                             </div>
                         }
-                        {url_search_metrics[metrics.game].includes('TopJobSwitchDestinations') &&
+                        {requested_extractors[metrics.game].includes('TopJobSwitchDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -301,7 +301,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                                 </label>
                             </div>
                         }
-                        {url_search_metrics[metrics.game].includes('ActiveJobs') &&
+                        {requested_extractors[metrics.game].includes('ActiveJobs') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input

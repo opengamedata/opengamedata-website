@@ -110,7 +110,7 @@ export const API_ORIGIN = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamed
 export const vis_games = ['AQUALAB', 'SHIPWRECKS']
 
 // list of API call params for each game
-export const url_search_metrics = {
+export const requested_extractors = {
     'AQUALAB': [
         'TopJobCompletionDestinations',
         'ActiveJobs',
