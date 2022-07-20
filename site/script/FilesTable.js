@@ -42,6 +42,10 @@ class FilesTable {
 						{
 							this.add_sessions_file(dataset['sessions_file'], cell)
 						}
+						if (dataset['players_file'] != null)
+						{
+							this.add_players_file(dataset['players_file'], cell)
+						}
 						if (dataset['population_file'] != null)
 						{
 							this.add_population_file(dataset['population_file'], cell)
@@ -106,6 +110,16 @@ class FilesTable {
 		sess_link.title = "Session Features";
 		sess_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + sessions_file;
 		cell.appendChild(sess_link);
+		cell.append(document.createTextNode(' - '))
+	}
+
+	add_players_file(players_file, cell) {
+		var players_link = document.createElement('a');
+		var linkText = document.createTextNode("Players");
+		players_link.appendChild(linkText);
+		players_link.title = "Player Features";
+		players_link.href = 'https://opengamedata.fielddaylab.wisc.edu/' + players_file;
+		cell.appendChild(players_link);
 		cell.append(document.createTextNode(' - '))
 	}
 
