@@ -115,7 +115,7 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
  * @returns converted data
  */
 function convert(rawData) {
-    const rawEvents = JSON.parse(rawData.vals[0])
+    const rawEvents = JSON.parse(rawData["EventList"])
 
     // console.log(rawData)
     // console.log(rawEvents)
