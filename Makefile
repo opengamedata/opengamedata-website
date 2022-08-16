@@ -9,8 +9,5 @@ build:
 deploy-test:
 	rsync -vrc ./build/* mli-field@fielddaylab.wisc.edu:/httpdocs/opengamedata-testing --exclude-from rsync-exclude
 
-deploy-test:
-	rsync -vrc ./site/* mli-field@fielddaylab.wisc.edu:/httpdocs/opengamedata-testing --exclude-from rsync-exclude
-
 deploy-redirect:
 	rsync -vrc ./redirects/* fieldday-web.ad.education.wisc.edu:/var/www/opengamedata --exclude-from rsync-exclude
