@@ -15,7 +15,7 @@ function App() {
       <Navigation />
       <div className='App h-screen w-screen pt-12 bg-gradient-to-br from-white via-stone-50 to-stone-200'>
 
-        <Routes basename={base_path}>
+        <Routes>
           <Route path={base_path+"/"} element={<About />} />
           <Route path={base_path+"about"} element={<About />} />
           <Route path={base_path+"datasets"} element={<Datasets />} />
