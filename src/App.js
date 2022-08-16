@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
-  let base_path = "/opengamedata-testing";
+  let base_path = "/opengamedata-testing/";
   return (
     <>
       <Navigation />
