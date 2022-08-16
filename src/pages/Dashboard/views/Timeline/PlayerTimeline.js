@@ -115,39 +115,30 @@ export default function PlayerTimeline({ metrics, viewMetrics, rawData, updateVi
  * @returns converted data
  */
 function convert(rawData) {
-    const rawEvents = JSON.parse(rawData["EventList"])
+    const event_list = JSON.parse(rawData["EventList"])
+    const sess_count = rawData["SessionCount"]
 
-    // console.log(rawData)
-    // console.log(rawEvents)
-    // console.log(rawEvents[0])
-
-    // extract primary values
-    const meta = {
-        playerID: rawEvents[0].user_id,
-        sessionCount: rawData.vals[1]
-    }
-    const events = rawEvents.map((e) => {
-        // console.log(e)
+    const events = event_list.map((evt) => {
         return {
-            level: e.job_name,
-            detail: e.event_primary_detail,
-            type: e.name,
-            timestamp: ((new Date(e.timestamp)).getTime() / 1000).toFixed(0),
-            date: (new Date(e.timestamp)).toLocaleString(),
-            sessionID: e.session_id
+            level:     evt.job_name,
+            detail:    evt.event_primary_detail,
+            type:      evt.name,
+            timestamp: ((new Date(evt.timestamp)).getTime() / 1000).toFixed(0),
+            date:      (new Date(evt.timestamp)).toLocaleString(),
+            sessionID: evt.session_id
         }
     })
 
     // a dictionary-like stucture that stores timestamp -> event(s) mappings
     let timestamps = {}
-    rawEvents.forEach((e, i) => {
-        const timestamp = ((new Date(e.timestamp)).getTime() / 1000).toFixed(0)
+    event_list.forEach((evt, i) => {
+        const timestamp = ((new Date(evt.timestamp)).getTime() / 1000).toFixed(0)
 
         // if timestamp already in the dictionary 
         if (timestamp in timestamps) {
-
-            if (typeof timestamps[timestamp] === 'number') timestamps[timestamp] = [timestamps[timestamp]]
-
+            if (typeof timestamps[timestamp] === 'number') {
+                timestamps[timestamp] = [timestamps[timestamp]]
+            }
             timestamps[timestamp].push(i)
         }
         // base case: add timestamp to dictionary
@@ -156,7 +147,9 @@ function convert(rawData) {
 
 
     // calculate derived values
-    const startTime = events[0].timestamp
+    const playerID = event_list[0].user_id
+    const startTimestamp = events[0].timestamp
+    const endTimestamp = events[events.length - 1].timestamp
     let minDuration = Infinity
     // let minDuration = 1000000
     const typeList = new Set()
@@ -169,14 +162,14 @@ function convert(rawData) {
         if (duration > 0 && duration < minDuration) minDuration = duration // update minimum duration
 
         // normalize timestamps
-        events[i].timestamp = events[i].timestamp - startTime
+        events[i].timestamp = events[i].timestamp - startTimestamp
 
         // construct list of types
         typeList.add(events[i].type)
 
         // lump extra features into one field
         let extra = []
-        for (const [k, v] of Object.entries(rawEvents[i])) {
+        for (const [k, v] of Object.entries(event_list[i])) {
             if (!['user_id', 'index'].includes(k)) // put what you don't want to show in this array
                 extra.push(`${k}: ${v}`)
         }
@@ -193,11 +186,16 @@ function convert(rawData) {
     });
 
 
-    meta.minDuration = minDuration
-    meta.startTime = events[0].date
-    meta.endTime = events[events.length - 1].date
-    meta.totalTime = events[events.length - 1].timestamp - events[0].timestamp
-    meta.types = types
+    // extract primary values
+    const meta = {
+        playerID: playerID,
+        sessionCount: sess_count,
+        minDuration: minDuration,
+        startTime: events[0].date,
+        endTime: events[events.length-1].date,
+        totalTime: endTimestamp - startTimestamp,
+        types: types
+    }
 
     // console.log(meta)
     // console.log(events)
