@@ -199,8 +199,8 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
              */
             const getNodeDetails = (d) => {
                 const generic = `${d['JobsAttempted-num-completes']} of ${d['JobsAttempted-num-starts']} (${parseFloat(d['JobsAttempted-percent-complete']).toFixed(2)}%) players completed\n` +
-                    `Average time to complete: ${parseFloat(d['JobsAttempted-avg-time-complete']).toFixed()}s\n` +
-                    `Standard deviation: ${parseFloat(d['JobsAttempted-std-dev-complete']).toFixed(2)}`
+                    `Average Time on Job: ${parseFloat(d['JobsAttempted-avg-time-per-attempt']).toFixed()}s\n` +
+                    `Standard Deviation of Time on Job: ${parseFloat(d['JobsAttempted-std-dev-per-attempt']).toFixed(2)}`
 
                 let gameSpecific = ''
                 switch (metrics.game) {
