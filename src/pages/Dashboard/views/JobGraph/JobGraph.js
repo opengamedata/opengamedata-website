@@ -50,7 +50,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
             const [k, metric] = key.split('_')
             // console.log(`${k}'s ${metric}: ${value}`);
 
-            if (metric === 'JobsAttempted-avg-time-complete') {
+            if (metric === 'JobsAttempted-avg-time-per-attempt') {
                 if (parseFloat(value) > meta.maxAvgTime) meta.maxAvgTime = parseFloat(value)
                 if (parseFloat(value) < meta.minAvgTime) meta.minAvgTime = parseFloat(value)
             }
@@ -231,7 +231,7 @@ export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
                 nodeGroup: d => d['JobsAttempted-num-completes'] / (d['JobsAttempted-num-starts'] === '0' ? 1 : d['JobsAttempted-num-starts']),
                 nodeTitle: d => d.id,
                 nodeDetail: d => getNodeDetails(d),
-                nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-complete']),
+                nodeRadius: d => projectRadius(d['JobsAttempted-avg-time-per-attempt']),
                 linkStrokeWidth: l => l.value,
                 linkDetail: l => `${l.value} players moved from ${l.sourceName} to ${l.targetName}`,
                 linkStrength: 1,
