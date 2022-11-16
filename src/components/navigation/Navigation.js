@@ -43,7 +43,7 @@ export default function Navigation() {
                         ease-in-out
                         hover:text-yellow-300
                         hover:bg-slate-800
-                        " to={base+"./dashboard"}>DASHBOARD</NavLink>
+                        " to={base}>DASHBOARD</NavLink>
             </div>
         </nav>
     )
