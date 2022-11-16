@@ -1,5 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
-import logo from './logo.svg';
+import { Routes, Route } from "react-router-dom";
 import './App.scss';
 // import './assets/scss/styles_ver1.scss';
 import Navigation from './components/navigation/Navigation';
