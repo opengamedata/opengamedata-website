@@ -1,4 +1,4 @@
-import { thumbs, data_readmes, feature_readmes, game_links } from '../../constants'
+import { thumbs, data_readmes, feature_readmes, game_links } from '../constants'
 
 export default function InfoCard({ game }) {
 

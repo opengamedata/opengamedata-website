@@ -1,4 +1,4 @@
-import SmallButton from "../../components/buttons/SmallButton"
+import SmallButton from "buttons/SmallButton"
 
 
 export default function GameList(props) {
@@ -6,13 +6,6 @@ export default function GameList(props) {
     const games = []
     Object.keys(props.fileList).forEach(key => {
         games.push(
-            // <button
-            //     key={key}
-            //     className={props.game === key ? baseStyle + 'text-yellow-300 bg-slate-700' : baseStyle}
-            //     onClick={() => props.setGame(key)}
-            // >
-            //     {key.replace('_', ' ')}
-            // </button>
             <SmallButton
                 key={key}
                 selected={props.game === key}
