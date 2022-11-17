@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Table from "../components/Table";
+import Table from "../components/tables/Table";
 import GameList from "../components/GameList";
 import InfoCard from "../components/InfoCard";
 import { FILE_SERVER } from "../constants";
