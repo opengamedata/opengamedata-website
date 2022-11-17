@@ -6,14 +6,13 @@ import LargeButton from '../../components/buttons/LargeButton'
 export default function Settings({ loading, metrics, updateGlobalMetrics }) {
 
     // vis metrics
-    const [game, setGame] = useState('');
-    const [version, setVersion] = useState('');
-    const [startDate, setstartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [game,        setGame]        = useState('');
+    const [version,     setVersion]     = useState('');
+    const [startDate,   setstartDate]   = useState('');
+    const [endDate,     setEndDate]     = useState('');
     const [minPlaytime, setMinPlaytime] = useState(0);
     const [maxPlaytime, setMaxPlaytime] = useState(0);
-
-    const [adjustMode, setAdejustMode] = useState(false)
+    const [adjustMode,  setAdjustMode]  = useState(false);
 
 
     const adjust = () => {
@@ -32,7 +31,6 @@ export default function Settings({ loading, metrics, updateGlobalMetrics }) {
             minPlaytime: minPlaytime,
             maxPlaytime: maxPlaytime
         }
-
         updateGlobalMetrics(metrics)
         // switch back to brief
         // setAdejustMode(false)
@@ -45,11 +43,11 @@ export default function Settings({ loading, metrics, updateGlobalMetrics }) {
         setEndDate(metrics.endDate)
         setMinPlaytime(metrics.minPlaytime)
         setMaxPlaytime(metrics.maxPlaytime)
-    }, [adjustMode])
+    }, [adjustMode]);
 
     useEffect(()=>{
-        if(!loading) setAdejustMode(false)
-    },[loading])
+        if(!loading) setAdjustMode(false)
+    },[loading]);
 
     return (
         <div className=" bg-white fixed top-14 left-3 p-3 w-content border shadow-sm">
@@ -59,9 +57,9 @@ export default function Settings({ loading, metrics, updateGlobalMetrics }) {
                     {/* <span>version</span> */}
                 </div>
                 {adjustMode ?
-                    !loading ? <XIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(false)} />:<></>
+                    !loading ? <XIcon className="cursor-pointer h-5 w-5" onClick={() => setAdjustMode(false)} />:<></>
                     :
-                    <AdjustmentsIcon className="cursor-pointer h-5 w-5" onClick={() => setAdejustMode(true)} />
+                    <AdjustmentsIcon className="cursor-pointer h-5 w-5" onClick={() => setAdjustMode(true)} />
                 }
             </div>
 
@@ -88,9 +86,7 @@ export default function Settings({ loading, metrics, updateGlobalMetrics }) {
                         </div>
                     </div>
 
-
                     <div className='flex space-x-2 items-center'>
-
                         {loading ?
                             <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
                             : 
