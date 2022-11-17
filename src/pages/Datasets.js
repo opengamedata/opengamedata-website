@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import Table from "./Table";
-import GameList from "./GameList";
-import InfoCard from "./InfoCard";
-import { FILE_SERVER } from "../../constants";
+import Table from "../components/Table";
+import GameList from "../components/GameList";
+import InfoCard from "../components/InfoCard";
+import { FILE_SERVER } from "../constants";
 
 export default function Datasets() {
 

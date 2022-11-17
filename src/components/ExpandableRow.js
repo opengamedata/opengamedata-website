@@ -1,5 +1,5 @@
-import SmallButton from '../../components/buttons/SmallButton.js'
-import { FILE_SERVER } from '../../constants.js'
+import SmallButton from 'buttons/SmallButton.js'
+import { FILE_SERVER } from '../constants.js'
 import { DownloadIcon } from '@heroicons/react/solid'
 
 export default function ExpandableRow(props) {

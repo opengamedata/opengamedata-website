@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import LargeButton from "../components/buttons/LargeButton";
 
 export default function NotFound() {
     return (

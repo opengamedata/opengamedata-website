@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
@@ -7,7 +6,6 @@ import JobGraph from './views/JobGraph/JobGraph';
 import PlayerTimeline from './views/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
 import LargeButton from '../../components/buttons/LargeButton';
-
 
 export default function Dashboard() {
 
@@ -125,26 +123,26 @@ export default function Dashboard() {
         else {
             console.log('fetching:', url)
 
-            fetch(url).then(result => result.json()).then(data => {
-                    if (data.status !== 'SUCCESS') throw data.msg
-
-                    console.log(data)
-
-                    // store data locally
-                    localStorage.setItem(url, JSON.stringify(data.val))
-                    fetchCallback()
-                    // set data state
-                    setData(data.val)
-                    // store response to parent component state
-                    setInitialized(true)
-                    // stop loading animation
-                    setLoadingState(false)
-                })
-                .catch(error => {
-                    console.error(error)
-                    setLoadingState(false)
-                    alert(error)
-                })
+            fetch(url)
+            .then(result => result.json())
+            .then(data => {
+                if (data.status !== 'SUCCESS') throw data.msg
+                console.log(data)
+                // store data locally
+                localStorage.setItem(url, JSON.stringify(data.val))
+                fetchCallback()
+                // set data state
+                setData(data.val)
+                // store response to parent component state
+                setInitialized(true)
+                // stop loading animation
+                setLoadingState(false)
+            })
+            .catch(error => {
+                console.error(error)
+                setLoadingState(false)
+                alert(error)
+            });
         }
     }
 
@@ -160,7 +158,6 @@ export default function Dashboard() {
                     }}
                 />
             </div>
-
             {!initialized ?
                 <VisForm
                     loading={is_loading}

@@ -2,10 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import './App.scss';
 // import './assets/scss/styles_ver1.scss';
 import Navigation from './components/navigation/Navigation';
-import About from './pages/About/About';
-import Datasets from './pages/Datasets/Datasets';
+import About from './pages/About';
+import Datasets from './pages/Datasets';
 import Dashboard from './pages/Dashboard/Dashboard';
-import NotFound from "./pages/NotFound/NotFound";
+import NotFound from "./pages/NotFound";
 
 function App() {
   let base_path = "/opengamedata-testing/";
