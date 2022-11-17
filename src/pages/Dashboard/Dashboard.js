@@ -161,7 +161,6 @@ export default function Dashboard() {
                 />
             </div>
 
-
             {!initialized ?
                 <VisForm
                     loading={is_loading}
