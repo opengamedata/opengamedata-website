@@ -1,4 +1,4 @@
-import SmallButton from "buttons/SmallButton"
+import SmallButton from "./buttons/SmallButton"
 
 
 export default function GameList(props) {
