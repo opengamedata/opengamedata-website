@@ -147,9 +147,9 @@ function convert(rawData) {
 
 
     // calculate derived values
-    const playerID = event_list[0].user_id ?? "Null User"
-    const startTimestamp = events[0].timestamp ?? new Date()
-    const endTimestamp = events[events.length - 1].timestamp ?? new Date()
+    const playerID = event_list[0].user_id
+    const startTimestamp = events[0].timestamp
+    const endTimestamp = events[events.length - 1].timestamp
     let minDuration = Infinity
     // let minDuration = 1000000
     const typeList = new Set()

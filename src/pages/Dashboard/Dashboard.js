@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
@@ -7,6 +8,7 @@ import PlayerTimeline from './views/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
 import LargeButton from '../../components/buttons/LargeButton';
 
+
 export default function Dashboard() {
 
     // whether initial form completed
@@ -14,48 +16,21 @@ export default function Dashboard() {
 
     // vis metrics
     const [metrics, setMetrics] = useState({
-        game: null,
+        game: '',
         version: '',
-        startDate: null,
-        endDate: null,
+        startDate: '',
+        endDate: '',
         minPlaytime: 0,
         maxPlaytime: 0
     })
     const [viewMetrics, setViewMetrics] = useState()
     const [currentView, setCurrentView] = useState('JobGraph')
 
-    const [is_loading, setLoadingState] = useState(false);
+
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
 
-    const getURLPath = (view, newMetrics) => {
-        let searchParams, urlPath
-        const startDate = metrics.startDate ?? newMetrics.startDate;
-        const endDate = metrics.endDate ?? newMetrics.endDate;
-        const gameName = metrics.game ?? newMetrics.game;
-        switch (view) {
-            case 'JobGraph':
-                // construct url path and params
-                searchParams = new URLSearchParams({
-                    start_datetime: encodeURIComponent(startDate) + 'T00:00',
-                    end_datetime: encodeURIComponent(endDate) + 'T23:59',
-                    metrics: `[${requested_extractors[gameName].toString()}]`
-                });
-                urlPath = `game/${gameName}/metrics`;
-                break;
-            case 'PlayerTimeline':
-                // construct url path and params
-                searchParams = new URLSearchParams({
-                    metrics: '[EventList]'
-                });
-                urlPath = `game/${gameName}/${timeline_url_path[gameName]}/${viewMetrics.player}/metrics`;
-                break;
-            default:
-                break;
-        };
 
-        // fetch by url
-        return new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
-    }
 
     /**
      * updates global metrics as seen in the metrics state above
@@ -63,11 +38,44 @@ export default function Dashboard() {
      */
     const updateGlobalMetrics = (newMetrics) => {
         // console.log(newMetrics)
-        const url = getURLPath(currentView, newMetrics);
-        const callback = () => {
-            setMetrics(newMetrics);
-        };
-        retrieveData(url.toString(), callback);
+
+        let searchParams, urlPath
+        switch (currentView) {
+            case 'JobGraph':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    start_datetime: encodeURIComponent(newMetrics.startDate) + 'T00:00',
+                    end_datetime: encodeURIComponent(newMetrics.endDate) + 'T23:59',
+                    metrics: `[${requested_extractors[newMetrics.game].toString()}]`
+                })
+
+                urlPath = `game/${newMetrics.game}/metrics`
+
+                break;
+            case 'PlayerTimeline':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    metrics: 'EventList'
+                })
+
+                urlPath = `game/${newMetrics.game}/${timeline_url_path[newMetrics.game]}/${viewMetrics.player}/metrics`
+
+
+                break;
+
+            default:
+                break;
+        }
+
+
+        const url = new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
+
+        // fetch by url
+        propagateData(url.toString(), () => {
+
+            setMetrics(newMetrics)
+        })
+
     }
 
     /**
@@ -80,13 +88,45 @@ export default function Dashboard() {
     const updateViewMetrics = (view, newViewMetrics) => {
         // console.log(newViewMetrics)
 
+        let searchParams, urlPath
+        switch (view) {
+            case 'JobGraph':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    start_datetime: encodeURIComponent(metrics.startDate) + 'T00:00',
+                    end_datetime: encodeURIComponent(metrics.endDate) + 'T23:59',
+                    metrics: `[${requested_extractors[metrics.game].toString()}]`
+                })
+
+                urlPath = `game/${metrics.game}/metrics`
+
+                break;
+            case 'PlayerTimeline':
+                // construct url path and params
+                searchParams = new URLSearchParams({
+                    metrics: '[EventList]'
+                })
+
+                urlPath = `game/${metrics.game}/${timeline_url_path[metrics.game]}/${newViewMetrics.player}/metrics`
+
+                break;
+
+            default:
+                break;
+        }
+
+
+        const url = new URL(`${urlPath}?${searchParams.toString()}`, API_ORIGIN)
+
         // fetch by url
-        const url = getURLPath(view, newViewMetrics);
-        const callback = () => {
+        propagateData(url.toString(), () => {
             setViewMetrics(newViewMetrics)
+            // console.log('newViewMetrics', newViewMetrics)
+
             if (view !== currentView) setCurrentView(view)
-        };
-        retrieveData(url.toString(), callback);
+        })
+
+
     }
 
     /**
@@ -100,54 +140,72 @@ export default function Dashboard() {
      * 
      * 
      */
-    const retrieveData = (url, fetchCallback) => {
+    const propagateData = (url, fetchCallback) => {
         // flush current dataset
         setData(null)
+
         // localStorage.clear() // DEBUG
 
         // start loading animation
-        setLoadingState(true)
+        setLoading(true)
+
         // console.log(url)
+
         // if query found in storage, retreive JSON
         const localData = localStorage.getItem(url)
+        // console.log(localData)
         if (localData) {
+
+
+
             fetchCallback()
-            setData(JSON.parse(localData))
+
+            setData(JSON.parse(localData)) 
+
             // console.log(localData)
+
+
             // store response to parent component state
             setInitialized(true)
             // stop loading animation
-            setLoadingState(false)
+            setLoading(false)
         }
         // if not found in storage, request dataset
         else {
             console.log('fetching:', url)
 
             fetch(url)
-            .then(result => result.json())
-            .then(data => {
-                if (data.status !== 'SUCCESS') throw data.msg
-                console.log(data)
-                // store data locally
-                localStorage.setItem(url, JSON.stringify(data.val))
-                fetchCallback()
-                // set data state
-                setData(data.val)
-                // store response to parent component state
-                setInitialized(true)
-                // stop loading animation
-                setLoadingState(false)
-            })
-            .catch(error => {
-                console.error(error)
-                setLoadingState(false)
-                alert(error)
-            });
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status !== 'SUCCESS') throw data.msg
+
+                    console.log(data)
+
+                    // store data locally
+                    localStorage.setItem(url, JSON.stringify(data.val))
+
+                    fetchCallback()
+
+                    // set data state
+                    setData(data.val)
+
+                    // store response to parent component state
+                    setInitialized(true)
+
+                    // stop loading animation
+                    setLoading(false)
+                })
+                .catch(error => {
+                    console.error(error)
+                    setLoading(false)
+                    alert(error)
+                })
         }
     }
 
     return (
         <div className='w-screen'>
+
             {/* For DEBUG purpose, remove in production */}
             <div className='fixed top-0 right-1/2 z-10'>
                 <LargeButton
@@ -158,28 +216,30 @@ export default function Dashboard() {
                     }}
                 />
             </div>
+
+
             {!initialized ?
                 <VisForm
-                    loading={is_loading}
+                    loading={loading}
                     updateGlobalMetrics={updateGlobalMetrics}
                 />
                 :
                 <>
                     {currentView === 'JobGraph' &&
-                        <Settings
-                            metrics={metrics}
-                            loading={is_loading}
-                            updateGlobalMetrics={updateGlobalMetrics}
-                        />
+                    <Settings
+                        metrics={metrics}
+                        loading={loading}
+                        updateGlobalMetrics={updateGlobalMetrics}
+                    />
                     }
-                    <LoadingBlur loading={is_loading} />
+                    <LoadingBlur loading={loading} />
                     {data &&
                         {
                             'JobGraph':
                                 <JobGraph
                                     rawData={data}
                                     metrics={metrics}
-                                    updateViewMetrics={updateViewMetrics} />,
+                                updateViewMetrics={updateViewMetrics} />,
                             'PlayerTimeline':
                                 <PlayerTimeline
                                     rawData={data}
