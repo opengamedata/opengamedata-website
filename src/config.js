@@ -110,30 +110,30 @@ export const API_ORIGIN = 'https://fieldday-web.wcer.wisc.edu/wsgi-bin/opengamed
 export const vis_games = ['AQUALAB', 'SHIPWRECKS']
 
 // list of API call params for each game
-export const requested_extractors = {
-    'AQUALAB': [
-        'TopJobCompletionDestinations',
-        'ActiveJobs',
-        'JobsAttempted',
-        'TopJobSwitchDestinations',
-        'PlayerSummary',
-        'PopulationSummary',
+// export const requested_extractors = {
+//     'AQUALAB': [
+//         'TopJobCompletionDestinations',
+//         'ActiveJobs',
+//         'JobsAttempted',
+//         'TopJobSwitchDestinations',
+//         'PlayerSummary',
+//         'PopulationSummary',
 
-        'JobsCompleted',
-        'SessionID',
-        'SessionDuration'
-    ],
-    'SHIPWRECKS': ['TopJobCompletionDestinations',
-        'ActiveJobs',
-        'JobsAttempted',
-        'PlayerSummary',
-        'PopulationSummary',
+//         'JobsCompleted',
+//         'SessionID',
+//         'SessionDuration'
+//     ],
+//     'SHIPWRECKS': ['TopJobCompletionDestinations',
+//         'ActiveJobs',
+//         'JobsAttempted',
+//         'PlayerSummary',
+//         'PopulationSummary',
 
-        'JobsCompleted',
-        'SessionID',
-        'SessionDuration'
-    ],
-}
+//         'JobsCompleted',
+//         'SessionID',
+//         'SessionDuration'
+//     ],
+// }
 
 // when fetching timeline from the graph, what type of timeline each game supports (either 'player' or 'session')
 export const timeline_url_path = {
