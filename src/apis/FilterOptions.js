@@ -1,14 +1,17 @@
 export class FilterOptions {
-   constructor(game=null, start_data=null, end_date=null, version="", min_playtime=0, max_playtime=0) {
+   constructor(game=null, start_date=null, end_date=null,
+               min_app_version="", max_app_version="",
+               min_log_version="", max_log_version="") {
       this.game_name = game;
-      this.start_date = start_data;
+      this.start_date = start_date;
       this.end_date = end_date;
-      this.version = version;
-      this.min_playtime = min_playtime;
-      this.max_playtime = max_playtime;
+      this.min_app_version = min_app_version;
+      this.max_app_version = max_app_version;
+      this.min_log_version = min_log_version;
+      this.max_log_version = max_log_version;
    }
 
    ToLocalStorageKey() {
-      return [this.game_name, this.start_date, this.end_date, this.version, this.min_playtime, this.max_playtime].join("/")
+      return [this.game_name, this.start_date, this.end_date, this.min_app_version, this.max_app_version, this.min_log_version, this.max_log_version].join("/")
    }
 }
