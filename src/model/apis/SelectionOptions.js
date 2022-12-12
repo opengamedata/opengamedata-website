@@ -1,4 +1,4 @@
-export class FilterOptions {
+export class SelectionOptions {
    constructor(game=null, start_date=null, end_date=null,
                min_app_version="", max_app_version="",
                min_log_version="", max_log_version="") {
