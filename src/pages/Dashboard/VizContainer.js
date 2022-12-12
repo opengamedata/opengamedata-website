@@ -13,24 +13,8 @@ import LoadingBlur from '../../components/LoadingBlur';
 
 export default function VizContainer(props) {
    // whether initial form completed
-   const [initialized, setInitialized] = useState(false); // in production: defalt to false 
-   const [gameSelected, setGameSelected] = useState(vis_games[0]);
-   const [gameVersions, setGameVersions] = useReducer({
-      app_versions: [],
-      log_versions: []
-   })
 
-   // vis metrics
-   const [metrics, setMetrics] = useState({
-      game: '',
-      version: '',
-      startDate: '',
-      endDate: '',
-      minPlaytime: 0,
-      maxPlaytime: 0
-   })
-   const [viewMetrics, setViewMetrics] = useState()
-   const [currentView, setCurrentView] = useState('JobGraph')
+   const [initialized, setInitialized] = useState(false); // in production: defalt to false 
    const [loading, setLoading] = useState(false);
    const [data, setData] = useState(null);
 
