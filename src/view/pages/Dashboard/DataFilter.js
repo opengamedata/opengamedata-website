@@ -66,7 +66,7 @@ export default function Settings({ loading, currentFilterOptions, setContainerFi
       if (!loading) setAdjustMode(false)
    }, [loading])
 
-   renderDatePicker = () => {
+   const renderDatePicker = () => {
       return (
          <div>
             {/* <div className="row"><h3 className='text-md font-bold'>date</h3></div> */}
