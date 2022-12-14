@@ -5,7 +5,4 @@ export class FilterOptions {
       this.max_playtime = max_playtime;
    }
 
-   ToLocalStorageKey() {
-      return [this.game_name, this.start_date, this.end_date, this.min_app_version, this.max_app_version, this.min_log_version, this.max_log_version].join("/")
-   }
 }
