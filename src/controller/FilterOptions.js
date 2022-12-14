@@ -4,5 +4,4 @@ export class FilterOptions {
       this.min_playtime = min_playtime;
       this.max_playtime = max_playtime;
    }
-
 }
