@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./dummy_build",
+    "target": "ES5",
+    "lib": ["ES5"],
+    "checkJs": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+      "node_modules"
+  ],
+  "include": [
+    "src/**/*.js",
+  ]
+}
