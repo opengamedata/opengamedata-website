@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "outDir": "./dummy_build",
     "target": "ES5",
     "lib": ["ES5"],
