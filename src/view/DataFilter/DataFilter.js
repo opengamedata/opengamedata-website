@@ -166,7 +166,7 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
             {loading ?
                <><CogIcon className='animate-spin h-8 w-8' /> &nbsp;Please wait...</>
                :
-               <LargeButton onClick={adjust} label='visualize'/>
+               <LargeButton label='visualize' onClick={adjust} selected="false"/>
             }
          </div>
 

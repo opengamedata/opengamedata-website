@@ -27,20 +27,71 @@ export default function SelectionOptionsView({
    const renderSelectionPickers = () => {
       return (
          <div>
-            {/* TODO: render the game selector */}
-            {/* TODO: render the app version range pickers */}
-            {/* TODO: render the log version range pickers */}
-            {renderModeSpecificSelectors()}
+            <div id="GameSelector" className="col">
+               <div className="input-group">
+                     <div className="mb-2">
+                        <span className='text-xl font-light' >Game</span>
+                     </div>
+                     <select
+                        className="form-select block w-full"
+                        value={gameSelected}
+                        onChange={(e) => updateFunctions["setGameSelected"](e.target.value)}>
+                        <option> </option>
+                        {gameList()}
+                     </select>
+               </div>
+            </div>
+            <div id="AppVersionRange">
+               <div className="row"><h5 className='text-md font-bold'>App Version</h5></div>
+               <div className="mb-5">
+                  <div id="MinAppVersionInput" className="col mb-2">
+                     <div className="input-group-prepend">
+                        <h4 className="text-sm" >From</h4>
+                     </div>
+                     <div>
+                        <input type='text' className='block w-full' value={minAppVersion} onChange={(e) => updateFunctions["setMinAppVersion"](e.target.value)}></input>
+                     </div>
+                  </div>
+                  <div id="MaxAppVersionInput" className="col">
+                     <div className="input-group-prepend">
+                        <h4 className="text-sm" >To</h4>
+                     </div>
+                     <input type='text' className='block w-full' value={maxAppVersion} onChange={(e) => updateFunctions["setMaxAppVersion"](e.target.value)}></input>
+                  </div>
+               </div>
+            </div>
+            <div id="LogVersionRange">
+               <div className="row"><h5 className='text-md font-bold'>Log Version</h5></div>
+               <div className="mb-5">
+                  <div id="MinLogVersionInput" className="col mb-2">
+                     <div className="input-group-prepend">
+                        <h4 className="text-sm" >From</h4>
+                     </div>
+                     <div>
+                        <input type='text' className='block w-full' value={minLogVersion} onChange={(e) => updateFunctions["setMinLogVersion"](e.target.value)}></input>
+                     </div>
+                  </div>
+                  <div id="MaxLogVersionInput" className="col">
+                     <div className="input-group-prepend">
+                        <h4 className="text-sm" >To</h4>
+                     </div>
+                     <input type='text' className='block w-full' value={maxLogVersion} onChange={(e) => updateFunctions["setMaxLogVersion"](e.target.value)}></input>
+                  </div>
+               </div>
+            </div>
+            <div id="ModeSpecificPickers">
+               {renderModeSpecificPickers()}
+            </div>
          </div>
       )
    }
 
-   const renderModeSpecificSelectors = () => {
+   const renderModeSpecificPickers = () => {
       switch (viewMode) {
          case ViewModes.POPULATION:
             return (
             <div>
-               <div className="row"><h5 className='text-md font-bold'>date</h5></div>
+               <div className="row"><h5 className='text-md font-bold'>Date</h5></div>
                <div className="mb-5">
                   <div id="MinDateInput" className="col mb-2">
                      <div className="input-group-prepend"><h4 className="text-sm" >From</h4></div>

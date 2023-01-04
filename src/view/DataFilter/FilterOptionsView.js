@@ -13,7 +13,7 @@ export default function FilterOptionsView({
    const renderFilterPickers = () => {
       return (
          <div>
-            <div>
+            <div id="PlaytimeRange">
                <div className="row"><h5 className='text-md font-bold'>Playtime</h5></div>
                <div className="mb-5">
                   <div id="MinPlaytimeInput" className="col mb-2">
@@ -28,18 +28,20 @@ export default function FilterOptionsView({
                      <div className="input-group-prepend">
                         <h4 className="text-sm" >To</h4>
                      </div>
-                     <input type='date' className='block w-full' value={maxPlaytime} onChange={(e) => updateFunctions["setMaxPlaytime"](e.target.value)}></input>
+                     <input type='time' className='block w-full' value={maxPlaytime} onChange={(e) => updateFunctions["setMaxPlaytime"](e.target.value)}></input>
                   </div>
                </div>
             </div>
-            <div className="row"><h5 className='text-md font-bold'>Jobs</h5></div>
-            <div className="mb-5">
-               <div id="MinJobInput" className="col">
-                  <div className="input-group-prepend">
-                     <h4 className="text-sm" >To</h4>
-                  </div>
-                  <input type='date' className='block w-full' value={minJobs} onChange={(e) => updateFunctions["setMinJobs"](e.target.value)}></input>
-                  </div>
+            <div id="JobRange">
+               <div className="row"><h5 className='text-md font-bold'>Jobs</h5></div>
+               <div className="mb-5">
+                  <div id="MinJobInput" className="col">
+                     <div className="input-group-prepend">
+                        <h4 className="text-sm" >To</h4>
+                     </div>
+                     <input type='number' className='block w-full' value={minJobs} onChange={(e) => updateFunctions["setMinJobs"](e.target.value)}></input>
+                     </div>
+               </div>
             </div>
          </div>
       )
