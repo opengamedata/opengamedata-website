@@ -10,21 +10,32 @@ import { ViewModes } from '../../controller/ViewModes';
 import { FilterOptions } from '../../controller/FilterOptions';
 import SelectionOptionsView from './SelectionOptionsView'
 import FilterOptionsView from './FilterOptionsView';
-import { PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOptions } from '../../controller/SelectionOptions';
+import { SelectionOptions, PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOptions } from '../../controller/SelectionOptions';
+
+/**
+ * @callback SetterCallback
+ * @param {object} newVal
+ */
 
 /**
  * @typedef {object} Props
  * @property {boolean} loading
  * @property {ViewModes} viewMode
+ * @property {SelectionOptions} containerSelection
+ * @property {SetterCallback} setContainerSelection
+ * @property {FilterOptions} containerFilter
+ * @property {SetterCallback} setContainerFilter
  * 
+ * @param {Props} props
  */
+
 export default function DataFilter({ loading, viewMode, containerSelection, setContainerSelection, containerFilter, setContainerFilter}) {
    // server-side selection options
-   const [gameSelected, setGameSelected] = useState(vis_games[0]);
+   const [gameSelected, setGameSelected]   = useState(containerSelection.game_name);
    const [minAppVersion, setMinAppVersion] = useState(containerSelection.min_app_version);
    const [maxAppVersion, setMaxAppVersion] = useState(containerSelection.max_app_version);
-   const [minLogVersion, setMinLogVersion] = useState(null);
-   const [maxLogVersion, setMaxLogVersion] = useState(null);
+   const [minLogVersion, setMinLogVersion] = useState(containerSelection.min_log_version);
+   const [maxLogVersion, setMaxLogVersion] = useState(containerSelection.max_log_version);
    const [startDate, setStartDate] = useState();
    const [endDate, setEndDate] = useState();
    const [ids, setIDs] = useState([]);
@@ -66,9 +77,9 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
 
    // If adjustMode changes, reset filters from current container filter
    useEffect(() => {
-      setMinPlaytime(containerFilter.minPlaytime)
-      setMaxPlaytime(containerFilter.maxPlaytime)
-      setMinJobs(containerFilter.minJobs)
+      setMinPlaytime(containerFilter.min_playtime)
+      setMaxPlaytime(containerFilter.max_playtime)
+      setMinJobs(containerFilter.min_jobs)
    }, [adjustMode])
 
    // If loading changes to false, we are not adjusting and should return to false (resetting selections/filters)
