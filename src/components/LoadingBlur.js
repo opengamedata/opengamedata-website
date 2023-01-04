@@ -1,5 +1,6 @@
-
+import { React } from 'react';
 import { CogIcon } from '@heroicons/react/solid'
+
 export default function LoadingBlur({ loading, height, width }) {
 
     return loading ?

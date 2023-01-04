@@ -1,5 +1,5 @@
+import { React } from 'react';
 import SmallButton from "./buttons/SmallButton"
-
 
 export default function GameList(props) {
 

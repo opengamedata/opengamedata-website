@@ -1,4 +1,5 @@
-import { thumbs, data_readmes, feature_readmes, game_links } from '../constants'
+import { React } from 'react';
+import { thumbs, data_readmes, feature_readmes, game_links } from '../config'
 
 export default function InfoCard({ game }) {
 
