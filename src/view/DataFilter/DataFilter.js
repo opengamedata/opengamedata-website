@@ -10,7 +10,7 @@ import { ViewModes } from '../../controller/ViewModes';
 import { FilterOptions } from '../../controller/FilterOptions';
 import SelectionOptionsView from './SelectionOptionsView'
 import FilterOptionsView from './FilterOptionsView';
-import { SelectionOptions, PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOptions } from '../../controller/SelectionOptions';
+import { PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOptions } from '../../controller/SelectionOptions';
 
 /**
  * @callback SetterCallback
@@ -21,11 +21,13 @@ import { SelectionOptions, PopulationSelectionOptions, PlayerSelectionOptions, S
  * @typedef {object} Props
  * @property {boolean} loading
  * @property {ViewModes} viewMode
- * @property {SelectionOptions} containerSelection
+ * @property {PopulationSelectionOptions|PlayerSelectionOptions|SessionSelectionOptions} containerSelection
  * @property {SetterCallback} setContainerSelection
  * @property {FilterOptions} containerFilter
  * @property {SetterCallback} setContainerFilter
- * 
+ */
+
+ /**
  * @param {Props} props
  */
 
@@ -70,9 +72,9 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
       setMaxAppVersion(containerSelection.min_app_version)
       setMinLogVersion(containerSelection.min_log_version)
       setMaxLogVersion(containerSelection.min_log_version)
-      setStartDate(containerSelection.start_date)
-      setEndDate(containerSelection.endDate)
-      setIDs(containerSelection.ids)
+      setStartDate(containerSelection['start_date'] || null)
+      setEndDate(containerSelection['endDate'] || null)
+      setIDs(containerSelection['ids'] || null)
    }, [adjustMode])
 
    // If adjustMode changes, reset filters from current container filter
