@@ -1,3 +1,6 @@
+// global imports
+import { React } from 'react';
+// local imports
 import VizContainer from './VizContainer'
 
 export default function Dashboard() {
