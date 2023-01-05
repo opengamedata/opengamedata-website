@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import LargeButton from '../../components/buttons/LargeButton';
 import { CogIcon } from '@heroicons/react/solid'
-import { vis_games } from '../../constants';
+import { vis_games } from '../../config';
 
 
 export default function VisForm({ loading, updateGlobalMetrics }) {

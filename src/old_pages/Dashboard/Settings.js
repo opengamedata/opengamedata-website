@@ -1,6 +1,5 @@
-
+import { React, useEffect, useState } from 'react'
 import { AdjustmentsIcon, XIcon, CogIcon } from '@heroicons/react/solid'
-import { useEffect, useState } from 'react'
 import LargeButton from '../../components/buttons/LargeButton'
 
 export default function Settings({ loading, metrics, updateGlobalMetrics }) {

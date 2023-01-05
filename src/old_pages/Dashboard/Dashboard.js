@@ -1,10 +1,10 @@
 
-import { useState } from 'react';
+import { React, useState } from 'react';
 import Settings from './Settings';
 import VisForm from './VisForm';
-import { API_ORIGIN, timeline_url_path, requested_extractors } from '../../constants';
-import JobGraph from './views/JobGraph/JobGraph';
-import PlayerTimeline from './views/Timeline/PlayerTimeline';
+import { API_ORIGIN, timeline_url_path, requested_extractors } from '../../config';
+import JobGraph from './visualizations/JobGraph/JobGraph';
+import PlayerTimeline from './visualizations/Timeline/PlayerTimeline';
 import LoadingBlur from '../../components/LoadingBlur';
 import LargeButton from '../../components/buttons/LargeButton';
 
