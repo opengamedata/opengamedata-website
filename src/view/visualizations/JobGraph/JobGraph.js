@@ -1,9 +1,8 @@
-// global imports
 import * as d3 from "d3";
-import { React, useEffect, useState } from "react";
-// local imports
-import { useD3 } from "../../../controller/hooks/useD3";
+import { useEffect, useState } from "react";
+import { useD3 } from "../../../../hooks/useD3";
 import PlayersList from "./PlayersList";
+import { requested_extractors } from "../../../../constants";
 import ForceGraph from './forceGraph'
 import JobGraphLegend from "./JobGraphLegend";
 
@@ -12,7 +11,7 @@ import JobGraphLegend from "./JobGraphLegend";
  * @param {Object} data raw data JSON object 
  * @returns 
  */
-export default function JobVisualizer({ rawData, metrics, updateViewMetrics, requested_extractors }) {
+export default function JobGraph({ rawData, metrics, updateViewMetrics }) {
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [data, setData] = useState(null)
 
