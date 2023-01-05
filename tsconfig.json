@@ -3,7 +3,7 @@
     "jsx": "react",
     "outDir": "./dummy_build",
     "target": "ES5",
-    "lib": ["ES5"],
+    "lib": ["ES5", "DOM"],
     "checkJs": true,
     "allowJs": true,
     "skipLibCheck": true,
