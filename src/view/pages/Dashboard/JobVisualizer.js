@@ -1,8 +1,8 @@
 // global imports
 import * as d3 from "d3";
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 // local imports
-import { useD3 } from "../../../../hooks/useD3";
+import { useD3 } from "../../../controller/hooks/useD3";
 import PlayersList from "../../components/visualizations/PlayersList";
 import ForceGraph from '../../components/visualizations/forceGraph'
 import JobGraphLegend from "../../components/visualizations/JobGraphLegend";
