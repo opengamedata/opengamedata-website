@@ -107,6 +107,69 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
       setContainerFilter(getFilterOptions());
    }
 
+
+   const oldInitialViz = (availableGames, currentGame, setCurrentGame, loading) => {
+      const populateGameList = () => {
+         const games = []
+         availableGames.forEach((k) => {
+               games.push(
+                  <option key={k} value={k}>{k}</option>
+               )
+         })
+         return games
+      }
+      /* checks if form is properly filled */
+      const formValidation = () => {
+         // console.log(game, version, startDate, endDate, minPlaytime, maxPlaytime)
+
+         // if empty fields, prompt user to fill in the blanks & return
+         // if (!(game && version && startDate && endDate && minPlaytime >= 0 && maxPlaytime)) {
+         if (!(game && startDate && endDate)) {
+               // prompt user
+               alert('make sure each field has a valid value')
+               return
+         }
+
+         // if start date later than end date, raise warnings & return
+         if (startDate > endDate) {
+               alert('invalid date range')
+               return
+         }
+
+         // if end date later than yesterday, raise warnings & return
+         const today = new Date();
+         const queryEnd = new Date(endDate)
+         // console.log(today, queryEnd)
+         // console.log(today - queryEnd)
+         if (today - queryEnd <= 1000 * 60 * 60 * 24) {
+               alert('select an end date that\'s prior to yesterday')
+               return
+         }
+
+         // if min playtime small than max playtime, raise warnings & return
+         /* 
+         if (minPlaytime >= maxPlaytime) {
+               alert('invalid total playtime')
+               return
+         }
+         */
+
+         const metrics = {
+               game: game,
+               version: version,
+               startDate: startDate,
+               endDate: endDate,
+               minPlaytime: minPlaytime,
+               maxPlaytime: maxPlaytime
+         }
+
+         // else, post request - propagateData()
+         // propagateData(metrics)
+         updateGlobalMetrics(metrics)
+
+      }
+   }
+
    const getSelectionOptions = () => {
       switch (viewMode) {
          case ViewModes.POPULATION:
