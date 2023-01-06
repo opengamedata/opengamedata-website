@@ -20,6 +20,11 @@ import InitialVisualizer from './InitialVisualizer';
 import JobVisualizer from '../../visualizations/JobGraph/JobVisualizer';
 import PlayerVisualizer from '../../visualizations/PlayerTimeline/PlayerVisualizer';
 
+/**
+ * 
+ * @param {*} props 
+ * @returns 
+ */
 export default function VizContainer(props) {
    // whether initial form completed
    const [initialized, setInitialized] = useState(false); // in production: defalt to false 
@@ -36,12 +41,14 @@ export default function VizContainer(props) {
       )
    );
 
+   useEffect(() => {
+      retrieveData();
+   }, [selectionOptions])
+
    const retrieveData = () => {
-        // flush current dataset
+        // flush current dataset and start loading animation
         setData(null)
-        // start loading animation
         setLoading(true)
-        // console.log(url)
 
         const localData = localStorage.getItem(selectionOptions.ToLocalStorageKey())
         // console.log(localData)
@@ -56,17 +63,30 @@ export default function VizContainer(props) {
         // if not found in storage, request dataset
         else {
             console.log('fetching:', selectionOptions.ToLocalStorageKey())
+            const metrics = ["Foo", "Bar"]; // TODO: figure out how to get list of metrics to load.
 
-            fetch(url)
+            let fetch_call;
+            switch (viewMode) {
+               case ViewModes.POPULATION:
+                  fetch_call = OGDPopulationAPI.fetch;
+                  break;
+               case ViewModes.PLAYER:
+                  fetch_call = OGDPlayerAPI.fetch;
+                  break;
+               case ViewModes.SESSION:
+                  throw Error("Session view mode not yet supported!");
+               default:
+                  throw Error(`Invalid view mode ${viewMode}!`)
+            }
+
+            fetch_call(selectionOptions, metrics)
             .then(res => res.json())
             .then(data => {
                if (data.status !== 'SUCCESS') throw data.msg
                console.log(data)
-               // store data locally
-               localStorage.setItem(url, JSON.stringify(data.val))
-               // set data state
+               // store data locally and in the state variable
+               localStorage.setItem(selectionOptions.ToLocalStorageKey(), JSON.stringify(data.val))
                setData(data.val)
-               // store response to parent component state
                setInitialized(true)
                // stop loading animation
                setLoading(false)
@@ -81,8 +101,7 @@ export default function VizContainer(props) {
 
    const emptyContainer = () => {
       return (
-         <InitialVisualizer
-         />
+         <InitialVisualizer/>
       )
    }
 
@@ -95,10 +114,12 @@ export default function VizContainer(props) {
                'JobGraph':
                   <JobVisualizer
                      rawData={data}
+                     setViewMode={setViewMode}
                   />,
                'PlayerTimeline':
                   <PlayerVisualizer
                      rawData={data}
+                     setViewMode={setViewMode}
                   />
             }[viewMode]
          }
