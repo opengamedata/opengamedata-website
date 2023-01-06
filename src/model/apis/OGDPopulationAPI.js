@@ -1,13 +1,12 @@
-import { API_ORIGIN } from '../../constants';
-import * as d3 from 'd3';
+import { API_ORIGIN } from '../../config';
 
 export class OGDPopulationAPI {
    static fetch(filter_options, metrics) {
-      const path = OGDPopulationAPI.#getURLPath(filter_options, metrics)
+      const path = OGDPopulationAPI.getURLPath(filter_options, metrics)
       return       fetch(path);
    }
 
-   static #getURLPath = (filter_options, metrics) => {
+   static getURLPath = (filter_options, metrics) => {
       // construct url path and params
       const urlPath = `game/${filter_options.game_name}/metrics`;
       const searchParams = new URLSearchParams({
