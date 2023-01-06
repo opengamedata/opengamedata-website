@@ -90,85 +90,45 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
    }, [loading])
 
    const adjust = () => {
+      // if empty fields, prompt user to fill in the blanks & return
+      // if (!(game && version && startDate && endDate && minPlaytime >= 0 && maxPlaytime)) {
+      if (!gameSelected) {
+            // prompt user
+            alert('make sure a game has been selected!');
+            return;
+      }
       if (startDate > endDate) {
          alert("The start date must not be later than the end date!")
          return;
+      }
+      // if end date later than yesterday, raise warnings & return
+      const today = new Date();
+      const queryEnd = new Date(endDate)
+      // console.log(today, queryEnd)
+      // console.log(today - queryEnd)
+      if (today - queryEnd <= 1000 * 60 * 60 * 24) {
+            alert('select an end date that\'s prior to yesterday')
+            return
+      }
+      if (minAppVersion !== null && maxAppVersion !== null && minAppVersion > maxAppVersion) {
+         alert('The minimum App version must be less than the maximum!')
+         return
+      }
+      if (minLogVersion !== null && maxLogVersion !== null && minLogVersion > maxLogVersion) {
+         alert('The minimum log version must be less than the maximum!')
+         return
       }
       if (minPlaytime !== null && maxPlaytime !== null && minPlaytime > maxPlaytime) {
          alert('The minimum play time must be less than the maximum!')
          return
       }
-      if (minLogVersion !== null && maxLogVersion !== null && minPlaytime > maxPlaytime) {
-         alert('The minimum play time must be less than the maximum!')
-         return
-      }
+
 
       setContainerSelection(getSelectionOptions());
       setContainerFilter(getFilterOptions());
    }
 
 
-   const oldInitialViz = (availableGames, currentGame, setCurrentGame, loading) => {
-      const populateGameList = () => {
-         const games = []
-         availableGames.forEach((k) => {
-               games.push(
-                  <option key={k} value={k}>{k}</option>
-               )
-         })
-         return games
-      }
-      /* checks if form is properly filled */
-      const formValidation = () => {
-         // console.log(game, version, startDate, endDate, minPlaytime, maxPlaytime)
-
-         // if empty fields, prompt user to fill in the blanks & return
-         // if (!(game && version && startDate && endDate && minPlaytime >= 0 && maxPlaytime)) {
-         if (!(game && startDate && endDate)) {
-               // prompt user
-               alert('make sure each field has a valid value')
-               return
-         }
-
-         // if start date later than end date, raise warnings & return
-         if (startDate > endDate) {
-               alert('invalid date range')
-               return
-         }
-
-         // if end date later than yesterday, raise warnings & return
-         const today = new Date();
-         const queryEnd = new Date(endDate)
-         // console.log(today, queryEnd)
-         // console.log(today - queryEnd)
-         if (today - queryEnd <= 1000 * 60 * 60 * 24) {
-               alert('select an end date that\'s prior to yesterday')
-               return
-         }
-
-         // if min playtime small than max playtime, raise warnings & return
-         /* 
-         if (minPlaytime >= maxPlaytime) {
-               alert('invalid total playtime')
-               return
-         }
-         */
-
-         const metrics = {
-               game: game,
-               version: version,
-               startDate: startDate,
-               endDate: endDate,
-               minPlaytime: minPlaytime,
-               maxPlaytime: maxPlaytime
-         }
-
-         // else, post request - propagateData()
-         // propagateData(metrics)
-         updateGlobalMetrics(metrics)
-
-      }
-   }
 
    const getSelectionOptions = () => {
       switch (viewMode) {
