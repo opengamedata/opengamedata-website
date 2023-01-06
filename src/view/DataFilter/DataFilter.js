@@ -18,7 +18,7 @@ import { PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOpt
  */
 
 /**
- * @typedef {object} Props
+ * @typedef  {object} DataFilterProps
  * @property {boolean} loading
  * @property {ViewModes} viewMode
  * @property {PopulationSelectionOptions|PlayerSelectionOptions|SessionSelectionOptions} containerSelection
@@ -28,7 +28,7 @@ import { PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOpt
  */
 
  /**
- * @param {Props} props
+ * @param {DataFilterProps} props
  */
 
 export default function DataFilter({ loading, viewMode, containerSelection, setContainerSelection, containerFilter, setContainerFilter}) {
