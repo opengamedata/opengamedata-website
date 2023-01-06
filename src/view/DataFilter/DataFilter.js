@@ -123,7 +123,6 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
          return
       }
 
-
       setContainerSelection(getSelectionOptions());
       setContainerFilter(getFilterOptions());
    }
