@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import { XIcon } from '@heroicons/react/solid'
-import LongButton from '../../../../components/buttons/LongButton'
-import { API_ORIGIN } from '../../../../constants';
+import LongButton from '../../../components/buttons/LongButton';
+import { API_ORIGIN } from '../../../config';
 
-export default function CodeForm({ metrics, viewMetrics, event, setFormVisible }) {
+export default function CodeForm({ metrics, event, setFormVisible }) {
     const [codeTypes, setCodeTypes] = useState([])
 
     const [codeInput, setCodeInput] = useState('')

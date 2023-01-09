@@ -10,7 +10,7 @@ import EventFilterCtrl from './EventFilterCtrl';
 import timeline from "./timeline";
 
 
-export default function PlayerVisualizer({ rawData, setViewMode }) {
+export default function PlayerVisualizer({ rawData, setViewMode, selectedGame }) {
 
     const convertedData = convert(rawData)
 
