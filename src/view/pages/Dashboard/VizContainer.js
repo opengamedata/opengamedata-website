@@ -29,7 +29,8 @@ export default function VizContainer(props) {
    // whether initial form completed
    const [initialized, setInitialized] = useState(false); // in production: defalt to false 
    const [loading, setLoading] = useState(false);
-   const [data, setData] = useState(null);
+   const [viewData, setViewData] = useState(null);
+   const [rawData, setRawData] = useState(null);
    const [viewMode, setViewMode] = useState(ViewModes.POPULATION);
    const [filterOptions, setFilterOptions] = useState(new FilterOptions(0, null, null));
    const [selectionOptions, setSelectionOptions] = useState(
@@ -45,16 +46,23 @@ export default function VizContainer(props) {
       retrieveData();
    }, [selectionOptions])
 
+   // TODO: Whenever filtering or underlying data change, refresh the view data.
+   useEffect(() => {
+      console.warn("Filtering of data on client side is not yet implemented!");
+      setViewData(rawData);
+   }, [filterOptions, rawData]);
+
    const retrieveData = () => {
         // flush current dataset and start loading animation
-        setData(null)
+        setRawData(null)
+        setViewData(null)
         setLoading(true)
 
         const localData = localStorage.getItem(selectionOptions.ToLocalStorageKey())
         // console.log(localData)
         if (localData) {
          // if query found in storage, retreive JSON
-            setData(JSON.parse(localData)) 
+            setRawData(JSON.parse(localData)) 
             // store response to parent component state
             setInitialized(true)
             // stop loading animation
@@ -86,7 +94,7 @@ export default function VizContainer(props) {
                console.log(data)
                // store data locally and in the state variable
                localStorage.setItem(selectionOptions.ToLocalStorageKey(), JSON.stringify(data.val))
-               setData(data.val)
+               setRawData(data.val)
                setInitialized(true)
                // stop loading animation
                setLoading(false)
@@ -99,26 +107,26 @@ export default function VizContainer(props) {
         }
    }
 
-   const emptyContainer = () => {
+   const renderEmptyContainer = () => {
       return (
          <InitialVisualizer/>
       )
    }
 
-   const filledContainer = () => {
+   const renderFilledContainer = () => {
       <>
          {/* TODO: figure out what the height and width ought to be */}
          <LoadingBlur loading={loading} height={10} width={10}/>
-         {data &&
+         {viewData &&
             {
                'JobGraph':
                   <JobVisualizer
-                     rawData={data}
+                     rawData={viewData}
                      setViewMode={setViewMode}
                   />,
                'PlayerTimeline':
                   <PlayerVisualizer
-                     rawData={data}
+                     rawData={viewData}
                      setViewMode={setViewMode}
                   />
             }[viewMode]
@@ -147,7 +155,7 @@ export default function VizContainer(props) {
          containerFilter={filterOptions}
          setContainerFilter={setFilterOptions}
          ></DataFilter>
-      { initialized ? filledContainer() : emptyContainer() }
+      { initialized ? renderFilledContainer() : renderEmptyContainer() }
    </div>
 
    )
