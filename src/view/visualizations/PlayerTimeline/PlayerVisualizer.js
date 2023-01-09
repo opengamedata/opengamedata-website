@@ -27,7 +27,7 @@ export default function PlayerVisualizer({ rawData, setViewMode, selectedGame })
     // register types of events found for this user
     useEffect(() => {
         const initialTypes = new Set()
-        initial_timeline_filter_options[metrics.game].forEach(type => {
+        initial_timeline_filter_options[selectedGame].forEach(type => {
             if (Object.hasOwn(convertedData.meta.types, type)) initialTypes.add(type)
         });
 
@@ -102,7 +102,6 @@ export default function PlayerVisualizer({ rawData, setViewMode, selectedGame })
                 {formVisible &&
                     <CodeForm
                     metrics={metrics}
-                    viewMetrics={viewMetrics}
                     setFormVisible={setFormVisible}
                     event={selectedEventForTagging}
                 />
