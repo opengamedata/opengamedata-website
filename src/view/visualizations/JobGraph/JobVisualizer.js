@@ -36,9 +36,6 @@ export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
     // }, [data])
 
     /* manipulate raw data to a format to be used by the vis views */
-    const convert = (rawData) => {
-    }
-    // const data = convert(rawData)
 
     const showPlayersList = (link) => {
         let players, title
@@ -170,7 +167,7 @@ export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
                                 </label>
                             </div>
                         }
-                        {requested_extractors[selectedGame].includes('TopJobSwitchDestinations') &&
+                        {JobGraph.RequiredExtractors()[selectedGame].includes('TopJobSwitchDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -184,7 +181,7 @@ export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
                                 </label>
                             </div>
                         }
-                        {requested_extractors[selectedGame].includes('ActiveJobs') &&
+                        {JobGraph.RequiredExtractors()[selectedGame].includes('ActiveJobs') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
