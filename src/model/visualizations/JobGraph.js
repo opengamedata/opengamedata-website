@@ -11,6 +11,19 @@ export class JobGraph {
       this.meta  = meta
    }
 
+   static RequiredExtractors() {
+      return {
+         "AQUALAB" : [
+            'TopJobCompletionDestinations',
+            'TopJobSwitchDestinations',
+            'ActiveJobs',
+            'JobsAttempted-avg-time-per-attempt',
+            'JobsAttempted-job-name',
+            'JobsAttempted-job-difficulties',
+         ]
+      };
+   }
+
    static fromRawData(rawData, linkMode) {
         // console.log('rawData', rawData)
 
@@ -23,6 +36,29 @@ export class JobGraph {
         }
 
         // nodes
+        let nodeBuckets = JobGraph.genNodeBuckets(rawData, meta);
+
+        // links
+        let l = JobGraph.genLinks(rawData, linkMode)
+
+      // filter out nodes w/ no edges
+      const relevantNodes = Object.values(nodeBuckets).filter(
+         ({ id }) => l.map(link => link.source).includes(id) || l.map(link => link.target).includes(id)
+      );
+      if (linkMode === 'ActiveJobs')
+         relevantNodes.forEach(n => {
+            // console.log(rawLinks)
+            const rawLinks = JSON.parse(rawData[linkMode].replaceAll('\\', ''))
+            n.players = rawLinks[n.id]
+         }
+      );
+
+      // console.log('relevantNodes', relevantNodes)
+      // console.log('links', l)
+      return new JobGraph(relevantNodes, l, meta);
+   }
+
+   static genNodeBuckets(rawData, meta) {
         let nodeBuckets = {}
         for (const [key, value] of Object.entries(rawData)) {
             if (key.substring(0, 3) !== 'job' && key.substring(0, 7) !== 'mission') continue
@@ -45,8 +81,10 @@ export class JobGraph {
             }
         }
         // console.log(nodeBuckets)
+        return nodeBuckets;
+   }
 
-        // links
+   static genLinks(rawData, linkMode) {
         let l = []
         const rawLinks = JSON.parse(rawData[linkMode].replaceAll('\\', ''))
 
@@ -96,18 +134,7 @@ export class JobGraph {
             default:
                 alert('Something went wrong. Plase refresh the page and try again')
                 break;
-        }
-
-        // filter out nodes w/ no edges
-        const relevantNodes = Object.values(nodeBuckets).filter(({ id }) => l.map(link => link.source).includes(id) || l.map(link => link.target).includes(id))
-        if (linkMode === 'ActiveJobs')
-            relevantNodes.forEach(n => {
-                // console.log(rawLinks)
-                n.players = rawLinks[n.id]
-            });
-
-        // console.log('relevantNodes', relevantNodes)
-        // console.log('links', l)
-        return new JobGraph(relevantNodes, l, meta);
+      }
+      return l;
    }
 }
