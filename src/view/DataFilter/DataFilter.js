@@ -106,7 +106,7 @@ export default function DataFilter({ loading, viewMode, containerSelection, setC
       const queryEnd = new Date(endDate)
       // console.log(today, queryEnd)
       // console.log(today - queryEnd)
-      if (today - queryEnd <= 1000 * 60 * 60 * 24) {
+      if (today.getTime() - queryEnd.getTime() <= 1000 * 60 * 60 * 24) {
             alert('select an end date that\'s prior to yesterday')
             return
       }
