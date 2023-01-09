@@ -11,7 +11,7 @@ import { OGDPopulationAPI } from '../../../model/apis/OGDPopulationAPI';
 
 // controller imports
 import { ViewModes } from '../../../controller/ViewModes';
-import { PopulationSelectionOptions, PlayerSelectionOptions, SessionSelectionOptions } from '../../../controller/SelectionOptions';
+import { PopulationSelectionOptions } from '../../../controller/SelectionOptions';
 import { FilterOptions } from '../../../controller/FilterOptions';
 
 // view imports
