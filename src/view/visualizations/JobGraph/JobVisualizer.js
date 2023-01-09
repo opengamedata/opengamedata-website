@@ -4,9 +4,15 @@ import { React, useEffect, useState } from "react";
 // local imports
 import { useD3 } from "../../../controller/hooks/useD3";
 import { ViewModes } from "../../../model/ViewModes";
+import { JobGraph } from "../../../model/visualizations/JobGraph";
 import PlayersList from "./PlayersList";
 import ForceGraph from './forceGraph'
 import JobGraphLegend from "./JobGraphLegend";
+
+/**
+ * @callback JobGraphSetter
+ * @param {JobGraph} newVal
+ */
 
 /**
  * force directed graph component for job/mission level data
@@ -14,14 +20,14 @@ import JobGraphLegend from "./JobGraphLegend";
  * @returns 
  */
 export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
+    /** @type {[JobGraph, JobGraphSetter]} data */
+    const [data, setData] = useState(new JobGraph())
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
-    const [data, setData] = useState(null)
-
     const [playersList, setPlayerList] = useState()
     const [playerHighlight, setHighlight] = useState()
 
     useEffect(() => {
-        setData(convert(rawData))
+        setData(JobGraph.fromRawData(rawData, linkMode))
         setPlayerList(null)
     }, [rawData, linkMode])
 
@@ -31,104 +37,6 @@ export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
-        // console.log('rawData', rawData)
-
-        // metadata
-        const meta = {
-            playerSummary: JSON.parse(rawData.PlayerSummary.replaceAll('\\', '')),
-            populationSummary: JSON.parse(rawData.PopulationSummary.replaceAll('\\', '').replaceAll('_', ' ')),
-            maxAvgTime: 0,
-            minAvgTime: Infinity
-        }
-
-        // nodes
-        let nodeBuckets = {}
-        for (const [key, value] of Object.entries(rawData)) {
-            if (key.substring(0, 3) !== 'job' && key.substring(0, 7) !== 'mission') continue
-
-            const [k, metric] = key.split('_')
-            // console.log(`${k}'s ${metric}: ${value}`);
-            if (metric === 'JobsAttempted-avg-time-per-attempt') {
-                if (parseFloat(value) > meta.maxAvgTime) meta.maxAvgTime = parseFloat(value)
-                if (parseFloat(value) < meta.minAvgTime) meta.minAvgTime = parseFloat(value)
-            }
-
-            if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = {} // create node pbject
-            if (metric === 'JobsAttempted-job-name') nodeBuckets[k].id = value // store job name as node id
-            else if (metric === 'JobsAttempted') continue
-            else nodeBuckets[k][metric] = value
-
-            // parse job difficulty json
-            if (metric === 'JobsAttempted-job-difficulties') {
-                nodeBuckets[k][metric] = JSON.parse(nodeBuckets[k][metric])
-            }
-        }
-        // console.log(nodeBuckets)
-
-        // links
-        let l = []
-        const rawLinks = JSON.parse(rawData[linkMode].replaceAll('\\', ''))
-
-        switch (linkMode) {
-            case 'TopJobCompletionDestinations':
-                for (const [sourceKey, targets] of Object.entries(rawLinks)) {
-                    for (const [targetKey, players] of Object.entries(targets)) {
-                        if (sourceKey === targetKey) continue // omit self-pointing jobs
-                        l.push({
-                            source: sourceKey,
-                            sourceName: sourceKey,
-                            target: targetKey,
-                            targetName: targetKey,
-                            value: players.length,
-                            players: players
-                        })
-                    }
-                }
-                break;
-            case 'TopJobSwitchDestinations':
-                for (const [sourceKey, targets] of Object.entries(rawLinks)) {
-                    for (const [targetKey, players] of Object.entries(targets)) {
-                        if (sourceKey === targetKey) continue // omit self-pointing jobs
-                        l.push({
-                            source: sourceKey,
-                            sourceName: sourceKey,
-                            target: targetKey,
-                            targetName: targetKey,
-                            value: players.length,
-                            players: players
-                        })
-                    }
-                }
-                break;
-            case 'ActiveJobs':
-                const activeJobs = Object.keys(rawLinks)
-                for (let i = 1; i < activeJobs.length; i++) {
-                    const target = activeJobs[i];
-                    l.push({
-                        source: activeJobs[0],
-                        sourceName: activeJobs[0],
-                        target: target,
-                        targetName: target
-                    })
-                }
-                break;
-            default:
-                alert('Something went wrong. Plase refresh the page and try again')
-                break;
-        }
-
-        // filter out nodes w/ no edges
-        const relevantNodes = Object.values(nodeBuckets).filter(({ id }) => l.map(link => link.source).includes(id) || l.map(link => link.target).includes(id))
-        if (linkMode === 'ActiveJobs')
-            relevantNodes.forEach(n => {
-                // console.log(rawLinks)
-                n.players = rawLinks[n.id]
-            });
-
-        // console.log('relevantNodes', relevantNodes)
-        // console.log('links', l)
-
-        return { nodes: relevantNodes, links: l, meta: meta }
     }
     // const data = convert(rawData)
 
@@ -151,7 +59,7 @@ export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
     * this function is passed to PlayersList
     * when user selects a player/session, they will be taken to that player/session's timeline
     */
-    const toPlayerTimeline = (viewMetrics) => {
+    const toPlayerTimeline = () => {
         setViewMode(ViewModes.PLAYER);
     };
 
@@ -248,7 +156,7 @@ export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
-                        {requested_extractors[selectedGame].includes('TopJobCompletionDestinations') &&
+                        {JobGraph.RequiredExtractors()[selectedGame].includes('TopJobCompletionDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
