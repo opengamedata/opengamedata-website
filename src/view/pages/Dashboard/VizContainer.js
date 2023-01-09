@@ -128,6 +128,7 @@ export default function VizContainer(props) {
                   <PlayerVisualizer
                      rawData={viewData}
                      setViewMode={setViewMode}
+                     selectedGame={selectionOptions.game_name}
                   />
             }[viewMode]
          }
