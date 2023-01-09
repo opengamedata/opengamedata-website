@@ -3,7 +3,7 @@ import { XIcon } from '@heroicons/react/solid'
 import LongButton from '../../../components/buttons/LongButton';
 import { API_ORIGIN } from '../../../config';
 
-export default function CodeForm({ metrics, event, setFormVisible }) {
+export default function CodeForm({ event, setFormVisible, selectedGame, selectedPlayer }) {
     const [codeTypes, setCodeTypes] = useState([])
 
     const [codeInput, setCodeInput] = useState('')
@@ -21,7 +21,7 @@ export default function CodeForm({ metrics, event, setFormVisible }) {
     }, [])
 
     const fetchCodeTypes = () => {
-        fetch(`${API_ORIGIN}/coding/game/${metrics.game}/codes`)
+        fetch(`${API_ORIGIN}/coding/game/${selectedGame}/codes`)
             .then(res => res.json())
             .then(data => {
                 console.log(data.val)
@@ -42,7 +42,7 @@ export default function CodeForm({ metrics, event, setFormVisible }) {
     const submit = () => {
         console.log(codeInput)
 
-        // fetch(`${API_ORIGIN}/coding/game/${metrics.game}/player/${viewMetrics.player}/session/${event.sessionID}/index/<index>/code/${codeInput}`,
+        // fetch(`${API_ORIGIN}/coding/game/${selectedGame}/player/${selectedPlayer}/session/${event.sessionID}/index/<index>/code/${codeInput}`,
         //     {
         //         method: 'POST',
         //         body: JSON.stringify({

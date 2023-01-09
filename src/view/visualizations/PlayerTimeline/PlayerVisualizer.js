@@ -101,7 +101,8 @@ export default function PlayerVisualizer({ rawData, setViewMode, selectedGame })
                 {/* error code event tagging  */}
                 {formVisible &&
                     <CodeForm
-                    metrics={metrics}
+                    selectedGame={selectedGame}
+                    selectedPlayer={null}
                     setFormVisible={setFormVisible}
                     event={selectedEventForTagging}
                 />
