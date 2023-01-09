@@ -4,7 +4,7 @@ import { React, useState, useEffect } from 'react';
 import LargeButton from "../../../components/buttons/LargeButton";
 import { initial_timeline_filter_options, color_20 } from '../../../config';
 import { useD3 } from "../../../controller/hooks/useD3";
-import { ViewModes } from '../../../controller/ViewModes';
+import { ViewModes } from '../../../model/ViewModes';
 import CodeForm from './CodeForm';
 import EventFilterCtrl from './EventFilterCtrl';
 import timeline from "./timeline";

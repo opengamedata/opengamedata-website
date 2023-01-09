@@ -1,7 +1,7 @@
 // global imports
 import { React } from 'react';
 // local imports
-import { ViewModes } from "../../controller/ViewModes"
+import { ViewModes } from "../../model/ViewModes"
 
 export default function FilterOptionsView({
    adjustMode, viewMode, 

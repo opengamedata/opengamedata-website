@@ -3,7 +3,7 @@ import { React } from 'react';
 import { useEffect, useState } from 'react'
 // local imports
 import { vis_games } from '../../config';
-import { ViewModes } from "../../controller/ViewModes"
+import { ViewModes } from "../../model/ViewModes"
 
 export default function SelectionOptionsView({
    adjustMode, viewMode, 

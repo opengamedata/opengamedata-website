@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 // local imports
 import LargeButton from '../../components/buttons/LargeButton';
 import { API_ORIGIN, timeline_url_path, vis_games } from '../../config';
-import { ViewModes } from '../../controller/ViewModes';
+import { ViewModes } from '../../model/ViewModes';
 import { FilterOptions } from '../../controller/FilterOptions';
 import SelectionOptionsView from './SelectionOptionsView'
 import FilterOptionsView from './FilterOptionsView';

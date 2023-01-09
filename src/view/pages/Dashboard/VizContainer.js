@@ -10,7 +10,7 @@ import { OGDPlayerAPI } from '../../../model/apis/OGDPlayerAPI';
 import { OGDPopulationAPI } from '../../../model/apis/OGDPopulationAPI';
 
 // controller imports
-import { ViewModes } from '../../../controller/ViewModes';
+import { ViewModes } from '../../../model/ViewModes';
 import { PopulationSelectionOptions } from '../../../controller/SelectionOptions';
 import { FilterOptions } from '../../../controller/FilterOptions';
 

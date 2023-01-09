@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import { React, useEffect, useState } from "react";
 // local imports
 import { useD3 } from "../../../controller/hooks/useD3";
-import { ViewModes } from "../../../controller/ViewModes";
+import { ViewModes } from "../../../model/ViewModes";
 import PlayersList from "./PlayersList";
 import ForceGraph from './forceGraph'
 import JobGraphLegend from "./JobGraphLegend";
