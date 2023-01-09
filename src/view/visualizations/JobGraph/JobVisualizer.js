@@ -12,7 +12,7 @@ import JobGraphLegend from "./JobGraphLegend";
  * @param {Object} data raw data JSON object 
  * @returns 
  */
-export default function JobVisualizer({ rawData, metrics, updateViewMetrics, requested_extractors }) {
+export default function JobVisualizer({ rawData, setViewMode }) {
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [data, setData] = useState(null)
 
