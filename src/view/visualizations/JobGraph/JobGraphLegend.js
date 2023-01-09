@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { React, useState } from "react";
 import { QuestionMarkCircleIcon, CursorClickIcon, ViewBoardsIcon, ColorSwatchIcon, CloudIcon } from '@heroicons/react/solid'
 
 export default function JobGraphLegend({ populationSummary }) {

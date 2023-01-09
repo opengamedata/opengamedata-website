@@ -1,3 +1,4 @@
+import { React } from 'react'
 import { EyeIcon, XIcon } from "@heroicons/react/solid"
 
 export default function PlayersList({ data, redirect, playerHighlight, setHighlight, setPlayerList, playerSummary }) {
