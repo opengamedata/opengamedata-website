@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import { React, useEffect, useState } from "react";
 // local imports
 import { useD3 } from "../../../controller/hooks/useD3";
+import { ViewModes } from "../../../controller/ViewModes";
 import PlayersList from "./PlayersList";
 import ForceGraph from './forceGraph'
 import JobGraphLegend from "./JobGraphLegend";
@@ -12,7 +13,7 @@ import JobGraphLegend from "./JobGraphLegend";
  * @param {Object} data raw data JSON object 
  * @returns 
  */
-export default function JobVisualizer({ rawData, setViewMode }) {
+export default function JobVisualizer({ rawData, setViewMode, selectedGame }) {
     const [linkMode, setLinkMode] = useState('TopJobCompletionDestinations')
     const [data, setData] = useState(null)
 
@@ -21,8 +22,6 @@ export default function JobVisualizer({ rawData, setViewMode }) {
 
     useEffect(() => {
         setData(convert(rawData))
-        // console.log(convert(rawData))
-
         setPlayerList(null)
     }, [rawData, linkMode])
 
@@ -32,7 +31,6 @@ export default function JobVisualizer({ rawData, setViewMode }) {
 
     /* manipulate raw data to a format to be used by the vis views */
     const convert = (rawData) => {
-
         // console.log('rawData', rawData)
 
         // metadata
@@ -50,14 +48,12 @@ export default function JobVisualizer({ rawData, setViewMode }) {
 
             const [k, metric] = key.split('_')
             // console.log(`${k}'s ${metric}: ${value}`);
-
             if (metric === 'JobsAttempted-avg-time-per-attempt') {
                 if (parseFloat(value) > meta.maxAvgTime) meta.maxAvgTime = parseFloat(value)
                 if (parseFloat(value) < meta.minAvgTime) meta.minAvgTime = parseFloat(value)
             }
 
             if (!nodeBuckets.hasOwnProperty(k)) nodeBuckets[k] = {} // create node pbject
-
             if (metric === 'JobsAttempted-job-name') nodeBuckets[k].id = value // store job name as node id
             else if (metric === 'JobsAttempted') continue
             else nodeBuckets[k][metric] = value
@@ -67,7 +63,6 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                 nodeBuckets[k][metric] = JSON.parse(nodeBuckets[k][metric])
             }
         }
-
         // console.log(nodeBuckets)
 
         // links
@@ -76,12 +71,9 @@ export default function JobVisualizer({ rawData, setViewMode }) {
 
         switch (linkMode) {
             case 'TopJobCompletionDestinations':
-
                 for (const [sourceKey, targets] of Object.entries(rawLinks)) {
                     for (const [targetKey, players] of Object.entries(targets)) {
-
                         if (sourceKey === targetKey) continue // omit self-pointing jobs
-
                         l.push({
                             source: sourceKey,
                             sourceName: sourceKey,
@@ -93,15 +85,10 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                     }
                 }
                 break;
-
-
             case 'TopJobSwitchDestinations':
-
                 for (const [sourceKey, targets] of Object.entries(rawLinks)) {
                     for (const [targetKey, players] of Object.entries(targets)) {
-
                         if (sourceKey === targetKey) continue // omit self-pointing jobs
-
                         l.push({
                             source: sourceKey,
                             sourceName: sourceKey,
@@ -112,16 +99,11 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                         })
                     }
                 }
-
                 break;
-
-
             case 'ActiveJobs':
-
                 const activeJobs = Object.keys(rawLinks)
                 for (let i = 1; i < activeJobs.length; i++) {
                     const target = activeJobs[i];
-
                     l.push({
                         source: activeJobs[0],
                         sourceName: activeJobs[0],
@@ -129,9 +111,7 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                         targetName: target
                     })
                 }
-
                 break;
-
             default:
                 alert('Something went wrong. Plase refresh the page and try again')
                 break;
@@ -139,8 +119,6 @@ export default function JobVisualizer({ rawData, setViewMode }) {
 
         // filter out nodes w/ no edges
         const relevantNodes = Object.values(nodeBuckets).filter(({ id }) => l.map(link => link.source).includes(id) || l.map(link => link.target).includes(id))
-
-
         if (linkMode === 'ActiveJobs')
             relevantNodes.forEach(n => {
                 // console.log(rawLinks)
@@ -151,10 +129,8 @@ export default function JobVisualizer({ rawData, setViewMode }) {
         // console.log('links', l)
 
         return { nodes: relevantNodes, links: l, meta: meta }
-
     }
     // const data = convert(rawData)
-
 
     const showPlayersList = (link) => {
         let players, title
@@ -176,9 +152,8 @@ export default function JobVisualizer({ rawData, setViewMode }) {
     * when user selects a player/session, they will be taken to that player/session's timeline
     */
     const toPlayerTimeline = (viewMetrics) => {
-        updateViewMetrics('PlayerTimeline', viewMetrics)
-
-    }
+        setViewMode(ViewModes.PLAYER);
+    };
 
     /**
      * draw the force directed graph on jobs/missions
@@ -204,14 +179,13 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                     `Standard Deviation: ${parseFloat(d['JobsAttempted-std-dev-per-attempt']).toFixed(2)}`
 
                 let gameSpecific = ''
-                switch (metrics.game) {
+                switch (selectedGame) {
                     case 'AQUALAB':
                         gameSpecific = '\n' +
                             `Experimentation: ${d['JobsAttempted-job-difficulties'] ? d['JobsAttempted-job-difficulties'].experimentation : 'N/A'}\n` +
                             `Modeling: ${d['JobsAttempted-job-difficulties'] ? d['JobsAttempted-job-difficulties'].modeling : 'N/A'}\n` +
                             `Argumentation: ${d['JobsAttempted-job-difficulties'] ? d['JobsAttempted-job-difficulties'].argumentation : 'N/A'}`
                         break;
-
                     default:
                         break;
                 }
@@ -274,7 +248,7 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                 <fieldset className="block">
                     <legend >Show paths of players who</legend>
                     <div className="mt-2">
-                        {requested_extractors[metrics.game].includes('TopJobCompletionDestinations') &&
+                        {requested_extractors[selectedGame].includes('TopJobCompletionDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -288,7 +262,7 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                                 </label>
                             </div>
                         }
-                        {requested_extractors[metrics.game].includes('TopJobSwitchDestinations') &&
+                        {requested_extractors[selectedGame].includes('TopJobSwitchDestinations') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
@@ -302,7 +276,7 @@ export default function JobVisualizer({ rawData, setViewMode }) {
                                 </label>
                             </div>
                         }
-                        {requested_extractors[metrics.game].includes('ActiveJobs') &&
+                        {requested_extractors[selectedGame].includes('ActiveJobs') &&
                             <div>
                                 <label className="inline-flex items-center">
                                     <input
