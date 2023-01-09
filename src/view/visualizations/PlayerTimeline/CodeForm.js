@@ -103,6 +103,7 @@ export default function CodeForm({ event, setFormVisible, selectedGame, selected
                                         </option>)}
                                 </select>
                                 <LongButton
+                                    selected={false}
                                     label='+ new'
                                     action={() => { setNewCodeToggle(true) }}
                                 />
