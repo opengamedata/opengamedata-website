@@ -13,7 +13,7 @@
         "showReuseMessage": true,
         "clear": false
       },
-      "args": ["--noEmit", "--watch" "--jsx"],
+      "args": ["--noEmit", "--watch", "--jsx"],
       "problemMatcher": [
         "$tsc-watch"
       ],
