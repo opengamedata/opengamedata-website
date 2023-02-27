@@ -1,0 +1,47 @@
+/* Customize Bootstrap sass variables here - see ~bootstrap/scss/_variables.scss */
+
+/* Colors */
+/* Grays */
+$gray-100: #F3EFEF;
+$gray-600: #6D6D6D;
+$gray-900: #242425; // body text
+
+/* Theme colors */
+$primary: #A2FFEB;
+$secondary: #3E3498;
+$dark: #0F175A;
+
+$link-color: #77C9C1;
+$link-hover-color:#4BB5AA;
+
+$box-shadow: 0 .25rem .625rem rgba(#222C85, .25);
+$box-shadow-sm: 0 .125rem .25rem rgba(#222C85, .125);
+$box-shadow-lg: 0 1rem 3rem rgba(#222C85, .2);
+
+/* Fonts */
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-monospace: "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$display-font-family: "brandon-grotesque", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+$display-font-weight: 700;
+$font-size-base: .875rem; // 14px
+$btn-font-weight: 700;
+$h1-font-size: 3rem;
+$h2-font-size: 2.625rem;
+$h3-font-size: 2rem;
+$h4-font-size: 1.5rem;
+$h5-font-size: 1rem;
+$display-font-sizes: (
+    1: 3.125rem,
+    2: 2.5rem
+);
+$enable-rfs: false; // turn off responsive font sizes
+
+/* Buttons */
+$btn-border-radius: .25rem;
+$btn-disabled-opacity: .6;
+$input-btn-padding-y: .594rem;
+$input-btn-padding-x: 1rem;
+
+/* Cards */
+$card-border-width: 0;
+$card-cap-bg: $secondary;

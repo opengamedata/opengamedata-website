@@ -1,4 +1,52 @@
-realtime_config.js
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/site/assets/styles/*.css
+/site/assets/scripts/bootstrap.bundle.min.js
+
+# dependencies
+/node_modules
+/site/assets/scripts/vendor
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+tests
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
 .DS_Store
-build
-node_modules
+Thumbs.db
+yarn-error.log
+
+realtime_config.js

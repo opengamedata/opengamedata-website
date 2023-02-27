@@ -1,0 +1,114 @@
+/* Set custom styles for elements and classes here (applied on top of themed bootstrap) */
+@import "bootstrap/scss/mixins/buttons";
+@import "bootstrap/scss/functions";
+
+/* Custom buttons - primary, secondary, outline-secondary, dark */
+.btn-primary {
+    @include button-variant($primary,
+                            $primary,
+                            color-contrast($primary),
+                            rgba($primary,0.7),
+                            rgba($primary,0.7),
+                            rgba(color-contrast($primary),0.7),
+                            $primary,
+                            $primary,
+                            color-contrast($primary));
+}
+.btn-secondary {
+    @include button-variant(transparent,
+                            transparent,
+                            $secondary,
+                            transparent,
+                            transparent,
+                            rgba($secondary,.7),
+                            transparent,
+                            transparent,
+                            $secondary);
+    --bs-btn-padding-y: .469rem;
+    --bs-btn-padding-x: .75rem;
+    text-transform: uppercase;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.btn-outline-secondary {
+    @include button-outline-variant($secondary, 
+                            rgba($secondary,.7),
+                            white,
+                            $secondary, 
+                            $secondary);
+    --bs-btn-hover-border-color: rgba($secondary,.7);
+    --bs-btn-padding-y: .469rem;
+    --bs-btn-padding-x: .75rem;
+    border-width: 2px;
+    text-transform: uppercase;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.btn-dark {
+    @include button-variant($dark, 
+                            $primary, 
+                            $primary,
+                            $dark,
+                            rgba($primary,0.7),
+                            rgba($primary,0.7),
+                            $dark, 
+                            $primary, 
+                            $primary);
+}
+.btn:not(.btn-link) {
+    letter-spacing: .1em;
+}
+
+/* Cards */
+.card-title {
+    font-weight: 700;
+    font-size: 1.125rem;
+}
+.card-subtitle {
+    color: #{$gray-600};
+}
+
+/* Text */
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+    font-weight: 700;
+}
+
+/* Data Pipeline Popover */
+.pipeline-popover {
+    --bs-popover-border-width: 0;
+    --bs-popover-header-bg: white;
+    --bs-popover-font-size: #{$font-size-base};
+    --bs-popover-header-font-size: 2rem;
+    --bs-popover-header-padding-x: 0;
+    .popover-arrow {
+        display: none;
+    }
+    .btn-close {
+        width: 1.2em;
+        height: 1.2em;
+        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle-fill' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z'/></svg>");
+        background-size: 1.2em;
+        color: #{$gray-900};
+        opacity: 1;
+        position: absolute;
+        right: -1em;
+        top: -1em;
+        &:hover {
+            opacity: .7;
+        }
+    }
+    .popover-header {
+        border-bottom: 4px solid #{$gray-100};
+        margin-top: 1rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        small {
+            font-weight: normal;
+            font-size: 1rem;
+            display: block;
+            padding-top: 1rem;
+        }
+    }
+}
