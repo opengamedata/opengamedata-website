@@ -1,0 +1,26 @@
+/* Global styles */
+
+/* Hero class */
+.hero { 
+    p {
+        font-family: var(--bs-font-monospace);
+        &.lead {
+            font-size: 1.5rem;
+        }
+    }
+    .btn {
+        --bs-btn-padding-x: 1.5rem;
+    }
+}
+
+/* Buttons */
+.btn i.bi::before {
+    font-weight: 700 !important; // bold any button icons
+}
+
+/* Footer */
+footer {
+    padding: 5rem;
+    width: 100%;
+    color: white;
+}
