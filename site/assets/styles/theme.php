@@ -66,5 +66,5 @@
     <!-- Bootstrap 5 Javascript -->
     <script src="/assets/scripts/bootstrap.bundle.min.js"></script>    
     <!-- Custom Javascript -->
-    <script src="/app.js"></script> 
+    <script src="/assets/scripts/app.js"></script> 
 </html>

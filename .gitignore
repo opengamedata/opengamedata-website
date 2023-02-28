@@ -2,7 +2,6 @@
 
 # compiled output
 /site/assets/styles/*.css
-/site/assets/scripts/bootstrap.bundle.min.js
 
 # dependencies
 /node_modules

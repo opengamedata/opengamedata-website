@@ -1,8 +1,8 @@
 {
-  "name": "php",
+  "name": "opengamedata",
   "version": "1.0.0",
   "description": "setup",
-  "main": "./site/app.js",
+  "main": "./site/assets/scripts/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
