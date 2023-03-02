@@ -1,0 +1,56 @@
+{
+    "JOWILDER": {
+        "game_name": "Jo Wilder and the Capitol Case",
+        "game_description": "This award-winning game turns kids into history detectives! In this point-and-click adventure, players use the methods of real historians to uncover the story behind each mystery artifact.",
+        "target_audience": "Grades 3-5",
+        "subject": "History",
+        "developers": [
+            {
+                "name": "PBS Wisconsin",
+                "link": "https://pbswisconsineducation.org/"
+            }
+        ],
+        "play_link": "https://pbswisconsineducation.org/jowilder/play-the-game/",
+        "source_link": "https://github.com/fielddaylab/jo_wilder",
+        "thumbnail_path" : "./assets/images/thumbs/jowilder-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/jo_wilder/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/JOWILDER/readme.md",
+        "studies": [
+            {
+                "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
+                "authors" : [
+                    "David J. Gagnon"
+                ],
+                "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
+                "link": "https://arxiv.org/abs/2210.09906"
+            }
+        ]
+    },
+    "WAKE": {
+        "game_name": "Wake: Tales from the Aqualab",
+        "game_description": "Wake: Tales from the Aqualab is a 6th-9th grade science game that challenges students with engaging, authentic missions in a variety of ocean-based ecosystems. In Wake, students take on the role of a scientist studying ocean ecosystems, traveling to different ocean research sites to answer questions and solve problems. As they progress at their own pace, players are guided to gradually take on more complex science challenges.",
+        "target_audience": "Grades 6-9",
+        "subject": "Life Sciences",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://fielddaylab.org/play/wake/ci/production/",
+        "source_link": "https://github.com/fielddaylab/wake",
+        "thumbnail_path" : "https://fielddaylab.wisc.edu/assets/img/gameplay/wake-gameplay.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAKE/readme.md",
+        "studies": [
+            {
+                "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
+                "authors" : [
+                    "David J. Gagnon"
+                ],
+                "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
+                "link": "https://arxiv.org/abs/2210.09906"
+            }
+        ]
+    }
+}

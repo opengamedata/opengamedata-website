@@ -1,5 +1,37 @@
 /* Global styles */
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+header {
+    width: 100%;
+    background-color: white;
+    padding: .75rem 1rem;
+    &.shadow {
+        z-index: 100;
+    }
+    .logo {
+        width: 366px;
+    }
+}
+
+footer {
+    padding: 5rem 6vw;
+    width: 100%;
+    color: white;
+    .logo {
+        width: 171px;
+    }
+}
+
 /* Hero class */
 .hero { 
     p {
@@ -18,9 +50,32 @@
     font-weight: 700 !important; // bold any button icons
 }
 
-/* Footer */
-footer {
-    padding: 5rem;
-    width: 100%;
-    color: white;
+img.rounded {
+    border-radius: .625rem !important;
+}
+
+img.avatar {
+    width: 33px;
+}
+
+/* Game Data page */
+#gamedata {
+    &.container-fluid {
+        padding-left: 6vw;
+        padding-right: 6vw;
+        padding-top: 5rem;
+    }
+    .button-bar {
+        .btn {
+            border-width: 0;
+            &:not(:last-of-type) {
+                border-right-color: var(--bs-gray-300);
+                border-radius: 0;
+                border-width: 0 2px;
+            }
+        }
+    }
+    .stats {
+        padding: 1.5rem 4rem 1.5rem 1.5rem;
+    }
 }
