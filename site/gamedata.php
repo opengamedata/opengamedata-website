@@ -137,9 +137,8 @@ function num_in_kilo ( $num ) {
             <section class="mb-5">
                 <!-- Publications -->
                 <h3>Publications</h3>
-                <!-- TODO: Update this to use the API information that will be returned -->
-                <?php $publication = array( (object) ['StudyName'=>'Whale Fall Study', 'Link'=>'www.cnn.com'], (object) ['StudyName'=>'Other Study', 'Link'=>'www.google.com']);
-                    foreach ($publication as $value) {
+                <?php
+                    foreach ($game->getPublications() as $value) {
                         echo '<div class="card shadow mb-4">
                             <div class="card-body">
                                 <a class="btn btn-secondary btn-publication" href="' . $value->Link . '">' . $value->StudyName . '</a>
