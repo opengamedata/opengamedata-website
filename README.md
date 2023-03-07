@@ -15,3 +15,7 @@ Run `gulp proxy` to start dev server, proxying http://localhost:8881
 Run `gulp build` to build the site for deployment.
 
 Note: Transpiled css and vendor js files are excluded from GIT
+
+### Run the dev API backend
+The API (opengamedata-website-api) should be running on http://localhost:5000 in order to get Game Usage and Data Pipeline/Templates files list. 
+- See README in API for further instructions.

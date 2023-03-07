@@ -1,8 +1,11 @@
+<?php
+$title = isset($game) ? " - " . $game->getName() : "";
+?>
 <!doctype html>
 <html lang="en">
     <head>
         <title>Open Game Data
-            <?php if (isset($game_name)) echo " - " . $game_name; ?>
+            <?php echo $title; ?>
         </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

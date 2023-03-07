@@ -1,98 +1,101 @@
 <?php
+
+require_once 'includes/services.php';
+require_once 'models/game.php';
+require_once 'models/game_usage.php';
+require_once 'models/game_file_info.php';
+
 // Declare variables
+$game_id = null;
 $game = null;
+
 $month_name = null;
-$year = null;
 $prev_month = null;
 $next_month = null;
+$prev_disabled = null;
+$next_disabled = null;
 
-// Response variables
-// game_list
-$game_name = null;
-$game_description = null;
-$play_link = null;
-$source_link = null;
-$thumbnail_path = null;
-$developer_name = null;
-$developer_link = null;
-
-// file_list
-$start_date = null;
-$end_date = null;
-$sessions = null;
-$events_file = null;
-$sessions_file = null;
-$players_file = null;
-$population_file = null;
-$raw_file = null;
-$events_template = null;
-$sessions_template = null;
-$players_template = null;
-$population_template = null;
-
-// game_data
-$first_month = null;
-$first_year = null;
-$last_month = null;
-$last_year = null;
-$total_monthly_sessions = null;
 $game_json = null;
-$game_obj = null;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
-    $game = strtoupper(htmlspecialchars($_GET['game']));
+    $game_id = strtoupper(htmlspecialchars($_GET['game']));
     
-    // $curl api for game data
-    $game_json = json_decode(file_get_contents('data/game_list.json'));
+    // Get game details from api
+    $game_json = services\getGameDetails($game_id);
+    $game = $game_json ? Game::fromJson($game_id, $game_json) : null;
+   
+    // Get game usage from api
+    $response_obj = services\getGameUsage($game_id);
 
-    if (isset($game_json)) $game_obj = $game_json->{$game};
+    if (isset($response_obj) && $response_obj->{'success'}) {
+        $game_usage = GameUsage::fromObj($response_obj->{'data'});
 
-    // Game objects
-    $game_name = $game_obj->{'game_name'};
-    $game_description = $game_obj->{'game_description'}; 
-    $thumbnail_path = $game_obj->{'thumbnail_path'};
-    $developer_name = $game_obj->{'developers'}[0]->{'name'};
-    $developer_link = $game_obj->{'developers'}[0]->{'link'};
-    $play_link = $game_obj->{'play_link'};
-    $source_link = $game_obj->{'source_link'};
+        // Populate current, previous, and next dates
+        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $game_usage->getSelectedYear() . '-' . $game_usage->getSelectedMonth() . '-1');
+        $month_name = $selected_date->format('F');
 
-    // temp
-    $end_date = "03/31/2023";
-    $start_date = "03/01/2023";
+        if ($game_usage->getNextMonth($selected_date) == $selected_date) {
+            $next_disabled = 'disabled';
+            $next_month = $selected_date->modify('+1 month')->format('F');
+        } else {
+            $next_disabled = '';
+            $next_month = $game_usage->getNextMonth($selected_date)->format('F');
+        }
+        if ($game_usage->getPrevMonth($selected_date) == $selected_date) {
+            $prev_disabled = 'disabled';
+            $prev_month = $selected_date->modify('-1 month')->format('F');
+        } else {
+            $prev_disabled = '';
+            $prev_month = $game_usage->getPrevMonth($selected_date)->format('F');
+        }
 
+    }
 
-    $month_name = date("F",strtotime($end_date));
-    $year = date("Y", strtotime($end_date));
+    $response_obj = null;
 
-    $first_month = 3;
-    $first_year = 2022;
-    $last_month = 3;
-    $last_year = 2023;
-    $total_monthly_sessions = 235235;
+    // Get game file info from API
+    $response_obj = services\getGameFileInfoByMonth($game_id, $game_usage->getSelectedYear(), $game_usage->getSelectedMonth());
+    
+    if (isset($response_obj) && $response_obj->{'success'}) {
+        $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+
+        // TODO process file links    
+    }
 
 }
+
+/* Round number to kilos (nearest 1K)
+ * <params> number
+ * Returns number in kilos or the number passed if under 1K 
+ */ 
+function num_in_kilo ( $num ) {
+    if ($num < 1000) return $num;
+    return round($num/1000) . "K"; 
+} 
+
 ?>
 <?php require 'includes/header.php'; ?>
 <main id="gamedata" class="container-fluid">
+    <?php if (isset($game)) : ?>
     <section>
         <div class="row mb-5">
             <div class="col-md-7 my-auto">
-                <h2><?php echo $game_name ?></h2>
+                <h2><?php echo $game->getName() ?></h2>
                 <div class="d-flex align-items-center mb-3">
                     <img class="avatar" src="/assets/images/avatar.png">
                     <div class="button-bar">
-                        <?php if (isset($developer_name)) echo '<a class="btn btn-secondary" href="' . $developer_link . '">Developer: ' . $developer_name . '</a>'; ?>
-                        <?php if (isset($play_link)) echo '<a class="btn btn-secondary" href="' . $play_link . '" target="_blank">Play Game</a>'; ?>
-                        <?php if (isset($source_link)) echo '<a class="btn btn-secondary" href="' . $source_link . '" target="_blank">Source Code</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . $game->getDeveloperLink() . '">Developer: ' . $game->getDeveloperName() . '</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . $game->getPlayLink() . '" target="_blank">Play Game</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . $game->getSourceLink() . '" target="_blank">Source Code</a>'; ?>
                     </div>
                 </div>
                 <p>
-                    <?php echo $game_description ?>
+                    <?php echo $game->getDescription() ?>
                 </p>
             </div>
             <div class="col">
-                <?php if (isset($thumbnail_path)) echo '<img class="img-fluid rounded" src="' . $thumbnail_path . '">'; ?>
+                <?php echo '<img class="img-fluid rounded" src="' . $game->getThumbPath() . '">'; ?>
             </div>
         </div>
     </section>
@@ -100,12 +103,12 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <div class="row mb-5">
             <div class="col">
                 <h3 class="mb-0">Player Activity</h3>
-                <strong><?php echo $month_name . " " . $year ?></strong>
+                <strong><?php echo $month_name . " " . $game_usage->getSelectedYear() ?></strong>
             </div>
             <div class="col text-end">
                 <nav class="text-nowrap">
-                    <button type="button" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i> March</button>
-                    <button type="button" class="btn btn-outline-secondary" disabled>April <i class="bi bi-chevron-right"></i></button>
+                    <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
+                    <?php echo '<button id="month-next" type="button" class="btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
                 </nav>
             </div>
         </div>
@@ -117,7 +120,9 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <!-- Stats -->
                 <h3><?php echo $month_name . " Stats:" ?></h3>
                 <div class="stats bg-primary text-secondary rounded d-inline-block">
-                    <h4 class="mb-0">10K Plays</h4>
+                    <h4 class="mb-0">
+                        <?php echo num_in_kilo($game_usage->getTotalMonthlySessions()) . " Plays"; ?>
+                    </h4>
                     <?php echo "In " . $month_name ?>
                 </div>
             </section>
@@ -137,6 +142,9 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             </section>
         </div>
     </div>
+    <?php else : 
+        echo '<h2 class="h3">No game data available.</h2>';
+    endif; ?>
 </main>
 <!-- Begin Footer Include -->
 <?php require 'includes/footer.php'; ?>
