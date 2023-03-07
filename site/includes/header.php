@@ -1,5 +1,5 @@
 <?php
-$title = isset($game) ? " - " . $game->getName() : "";
+$title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
 ?>
 <!doctype html>
 <html lang="en">

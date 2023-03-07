@@ -19,7 +19,7 @@ $game_json = null;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
-    $game_id = strtoupper(htmlspecialchars($_GET['game']));
+    $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9]+/", "", $_GET['game']));
     
     // Get game details from api
     $game_json = services\getGameDetails($game_id);
@@ -79,21 +79,21 @@ function num_in_kilo ( $num ) {
     <section>
         <div class="row mb-5">
             <div class="col-md-7 my-auto">
-                <h2><?php echo $game->getName() ?></h2>
+                <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
                 <div class="d-flex align-items-center mb-3">
                     <img class="avatar" src="/assets/images/avatar.png">
                     <div class="button-bar">
-                        <?php echo '<a class="btn btn-secondary" href="' . $game->getDeveloperLink() . '">Developer: ' . $game->getDeveloperName() . '</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . $game->getPlayLink() . '" target="_blank">Play Game</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . $game->getSourceLink() . '" target="_blank">Source Code</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
                     </div>
                 </div>
                 <p>
-                    <?php echo $game->getDescription() ?>
+                    <?php echo htmlspecialchars($game->getDescription()) ?>
                 </p>
             </div>
             <div class="col">
-                <?php echo '<img class="img-fluid rounded" src="' . $game->getThumbPath() . '">'; ?>
+                <?php echo '<img class="img-fluid rounded" src="' . htmlspecialchars($game->getThumbPath()) . '">'; ?>
             </div>
         </div>
     </section>
@@ -101,7 +101,7 @@ function num_in_kilo ( $num ) {
         <div class="row mb-5">
             <div class="col">
                 <h3 class="mb-0">Player Activity</h3>
-                <strong><?php echo $month_name . " " . $game_usage->getSelectedYear() ?></strong>
+                <strong><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></strong>
             </div>
             <div class="col text-end">
                 <nav class="text-nowrap">
@@ -119,7 +119,7 @@ function num_in_kilo ( $num ) {
                 <h3><?php echo $month_name . " Stats:" ?></h3>
                 <div class="stats bg-primary text-secondary rounded d-inline-block">
                     <h4 class="mb-0">
-                        <?php echo num_in_kilo($game_usage->getTotalMonthlySessions()) . " Plays"; ?>
+                        <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
                     </h4>
                     <?php echo "In " . $month_name ?>
                 </div>
@@ -144,8 +144,7 @@ function num_in_kilo ( $num ) {
         echo '<h2 class="h3">No game data available.</h2>';
     endif; ?>
 </main>
-
-<!-- Begin Footer Include -->
 <script type="module" src="/assets/scripts/services.js"></script>
 <script type="module" src="/assets/scripts/game_usage.js"></script>
+<!-- Begin Footer Include -->
 <?php require 'includes/footer.php'; ?>
