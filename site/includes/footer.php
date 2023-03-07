@@ -4,7 +4,8 @@
         </footer>
     </body>
     <!-- Bootstrap 5 Javascript -->
-    <script src="/assets/scripts/bootstrap.bundle.min.js"></script>    
+    <script src="/assets/scripts/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/assets/scripts/axios.min.js"></script>
     <!-- Custom Javascript -->
     <script src="/assets/scripts/app.js"></script> 
 </html>

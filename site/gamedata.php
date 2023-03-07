@@ -146,5 +146,8 @@ function num_in_kilo ( $num ) {
         echo '<h2 class="h3">No game data available.</h2>';
     endif; ?>
 </main>
+
 <!-- Begin Footer Include -->
+<script type="module" src="/assets/scripts/services.js"></script>
+<script type="module" src="/assets/scripts/game_usage.js"></script>
 <?php require 'includes/footer.php'; ?>
