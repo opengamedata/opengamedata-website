@@ -24,8 +24,9 @@
                             transparent,
                             transparent,
                             $secondary);
-    --bs-btn-padding-y: .469rem;
-    --bs-btn-padding-x: .75rem;
+    --bs-btn-padding-y: .157rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
     text-transform: uppercase;
     &:hover {
         text-decoration: underline;
@@ -38,8 +39,9 @@
                             $secondary, 
                             $secondary);
     --bs-btn-hover-border-color: rgba($secondary,.7);
-    --bs-btn-padding-y: .469rem;
+    --bs-btn-padding-y: .563rem;
     --bs-btn-padding-x: .75rem;
+    --bs-btn-font-size: .75rem;
     border-width: 2px;
     text-transform: uppercase;
     &:hover {
