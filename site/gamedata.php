@@ -113,6 +113,7 @@ function num_in_kilo ( $num ) {
             </div>
         </div>
         <!-- Chart -->
+        <?php require 'includes/chart.php'; ?>
     </section>
     <div class="row mb-5">
         <div class="col-md">
