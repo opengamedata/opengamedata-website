@@ -33,7 +33,13 @@ footer {
 }
 
 /* Hero class */
-.hero { 
+.hero {
+    background-image: url("/assets/images/hero-artwork.png"), url("/assets/images/grid-top.jpg"), url("/assets/images/grid-bottom.jpg");
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: right, top, bottom; 
+    background-size: auto 90%, auto 380px, auto 380px;
+    background-blend-mode: normal, lighten, lighten;
+    min-height: 70vh;
     p {
         font-family: var(--bs-font-monospace);
         &.lead {
@@ -42,6 +48,15 @@ footer {
     }
     .btn {
         --bs-btn-padding-x: 1.5rem;
+    }
+    @media (max-width: 575.98px) {
+        background-position: top, top, bottom;
+        p.lead {
+            font-size: 1.25rem;
+        }
+    }
+    @media (max-width: 991.98px) {
+        background-size: 100vw, auto 380px, auto 380px;
     }
 }
 
@@ -77,5 +92,22 @@ img.avatar {
     }
     .stats {
         padding: 1.5rem 4rem 1.5rem 1.5rem;
+    }
+}
+
+/* Dashboard */
+#dashboard {
+    .container-fluid {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        padding-top: 4rem;
+    }
+    .card-img-top {
+        height: 50%;
+        object-fit: cover;
+        width: auto;
+    }
+    .card:hover {
+        transform: scale(1.05);
     }
 }

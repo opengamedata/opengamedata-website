@@ -4,6 +4,7 @@ require_once 'includes/services.php';
 require_once 'models/game.php';
 require_once 'models/game_usage.php';
 require_once 'models/game_file_info.php';
+require_once 'includes/functions.php';
 
 // Declare variables
 $game_id = null;
@@ -62,15 +63,6 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     }
 
 }
-
-/* Round number to kilos (nearest 1K)
- * <params> number
- * Returns number in kilos or the number passed if under 1K 
- */ 
-function num_in_kilo ( $num ) {
-    if ($num < 1000) return $num;
-    return round($num/1000) . "K"; 
-} 
 
 ?>
 <?php require 'includes/header.php'; ?>
