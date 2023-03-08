@@ -167,6 +167,15 @@ function num_in_kilo ( $num ) {
             <section class="mb-5">
                 <!-- Publications -->
                 <h3>Publications</h3>
+                <?php
+                    foreach ($game->getPublications() as $value) {
+                        echo '<div class="card shadow mb-4">
+                            <div class="card-body">
+                                <a class="btn btn-secondary btn-publication" href="' . htmlspecialchars($value->Link) . '">' . htmlspecialchars($value->StudyName) . '</a>
+                            </div>
+                        </div>';
+                    }
+                ?>
             </section>
         </div>
     </div>
