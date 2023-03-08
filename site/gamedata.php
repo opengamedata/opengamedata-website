@@ -31,6 +31,8 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
 
     if (isset($response_obj) && $response_obj->{'success'}) {
         $game_usage = GameUsage::fromObj($response_obj->{'data'});
+        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $game_usage->getSelectedYear() . '-' . $game_usage->getSelectedMonth() . '-1');
+        $month_name = $selected_date->format('F');
     }
 
     $response_obj = null;
@@ -41,11 +43,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     if (isset($response_obj) && $response_obj->{'success'}) {
         $game_files = GameFileInfo::fromObj($response_obj->{'data'});
 
-        // TODO process file links    
         // Populate current, previous, and next dates
-        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $game_usage->getSelectedYear() . '-' . $game_usage->getSelectedMonth() . '-1');
-        $month_name = $selected_date->format('F');
-
         if ($game_files->getNextMonth($selected_date) == $selected_date) {
             $next_disabled = 'disabled';
             $next_month = $selected_date->modify('+1 month')->format('F');
@@ -102,7 +100,7 @@ function num_in_kilo ( $num ) {
         <div class="row mb-5">
             <div class="col">
                 <h3 class="mb-0">Player Activity</h3>
-                <strong><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></strong>
+                <strong><span id="player-activity-date"><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></span></strong>
             </div>
             <div class="col text-end">
                 <nav class="text-nowrap">
@@ -117,12 +115,12 @@ function num_in_kilo ( $num ) {
         <div class="col-md">
             <section class="mb-5">
                 <!-- Stats -->
-                <h3><?php echo $month_name . " Stats:" ?></h3>
+                <h3 id="stats-header"><?php echo $month_name . " Stats:" ?></h3>
                 <div class="stats bg-primary text-secondary rounded d-inline-block">
-                    <h4 class="mb-0">
+                    <h4 id="num-plays" class="mb-0">
                         <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
                     </h4>
-                    <?php echo "In " . $month_name ?>
+                    <span id="stats-data-month"><?php echo "In " . $month_name ?></span>
                 </div>
             </section>
             <section class="mb-5">
@@ -138,28 +136,28 @@ function num_in_kilo ( $num ) {
                 <?php if (isset($game_files) && $game_files->getEventsTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getEventsTemplate()) . '">Events Data</a>'; ?>
+                        <?php echo '<a id="events-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getEventsTemplate()) . '">Events Data</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
                 <?php if (isset($game_files) && $game_files->getPlayersTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPlayersTemplate()) . '">Players Data</a>'; ?>
+                        <?php echo '<a id="players-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPlayersTemplate()) . '">Players Data</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
                 <?php if (isset($game_files) && $game_files->getPopulationTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPopulationTemplate()) . '">Population Data</a>'; ?>
+                        <?php echo '<a id="population-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPopulationTemplate()) . '">Population Data</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
                 <?php if (isset($game_files) && $game_files->getSessionsTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getSessionsTemplate()) . '">Sessions Data</a>'; ?>
+                        <?php echo '<a id="sessions-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getSessionsTemplate()) . '">Sessions Data</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
