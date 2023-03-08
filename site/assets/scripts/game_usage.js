@@ -53,33 +53,36 @@ prevMonth.addEventListener('click', prevMonthFunc, false);
 nextMonth.addEventListener('click', nextMonthFunc, false);
 
 function updateHtml(gameId, currentYear, currentMonth) {
-    console.log("updateHtml");
     // get game usage for that month
     getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
-        // update the months and year
-        var currentJSMonth = currentMonth - 1;
-        var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', {month: 'long'});
-        var nextMonthName = new Date(currentYear, (currentJSMonth + 1) % 12).toLocaleString('default', {month: 'long'});
-        var prevMonthName = new Date(currentYear, (currentJSMonth - 1) % 12).toLocaleString('default', {month: 'long'});
-        prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
-        nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
-        statsHeader.innerHTML = currentMonthName + ' Stats:';
-        statsData.innerHTML = 'In ' + currentMonthName;
-        playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
-        // update the game usage information
-        var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
-        numPlays.innerHTML = monthlySessions + ' Plays';
+        if (response.success) {
+            // update the months and year
+            var currentJSMonth = currentMonth - 1;
+            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', {month: 'long'});
+            var nextMonthName = new Date(currentYear, (currentJSMonth + 1) % 12).toLocaleString('default', {month: 'long'});
+            var prevMonthName = new Date(currentYear, (currentJSMonth - 1) % 12).toLocaleString('default', {month: 'long'});
+            prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
+            nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
+            statsHeader.innerHTML = currentMonthName + ' Stats:';
+            statsData.innerHTML = 'In ' + currentMonthName;
+            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
+            // update the game usage information
+            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
+            numPlays.innerHTML = monthlySessions + ' Plays';
+        }
     });
 
     // get game files for that month
     getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
-        // update next / previous to be enabled or disabled depending on what other data exists
-        nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
-        prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;
-        // update general templates
-        eventsData.href = response.data.events_template;
-        playersData.href = response.data.players_template;
-        populationData.href = response.data.population_template;
-        sessionsData.href = response.data.sessions_template;
+        if (response.success) {
+            // update next / previous to be enabled or disabled depending on what other data exists
+            nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
+            prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;
+            // update general templates
+            eventsData.href = response.data.events_template;
+            playersData.href = response.data.players_template;
+            populationData.href = response.data.population_template;
+            sessionsData.href = response.data.sessions_template;
+        }
     });
 }
