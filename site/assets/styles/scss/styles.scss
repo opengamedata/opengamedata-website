@@ -106,6 +106,9 @@ img.avatar {
         height: 50%;
         object-fit: cover;
         width: auto;
+        @media (max-width: 575.98px) {
+            height: 70%;
+        }
     }
     .card:hover {
         transform: scale(1.05);
