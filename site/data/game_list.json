@@ -43,14 +43,6 @@
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAKE/readme.md",
         "studies": [
-            {
-                "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
-                "authors" : [
-                    "David J. Gagnon"
-                ],
-                "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
-                "link": "https://arxiv.org/abs/2210.09906"
-            }
         ]
     },
     "LAKELAND": {
