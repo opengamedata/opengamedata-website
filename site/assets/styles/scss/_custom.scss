@@ -63,6 +63,12 @@
     letter-spacing: .1em;
 }
 
+/* Add to btn-secondary for the general template */
+.btn-general {
+    --bs-btn-font-size: 1.25rem;
+    text-transform: none;
+}
+
 /* Add to btn-secondary for the publications template */
 .btn-publication {
     --bs-btn-font-size: 1.25rem;
@@ -71,7 +77,6 @@
     padding-bottom: 8px;
     text-align: left;
 }
-
 
 /* Cards */
 .card-title {
