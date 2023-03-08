@@ -28,17 +28,17 @@ function getGameDetails(string $game_id)
  */
 function getGameUsage(string $game_id, ?string $year = null, ?string $month = null)
 {
-    $params = "?game_id=" . $game_id;
-    if (isset($year)) $params .= "&year=$year";
-    if (isset($month)) $params .= "&month=$month";
-    // TODO Get url from config
-    $usage_url = "http://localhost:5000/getGameUsageByMonth" . $params;
+    $params = array(
+        'game_id' => $game_id,
+        'year' => $year,
+        'month' => $month
+    );
 
-    $curl = curl_init($usage_url);
+    // TODO Get url from config
+    $usage_url = "http://localhost:5000/getGameUsageByMonth";
+
+    $curl = curl_init($usage_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json'
-      ]);
     $response = curl_exec($curl);
     curl_close($curl);
 
@@ -52,15 +52,16 @@ function getGameUsage(string $game_id, ?string $year = null, ?string $month = nu
  */
 function getGameFileInfoByMonth(string $game_id, string $year, string $month)
 {
-    $params = "?game_id=$game_id&year=$year&month=$month";
+    $params = array(
+        'game_id' => $game_id,
+        'year' => $year,
+        'month' => $month
+    );
     // TODO Get url from config
-    $info_url = "http://localhost:5000/getGameFileInfoByMonth" . $params;
+    $info_url = "http://localhost:5000/getGameFileInfoByMonth";
 
-    $curl = curl_init($info_url);
+    $curl = curl_init($info_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json'
-      ]);
     $response = curl_exec($curl);
     curl_close($curl);
 
