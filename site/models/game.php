@@ -9,8 +9,9 @@ class Game
     protected $source_link;
     protected $developer_name;
     protected $developer_link;
+    protected $publications;
 
-    public function __construct(string $id, string $name, string $description, string $thumbnail_path, string $play_link, string $source_link, string $developer_name, string $developer_link)
+    public function __construct(string $id, string $name, string $description, string $thumbnail_path, string $play_link, string $source_link, string $developer_name, string $developer_link, array $publications)
     {
         $this->game_id = $id;
         $this->game_name = $name;
@@ -20,6 +21,7 @@ class Game
         $this->source_link = $source_link;
         $this->developer_name = $developer_name;
         $this->developer_link = $developer_link;
+        $this->publications = $publications;
     }
 
     public static function fromJson(string $id, string $json): static {
@@ -30,7 +32,13 @@ class Game
         // game object returned from api
         $data = json_decode($json);
         
-        return new static($id, $data->{'game_name'}, $data->{'game_description'}, $data->{'thumbnail_path'}, $data->{'play_link'}, $data->{'source_link'}, $data->{'developers'}[0]->{'name'}, $data->{'developers'}[0]->{'link'});
+        // build the array for publications
+        $publications = array();
+        foreach ($data->{'studies'} as $value) {
+            array_push($publications, (object) ["StudyName" => $value->{'name'} , "Link" => $value->{'link'}]);
+        }
+
+        return new static($id, $data->{'game_name'}, $data->{'game_description'}, $data->{'thumbnail_path'}, $data->{'play_link'}, $data->{'source_link'}, $data->{'developers'}[0]->{'name'}, $data->{'developers'}[0]->{'link'}, $publications);
     }
 
     // Get methods
@@ -65,6 +73,10 @@ class Game
     public function getDeveloperLink()
     {
         return $this->developer_link;
+    }
+    public function getPublications()
+    {
+        return $this->publications;
     }
 
     // Set methods

@@ -63,6 +63,16 @@
     letter-spacing: .1em;
 }
 
+/* Add to btn-secondary for the publications template */
+.btn-publication {
+    --bs-btn-font-size: 1.25rem;
+    text-transform: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+}
+
+
 /* Cards */
 .card-title {
     font-weight: 700;
