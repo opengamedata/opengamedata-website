@@ -8,6 +8,7 @@ require_once 'models/game_file_info.php';
 // Declare variables
 $game_id = null;
 $game = null;
+$game_files = null;
 
 $month_name = null;
 $prev_month = null;
@@ -36,7 +37,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
 
     // Get game file info from API
     $response_obj = services\getGameFileInfoByMonth($game_id, $game_usage->getSelectedYear(), $game_usage->getSelectedMonth());
-    
+
     if (isset($response_obj) && $response_obj->{'success'}) {
         $game_files = GameFileInfo::fromObj($response_obj->{'data'});
 
@@ -133,6 +134,35 @@ function num_in_kilo ( $num ) {
             <section class="mb-5">
                 <!-- Templates -->
                 <h3>General Templates</h3>
+                <p>These templates link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+                <?php if (isset($game_files) && $game_files->getEventsTemplate() !== null) : ?>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getEventsTemplate()) . '">Events Data</a>'; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($game_files) && $game_files->getPlayersTemplate() !== null) : ?>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPlayersTemplate()) . '">Players Data</a>'; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($game_files) && $game_files->getPopulationTemplate() !== null) : ?>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPopulationTemplate()) . '">Population Data</a>'; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($game_files) && $game_files->getSessionsTemplate() !== null) : ?>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <?php echo '<a class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getSessionsTemplate()) . '">Sessions Data</a>'; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
             </section>
             <section class="mb-5">
                 <!-- Publications -->
