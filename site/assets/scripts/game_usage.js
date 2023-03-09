@@ -14,6 +14,27 @@ const eventsData = document.getElementById('events-data');
 const playersData = document.getElementById('players-data');
 const populationData = document.getElementById('population-data');
 const sessionsData = document.getElementById('sessions-data');
+// Pipeline dynamic elements
+const rawBtn = document.getElementById('raw-btn');
+const rawLink = document.getElementById('raw-link');
+const rawMonth = document.getElementById('raw-month');
+const rawHead = document.getElementById("raw-header");
+const rawBody = document.getElementById('raw-body');
+const eventBtn = document.getElementById('event-btn');
+const eventLink = document.getElementById('event-link');
+const eventMonth = document.getElementById('event-month');
+const eventHead = document.getElementById("event-header");
+const eventBody = document.getElementById('event-body');
+const featureBtn = document.getElementById('feature-btn');
+const featureLink = document.getElementById('feature-link');
+const featureMonth = document.getElementById('feature-month');
+// const featureHead = document.getElementById("feature-header");
+// const featureBody = document.getElementById('feature-body');
+
+// Pipeline popovers
+const rawPop = bootstrap.Popover.getOrCreateInstance('#raw-btn');
+const eventPop = bootstrap.Popover.getOrCreateInstance('#event-btn');
+// const featurePop = bootstrap.Popover.getOrCreateInstance('#feature-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
@@ -28,6 +49,28 @@ document.addEventListener('DOMContentLoaded', () => {
             createChart(response.data.sessions_by_day, currentMonthName);
         }
     });
+
+    // Pipeline close button listeners
+    rawBtn.addEventListener('inserted.bs.popover', () => {
+        const closeBtn = document.querySelector('.popover-header #raw-close');
+        closeBtn.addEventListener('click', () => {
+            rawPop.hide();
+        });
+    });
+    eventBtn.addEventListener('inserted.bs.popover', () => {
+        const closeBtn = document.querySelector('.popover-header #event-close');
+        closeBtn.addEventListener('click', () => {
+            eventPop.hide();
+        });
+    });
+    /* Uncomment when Feature Data becomes available
+    featureBtn.addEventListener('inserted.bs.popover', () => {
+        const closeBtn = document.querySelector('.popover-header #feature-close');
+        closeBtn.addEventListener('click', () => {
+            featurePop.hide();
+        });
+    });
+    */
 });
 
 var prevMonthFunc = function () {
@@ -93,6 +136,41 @@ function updateHtml(gameId, currentYear, currentMonth) {
             playersData.href = response.data.players_template;
             populationData.href = response.data.population_template;
             sessionsData.href = response.data.sessions_template;
+            // update pipelines
+            var currentMonthName = new Date(currentYear, currentMonth-1).toLocaleString('default', {month: 'long'});
+            const pipelineMonth = 'Month of ' + currentMonthName;
+            if (rawLink) {
+                rawLink.href = response.data.raw_file;
+                rawMonth.innerHTML = pipelineMonth; 
+                // Set Popover content to updated elements
+                rawPop.setContent({
+                    '.popover-header': rawHead,
+                    '.popover-body': rawBody
+                });
+            } 
+            rawBtn.disabled = response.data.raw_file ? false : true;
+            if (eventLink) { 
+                eventLink.href = response.data.events_file;
+                eventMonth.innerHTML = pipelineMonth;
+                // Set Popover content to updated elements
+                eventPop.setContent({
+                    '.popover-header': eventHead,
+                    '.popover-body': eventBody
+                });
+            } 
+            eventBtn.disabled = response.data.events_file ? false : true;
+            if (featureLink) {
+                featureLink.href = ''; // Not in file_list yet
+                featureMonth.innerHTML = pipelineMonth;
+                // Set Popover content to updated elements
+                /* Uncomment when Feature Data becomes available
+                featurePop.setContent({
+                    '.popover-header': featureHead,
+                    '.popover-body': featureBody
+                }); 
+                */
+            } 
+            // featureBtn.disabled = true; // Not in file_list yet
         }
     });
 }
