@@ -39,9 +39,19 @@ const eventPop = bootstrap.Popover.getOrCreateInstance('#event-btn');
 document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
     gameId = params.get("game");
-    const date = new Date();
-    currentMonth = date.getMonth() + 1; // add 1 here because JS months run 0-11 and we want 1-12
-    currentYear = date.getFullYear();
+
+    // Get Current month from #stats element
+    const statsEl = document.getElementById('stats');
+    if (statsEl) {
+        currentMonth = Number(statsEl.dataset.month);
+        currentYear = Number(statsEl.dataset.year);
+    } else {
+        // revert to current date
+        const date = new Date();
+        currentMonth = date.getMonth() + 1; // add 1 here because JS months run 0-11 and we want 1-12
+        currentYear = date.getFullYear();    
+    }
+
     getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
         if (response.success) {
             // create the chart
@@ -104,40 +114,27 @@ if (prevMonth !== null) prevMonth.addEventListener('click', prevMonthFunc, false
 if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false);
 
 function updateHtml(gameId, currentYear, currentMonth) {
-    // get game usage for that month
-    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
-        if (response.success) {
-            // update the months and year
-            var currentJSMonth = currentMonth - 1;
-            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', {month: 'long'});
-            var nextMonthName = new Date(currentYear, (currentJSMonth + 1) % 12).toLocaleString('default', {month: 'long'});
-            var prevMonthName = new Date(currentYear, (currentJSMonth - 1) % 12).toLocaleString('default', {month: 'long'});
-            prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
-            nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
-            statsHeader.innerHTML = currentMonthName + ' Stats:';
-            statsData.innerHTML = 'In ' + currentMonthName;
-            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
-            // update the game usage information
-            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
-            numPlays.innerHTML = monthlySessions + ' Plays';
-            // update the chart
-            updateChart(response.data.sessions_by_day, currentMonthName);
-        }
-    });
 
     // get game files for that month
     getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
         if (response.success) {
+            // update the months and year
+            var currentJSMonth = currentMonth - 1;
+            var nextMonthName = new Date(currentYear, (currentJSMonth + 1) % 12).toLocaleString('default', {month: 'long'});
+            var prevMonthName = new Date(currentYear, (currentJSMonth - 1) % 12).toLocaleString('default', {month: 'long'});
+            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', {month: 'long'});
+            prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
+            nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
+            statsHeader.innerHTML = currentMonthName + ' Stats:';
             // update next / previous to be enabled or disabled depending on what other data exists
             nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
-            prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;
+            prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;            
             // update general templates
             eventsData.href = response.data.events_template;
             playersData.href = response.data.players_template;
             populationData.href = response.data.population_template;
             sessionsData.href = response.data.sessions_template;
             // update pipelines
-            var currentMonthName = new Date(currentYear, currentMonth-1).toLocaleString('default', {month: 'long'});
             const pipelineMonth = 'Month of ' + currentMonthName;
             if (rawLink) {
                 rawLink.href = response.data.raw_file;
@@ -171,6 +168,22 @@ function updateHtml(gameId, currentYear, currentMonth) {
                 */
             } 
             // featureBtn.disabled = true; // Not in file_list yet
+        }
+    });
+
+    // get game usage for that month
+    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
+        if (response.success) {
+            // update the months and year
+            var currentJSMonth = currentMonth - 1;
+            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
+            statsData.innerHTML = 'In ' + currentMonthName;
+            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
+            // update the game usage information
+            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
+            numPlays.innerHTML = monthlySessions + ' Plays';
+            // update the chart
+            updateChart(response.data.sessions_by_day, currentMonthName);
         }
     });
 }
