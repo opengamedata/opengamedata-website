@@ -93,6 +93,55 @@ img.avatar {
     .stats {
         padding: 1.5rem 4rem 1.5rem 1.5rem;
     }
+    #pipelines {
+        .pipeline-row:not(:first-of-type) {
+            margin-top: -26px;
+        }
+        .btn {
+            height:160px;
+            width: 90px;
+            border: none;
+            background-color: transparent;
+            &:hover, &:focus {
+                transform: scale(1.05);
+            }
+        }
+        .btn-pipeline-1 {
+            background-image: url("/assets/images/pipeline-raw.svg"), url("/assets/images/pipeline-transform.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: top, bottom;
+            &:active {
+                background-image: url("/assets/images/pipeline-raw-primary.svg"), url("/assets/images/pipeline-transform.png");
+            }
+            z-index: 10;
+        }
+        .btn-pipeline-2 {
+            background-image: url("/assets/images/pipeline-event.svg"), url("/assets/images/pipeline-transform.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: top, bottom;
+            &:active {
+                background-image: url("/assets/images/pipeline-event-primary.svg"), url("/assets/images/pipeline-transform.png");
+            }
+            z-index: 7;
+        }
+        .btn-pipeline-3 {
+            background-image: url("/assets/images/pipeline-feature.svg");
+            background-repeat: no-repeat;
+            background-position: top;
+            &:active {
+                background-image: url("/assets/images/pipeline-event-primary.svg");
+            }
+            z-index: 4;
+        }        
+        .pipeline-text {
+            width: calc(100% - 100px);
+        }
+    }
+}
+.pipeline-pop {
+    position: absolute;
+    top: 20px;
+    right: 20px;        
 }
 
 /* Dashboard */
