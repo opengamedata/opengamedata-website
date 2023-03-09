@@ -18,23 +18,28 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-
-    # Setup Steps
-
+    
     steps:
-      
-    - name: Install OpenConnect
-      run: sudo apt-get -q update && sudo apt-get -q install openconnect
-      
-    - name: Connect to VPN
-      run: echo ${{ secrets.VPN_PASS }} | sudo openconnect --protocol=gp -u ${{ secrets.VPN_USER}} --passwd-on-stdin soe.vpn.wisc.edu &
-      
+
+    - name: Update apt-get
+      run: sudo apt-get -q update 
+
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        lfs: true
- 
-    # Deploy Steps
+        lfs: true  
+    
+    - name: Setup Node
+      run: npm install
+
+    - name: Build
+      run: gulp build   
+
+    - name: Install OpenConnect
+      run: sudo apt-get -q update sudo apt-get -q install openconnect
+      
+    - name: Connect to VPN
+      run: echo ${{ secrets.VPN_PASS }} | sudo openconnect --protocol=gp -u ${{ secrets.VPN_USER}} --passwd-on-stdin soe.vpn.wisc.edu &
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
