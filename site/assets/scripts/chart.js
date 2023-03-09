@@ -60,7 +60,7 @@ function createChart (sessionsByDay, month) {
                     bodyFont: {weight: 'bold'},
                     callbacks: {
                         label: function(context) {
-                            let label = context.parsed.y + ' sessions';
+                            let label = context.parsed.y < 1000 ? context.parsed.y + ' sessions' : (context.parsed.y / 1000).toFixed(2) + 'K sessions';
                             return label;
                         }
                     }
