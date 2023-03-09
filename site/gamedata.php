@@ -129,28 +129,28 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <?php if (isset($game_files) && $game_files->getEventsTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a id="events-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getEventsTemplate()) . '">Events Data</a>'; ?>
+                        <?php echo '<a id="events-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getEventsTemplate()) . '">Events Template</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
                 <?php if (isset($game_files) && $game_files->getPlayersTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a id="players-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPlayersTemplate()) . '">Players Data</a>'; ?>
+                        <?php echo '<a id="players-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPlayersTemplate()) . '">Player Features Template</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
                 <?php if (isset($game_files) && $game_files->getPopulationTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a id="population-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPopulationTemplate()) . '">Population Data</a>'; ?>
+                        <?php echo '<a id="population-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getPopulationTemplate()) . '">Population Features Template</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
                 <?php if (isset($game_files) && $game_files->getSessionsTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <?php echo '<a id="sessions-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getSessionsTemplate()) . '">Sessions Data</a>'; ?>
+                        <?php echo '<a id="sessions-data" class="btn btn-secondary btn-general" href="' . htmlspecialchars($game_files->getSessionsTemplate()) . '">Session Features Template</a>'; ?>
                     </div>
                 </div>
                 <?php endif; ?>
