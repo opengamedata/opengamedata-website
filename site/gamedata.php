@@ -36,34 +36,37 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $game_usage->getSelectedYear() . '-' . $game_usage->getSelectedMonth() . '-1');
         $month_name = $selected_date->format('F');
     }
+    else {
+        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', date('Y') . '-' . date('n') . '-1');
+        $month_name = $selected_date->format('F');
+    }
 
     $response_obj = null;
 
     // Get game file info from API
-    if ($game_usage != null) {
-        $response_obj = services\getGameFileInfoByMonth($game_id, $game_usage->getSelectedYear(), $game_usage->getSelectedMonth());
+    $selected_year = isset($game_usage) ? $game_usage->getSelectedYear() : '';
+    $selected_month = isset($game_usage) ? $game_usage->getSelectedMonth() : '';
+    $response_obj = services\getGameFileInfoByMonth($game_id, $selected_year, $selected_month);
 
-        if (isset($response_obj) && $response_obj->{'success'}) {
-            $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+    if (isset($response_obj) && $response_obj->{'success'}) {
+        $game_files = GameFileInfo::fromObj($response_obj->{'data'});
 
-            // Populate current, previous, and next dates
-            if ($game_files->getNextMonth($selected_date) == $selected_date) {
-                $next_disabled = 'disabled';
-                $next_month = $selected_date->modify('+1 month')->format('F');
-            } else {
-                $next_disabled = '';
-                $next_month = $game_files->getNextMonth($selected_date)->format('F');
-            }
-            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
-                $prev_disabled = 'disabled';
-                $prev_month = $selected_date->modify('-1 month')->format('F');
-            } else {
-                $prev_disabled = '';
-                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
-            }
+        // Populate current, previous, and next dates
+        if ($game_files->getNextMonth($selected_date) == $selected_date) {
+            $next_disabled = 'disabled';
+            $next_month = $selected_date->modify('+1 month')->format('F');
+        } else {
+            $next_disabled = '';
+            $next_month = $game_files->getNextMonth($selected_date)->format('F');
+        }
+        if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+            $prev_disabled = 'disabled';
+            $prev_month = $selected_date->modify('-1 month')->format('F');
+        } else {
+            $prev_disabled = '';
+            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
         }
     }
-
 }
 
 ?>
