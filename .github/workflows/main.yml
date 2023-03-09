@@ -1,0 +1,49 @@
+name: Field Day Site Deploy
+
+# Controls when the action will run. Triggers the workflow on creation of 
+# tags.  Creating new 'versions' via github is the most straightforward 
+# way of doing this.
+on:
+  #create:
+  #  tags:
+  #    - '*'
+  workflow_dispatch:
+  push:
+     branches: [ production ] 
+  
+jobs:
+  deploy:
+    name: Deploy via rsync
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    # Setup Steps
+
+    steps:
+      
+    - name: Install OpenConnect
+      run: sudo apt-get -q update && sudo apt-get -q install openconnect
+      
+    - name: Connect to VPN
+      run: echo ${{ secrets.FIELDDAY_VPN_PASSWORD }} | sudo openconnect --protocol=gp -u ${{ secrets.FIELDDAY_VPN_USERNAME }} --passwd-on-stdin soe.vpn.wisc.edu &
+      
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: true
+ 
+  
+    # Deploy Steps
+    
+    - name: Upload to web server via rsync
+      uses: burnett01/rsync-deployments@5.2
+      with:
+        switches: -vrc --exclude-from 'rsync-exclude'
+        path: /*
+        remote_path: ${{ secrets.DEPLOY_DIR }}
+        remote_host: ${{ secrets.FIELDDAY_WISC_EDU_DEPLOY_HOST }}
+        remote_user: ${{ secrets.FIELDDAY_WISC_EDU_DEPLOY_USER }}
+        remote_key: ${{ secrets.FIELDDAY_WISC_EDU_DEPLOY_KEY }}
+    
