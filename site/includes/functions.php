@@ -7,4 +7,3 @@ function num_in_kilo ( $num ) {
     if ($num < 1000) return $num;
     return round($num/1000) . "K"; 
 }
-?>

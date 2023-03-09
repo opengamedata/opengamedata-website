@@ -9,7 +9,7 @@ class Card
     private $game_link = "/gamedata.php?game=";
     private $monthly_sessions = "0";
 
-    public function __construct(Game $game, ?GameUsage $game_usage)
+    public function __construct($game, $game_usage)
     {
         $this->game = $game;
         $this->game_usage = $game_usage;
@@ -37,4 +37,3 @@ class Card
                 </div>';
     }
 }
-?>
