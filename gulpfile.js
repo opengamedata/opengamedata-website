@@ -22,7 +22,8 @@ exports.clean = clean;
 gulp.task('vendor', function() {
     return gulp.src([
       './node_modules/bootstrap/dist/js/*',
-      './node_modules/axios/dist/esm/*.js'
+      './node_modules/axios/dist/esm/*.js',
+      './node_modules/chart.js/dist/*'
     ])
       .pipe(gulp.dest('./site/assets/scripts/vendor'));
 });
@@ -30,7 +31,8 @@ gulp.task('vendor', function() {
 gulp.task('vendor:build', function() {
     return gulp.src([
       './site/assets/scripts/vendor/bootstrap.bundle.min.js',
-      './site/assets/scripts/vendor/axios.min.js'
+      './site/assets/scripts/vendor/axios.min.js',
+      './site/assets/scripts/vendor/chart.umd.js'
     ])
     .pipe(gulp.dest('./site/assets/scripts'));
 });
