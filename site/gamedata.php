@@ -9,6 +9,7 @@ require_once 'includes/functions.php';
 // Declare variables
 $game_id = null;
 $game = null;
+$game_usage = null;
 $game_files = null;
 
 $month_name = null;
@@ -39,25 +40,27 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     $response_obj = null;
 
     // Get game file info from API
-    $response_obj = services\getGameFileInfoByMonth($game_id, $game_usage->getSelectedYear(), $game_usage->getSelectedMonth());
+    if ($game_usage != null) {
+        $response_obj = services\getGameFileInfoByMonth($game_id, $game_usage->getSelectedYear(), $game_usage->getSelectedMonth());
 
-    if (isset($response_obj) && $response_obj->{'success'}) {
-        $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+        if (isset($response_obj) && $response_obj->{'success'}) {
+            $game_files = GameFileInfo::fromObj($response_obj->{'data'});
 
-        // Populate current, previous, and next dates
-        if ($game_files->getNextMonth($selected_date) == $selected_date) {
-            $next_disabled = 'disabled';
-            $next_month = $selected_date->modify('+1 month')->format('F');
-        } else {
-            $next_disabled = '';
-            $next_month = $game_files->getNextMonth($selected_date)->format('F');
-        }
-        if ($game_files->getPrevMonth($selected_date) == $selected_date) {
-            $prev_disabled = 'disabled';
-            $prev_month = $selected_date->modify('-1 month')->format('F');
-        } else {
-            $prev_disabled = '';
-            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            // Populate current, previous, and next dates
+            if ($game_files->getNextMonth($selected_date) == $selected_date) {
+                $next_disabled = 'disabled';
+                $next_month = $selected_date->modify('+1 month')->format('F');
+            } else {
+                $next_disabled = '';
+                $next_month = $game_files->getNextMonth($selected_date)->format('F');
+            }
+            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+                $prev_disabled = 'disabled';
+                $prev_month = $selected_date->modify('-1 month')->format('F');
+            } else {
+                $prev_disabled = '';
+                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            }
         }
     }
 
@@ -92,14 +95,20 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <div class="row mb-5">
             <div class="col">
                 <h3 class="mb-0">Player Activity</h3>
-                <strong><span id="player-activity-date"><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></span></strong>
+                <?php if (isset($game_usage)) : ?>
+                    <strong><span id="player-activity-date"><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></span></strong>
+                    <?php else : 
+                        echo 'No player activity to display';
+                    endif; ?>
             </div>
-            <div class="col text-end">
-                <nav class="text-nowrap">
-                    <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
-                    <?php echo '<button id="month-next" type="button" class="btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
-                </nav>
-            </div>
+            <?php if (isset($game_usage)) : ?>
+                <div class="col text-end">
+                    <nav class="text-nowrap">
+                        <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
+                        <?php echo '<button id="month-next" type="button" class="btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
+                    </nav>
+                </div>
+            <?php endif; ?>
         </div>
         <!-- Chart -->
     </section>
@@ -109,10 +118,14 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <!-- Stats -->
                 <h3 id="stats-header"><?php echo $month_name . " Stats:" ?></h3>
                 <div class="stats bg-primary text-secondary rounded d-inline-block">
-                    <h4 id="num-plays" class="mb-0">
-                        <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
-                    </h4>
-                    <span id="stats-data-month"><?php echo "In " . $month_name ?></span>
+                    <?php if (isset($game_usage)) : ?>
+                        <h4 id="num-plays" class="mb-0">
+                            <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
+                        </h4>
+                        <span id="stats-data-month"><?php echo "In " . $month_name ?></span>
+                    <?php else : 
+                        echo 'None';
+                    endif; ?>
                 </div>
             </section>
             <section class="mb-5">
