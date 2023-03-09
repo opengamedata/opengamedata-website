@@ -1,4 +1,4 @@
-name: Field Day Site Deploy
+name: Open Game Data Site Deploy
 
 # Controls when the action will run. Triggers the workflow on creation of 
 # tags.  Creating new 'versions' via github is the most straightforward 
@@ -34,16 +34,15 @@ jobs:
       with:
         lfs: true
  
-  
     # Deploy Steps
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
-        switches: -vrc --exclude-from 'rsync-exclude'
-        path: /*
-        remote_path: ${{ secrets.DEPLOY_DIR }}
-        remote_host: ${{ secrets.FIELDDAY_WISC_EDU_DEPLOY_HOST }}
-        remote_user: ${{ secrets.FIELDDAY_WISC_EDU_DEPLOY_USER }}
-        remote_key: ${{ secrets.FIELDDAY_WISC_EDU_DEPLOY_KEY }}
+        switches: -vrcn --exclude-from 'rsync-exclude'
+        path: /site/*
+        remote_path: /
+        remote_host: ${{ secrets.FILE_HOST }}
+        remote_user: ${{ secrets.FILE_USER }}
+        remote_key: ${{ secrets.FILE_DEPLOY_KEY }}
     
