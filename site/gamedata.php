@@ -9,6 +9,7 @@ require_once 'includes/functions.php';
 // Declare variables
 $game_id = null;
 $game = null;
+$game_usage = null;
 $game_files = null;
 
 $month_name = null;
@@ -35,11 +36,17 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $game_usage->getSelectedYear() . '-' . $game_usage->getSelectedMonth() . '-1');
         $month_name = $selected_date->format('F');
     }
+    else {
+        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', date('Y') . '-' . date('n') . '-1');
+        $month_name = $selected_date->format('F');
+    }
 
     $response_obj = null;
 
     // Get game file info from API
-    $response_obj = services\getGameFileInfoByMonth($game_id, $game_usage->getSelectedYear(), $game_usage->getSelectedMonth());
+    $selected_year = isset($game_usage) ? $game_usage->getSelectedYear() : '';
+    $selected_month = isset($game_usage) ? $game_usage->getSelectedMonth() : '';
+    $response_obj = services\getGameFileInfoByMonth($game_id, $selected_year, $selected_month);
 
     if (isset($response_obj) && $response_obj->{'success'}) {
         $game_files = GameFileInfo::fromObj($response_obj->{'data'});
@@ -60,7 +67,6 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
         }
     }
-
 }
 
 ?>
@@ -92,14 +98,20 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <div class="row mb-5">
             <div class="col">
                 <h3 class="mb-0">Player Activity</h3>
-                <strong><span id="player-activity-date"><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></span></strong>
+                <?php if (isset($game_usage)) : ?>
+                    <strong><span id="player-activity-date"><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></span></strong>
+                    <?php else : 
+                        echo 'No player activity to display';
+                    endif; ?>
             </div>
-            <div class="col text-end">
-                <nav class="text-nowrap">
-                    <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
-                    <?php echo '<button id="month-next" type="button" class="btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
-                </nav>
-            </div>
+            <?php if (isset($game_usage)) : ?>
+                <div class="col text-end">
+                    <nav class="text-nowrap">
+                        <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
+                        <?php echo '<button id="month-next" type="button" class="btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
+                    </nav>
+                </div>
+            <?php endif; ?>
         </div>
         <!-- Chart -->
         <?php require 'includes/chart.php'; ?>
@@ -110,10 +122,14 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <!-- Stats -->
                 <h3 id="stats-header"><?php echo $month_name . " Stats:" ?></h3>
                 <div class="stats bg-primary text-secondary rounded d-inline-block">
-                    <h4 id="num-plays" class="mb-0">
-                        <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
-                    </h4>
-                    <span id="stats-data-month"><?php echo "In " . $month_name ?></span>
+                    <?php if (isset($game_usage)) : ?>
+                        <h4 id="num-plays" class="mb-0">
+                            <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
+                        </h4>
+                        <span id="stats-data-month"><?php echo "In " . $month_name ?></span>
+                    <?php else : 
+                        echo 'None';
+                    endif; ?>
                 </div>
             </section>
             <section class="mb-5">
