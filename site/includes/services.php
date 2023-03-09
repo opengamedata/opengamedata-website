@@ -26,7 +26,7 @@ function getGameDetails(string $game_id)
  * <param> string year - optional
  * <param> string month - optional
  */
-function getGameUsage(string $game_id, ?string $year = null, ?string $month = null)
+function getGameUsage($game_id, $year = null, $month = null)
 {
     $params = array(
         'game_id' => $game_id,
@@ -50,7 +50,7 @@ function getGameUsage(string $game_id, ?string $year = null, ?string $month = nu
  * <param> string year
  * <param> string month
  */
-function getGameFileInfoByMonth(string $game_id, string $year, string $month)
+function getGameFileInfoByMonth($game_id, $year, $month)
 {
     $params = array(
         'game_id' => $game_id,
@@ -67,5 +67,3 @@ function getGameFileInfoByMonth(string $game_id, string $year, string $month)
 
     return $response ? json_decode(($response)) : null;
 }
-
-?>

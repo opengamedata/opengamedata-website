@@ -7,7 +7,7 @@ class GameCard
     private $game;
     private $game_usage = null;
 
-    public function __construct(Game $game, ?GameUsage $game_usage)
+    public function __construct($game, $game_usage)
     {
         $this->game = $game;
         $this->game_usage = $game_usage;
@@ -23,4 +23,3 @@ class GameCard
         return $this->game_usage;
     }
 }
-?>

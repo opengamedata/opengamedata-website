@@ -11,7 +11,7 @@ class Game
     protected $developer_link;
     protected $publications;
 
-    public function __construct(string $id, string $name, string $description, string $thumbnail_path, string $play_link, string $source_link, string $developer_name, string $developer_link, array $publications)
+    public function __construct($id, $name, $description, $thumbnail_path, $play_link, $source_link, $developer_name, $developer_link, $publications)
     {
         $this->game_id = $id;
         $this->game_name = $name;
@@ -24,7 +24,7 @@ class Game
         $this->publications = $publications;
     }
 
-    public static function fromJson(string $id, string $json): static {
+    public static function fromJson($id, $json) {
         
         // get game object from full game_list
         //$data = json_decode($json)->{$id};
@@ -80,40 +80,37 @@ class Game
     }
 
     // Set methods
-    public function setId(string $id)
+    public function setId($id)
     {
         $this->game_id = $id;
     }
-    public function setName(string $name)
+    public function setName($name)
     {
         return $this->game_name = $name;
     }
-    public function setDescription(string $description)
+    public function setDescription($description)
     {
         return $this->game_description = $description;
     }
-    public function setPlayLink(string $link)
+    public function setPlayLink($link)
     {
         return $this->play_link = $link;
     }
-    public function setSourceLink(string $link)
+    public function setSourceLink($link)
     {
         return $this->source_link = $link;
     }
-    public function setThumbPath(string $path)
+    public function setThumbPath($path)
     {
         return $this->thumbnail_path = $path;
     }
-    public function setDeveloperName(string $name)
+    public function setDeveloperName($name)
     {
         return $this->developer_name = $name;
     }
-    public function setDeveloperLink(string $link)
+    public function setDeveloperLink($link)
     {
         return $this->developer_link = $link;
     }
 
 }
-
-
-?>

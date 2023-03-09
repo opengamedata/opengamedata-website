@@ -7,7 +7,7 @@ class GameUsage
     protected $total_monthly_sessions;
     protected $sessions_by_day;
 
-    public function __construct(string $id, int $selected_month, int $selected_year, int $total_monthly_sessions, object $sessions_by_day)
+    public function __construct($id, $selected_month, $selected_year, $total_monthly_sessions, $sessions_by_day)
     {
         $this->game_id = $id;
         $this->selected_month = $selected_month;
@@ -16,11 +16,11 @@ class GameUsage
         $this->sessions_by_day = $sessions_by_day;
     }
 
-    public static function fromObj(object $obj): static {
+    public static function fromObj($obj) {
         return new static($obj->{'game_id'},$obj->{'selected_month'},$obj->{'selected_year'},$obj->{'total_monthly_sessions'},$obj->{'sessions_by_day'});
     }
 
-    public static function fromJson(string $json): static {
+    public static function fromJson($json) {
         $data = json_decode($json);
         return new static($data->{'game_id'},$data->{'selected_month'},$data->{'selected_year'},$data->{'total_monthly_sessions'},$data->{'sessions_by_day'});
     }
@@ -48,4 +48,3 @@ class GameUsage
     }
 
 }
-?>
