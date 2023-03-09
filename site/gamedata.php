@@ -162,7 +162,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                     <div class="mt-2 ms-3 pipeline-text">
                         <h4 class="mb-0">Feature Data</h4>
                         Descriptions of sessions, players or populations
-                        <p class="mt-2">No Features yet. <a href="">Care to contribute?</a></p>
+                        <p class="mt-2">No Features yet.</p>
                     </div>
                 </div>
                 <?php 
