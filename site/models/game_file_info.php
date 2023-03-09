@@ -16,7 +16,7 @@ class GameFileInfo
     protected $sessions_file;
     protected $sessions_template;    
     
-    public function __construct(int $first_month, int $first_year, int $last_month, int $last_year, bool $found_matching_range, ?string $events_file = null, ?string $events_template = null, ?string $players_file = null, ?string $players_template = null, ?string $population_file = null, ?string $population_template = null, ?string $raw_file = null, ?string $sessions_file = null, ?string $sessions_template = null)
+    public function __construct($first_month, $first_year, $last_month, $last_year, $found_matching_range, $events_file = null, $events_template = null, $players_file = null, $players_template = null, $population_file = null, $population_template = null, $raw_file = null, $sessions_file = null, $sessions_template = null)
     {
         $this->first_month = $first_month;
         $this->first_year = $first_year;
@@ -34,7 +34,7 @@ class GameFileInfo
         $this->sessions_template = $sessions_template;
     }
 
-    public static function fromObj(object $obj): static {
+    public static function fromObj($obj) {
         return new static($obj->{'first_month'},$obj->{'first_year'},$obj->{'last_month'},$obj->{'last_year'},$obj->{'found_matching_range'},$obj->{'events_file'},$obj->{'events_template'},$obj->{'players_file'},$obj->{'players_template'},$obj->{'population_file'},$obj->{'population_template'},$obj->{'raw_file'},$obj->{'sessions_file'},$obj->{'sessions_template'});
     }
 
@@ -120,7 +120,7 @@ class GameFileInfo
      * Returns previous month number or selected month if no previous month exists
      * <param> DateTime selected_date
      */
-    public function getPrevMonth(DateTimeImmutable $current_date): DateTimeImmutable 
+    public function getPrevMonth($current_date) 
     {
         $_first_date = DateTime::createFromFormat('Y-n-j|', $this->first_year . '-' . $this->first_month . '-1');
         if ($_first_date == $current_date) return $current_date;
@@ -128,9 +128,9 @@ class GameFileInfo
         $_usage_array = $this->getUsageRange();
 
         // If date not found, return selected_date
-        if (!in_array($current_date->format('Y-n-j'), array_map(fn($value): string => $value->format('Y-n-j'), $_usage_array))) return $current_date;
+        if (!in_array($current_date->format('Y-n-j'), array_map(array('GameFileInfo', 'doFormat'), $_usage_array))) return $current_date;
 
-        $_date_index = array_search($current_date->format('Y-n-j'), array_map(fn($value): string => $value->format('Y-n-j'), $_usage_array));
+        $_date_index = array_search($current_date->format('Y-n-j'), array_map(array('GameFileInfo', 'doFormat'), $_usage_array));
 
         // Return previous month from usage_range
         return $_date_index+1 <= count($_usage_array) ? $_usage_array[$_date_index-1] : $current_date;
@@ -140,7 +140,7 @@ class GameFileInfo
      * Returns next month number or selected month if no next month exists
      * <param> DateTime selected_date
      */
-    public function getNextMonth(DateTimeImmutable $current_date): DateTimeImmutable 
+    public function getNextMonth($current_date)
     {
         $_last_date = DateTime::createFromFormat('Y-n-j|', $this->last_year . '-' . $this->last_month . '-1');
         if ($_last_date == $current_date) return $current_date;
@@ -148,12 +148,16 @@ class GameFileInfo
         $_usage_array = $this->getUsageRange();
 
         // If date not found, return selected_date
-        if (!in_array($current_date->format('Y-n-j'), array_map(fn($value): string => $value->format('Y-n-j'), $_usage_array))) return $current_date;
+        if (!in_array($current_date->format('Y-n-j'), array_map(array('GameFileInfo', 'doFormat'), $_usage_array))) return $current_date;
         
-        $_date_index = array_search($current_date->format('Y-n-j'), array_map(fn($value): string => $value->format('Y-n-j'), $_usage_array));
+        $_date_index = array_search($current_date->format('Y-n-j'), array_map(array('GameFileInfo', 'doFormat'), $_usage_array));
 
         // Return next month from usage_range
         return count($_usage_array) >= $_date_index+1 ? $_usage_array[$_date_index+1] : $current_date;
     }
+
+    public static function doFormat($value)
+    {
+        return $value->format('Y-n-j');
+    }
 }
-?>

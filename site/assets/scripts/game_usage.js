@@ -1,4 +1,5 @@
 import { getGameUsage, getGameFiles } from "./services.js";
+import { createChart, updateChart } from "./chart.js";
 
 let gameId = null;
 let currentMonth = null;
@@ -14,12 +15,19 @@ const playersData = document.getElementById('players-data');
 const populationData = document.getElementById('population-data');
 const sessionsData = document.getElementById('sessions-data');
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
     gameId = params.get("game");
     const date = new Date();
     currentMonth = date.getMonth() + 1; // add 1 here because JS months run 0-11 and we want 1-12
     currentYear = date.getFullYear();
+    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
+        if (response.success) {
+            // create the chart
+            var currentMonthName = new Date(currentYear, currentMonth - 1).toLocaleString('default', {month: 'long'});
+            createChart(response.data.sessions_by_day, currentMonthName);
+        }
+    });
 });
 
 var prevMonthFunc = function () {
@@ -49,8 +57,8 @@ var nextMonthFunc = function () {
 }
 
 // add event listeners
-prevMonth.addEventListener('click', prevMonthFunc, false);
-nextMonth.addEventListener('click', nextMonthFunc, false);
+if (prevMonth !== null) prevMonth.addEventListener('click', prevMonthFunc, false);
+if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false);
 
 function updateHtml(gameId, currentYear, currentMonth) {
     // get game usage for that month
@@ -69,6 +77,8 @@ function updateHtml(gameId, currentYear, currentMonth) {
             // update the game usage information
             var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
             numPlays.innerHTML = monthlySessions + ' Plays';
+            // update the chart
+            updateChart(response.data.sessions_by_day, currentMonthName);
         }
     });
 
