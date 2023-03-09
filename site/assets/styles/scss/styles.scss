@@ -99,7 +99,7 @@ img.avatar {
         }
         .btn {
             height:160px;
-            width: 90px;
+            width: 92px;
             border: none;
             background-color: transparent;
             &:hover, &:focus {
@@ -110,28 +110,40 @@ img.avatar {
             background-image: url("/assets/images/pipeline-raw.svg"), url("/assets/images/pipeline-transform.png");
             background-repeat: no-repeat, no-repeat;
             background-position: top, bottom;
-            &:active {
-                background-image: url("/assets/images/pipeline-raw-primary.svg"), url("/assets/images/pipeline-transform.png");
-            }
             z-index: 10;
+            &:active {
+                background-image: url("/assets/images/pipeline-raw-active.svg"), url("/assets/images/pipeline-transform.png");
+            }
+            &:disabled {
+                background-image: url("/assets/images/pipeline-raw-disabled.svg"), url("/assets/images/pipeline-transform-disabled.png");
+                opacity: 1;
+            }
         }
         .btn-pipeline-2 {
             background-image: url("/assets/images/pipeline-event.svg"), url("/assets/images/pipeline-transform.png");
             background-repeat: no-repeat, no-repeat;
             background-position: top, bottom;
-            &:active {
-                background-image: url("/assets/images/pipeline-event-primary.svg"), url("/assets/images/pipeline-transform.png");
-            }
             z-index: 7;
+            &:active {
+                background-image: url("/assets/images/pipeline-event-active.svg"), url("/assets/images/pipeline-transform.png");
+            }
+            &:disabled {
+                background-image: url("/assets/images/pipeline-event-disabled.svg"), url("/assets/images/pipeline-transform-disabled.png");
+                opacity: 1;
+            }
         }
         .btn-pipeline-3 {
             background-image: url("/assets/images/pipeline-feature.svg");
             background-repeat: no-repeat;
             background-position: top;
-            &:active {
-                background-image: url("/assets/images/pipeline-event-primary.svg");
-            }
             z-index: 4;
+            &:active {
+                background-image: url("/assets/images/pipeline-feature-active.svg");
+            }
+            &:disabled {
+                background-image: url("/assets/images/pipeline-feature-disabled.svg");
+                opacity: 1;
+            }
         }        
         .pipeline-text {
             width: calc(100% - 100px);

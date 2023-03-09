@@ -16,6 +16,7 @@ class PipelineButton
     private $body;
     private $header_id;
     private $body_id;
+    private $close_id;
 
     public function __construct(string $title, string $image, string $css, string $selector, ?string $file_link, ?string $month, string $text)
     {
@@ -31,7 +32,8 @@ class PipelineButton
         $this->anchor_id = $selector . '-link';
         $this->header_id = $selector . '-header';
         $this->body_id = $selector . '-body';
-        $this->header = "$this->title <small id='$this->month_id'>Month of $this->month</small> <img class='pipeline-pop' src='/assets/images/$this->image' alt=''> <button type='button' class='btn-close' aria-label='Close'></button>";
+        $this->close_id = $selector . '-close';
+        $this->header = "$this->title <small id='$this->month_id'>Month of $this->month</small> <img class='pipeline-pop' src='/assets/images/$this->image' alt=''> <button id='$this->close_id' type='button' class='btn-close' aria-label='Close'></button>";
         $this->body = "<p>$this->text</p><a id='$this->anchor_id' class='btn btn-primary' href='$this->file_link' role='button'>$this->title <i class='bi bi-arrow-down'></i></a>";
     }
 

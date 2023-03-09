@@ -27,10 +27,13 @@ const eventBody = document.getElementById('event-body');
 const featureBtn = document.getElementById('feature-btn');
 const featureLink = document.getElementById('feature-link');
 const featureMonth = document.getElementById('feature-month');
+// const featureHead = document.getElementById("feature-header");
+// const featureBody = document.getElementById('feature-body');
+
 // Pipeline popovers
 const rawPop = bootstrap.Popover.getOrCreateInstance('#raw-btn');
 const eventPop = bootstrap.Popover.getOrCreateInstance('#event-btn');
-
+// const featurePop = bootstrap.Popover.getOrCreateInstance('#feature-btn');
 
 document.addEventListener("DOMContentLoaded", () => {
     let params = new URLSearchParams(document.location.search);
@@ -38,6 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const date = new Date();
     currentMonth = date.getMonth() + 1; // add 1 here because JS months run 0-11 and we want 1-12
     currentYear = date.getFullYear();
+
+    // Pipeline close button listeners
+    rawBtn.addEventListener('inserted.bs.popover', () => {
+        const closeBtn = document.querySelector('.popover-header #raw-close');
+        closeBtn.addEventListener('click', () => {
+            rawPop.hide();
+        });
+    });
+    eventBtn.addEventListener('inserted.bs.popover', () => {
+        const closeBtn = document.querySelector('.popover-header #event-close');
+        closeBtn.addEventListener('click', () => {
+            eventPop.hide();
+        });
+    });
+    /* Uncomment when Feature Data becomes available
+    featureBtn.addEventListener('inserted.bs.popover', () => {
+        const closeBtn = document.querySelector('.popover-header #feature-close');
+        closeBtn.addEventListener('click', () => {
+            featurePop.hide();
+        });
+    });
+    */
 });
 
 var prevMonthFunc = function () {
@@ -127,8 +152,15 @@ function updateHtml(gameId, currentYear, currentMonth) {
             if (featureLink) {
                 featureLink.href = ''; // Not in file_list yet
                 featureMonth.innerHTML = pipelineMonth;
+                // Set Popover content to updated elements
+                /* Uncomment when Feature Data becomes available
+                featurePop.setContent({
+                    '.popover-header': featureHead,
+                    '.popover-body': featureBody
+                }); 
+                */
             } 
-            //featureBtn.disabled = true; // Not in file_list yet
+            // featureBtn.disabled = true; // Not in file_list yet
         }
     });
 }
