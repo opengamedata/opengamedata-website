@@ -18,4 +18,4 @@ Note: Transpiled css and vendor js files are excluded from GIT
 
 ### Run the dev API backend
 The API (opengamedata-website-api) should be running on http://localhost:5000 in order to get Game Usage and Data Pipeline/Templates files list. 
-- See README in API for further instructions.
+- See README in the [API repository](https://github.com/opengamedata/opengamedata-website-api) for further instructions.
