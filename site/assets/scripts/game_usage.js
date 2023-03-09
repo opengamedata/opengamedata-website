@@ -49,8 +49,8 @@ var nextMonthFunc = function () {
 }
 
 // add event listeners
-prevMonth.addEventListener('click', prevMonthFunc, false);
-nextMonth.addEventListener('click', nextMonthFunc, false);
+if (prevMonth !== null) prevMonth.addEventListener('click', prevMonthFunc, false);
+if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false);
 
 function updateHtml(gameId, currentYear, currentMonth) {
     // get game usage for that month
