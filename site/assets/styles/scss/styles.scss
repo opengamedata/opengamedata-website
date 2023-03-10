@@ -93,6 +93,70 @@ img.avatar {
     .stats {
         padding: 1.5rem 4rem 1.5rem 1.5rem;
     }
+    .card {
+        height: auto;
+    }
+    #pipelines {
+        .pipeline-row:not(:first-of-type) {
+            margin-top: -26px;
+        }
+        .btn {
+            height:160px;
+            width: 92px;
+            border: none;
+            background-color: transparent;
+            &:hover, &:focus {
+                transform: scale(1.05);
+            }
+        }
+        .btn-pipeline-1 {
+            background-image: url("/assets/images/pipeline-raw.svg"), url("/assets/images/pipeline-transform.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: top, bottom;
+            z-index: 10;
+            &:active {
+                background-image: url("/assets/images/pipeline-raw-active.svg"), url("/assets/images/pipeline-transform.png");
+            }
+            &:disabled {
+                background-image: url("/assets/images/pipeline-raw-disabled.svg"), url("/assets/images/pipeline-transform-disabled.png");
+                opacity: 1;
+            }
+        }
+        .btn-pipeline-2 {
+            background-image: url("/assets/images/pipeline-event.svg"), url("/assets/images/pipeline-transform.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: top, bottom;
+            z-index: 7;
+            &:active {
+                background-image: url("/assets/images/pipeline-event-active.svg"), url("/assets/images/pipeline-transform.png");
+            }
+            &:disabled {
+                background-image: url("/assets/images/pipeline-event-disabled.svg"), url("/assets/images/pipeline-transform-disabled.png");
+                opacity: 1;
+            }
+        }
+        .btn-pipeline-3 {
+            background-image: url("/assets/images/pipeline-feature.svg");
+            background-repeat: no-repeat;
+            background-position: top;
+            z-index: 4;
+            &:active {
+                background-image: url("/assets/images/pipeline-feature-active.svg");
+            }
+            &:disabled {
+                background-image: url("/assets/images/pipeline-feature-disabled.svg");
+                opacity: 1;
+            }
+        }        
+        .pipeline-text {
+            width: calc(100% - 100px);
+        }
+    }
+}
+.pipeline-pop {
+    position: absolute;
+    top: 20px;
+    right: 20px;        
 }
 
 /* Dashboard */

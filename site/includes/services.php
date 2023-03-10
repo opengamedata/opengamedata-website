@@ -47,10 +47,10 @@ function getGameUsage($game_id, $year = null, $month = null)
 
 /* Get game file info from API
  * <param> string game_id
- * <param> string year
- * <param> string month
+ * <param> string year --optional
+ * <param> string month --optional
  */
-function getGameFileInfoByMonth($game_id, $year, $month)
+function getGameFileInfoByMonth($game_id, $year = null, $month = null)
 {
     $params = array(
         'game_id' => $game_id,
