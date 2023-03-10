@@ -30,7 +30,7 @@
         ],
         "play_link": "https://theyardgames.org/game/balloon.html",
         "source_link": "https://github.com/fielddaylab/balloon",
-        "thumbnail_path" : "./assets/images/thumbs/balloon-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/balloon-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/balloon/blob/master/readme.md",
         "feature_readme_link": null,
         "studies": []
@@ -48,7 +48,7 @@
         ],
         "play_link": "https://theyardgames.org/game/crystal.html",
         "source_link": "https://github.com/fielddaylab/crystal",
-        "thumbnail_path" : "./assets/images/thumbs/crystal-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/crystal-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/crystal/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CRYSTAL/readme.md",
         "studies": []
@@ -66,7 +66,7 @@
         ],
         "play_link": "https://theyardgames.org/game/carbon.html",
         "source_link": "https://github.com/fielddaylab/carbon",
-        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_CARBON/readme.md",
         "studies": []
@@ -84,7 +84,7 @@
         ],
         "play_link": "https://theyardgames.org/game/carbon.html",
         "source_link": "https://github.com/fielddaylab/carbon",
-        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_NITROGEN/readme.md",
         "studies": []
@@ -102,7 +102,7 @@
         ],
         "play_link": "https://theyardgames.org/game/water.html",
         "source_link": "https://github.com/fielddaylab/water",
-        "thumbnail_path" : "./assets/images/thumbs/cycle-water-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-water-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/wwater/blob/master/readme.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_WATER/readme.md",
         "studies": []
