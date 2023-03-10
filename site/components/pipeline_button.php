@@ -18,7 +18,7 @@ class PipelineButton
     private $body_id;
     private $close_id;
 
-    public function __construct(string $title, string $image, string $css, string $selector, ?string $file_link, ?string $month, string $text)
+    public function __construct($title, $image, $css, $selector, $file_link, $month, $text)
     {
         $this->title = $title;
         $this->image = $image;
@@ -57,4 +57,3 @@ class PipelineButton
                 </div>';
     }
 }
-?>
