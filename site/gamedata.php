@@ -1,5 +1,6 @@
 <?php
 
+require_once 'includes/app_config.php';
 require_once 'includes/services.php';
 require_once 'models/game.php';
 require_once 'models/game_file_info.php';
