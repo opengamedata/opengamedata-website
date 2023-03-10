@@ -12,7 +12,7 @@
         ],
         "play_link": "https://theyardgames.org/game/bacteria/",
         "source_link": "https://github.com/fielddaylab/bacteria",
-        "thumbnail_path" : "./assets/images/thumbs/bacteria-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/bacteria-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/bacteria/blob/master/readme.md",
         "feature_readme_link": null,
         "studies": []
@@ -190,7 +190,7 @@
         ],
         "play_link": "https://pbswisconsineducation.org/emerald/play-the-game/",
         "source_link": "https://github.com/fielddaylab/lost_emerald",
-        "thumbnail_path" : "./assets/images/thumbs/shipwrecks-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/emerald-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/lost_emerald/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md",
         "studies": []
