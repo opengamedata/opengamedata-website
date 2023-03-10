@@ -54,8 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
         if (response.success) {
+            // update the months and year
+            var currentJSMonth = currentMonth - 1;
+            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
+            statsData.innerHTML = 'In ' + currentMonthName;
+            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
+            // update the game usage information
+            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
+            numPlays.innerHTML = monthlySessions + ' Plays';
             // create the chart
-            var currentMonthName = new Date(currentYear, currentMonth - 1).toLocaleString('default', {month: 'long'});
             createChart(response.data.sessions_by_day, currentMonthName);
         }
     });
@@ -114,7 +121,23 @@ if (prevMonth !== null) prevMonth.addEventListener('click', prevMonthFunc, false
 if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false);
 
 function updateHtml(gameId, currentYear, currentMonth) {
-
+    // set loading values
+    numPlays.innerHTML = '-- Plays';
+    // get game usage for that month
+    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
+        if (response.success) {
+            // update the months and year
+            var currentJSMonth = currentMonth - 1;
+            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
+            // update the game usage information
+            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
+            numPlays.innerHTML = monthlySessions + ' Plays';
+            // update the chart
+            updateChart(response.data.sessions_by_day, currentMonthName);
+        } else {
+            numPlays.innerHTML = 'No Plays';
+        }
+    });
     // get game files for that month
     getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
         if (response.success) {
@@ -126,6 +149,8 @@ function updateHtml(gameId, currentYear, currentMonth) {
             prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
             nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
             statsHeader.innerHTML = currentMonthName + ' Stats:';
+            statsData.innerHTML = 'In ' + currentMonthName;
+            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
             // update next / previous to be enabled or disabled depending on what other data exists
             nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
             prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;            
@@ -171,19 +196,4 @@ function updateHtml(gameId, currentYear, currentMonth) {
         }
     });
 
-    // get game usage for that month
-    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
-        if (response.success) {
-            // update the months and year
-            var currentJSMonth = currentMonth - 1;
-            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
-            statsData.innerHTML = 'In ' + currentMonthName;
-            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
-            // update the game usage information
-            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
-            numPlays.innerHTML = monthlySessions + ' Plays';
-            // update the chart
-            updateChart(response.data.sessions_by_day, currentMonthName);
-        }
-    });
 }

@@ -2,15 +2,12 @@
 
 require_once 'includes/services.php';
 require_once 'models/game.php';
-require_once 'models/game_usage.php';
 require_once 'models/game_file_info.php';
-require_once 'includes/functions.php';
 require_once 'components/pipeline_button.php';
 
 // Declare variables
 $game_id = null;
 $game = null;
-$game_usage = null;
 $game_files = null;
 
 $month_name = null;
@@ -20,6 +17,8 @@ $prev_disabled = null;
 $next_disabled = null;
 $selected_year = null;
 $selected_month = null;
+$activity_text = 'No player activity to display.';
+$stats_text = '';
 $raw_file_link = null;
 $event_file_link = null;
 $feature_file_link = null;
@@ -61,19 +60,14 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
         }
 
+        $activity_text = $month_name . ' ' . htmlspecialchars($selected_year);
+        $stats_text = 'In ' . $month_name;
+
         $raw_file_link = $game_files->getRawFile();
         $event_file_link = $game_files->getEventsFile();
         // $feature_file_link = null;
     
     } 
-
-    $response_obj = null;
-    // Get game usage from api
-    $response_obj = services\getGameUsage($game_id,$selected_year,$selected_month);
-
-    if (isset($response_obj) && $response_obj->{'success'}) {
-        $game_usage = GameUsage::fromObj($response_obj->{'data'});
-    }
     
     // Create Pipeline buttons with popovers
     $button_raw = new PipelineButton('Raw Data', 'pipeline-raw-active.svg', 'btn-pipeline-1', 'raw', $raw_file_link, $month_name, 'Time-sequenced data as provided by the game directly. Includes player events, system feedback and game progression.');
@@ -111,11 +105,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <div class="row mb-5">
             <div class="col">
                 <h3 class="mb-0">Player Activity</h3>
-                <?php if (isset($game_usage)) : ?>
-                    <strong><span id="player-activity-date"><?php echo $month_name . " " . htmlspecialchars($game_usage->getSelectedYear()) ?></span></strong>
-                    <?php else : 
-                        echo 'No player activity to display';
-                    endif; ?>
+                <?php echo '<strong><span id="player-activity-date">' . $activity_text . '</span></strong>' ?>
             </div>
             <?php if (isset($game_files)) : ?>
                 <div class="col text-end">
@@ -135,14 +125,8 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <!-- Stats -->
                 <h3 id="stats-header"><?php echo $month_name . " Stats:" ?></h3>
                 <div class="stats bg-primary text-secondary rounded d-inline-block">
-                    <?php if (isset($game_usage)) : ?>
-                        <h4 id="num-plays" class="mb-0">
-                            <?php echo num_in_kilo(htmlspecialchars($game_usage->getTotalMonthlySessions())) . " Plays"; ?>
-                        </h4>
-                        <span id="stats-data-month"><?php echo "In " . $month_name ?></span>
-                    <?php else : 
-                        echo 'None';
-                    endif; ?>
+                    <h4 id="num-plays" class="mb-0">No Plays</h4>
+                    <span id="stats-data-month"><?php echo $stats_text ?></span>
                 </div>
             </section>
             <section id="pipelines" class="mb-5">
@@ -211,6 +195,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 </div>
                 <?php endif; ?>
             </section>
+            <?php if (count($game->getPublications()) > 0) : ?>
             <section class="mb-5">
                 <!-- Publications -->
                 <h3>Publications</h3>
@@ -224,6 +209,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                     }
                 ?>
             </section>
+            <?php endif; ?>
         </div>
     </div>
     <?php else : 
