@@ -1,4 +1,112 @@
 {
+    "BACTERIA": {
+        "game_name": "Antibiotic Resistance",
+        "game_description": "In this playful introduction to the world of bacteria, players get a visual representation of reproduction, mutation, and antibiotic resistance.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/bacteria/",
+        "source_link": "https://github.com/fielddaylab/bacteria",
+        "thumbnail_path" : "./assets/images/thumbs/bacteria-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/bacteria/blob/master/readme.md",
+        "feature_readme_link": null,
+        "studies": []
+    },
+    "BALLOON": {
+        "game_name": "Hot Air Balloon",
+        "game_description": "Time to fly! In this game, players control the altitude of a hot air balloon by heating the balloon or releasing air with the air flap. Players learn about buoyancy, volume, and air pressure.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/balloon.html",
+        "source_link": "https://github.com/fielddaylab/balloon",
+        "thumbnail_path" : "./assets/images/thumbs/balloon-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/balloon/blob/master/readme.md",
+        "feature_readme_link": null,
+        "studies": []
+    },
+    "CRYSTAL": {
+        "game_name": "Crystal Cave",
+        "game_description": "This simple puzzle game introduces kids to crystals! Players try their hand at arranging molecules with different shapes and properties into an ordered, stable configuration.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/crystal.html",
+        "source_link": "https://github.com/fielddaylab/crystal",
+        "thumbnail_path" : "./assets/images/thumbs/crystal-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/crystal/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CRYSTAL/readme.md",
+        "studies": []
+    },
+    "CYCLE_CARBON": {
+        "game_name": "Carbon Cycle",
+        "game_description": "Learn how carbon moves through the world! In this board-game style game, players use Action cards, like Photosynthesis and Soil Respiration, to convert carbon from one form to another. ",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/carbon.html",
+        "source_link": "https://github.com/fielddaylab/carbon",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_CARBON/readme.md",
+        "studies": []
+    },
+    "CYCLE_NITROGEN": {
+        "game_name": "Carbon Cycle",
+        "game_description": "Learn how carbon moves through the world! In this board-game style game, players use Action cards, like Photosynthesis and Soil Respiration, to convert carbon from one form to another. ",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/carbon.html",
+        "source_link": "https://github.com/fielddaylab/carbon",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_NITROGEN/readme.md",
+        "studies": []
+    },
+    "CYCLE_WATER": {
+        "game_name": "Water Cycle",
+        "game_description": "Learn how water moves through the world! In this board-game style game, players use Action cards, like Condensation and Evaporation, to convert water from one form to another. ",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/water.html",
+        "source_link": "https://github.com/fielddaylab/water",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-water-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/wwater/blob/master/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_WATER/readme.md",
+        "studies": []
+    },
     "JOWILDER": {
         "game_name": "Jo Wilder and the Capitol Case",
         "game_description": "This award-winning game turns kids into history detectives! In this point-and-click adventure, players use the methods of real historians to uncover the story behind each mystery artifact.",
@@ -49,7 +157,7 @@
         "source_link": "https://github.com/fielddaylab/lakeland",
         "thumbnail_path" : "./assets/images/thumbs/lakeland-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/lakeland/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/lakeland/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/LAKELAND/readme.md",
         "studies": [
             {
                 "name": "Leveraging Cluster Analysis to Understand Educational Game Player Experiences and Support Design",
@@ -69,6 +177,42 @@
             }
         ]
     },
+    "SHIPWRECKS": {
+        "game_name": "Legend of the Lost Emerald",
+        "game_description": "Take on the role of a maritime archaeologist uncovering shipwrecks in the Great Lakes! In this historical inquiry game, players use GPS coordinates, go out on dives, take underwater photos, and use artifacts to solve the mystery of each shipwreck.",
+        "target_audience": "Grades 4-6",
+        "subject": "History",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://pbswisconsineducation.org/emerald/play-the-game/",
+        "source_link": "https://github.com/fielddaylab/lost_emerald",
+        "thumbnail_path" : "./assets/images/thumbs/shipwrecks-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/lost_emerald/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md",
+        "studies": []
+    },
+    "WAVES": {
+        "game_name": "Wave Combinator",
+        "game_description": "This game invites kids to explore how waves interact. Kids can use the Wave Combinator to learn about concepts like amplitude, offset, wavelength, and frequency.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/waves.html",
+        "source_link": "https://github.com/fielddaylab/waves",
+        "thumbnail_path" : "./assets/images/thumbs/waves-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/waves/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAVES/readme.md",
+        "studies": []
+    },
     "WAKE": {
         "game_name": "Wake: Tales from the Aqualab",
         "game_description": "Wake: Tales from the Aqualab is a 6th-9th grade science game that challenges students with engaging, authentic missions in a variety of ocean-based ecosystems. In Wake, students take on the role of a scientist studying ocean ecosystems, traveling to different ocean research sites to answer questions and solve problems. As they progress at their own pace, players are guided to gradually take on more complex science challenges.",
@@ -84,8 +228,7 @@
         "source_link": "https://github.com/fielddaylab/wake",
         "thumbnail_path" : "https://fielddaylab.wisc.edu/assets/img/gameplay/wake-gameplay.jpg",
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAKE/readme.md",
-        "studies": [
-        ]
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
+        "studies": []
     }
 }
