@@ -70,7 +70,13 @@ function createChart (sessionsByDay, month) {
     });
 }
 
-function updateChart(sessionsByDay, month) {
+function updateOrCreateChart(sessionsByDay, month) {
+    // Create chart if it isn't already created.
+    if (chartInstance === null) {
+        createChart(sessionsByDay, month);
+        return;
+    }
+    // Else update
     var hoverLabels = [];
     var displaySessions = [];
 
@@ -85,4 +91,4 @@ function updateChart(sessionsByDay, month) {
     chartInstance.update();
 }
 
-export { createChart, updateChart }
+export { createChart, updateOrCreateChart }
