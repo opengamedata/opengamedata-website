@@ -5,7 +5,7 @@ class PipelineButton
     private $title;
     private $image;
     private $css;
-    private $file_link;
+    private $file_links;
     private $btn_disabled;
     private $month;
     private $text;
@@ -18,15 +18,15 @@ class PipelineButton
     private $body_id;
     private $close_id;
 
-    public function __construct($title, $image, $css, $selector, $file_link, $month, $text)
+    public function __construct($title, $image, $css, $selector, $file_links, $month, $text)
     {
         $this->title = $title;
         $this->image = $image;
         $this->css = $css;
-        $this->file_link = $file_link;
+        $this->file_links = $file_links;
         $this->month = $month;
         $this->text = $text;
-        $this->btn_disabled = isset($this->file_link) ? '' : 'disabled';
+        $this->btn_disabled = count($this->file_links) > 0 ? '' : 'disabled';
         $this->button_id = $selector . '-btn';
         $this->month_id = $selector . '-month';
         $this->anchor_id = $selector . '-link';
@@ -34,7 +34,14 @@ class PipelineButton
         $this->body_id = $selector . '-body';
         $this->close_id = $selector . '-close';
         $this->header = "$this->title <small id='$this->month_id'>Month of $this->month</small> <img class='pipeline-pop' src='/assets/images/$this->image' alt=''> <button id='$this->close_id' type='button' class='btn-close' aria-label='Close'></button>";
-        $this->body = "<p>$this->text</p><a id='$this->anchor_id' class='btn btn-primary' href='$this->file_link' role='button'>$this->title <i class='bi bi-arrow-down'></i></a>";
+        $this->body = "<p>$this->text</p>";
+        // Loop through file_links array and add download links
+        $index = 0;
+        foreach($this->file_links as $key => $value) {
+            $classList = $value ? 'btn btn-primary mb-2' : 'd-none';
+            $this->body .= "<a id='$this->anchor_id-$index' class='$classList' href='$value'>$key <i class='bi bi-arrow-down'></i></a>";
+            $index++;
+        }        
     }
 
     // Renders the Pipeline button with popover content

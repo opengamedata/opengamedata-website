@@ -14,7 +14,8 @@ class GameFileInfo
     protected $population_template;
     protected $raw_file;
     protected $sessions_file;
-    protected $sessions_template;    
+    protected $sessions_template;
+    protected $feature_files = [];
     
     public function __construct($first_month, $first_year, $last_month, $last_year, $found_matching_range, $events_file = null, $events_template = null, $players_file = null, $players_template = null, $population_file = null, $population_template = null, $raw_file = null, $sessions_file = null, $sessions_template = null)
     {
@@ -94,6 +95,14 @@ class GameFileInfo
     public function getSessionsTemplate()
     {
         return $this->sessions_template;
+    }
+    public function getFeatureFiles()
+    {
+        $this->feature_files['Population Features'] = $this->population_file;
+        $this->feature_files['Player Features'] = $this->players_file;
+        $this->feature_files['Session Features'] = $this->sessions_file;
+        
+        return $this->feature_files;
     }
 
     // Prev/next month functions

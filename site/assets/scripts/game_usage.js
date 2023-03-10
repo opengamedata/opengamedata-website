@@ -17,25 +17,29 @@ const populationData = document.getElementById('population-data');
 const sessionsData = document.getElementById('sessions-data');
 // Pipeline dynamic elements
 const rawBtn = document.getElementById('raw-btn');
-const rawLink = document.getElementById('raw-link');
+const rawLink = document.getElementById('raw-link-0');
 const rawMonth = document.getElementById('raw-month');
 const rawHead = document.getElementById("raw-header");
 const rawBody = document.getElementById('raw-body');
 const eventBtn = document.getElementById('event-btn');
-const eventLink = document.getElementById('event-link');
+const eventLink = document.getElementById('event-link-0');
 const eventMonth = document.getElementById('event-month');
 const eventHead = document.getElementById("event-header");
 const eventBody = document.getElementById('event-body');
 const featureBtn = document.getElementById('feature-btn');
-const featureLink = document.getElementById('feature-link');
+const featureLinks = [];
 const featureMonth = document.getElementById('feature-month');
-// const featureHead = document.getElementById("feature-header");
-// const featureBody = document.getElementById('feature-body');
+const featureHead = document.getElementById("feature-header");
+const featureBody = document.getElementById('feature-body');
+// Add link elements to featureLinks
+if (document.getElementById('feature-link-0')) featureLinks.push(document.getElementById('feature-link-0'));
+if (document.getElementById('feature-link-1')) featureLinks.push(document.getElementById('feature-link-1'));
+if (document.getElementById('feature-link-2')) featureLinks.push(document.getElementById('feature-link-2'));
 
 // Pipeline popovers
 const rawPop = bootstrap.Popover.getOrCreateInstance('#raw-btn');
 const eventPop = bootstrap.Popover.getOrCreateInstance('#event-btn');
-// const featurePop = bootstrap.Popover.getOrCreateInstance('#feature-btn');
+const featurePop = bootstrap.Popover.getOrCreateInstance('#feature-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
@@ -83,14 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
             eventPop.hide();
         });
     });
-    /* Uncomment when Feature Data becomes available
     featureBtn.addEventListener('inserted.bs.popover', () => {
         const closeBtn = document.querySelector('.popover-header #feature-close');
         closeBtn.addEventListener('click', () => {
             featurePop.hide();
         });
     });
-    */
 });
 
 var prevMonthFunc = function () {
@@ -188,18 +190,27 @@ function updateHtml(gameId, currentYear, currentMonth) {
                 });
             } 
             eventBtn.disabled = response.data.events_file ? false : true;
-            if (featureLink) {
-                featureLink.href = ''; // Not in file_list yet
+
+            featureBtn.disabled = true;
+            // Build array for Feature Data links
+            const responseLinks = [];
+            responseLinks.push({link: response.data.population_file});
+            responseLinks.push({link: response.data.players_file});
+            responseLinks.push({link: response.data.sessions_file});
+            // Update Feature file links
+            featureLinks.forEach((link, index) => { 
+                link.href = responseLinks[index].link ? responseLinks[index].link : '';
+                link.classList = responseLinks[index].link ? 'btn btn-primary mb-2' : 'd-none';
+                if (responseLinks[index].link) { featureBtn.disabled = false; }
+            });
+            if (featureLinks.length > 0) {
                 featureMonth.innerHTML = pipelineMonth;
                 // Set Popover content to updated elements
-                /* Uncomment when Feature Data becomes available
                 featurePop.setContent({
                     '.popover-header': featureHead,
                     '.popover-body': featureBody
                 }); 
-                */
             } 
-            // featureBtn.disabled = true; // Not in file_list yet
         }
     });
 
