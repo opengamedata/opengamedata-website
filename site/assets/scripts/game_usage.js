@@ -1,11 +1,12 @@
 import { getGameUsage, getGameFiles } from "./services.js";
-import { createChart, updateChart } from "./chart.js";
+import { createChart, updateOrCreateChart } from "./chart.js";
 
 let gameId = null;
 let currentMonth = null;
 let currentYear = null;
 const prevMonth = document.getElementById('month-prev');
 const nextMonth = document.getElementById('month-next');
+const chartEl = document.getElementById('chart');
 const statsHeader = document.getElementById('stats-header');
 const statsData = document.getElementById('stats-data-month');
 const playerActivityDate = document.getElementById('player-activity-date');
@@ -63,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
             numPlays.innerHTML = monthlySessions + ' Plays';
             // create the chart
+            chartEl.style.height = '200px';
+            chartEl.classList.add('mb-5');
             createChart(response.data.sessions_by_day, currentMonthName);
         }
     });
@@ -132,8 +135,12 @@ function updateHtml(gameId, currentYear, currentMonth) {
             // update the game usage information
             var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
             numPlays.innerHTML = monthlySessions + ' Plays';
-            // update the chart
-            updateChart(response.data.sessions_by_day, currentMonthName);
+            // update or create the chart
+            chartEl.style.height = '200px';
+            if (!chartEl.classList.contains('mb-5')) {
+                chartEl.classList.add('mb-5');
+            }
+            updateOrCreateChart(response.data.sessions_by_day, currentMonthName);
         } else {
             numPlays.innerHTML = 'No Plays';
         }

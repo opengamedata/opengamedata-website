@@ -1,5 +1,5 @@
-<div style="height: 200px;">
-    <canvas id="activityChart"></canvas>
+<div id="chart">
+    <canvas id="activityChart" style="height: 0;"></canvas>
 </div>
 
 <script src="../assets/scripts/chart.umd.js"></script>

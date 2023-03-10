@@ -34,8 +34,7 @@ function getGameUsage($game_id, $year = null, $month = null)
         'month' => $month
     );
 
-    // TODO Get url from config
-    $usage_url = "http://localhost:5000/getGameUsageByMonth";
+    $usage_url = \AppConfig::GetConfig()['WEBSITE_API_URL_BASE'] . 'getGameUsageByMonth';
 
     $curl = curl_init($usage_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -57,8 +56,8 @@ function getGameFileInfoByMonth($game_id, $year = null, $month = null)
         'year' => $year,
         'month' => $month
     );
-    // TODO Get url from config
-    $info_url = "http://localhost:5000/getGameFileInfoByMonth";
+    
+    $info_url =  \AppConfig::GetConfig()['WEBSITE_API_URL_BASE'] . 'getGameFileInfoByMonth';
 
     $curl = curl_init($info_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

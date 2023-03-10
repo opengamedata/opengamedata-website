@@ -1,5 +1,6 @@
 <?php
 
+require_once 'includes/app_config.php';
 require_once 'includes/services.php';
 require_once 'models/game.php';
 require_once 'models/game_file_info.php';
@@ -119,7 +120,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <!-- Chart -->
         <?php require 'includes/chart.php'; ?>
     </section>
-    <div class="row my-5">
+    <div class="row mb-5">
         <div class="col-md">
             <?php echo '<section id="stats" class="mb-5" data-year="' . $selected_year . '" data-month="' . $selected_month . '">'; ?>
                 <!-- Stats -->

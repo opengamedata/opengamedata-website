@@ -13,6 +13,7 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
         <link rel="stylesheet" href="https://use.typekit.net/zra8nem.css">
         <link rel="stylesheet" href="/assets/styles/bootstrap.css">
         <link rel="stylesheet" href="/assets/styles/styles.css">
+        <script>const WEBSITE_API_URL_BASE = '<?php echo htmlspecialchars(\AppConfig::getConfig()['WEBSITE_API_URL_BASE']); ?>';</script>
     </head>
     <body>
         <header class="shadow">

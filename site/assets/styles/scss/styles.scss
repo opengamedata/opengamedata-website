@@ -177,4 +177,19 @@ img.avatar {
     .card:hover {
         transform: scale(1.05);
     }
+    .about-robot{
+        text-align: center;
+        img{
+            width: 50%;
+        }
+    }
+    .about-data{
+        text-align: center;
+        img{
+            width: 80%;
+        }
+    }
+    .top-buffer{
+        margin-top: 26px;
+    }
 }
