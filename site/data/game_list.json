@@ -1,4 +1,112 @@
 {
+    "BACTERIA": {
+        "game_name": "Antibiotic Resistance",
+        "game_description": "In this playful introduction to the world of bacteria, players get a visual representation of reproduction, mutation, and antibiotic resistance.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/bacteria/",
+        "source_link": "https://github.com/fielddaylab/bacteria",
+        "thumbnail_path" : "./assets/images/thumbs/bacteria-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/bacteria/blob/master/readme.md",
+        "feature_readme_link": null,
+        "studies": []
+    },
+    "BALLOON": {
+        "game_name": "Hot Air Balloon",
+        "game_description": "Time to fly! In this game, players control the altitude of a hot air balloon by heating the balloon or releasing air with the air flap. Players learn about buoyancy, volume, and air pressure.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/balloon.html",
+        "source_link": "https://github.com/fielddaylab/balloon",
+        "thumbnail_path" : "./assets/images/thumbs/balloon-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/balloon/blob/master/readme.md",
+        "feature_readme_link": null,
+        "studies": []
+    },
+    "CRYSTAL": {
+        "game_name": "Crystal Cave",
+        "game_description": "This simple puzzle game introduces kids to crystals! Players try their hand at arranging molecules with different shapes and properties into an ordered, stable configuration.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/crystal.html",
+        "source_link": "https://github.com/fielddaylab/crystal",
+        "thumbnail_path" : "./assets/images/thumbs/crystal-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/crystal/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CRYSTAL/readme.md",
+        "studies": []
+    },
+    "CYCLE_CARBON": {
+        "game_name": "Carbon Cycle",
+        "game_description": "Learn how carbon moves through the world! In this board-game style game, players use Action cards, like Photosynthesis and Soil Respiration, to convert carbon from one form to another. ",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/carbon.html",
+        "source_link": "https://github.com/fielddaylab/carbon",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_CARBON/readme.md",
+        "studies": []
+    },
+    "CYCLE_NITROGEN": {
+        "game_name": "Carbon Cycle",
+        "game_description": "Learn how carbon moves through the world! In this board-game style game, players use Action cards, like Photosynthesis and Soil Respiration, to convert carbon from one form to another. ",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/carbon.html",
+        "source_link": "https://github.com/fielddaylab/carbon",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_NITROGEN/readme.md",
+        "studies": []
+    },
+    "CYCLE_WATER": {
+        "game_name": "Water Cycle",
+        "game_description": "Learn how water moves through the world! In this board-game style game, players use Action cards, like Condensation and Evaporation, to convert water from one form to another. ",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/water.html",
+        "source_link": "https://github.com/fielddaylab/water",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-water-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/wwater/blob/master/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_WATER/readme.md",
+        "studies": []
+    },
     "JOWILDER": {
         "game_name": "Jo Wilder and the Capitol Case",
         "game_description": "This award-winning game turns kids into history detectives! In this point-and-click adventure, players use the methods of real historians to uncover the story behind each mystery artifact.",
@@ -19,37 +127,18 @@
             {
                 "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
                 "authors" : [
-                    "David J. Gagnon"
+                    "David J Gagnon", "Ryan S Baker", "Sarah Gagnon", "Luke Swanson", "Nick Spevacek", "Juliana Andres", "Erik Harpstead", "Jennifer Scianna", "Stefan Slater", "Maria OCZ San Pedro"
                 ],
                 "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
                 "link": "https://arxiv.org/abs/2210.09906"
-            }
-        ]
-    },
-    "WAKE": {
-        "game_name": "Wake: Tales from the Aqualab",
-        "game_description": "Wake: Tales from the Aqualab is a 6th-9th grade science game that challenges students with engaging, authentic missions in a variety of ocean-based ecosystems. In Wake, students take on the role of a scientist studying ocean ecosystems, traveling to different ocean research sites to answer questions and solve problems. As they progress at their own pace, players are guided to gradually take on more complex science challenges.",
-        "target_audience": "Grades 6-9",
-        "subject": "Life Sciences",
-        "developers": [
+            },
             {
-                "name": "Field Day Lab",
-                "link": "https://fielddaylab.wisc.edu/"
-            }
-        ],
-        "play_link": "https://fielddaylab.org/play/wake/ci/production/",
-        "source_link": "https://github.com/fielddaylab/wake",
-        "thumbnail_path" : "https://fielddaylab.wisc.edu/assets/img/gameplay/wake-gameplay.jpg",
-        "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAKE/readme.md",
-        "studies": [
-            {
-                "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
+                "name": "Changing Students’ Perceptions of a History Exploration Game Using Different Scripts",
                 "authors" : [
-                    "David J. Gagnon"
+                    "Stefan Slater", "Ryan S Baker", "David Gagnon", "Erik Harpstead", "Juliana Ma", "Alexandra L Andres", "Luke Swanson"
                 ],
-                "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
-                "link": "https://arxiv.org/abs/2210.09906"
+                "abstract": "As digital games and simulations continue to see use in both formal and informal learning contexts, it becomes increasingly important to understand the goals, motivations, and interests of the learners using them. Recently, there has been increased interest in identifying the different engagement profiles of learners playing games, descriptions of groups of learners’ tendencies and preferences when playing digital games. These engagement profiles represent a powerful tool for designers looking to create personalized and adaptive learning environments. In this work, we explore two aspects of these engagement profiles. First, we explore the different profiles of engagement in a large sample of elementary and middle school learners playing the history game Jo Wilder and the Capitol Case (2019) in a variety of contexts, using the data from a self-report survey. Second, we explore the effect that minor game dialogue changes had on learners’ perceptions of different game elements, such as character likeability and humor, as well as personal preferences, such as enjoyment of history. These findings highlight opportunities for personalized and adaptive game design that leverage players’ goals and motivations.",
+                "link": "https://learninganalytics.upenn.edu/ryanbaker/ICCE2022_paper_58.pdf"
             }
         ]
     },
@@ -68,16 +157,78 @@
         "source_link": "https://github.com/fielddaylab/lakeland",
         "thumbnail_path" : "./assets/images/thumbs/lakeland-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/lakeland/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/lakeland/readme.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/LAKELAND/readme.md",
         "studies": [
             {
-                "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
+                "name": "Leveraging Cluster Analysis to Understand Educational Game Player Experiences and Support Design",
                 "authors" : [
-                    "David J. Gagnon"
+                    "Luke Swanson", "David Gagnon", "Jennifer Scianna", "John McCloskey", "Nicholas Spevacek", "Stefan Slater", "Erik Harpstead"
                 ],
-                "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
-                "link": "https://arxiv.org/abs/2210.09906"
+                "abstract": "The ability for an educational game designer to understand their audience's play styles and resulting experience is an essential tool for improving their game's design. As a game is subjected to large-scale player testing, the designers require inexpensive, automated methods for categorizing patterns of player-game interactions. In this paper we present a simple, reusable process using best practices for data clustering, feasible for use within a small educational game studio. We utilize the method to analyze a real-time strategy game, processing game telemetry data to determine categories of players based on their in-game actions, the feedback they received, and their progress through the game. An interpretive analysis of these clusters results in actionable insights for the game's designers.",
+                "link": "https://arxiv.org/abs/2210.09911"
+            },
+            {
+                "name": "A Pilot Study on Teacher-Facing Real-Time Classroom Game Dashboards",
+                "authors" : [
+                    "Luke Swanson", "David Gagnon", "Jennifer Scianna"
+                ],
+                "abstract": "Educational games are an increasingly popular teaching tool in modern classrooms. However, the development of complementary tools for teachers facilitating classroom gameplay is lacking. We present the results of a participatory design process for a teacher-facing, real-time game data dashboard. This two-phase process included a workshop to elicit teachers' requirements for such a tool, and a pilot study of our dashboard prototype. We analyze post-gameplay survey and interview data to understand teachers' experiences with the tool in terms of evidence of co-design, feasibility, and effectiveness. Our results indicate the participatory design yielded a tool both useful for and usable by teachers within the context of a real class gameplay session. We advocate for the continued development of data-driven teacher tools to improve the effectiveness of games deployed in the classroom.",
+                "link": "https://arxiv.org/abs/2210.09427"
             }
         ]
+    },
+    "SHIPWRECKS": {
+        "game_name": "Legend of the Lost Emerald",
+        "game_description": "Take on the role of a maritime archaeologist uncovering shipwrecks in the Great Lakes! In this historical inquiry game, players use GPS coordinates, go out on dives, take underwater photos, and use artifacts to solve the mystery of each shipwreck.",
+        "target_audience": "Grades 4-6",
+        "subject": "History",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://pbswisconsineducation.org/emerald/play-the-game/",
+        "source_link": "https://github.com/fielddaylab/lost_emerald",
+        "thumbnail_path" : "./assets/images/thumbs/shipwrecks-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/lost_emerald/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md",
+        "studies": []
+    },
+    "WAVES": {
+        "game_name": "Wave Combinator",
+        "game_description": "This game invites kids to explore how waves interact. Kids can use the Wave Combinator to learn about concepts like amplitude, offset, wavelength, and frequency.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/waves.html",
+        "source_link": "https://github.com/fielddaylab/waves",
+        "thumbnail_path" : "./assets/images/thumbs/waves-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/waves/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAVES/readme.md",
+        "studies": []
+    },
+    "WAKE": {
+        "game_name": "Wake: Tales from the Aqualab",
+        "game_description": "Wake: Tales from the Aqualab is a 6th-9th grade science game that challenges students with engaging, authentic missions in a variety of ocean-based ecosystems. In Wake, students take on the role of a scientist studying ocean ecosystems, traveling to different ocean research sites to answer questions and solve problems. As they progress at their own pace, players are guided to gradually take on more complex science challenges.",
+        "target_audience": "Grades 6-9",
+        "subject": "Life Sciences",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://fielddaylab.org/play/wake/ci/production/",
+        "source_link": "https://github.com/fielddaylab/wake",
+        "thumbnail_path" : "https://fielddaylab.wisc.edu/assets/img/gameplay/wake-gameplay.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
+        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
+        "studies": []
     }
 }
