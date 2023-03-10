@@ -8,8 +8,8 @@ class AppConfig
         $APP_CONFIG = [];
         $APP_CONFIG['WEBSITE_API_URL_BASE'] = 'https://fieldday-web.wcer.wisc.edu/wsgi/website/production/';
 
-        // If the hostname is localhost or 127.0.0.1
-        if(!empty($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], ['localhost','127.0.0.1']))
+        // If hostname starts with localhost
+        if(!empty($_SERVER['HTTP_HOST']) && substr($_SERVER['HTTP_HOST'], 0, 9) === 'localhost')
         {
             // Assume we're in a development environment
             $APP_CONFIG['WEBSITE_API_URL_BASE'] = 'http://localhost:5000/';
