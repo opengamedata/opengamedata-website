@@ -28,7 +28,7 @@ $game_json = null;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
-    $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9]+/", "", $_GET['game']));
+    $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9-_]+/", "", $_GET['game']));
     
     // Get game details from api
     $game_json = services\getGameDetails($game_id);
