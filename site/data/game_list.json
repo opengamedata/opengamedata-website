@@ -262,7 +262,7 @@
         ],
         "play_link": "https://theyardgames.org/game/magnetism.html",
         "source_link": "https://github.com/fielddaylab/magnetism",
-        "thumbnail_path" : "./assets/images/thumbs/magnetism-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/magnetism-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/magnetism/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/MAGNET/readme.md",
         "studies": []
