@@ -16,6 +16,9 @@
       <div class="info">
         <h1 class="corrected">Open Game Data</h1>
         <p class="">These anonymous data are provided in service of future educational data mining research. They are made available under the <a target="_blank" href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons CCO 1.0 Universal license.</a> Source code for this website and related data processing is available on <a target="_blank" href="https://github.com/fielddaylab/opengamedata">github</a></p>
+        <p class="">
+          Check out our <a target="_blank" href="https://opengamedata.fielddaylab.wisc.edu">prototype for a new site here.</a>
+        </p>
       </div>
       <!-- <div class="info">
         <h1 class="corrected">Lakeland Teacher Dashboard</h1>
