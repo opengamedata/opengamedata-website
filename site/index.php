@@ -33,12 +33,12 @@ foreach($gamelist as $key => $value)
         <p class="lead">We are leveraging data science to create meaningful insights out of mountains of player data.</p>
         <div class="text-nowrap">
             <a href="#gamelist" class="btn btn-primary me-3">View Games</a> 
-            <a href="#about" class="btn btn-dark">Learn More</a>
+            <a href="/about.php" class="btn btn-dark">Learn More</a>
         </div>
     </div>
 </section>
 <main id="dashboard">
-    <section id="gamelist" class="container-fluid">
+    <section id="gamelist" class="container-fluid mb-5">
         <h2 class="mb-5 text-center">Featured Data Sets</h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <?php 
@@ -47,28 +47,6 @@ foreach($gamelist as $key => $value)
                     echo $card->render();
                 }
             ?>
-        </div>
-    </section>
-    <section id="about" class="container-fluid mb-5">
-        <div class="row">
-            <div class="col-sm my-auto">
-                <h2>How Open Game Data Works</h2>
-                <p>We have built an open-source and community-maintained data storage and processing pipeline for educational game data. From the logging libraries that studios can integrate into their games, all the way to the final visualizations that allow design researchers to build new theory, we are thinking about modularity, scalability and performance.</p> 
-                <p>Gone are the days of ad hoc, glued together analysis! It's time we worked together.</p>
-            </div>
-            <div class="col-sm about-robot">
-                <img class="img-fluid" src="/assets/images/about-robot.png" alt="robot">
-            </div>
-        </div>
-        <div class="row top-buffer">
-            <div class="col-sm my-auto order-sm-last">
-                <h2>Data without Insight isn't worth much.</h2>
-                <p>Everyone is excited about data science and analytics for learning. Games provide rich descriptions into how learners interact with complex systems. We are excited to develop new methods to transform that raw &quot;click steam&quot; data into insights that can be used by designers, educators, researchers and learners. Open Game Data is the infrastructure that will support those discoveries.</p>
-            </div>            
-            <div class="col-sm order-sm-first about-data my-auto">
-                <img class="img-fluid" src="/assets/images/about-data.png" alt="data graph">
-            </div>
-
         </div>
     </section>
 </main>

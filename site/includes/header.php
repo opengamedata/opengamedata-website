@@ -18,4 +18,5 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
     <body>
         <header class="shadow">
             <a href="/index.php"><img class="logo" src="/assets/images/logos/OpenGameData-logo.png" alt="Open Game Data"></a>
+            <a href="/about.php" class="btn btn-header mx-5">About</a>
         </header>

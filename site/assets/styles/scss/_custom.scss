@@ -70,6 +70,25 @@
     text-align: left;
 }
 
+.btn-header {
+    @include button-variant(transparent,
+                            transparent,
+                            #5D5FEF,
+                            transparent,
+                            transparent,
+                            rgba(#5D5FEF,.7),
+                            transparent,
+                            transparent,
+                            #5D5FEF);
+    --bs-btn-padding-y: .157rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+    //text-transform: uppercase;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 /* Add to btn-secondary for the publications template */
 .btn-publication {
     --bs-btn-font-size: 1.25rem;
