@@ -1,8 +1,7 @@
 <?php
     require_once 'includes/app_config.php';
+    require 'includes/header.php'; 
 ?>
-
-<?php require 'includes/header.php'; ?>
 <section class="hero-about w-100 px-3 py-5 px-md-5 bg-dark text-white d-flex">
     <div class="col-sm-6 mt-auto my-md-auto">
         <h1 class="display-1">All About Open Game Data</h1>

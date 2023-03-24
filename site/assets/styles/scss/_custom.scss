@@ -83,9 +83,9 @@
     --bs-btn-padding-y: .157rem;
     --bs-btn-padding-x: .5rem;
     --bs-btn-font-size: .75rem;
-    //text-transform: uppercase;
     &:hover {
         text-decoration: underline;
+        text-underline-offset: 3px;
     }
 }
 
@@ -154,4 +154,8 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
             padding-top: 1rem;
         }
     }
+}
+
+.navbar {
+    justify-content: start;
 }
