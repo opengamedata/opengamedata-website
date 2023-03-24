@@ -60,6 +60,31 @@ footer {
     }
 }
 
+/* Hero class for about page */
+.hero-about {
+    background-image: url("/assets/images/about-page-hero.png"), url("/assets/images/grid-top.jpg"), url("/assets/images/grid-bottom.jpg");
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: right, top, bottom; 
+    background-size: auto 90%, auto 380px, auto 380px;
+    background-blend-mode: normal, lighten, lighten;
+    min-height: 70vh;
+    p {
+        font-family: var(--bs-font-monospace);
+        &.lead {
+            font-size: 1.5rem;
+        }
+    }
+    @media (max-width: 575.98px) {
+        background-position: top, top, bottom;
+        p.lead {
+            font-size: 1.25rem;
+        }
+    }
+    @media (max-width: 991.98px) {
+        background-size: 100vw, auto 380px, auto 380px;
+    }
+}
+
 /* Buttons */
 .btn i.bi::before {
     font-weight: 700 !important; // bold any button icons
@@ -176,6 +201,18 @@ img.avatar {
     }
     .card:hover {
         transform: scale(1.05);
+    }
+    .top-buffer{
+        margin-top: 26px;
+    }
+}
+
+/* About */
+#about {
+    .container-fluid {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        padding-top: 4rem;
     }
     .about-robot{
         text-align: center;
