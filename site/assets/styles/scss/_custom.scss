@@ -70,6 +70,25 @@
     text-align: left;
 }
 
+.btn-header {
+    @include button-variant(transparent,
+                            transparent,
+                            #5D5FEF,
+                            transparent,
+                            transparent,
+                            rgba(#5D5FEF,.7),
+                            transparent,
+                            transparent,
+                            #5D5FEF);
+    --bs-btn-padding-y: .157rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+    &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+}
+
 /* Add to btn-secondary for the publications template */
 .btn-publication {
     --bs-btn-font-size: 1.25rem;
@@ -135,4 +154,8 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
             padding-top: 1rem;
         }
     }
+}
+
+.navbar {
+    justify-content: start;
 }
