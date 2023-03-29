@@ -165,8 +165,8 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <div class="col-md">
             <section id="templates" class="mb-5">
                 <!-- Templates -->
-                <h3>General Templates</h3>
-                <p>These templates link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+                <h3>Code Samples</h3>
+                <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
                 <?php if (isset($game_files) && $game_files->getEventsTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">
