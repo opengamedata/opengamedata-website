@@ -1,6 +1,6 @@
 import axios from "./axios.min.js"
 
-const getGameUsage = (gameId, year, month) => {
+const getGameUsageByMonth = (gameId, year, month) => {
     const url = WEBSITE_API_URL_BASE + 'getGameUsageByMonth';
     let data = axios.get(url, {
         params: {
@@ -32,4 +32,18 @@ const getGameFiles = (gameId, year, month) => {
     return data;
 }
 
-export { getGameUsage, getGameFiles };
+const getGameUsage = (gameId) => {
+    const url = WEBSITE_API_URL_BASE + 'getMonthlyGameUsage';
+    let data = axios.get(url, {
+        params: {
+            game_id: gameId
+        }
+    })
+    .then(function (response) {
+        return response.data;
+    });
+
+    return data;
+}
+
+export { getGameUsageByMonth, getGameUsage, getGameFiles };
