@@ -1,0 +1,62 @@
+name: OGD-Website Release Script
+
+# Controls when the action will run. Triggers the workflow on creation of 
+# tags.  Creating new 'versions' via github is the most straightforward 
+# way of doing this.
+on:
+  workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
+  push: # Trigger automatically when we do a merge to production
+    paths:
+    - '.github/workflows/website_CI.yml'
+    - 'site/**'
+    - 'gulpfile.js'
+    - 'package.json'
+
+env:
+  BRANCH_PATH: opengamedata/
+  
+jobs:
+  production_deply:
+    name: CI Deploy of Website
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        lfs: true  
+    
+    - name: Setup Node
+      run: npm install
+
+    - name: Build
+      run: gulp build   
+
+    - name: Install OpenConnect
+      run: sudo apt-get -q update && sudo apt-get -q install openconnect
+    - name: Connect to VPN
+      run: echo ${{ secrets.VPN_PASS }} | sudo openconnect --protocol=gp -u ${{ secrets.VPN_USER}} --passwd-on-stdin soe.vpn.wisc.edu &
+
+    - name: Setup Access Key
+      run: |
+        mkdir -p ~/.ssh
+        echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
+        chmod 600 ./key.txt
+
+    - name: Ensure directory exists
+      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ vars.OGD_STAGING_HOST }} "mkdir -p ${{ vars.WSGI_PATH }}${{ env.BRANCH_PATH }}"
+    
+    - name: Upload to web server via rsync
+      uses: burnett01/rsync-deployments@5.2
+      with:
+        switches: -vrct --delete --exclude-from 'rsync-exclude'
+        path: /site/*
+        remote_path: ${{ vars.WEB_PATH }}${{ env.BRANCH_PATH }}
+        remote_host: ${{ vars.OGD_STAGING_HOST }}
+        remote_user: ${{ secrets.DEPLOY_USER }}
+        remote_key: ${{ secrets.DEPLOY_KEY }}
+    
