@@ -90,7 +90,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                     <div class="button-bar">
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Event Schema and Source Code</a>'; ?>
                     </div>
                 </div>
                 <p>
@@ -132,7 +132,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             </section>
             <section id="pipelines" class="mb-5">
                 <!-- Data Pipeline -->
-                <h3 class="mb-3">Data Pipelines:</h3>
+                <h3 class="mb-3">Data Downloads:</h3>
                 <div class="pipeline-row d-flex">
                     <?php echo $button_raw->renderButton(); ?>
                     <div class="mt-2 ms-3 pipeline-text">
@@ -165,8 +165,8 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <div class="col-md">
             <section id="templates" class="mb-5">
                 <!-- Templates -->
-                <h3>General Templates</h3>
-                <p>These templates link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+                <h3>Code Samples</h3>
+                <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
                 <?php if (isset($game_files) && $game_files->getEventsTemplate() !== null) : ?>
                 <div class="card shadow mb-4">
                     <div class="card-body">

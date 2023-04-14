@@ -26,7 +26,7 @@ function getGameDetails(string $game_id)
  * <param> string year - optional
  * <param> string month - optional
  */
-function getGameUsage($game_id, $year = null, $month = null)
+function getGameUsageByMonth($game_id, $year = null, $month = null)
 {
     $params = array(
         'game_id' => $game_id,
@@ -60,6 +60,25 @@ function getGameFileInfoByMonth($game_id, $year = null, $month = null)
     $info_url =  \AppConfig::GetConfig()['WEBSITE_API_URL_BASE'] . 'getGameFileInfoByMonth';
 
     $curl = curl_init($info_url . '?' . http_build_query($params));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response ? json_decode(($response)) : null;
+}
+
+/* Get game usage from API
+ * <param> string game_id
+ */
+function getGameUsage($game_id)
+{
+    $params = array(
+        'game_id' => $game_id
+    );
+
+    $usage_url = \AppConfig::GetConfig()['WEBSITE_API_URL_BASE'] . 'getMonthlyGameUsage';
+
+    $curl = curl_init($usage_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $response = curl_exec($curl);
     curl_close($curl);
