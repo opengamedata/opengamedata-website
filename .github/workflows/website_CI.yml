@@ -1,4 +1,4 @@
-name: OGD-Website Release Script
+name: OGD-Website CI Script
 
 # Controls when the action will run. Triggers the workflow on creation of 
 # tags.  Creating new 'versions' via github is the most straightforward 
