@@ -15,6 +15,6 @@ coffee_out.js
 browserify_out.js
 minify_out.js.report.txt
 rsync-exclude
-realtime_config.js
+site/config/realtime_config.js.template
 site/assets/scripts/vendor
 site/assets/styles/scss
