@@ -47,7 +47,7 @@ jobs:
         chmod 600 ./key.txt
 
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ vars.OGD_SERVICES_HOST }} "mkdir -p ${{ vars.WSGI_PATH }}${{ env.BRANCH_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ vars.OGD_SERVICES_HOST }} "mkdir -p ${{ vars.WEB_PATH }}${{ env.BRANCH_PATH }}"
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
