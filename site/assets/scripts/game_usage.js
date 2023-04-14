@@ -1,5 +1,6 @@
 import { getGameUsage, getGameFiles } from "./services.js";
-import { createChart, updateOrCreateChart } from "./chart.js";
+import { createChart, updateOrCreateChart, setActiveBar } from "./chart.js";
+import { GameUsage } from "./models.js";
 
 let gameId = null;
 let currentMonth = null;
@@ -41,6 +42,10 @@ const rawPop = bootstrap.Popover.getOrCreateInstance('#raw-btn');
 const eventPop = bootstrap.Popover.getOrCreateInstance('#event-btn');
 const featurePop = bootstrap.Popover.getOrCreateInstance('#feature-btn');
 
+let gameUsage = null;
+let currentSession = null;
+let updateChart = false;
+
 document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
     gameId = params.get("game");
@@ -57,20 +62,28 @@ document.addEventListener('DOMContentLoaded', () => {
         currentYear = date.getFullYear();    
     }
 
-    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
+    getGameUsage(gameId).then(function (response) {
         if (response.success) {
             // update the months and year
             var currentJSMonth = currentMonth - 1;
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
             statsData.innerHTML = 'In ' + currentMonthName;
             playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
+
+            gameUsage = new GameUsage(response.data.gameId, response.data.sessions);
+            currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
             // update the game usage information
-            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
+            var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
             numPlays.innerHTML = monthlySessions + ' Plays';
             // create the chart
             chartEl.style.height = '200px';
             chartEl.classList.add('mb-5');
-            createChart(response.data.sessions_by_day, currentMonthName);
+
+            if (gameUsage.chartSessions.length > 30) {
+                // slice the chart sessions array to 30 elements
+                gameUsage.chartSlice(gameUsage.chartSessions.length-30, gameUsage.chartSessions.length);    
+            } 
+            createChart(gameUsage.chartSessions, goToMonth);
         }
     });
 
@@ -96,6 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 var prevMonthFunc = function () {
+    // find the current chart array index
+    var chartIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
+    // find the full sessions array index
+    var sessionIndex = gameUsage.sessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
+    if (chartIndex === 0) {
+        // update the chart array with subset of full sessions array
+        gameUsage.chartSlice(Math.max(0,sessionIndex - 30), sessionIndex);
+        updateChart = true;
+    }
     // setup year and month
     // we were in January, move back to December of previous year
     if (currentMonth === 1) {
@@ -105,10 +127,20 @@ var prevMonthFunc = function () {
     else {
         currentMonth--;
     }
+
     updateHtml(gameId, currentYear, currentMonth);
 }
 
 var nextMonthFunc = function () {
+    // find the current chart array index
+    var chartIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
+    // find the full sessions array index
+    var sessionIndex = gameUsage.sessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
+    if (chartIndex === gameUsage.chartSessions.length-1) {
+        // update the chart array with subset of full sessions array
+        gameUsage.chartSlice(sessionIndex+1, Math.min(sessionIndex+31, gameUsage.sessions.length));
+        updateChart = true;
+    }
     // setup year and month
     // we were in December, move to January of next year
     if (currentMonth === 12) {
@@ -121,6 +153,14 @@ var nextMonthFunc = function () {
     updateHtml(gameId, currentYear, currentMonth);
 }
 
+// callback function called when chart bars are clicked
+var goToMonth = function (index) {
+    const currentSession = gameUsage.chartSessions[index];
+    currentYear = currentSession.year;
+    currentMonth = currentSession.month;
+    updateHtml(gameId, currentYear, currentMonth);
+}
+
 // add event listeners
 if (prevMonth !== null) prevMonth.addEventListener('click', prevMonthFunc, false);
 if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false);
@@ -128,27 +168,27 @@ if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false
 function updateHtml(gameId, currentYear, currentMonth) {
     // set loading values
     numPlays.innerHTML = '-- Plays';
-    // get game usage for that month
-    getGameUsage(gameId, currentYear, currentMonth).then(function (response) {
-        if (response.success) {
-            // update the months and year
-            var currentJSMonth = currentMonth - 1;
-            var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
-            // update the game usage information
-            var monthlySessions = response.data.total_monthly_sessions < 1000 ? response.data.total_monthly_sessions : (response.data.total_monthly_sessions / 1000).toFixed(0) + 'K';
-            numPlays.innerHTML = monthlySessions + ' Plays';
-            // update or create the chart
+
+    if (gameUsage) {
+        currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
+        var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
+        numPlays.innerHTML = currentSession.total_sessions > 0 ? monthlySessions + ' Plays' : 'No Plays';                    
+        // update or create the chart
+        if (updateChart) {
             chartEl.style.height = '200px';
             if (!chartEl.classList.contains('mb-5')) {
                 chartEl.classList.add('mb-5');
             }
-            updateOrCreateChart(response.data.sessions_by_day, currentMonthName);
-        } else {
-            numPlays.innerHTML = 'No Plays';
+            updateOrCreateChart(gameUsage.chartSessions, goToMonth); 
+            updateChart = false;
         }
-    });
+        var currentIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
+        setActiveBar(currentIndex);    
+    }
+
     // get game files for that month
     getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
+
         if (response.success) {
             // update the months and year
             var currentJSMonth = currentMonth - 1;

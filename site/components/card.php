@@ -15,7 +15,7 @@ class Card
         $this->game_usage = $game_usage;
         $this->game_link .= $this->game->getId();
         if (isset($game_usage)) {
-            $this->monthly_sessions = num_in_kilo($this->game_usage->getTotalMonthlySessions());
+            $this->monthly_sessions = num_in_kilo($this->game_usage->getLatestMonthlySessions());
         }
     }
 

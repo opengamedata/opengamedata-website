@@ -1,17 +1,18 @@
 var chartInstance = null;
+var rendered = false;
+var activeBar = 0;
 
-function createChart (sessionsByDay, month) {
+function createChart (sessions, fnCallback) {
     var hoverLabels = [];
     var displaySessions = [];
 
-    for (const [key, value] of Object.entries(sessionsByDay)) {
-        var index = parseInt(key);
-        hoverLabels[index - 1] = month + " " + index;
-        displaySessions[index - 1] = value;
-    }
+    sessions.forEach(element => {
+        hoverLabels.push(element.label);
+        displaySessions.push(element.totalSessions);
+    });
 
     const ctx = document.getElementById('activityChart');
-
+    activeBar = sessions.length-1;
     chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -20,6 +21,9 @@ function createChart (sessionsByDay, month) {
                 data: displaySessions,
                 borderWidth: 1,
                 backgroundColor: '#3E3498',  // This is the secondary theme color in _theme.scss
+                hoverBackgroundColor: '#A2FFEB',
+                hoverBorderColor: '#3E3498',
+                hoverBorderWidth: 2,
             }]
         },
         options: {
@@ -65,30 +69,78 @@ function createChart (sessionsByDay, month) {
                         }
                     }
                 }
+            },
+            onClick: (event, active) => {
+                // Find active element index
+                const bar = active.find(e => e.element.hasValue());
+                if (bar === undefined) {
+                    return;
+                }
+                // Execute callback function
+                fnCallback(bar.index);
+            },
+            onHover: (event, chartElement) => {
+                event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
             }
-        }
+        },
+        plugins: [{
+            afterDraw: function(chart) {
+                if (!rendered) {
+                    // set active element on initial chart draw
+                    chart.setActiveElements([
+                        {
+                          datasetIndex: 0,
+                          index: activeBar,
+                        }
+                    ]);
+                    rendered = true;
+                }
+            },
+            afterEvent: function(chart, args) {
+                // reset active element on mouseout (after hovers)
+                if (args.event.type === "mouseout") {
+                    chart.setActiveElements([
+                        {
+                          datasetIndex: 0,
+                          index: activeBar,
+                        }
+                    ]);
+                    chart.update();
+                }
+            }
+        }]
     });
 }
 
-function updateOrCreateChart(sessionsByDay, month) {
+function updateOrCreateChart(sessions, fnCallback) {
     // Create chart if it isn't already created.
     if (chartInstance === null) {
-        createChart(sessionsByDay, month);
+        createChart(sessions, fnCallback);
         return;
     }
     // Else update
     var hoverLabels = [];
     var displaySessions = [];
 
-    for (const [key, value] of Object.entries(sessionsByDay)) {
-        var index = parseInt(key);
-        hoverLabels[index - 1] = month + " " + index;
-        displaySessions[index - 1] = value;
-    }
+    sessions.forEach(element => {
+        hoverLabels.push(element.label);
+        displaySessions.push(element.totalSessions);
+    });
 
     chartInstance.data.labels = hoverLabels;
     chartInstance.data.datasets[0].data = displaySessions;
     chartInstance.update();
 }
 
-export { createChart, updateOrCreateChart }
+function setActiveBar(index) {
+    activeBar = index;
+    chartInstance.setActiveElements([
+      {
+        datasetIndex: 0,
+        index: index,
+      }
+    ]);
+    chartInstance.update();
+}
+
+export { createChart, updateOrCreateChart, setActiveBar }
