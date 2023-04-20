@@ -17,6 +17,7 @@ const playersData = document.getElementById('players-data');
 const populationData = document.getElementById('population-data');
 const sessionsData = document.getElementById('sessions-data');
 // Pipeline dynamic elements
+const pipeHeader = document.getElementById('pipeline-header');
 const rawBtn = document.getElementById('raw-btn');
 const rawLink = document.getElementById('raw-link-0');
 const rawMonth = document.getElementById('raw-month');
@@ -200,6 +201,7 @@ function updateHtml(gameId, currentYear, currentMonth) {
             statsHeader.innerHTML = currentMonthName + ' Stats:';
             statsData.innerHTML = 'In ' + currentMonthName;
             playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
+            pipeHeader.innerHTML = currentMonthName + ' Data Downloads:';
             // update next / previous to be enabled or disabled depending on what other data exists
             nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
             prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;            
