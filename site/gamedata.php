@@ -132,7 +132,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             </section>
             <section id="pipelines" class="mb-5">
                 <!-- Data Pipeline -->
-                <h3 class="mb-3">Data Downloads:</h3>
+                <h3 id="pipeline-header" class="mb-3"><?php echo $month_name . " Data Downloads:" ?></h3>
                 <div class="pipeline-row d-flex">
                     <?php echo $button_raw->renderButton(); ?>
                     <div class="mt-2 ms-3 pipeline-text">
