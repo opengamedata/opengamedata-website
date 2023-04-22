@@ -4,10 +4,10 @@ name: OGD-Website Release Script
 # tags.  Creating new 'versions' via github is the most straightforward 
 # way of doing this.
 on:
+  workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
   #create:
   #  tags:
   #    - '*'
-  workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
   push: # Trigger automatically when we do a merge to production
      branches: [ production ]
 
