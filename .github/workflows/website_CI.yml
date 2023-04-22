@@ -17,7 +17,7 @@ env:
   TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
   
 jobs:
-  production_deply:
+  ci_deploy:
     name: CI Deploy of Website
     runs-on: ubuntu-22.04
     concurrency:
@@ -26,17 +26,23 @@ jobs:
     
     steps:
 
+    # 1. Local checkout & config
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         lfs: true  
     
-    - name: Setup Node
-      run: npm install
-
+    # 2. Build 
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install libraries
+      run: npm clean-install
     - name: Build
       run: gulp build   
 
+    # 3. Remote config & deploy
     - name: Install OpenConnect
       run: sudo apt-get -q update && sudo apt-get -q install openconnect
     - name: Connect to VPN
@@ -47,7 +53,6 @@ jobs:
         mkdir -p ~/.ssh
         echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
-
     - name: Ensure directory exists
       run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.TARGET_HOST }} "mkdir -p ${{ env.TARGET_PATH }}"
     
