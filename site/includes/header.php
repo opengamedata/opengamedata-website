@@ -14,6 +14,15 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
         <link rel="stylesheet" href="/assets/styles/bootstrap.css">
         <link rel="stylesheet" href="/assets/styles/styles.css">
         <script>const WEBSITE_API_URL_BASE = '<?php echo htmlspecialchars(\AppConfig::getConfig()['WEBSITE_API_URL_BASE']); ?>';</script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FZHES4D1G"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-2FZHES4D1G');
+        </script>
     </head>
     <body>
         <header class="shadow">
