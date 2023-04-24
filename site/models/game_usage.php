@@ -30,7 +30,7 @@ class GameUsage
     }
     public function getLatestMonthlySessions()
     {
-        return array_is_list($this->sessions) ? $this->sessions[count($this->sessions)-1]->total_sessions : 0;
+        return isset($this->sessions[0]) ? $this->sessions[count($this->sessions)-1]->total_sessions : 0;
     }
 
 }
