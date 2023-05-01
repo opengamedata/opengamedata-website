@@ -1,12 +1,12 @@
 <?php 
-require_once './models/game_card.php';
-require_once './includes/functions.php';
+require_once 'models/game_card.php';
+require_once 'includes/functions.php';
 
 class Card
 {
     private $game;
     private $game_usage = null;
-    private $game_link = "/gamedata.php?game=";
+    private $game_link = "gamedata.php?game=";
     private $monthly_sessions = "0";
 
     public function __construct($game, $game_usage)
@@ -29,7 +29,7 @@ class Card
                                 <p class="card-subtitle small">' . htmlspecialchars($this->monthly_sessions) . ' Monthly Sessions</p>
                             </div>
                             <div class="card-footer d-flex align-items-center">
-                                <img class="avatar me-2" src="/assets/images/avatar.png" alt="avatar"> 
+                                <img class="avatar me-2" src="../assets/images/avatar.png" alt="avatar"> 
                                 <h5 class="mb-0">' . htmlspecialchars($this->game->getDeveloperName()) . '</h5> 
                             </div>
                         </div>

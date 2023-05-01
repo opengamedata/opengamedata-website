@@ -34,7 +34,7 @@ footer {
 
 /* Hero class */
 .hero {
-    background-image: url("/assets/images/hero-artwork.png"), url("/assets/images/grid-top.jpg"), url("/assets/images/grid-bottom.jpg");
+    background-image: url("../images/hero-artwork.png"), url("../images/grid-top.jpg"), url("../images/grid-bottom.jpg");
     background-repeat: no-repeat, no-repeat, no-repeat;
     background-position: right, top, bottom; 
     background-size: auto 90%, auto 380px, auto 380px;
@@ -62,7 +62,7 @@ footer {
 
 /* Hero class for about page */
 .hero-about {
-    background-image: url("/assets/images/about-page-hero.png"), url("/assets/images/grid-top.jpg"), url("/assets/images/grid-bottom.jpg");
+    background-image: url("../images/about-page-hero.png"), url("../images/grid-top.jpg"), url("../images/grid-bottom.jpg");
     background-repeat: no-repeat, no-repeat, no-repeat;
     background-position: right, top, bottom; 
     background-size: auto 90%, auto 380px, auto 380px;
@@ -135,41 +135,41 @@ img.avatar {
             }
         }
         .btn-pipeline-1 {
-            background-image: url("/assets/images/pipeline-raw.svg"), url("/assets/images/pipeline-transform.png");
+            background-image: url("../images/pipeline-raw.svg"), url("../images/pipeline-transform.png");
             background-repeat: no-repeat, no-repeat;
             background-position: top, bottom;
             z-index: 10;
             &:active {
-                background-image: url("/assets/images/pipeline-raw-active.svg"), url("/assets/images/pipeline-transform.png");
+                background-image: url("../images/pipeline-raw-active.svg"), url("../images/pipeline-transform.png");
             }
             &:disabled {
-                background-image: url("/assets/images/pipeline-raw-disabled.svg"), url("/assets/images/pipeline-transform-disabled.png");
+                background-image: url("../images/pipeline-raw-disabled.svg"), url("../images/pipeline-transform-disabled.png");
                 opacity: 1;
             }
         }
         .btn-pipeline-2 {
-            background-image: url("/assets/images/pipeline-event.svg"), url("/assets/images/pipeline-transform.png");
+            background-image: url("../images/pipeline-event.svg"), url("../images/pipeline-transform.png");
             background-repeat: no-repeat, no-repeat;
             background-position: top, bottom;
             z-index: 7;
             &:active {
-                background-image: url("/assets/images/pipeline-event-active.svg"), url("/assets/images/pipeline-transform.png");
+                background-image: url("../images/pipeline-event-active.svg"), url("../images/pipeline-transform.png");
             }
             &:disabled {
-                background-image: url("/assets/images/pipeline-event-disabled.svg"), url("/assets/images/pipeline-transform-disabled.png");
+                background-image: url("../images/pipeline-event-disabled.svg"), url("../images/pipeline-transform-disabled.png");
                 opacity: 1;
             }
         }
         .btn-pipeline-3 {
-            background-image: url("/assets/images/pipeline-feature.svg");
+            background-image: url("../images/pipeline-feature.svg");
             background-repeat: no-repeat;
             background-position: top;
             z-index: 4;
             &:active {
-                background-image: url("/assets/images/pipeline-feature-active.svg");
+                background-image: url("../images/pipeline-feature-active.svg");
             }
             &:disabled {
-                background-image: url("/assets/images/pipeline-feature-disabled.svg");
+                background-image: url("../images/pipeline-feature-disabled.svg");
                 opacity: 1;
             }
         }        

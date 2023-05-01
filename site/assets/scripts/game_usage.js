@@ -1,6 +1,6 @@
-import { getGameUsage, getGameFiles } from "./services.js";
-import { createChart, updateOrCreateChart, setActiveBar } from "./chart.js";
-import { GameUsage } from "./models.js";
+import { getGameUsage, getGameFiles } from "../scripts/services.js";
+import { createChart, updateOrCreateChart, setActiveBar } from "../scripts/chart.js";
+import { GameUsage } from "../scripts/models.js";
 
 let gameId = null;
 let currentMonth = null;

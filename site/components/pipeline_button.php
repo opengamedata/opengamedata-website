@@ -33,7 +33,7 @@ class PipelineButton
         $this->header_id = $selector . '-header';
         $this->body_id = $selector . '-body';
         $this->close_id = $selector . '-close';
-        $this->header = "$this->title <small id='$this->month_id'>Month of $this->month</small> <img class='pipeline-pop' src='/assets/images/$this->image' alt=''> <button id='$this->close_id' type='button' class='btn-close' aria-label='Close'></button>";
+        $this->header = "$this->title <small id='$this->month_id'>Month of $this->month</small> <img class='pipeline-pop' src='../assets/images/$this->image' alt=''> <button id='$this->close_id' type='button' class='btn-close' aria-label='Close'></button>";
         $this->body = "<p>$this->text</p>";
         // Loop through file_links array and add download links
         $index = 0;
