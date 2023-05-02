@@ -83,15 +83,15 @@
             }
         ],
         "play_link": "https://theyardgames.org/game/carbon.html",
-        "source_link": "https://github.com/fielddaylab/carbon",
+        "source_link": "https://github.com/fielddaylab/cycle",
         "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.png",
-        "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
+        "event_readme_link": "https://github.com/fielddaylab/cycle/blob/master/readme.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_CARBON/readme.md",
         "studies": []
     },
     "CYCLE_NITROGEN": {
-        "game_name": "Carbon Cycle",
-        "game_description": "Learn how carbon moves through the world! In this board-game style game, players use Action cards, like Photosynthesis and Soil Respiration, to convert carbon from one form to another. ",
+        "game_name": "Nitrogen Cycle",
+        "game_description": "Learn how nitrogen moves through the world! In this board-game style game, players use Action cards, like Plant Death and Plant Assimilation, to convert nitrogen atoms from one form to another.",
         "target_audience": "Grades 5-8",
         "subject": "Science",
         "developers": [
@@ -100,10 +100,10 @@
                 "link": "https://fielddaylab.wisc.edu/"
             }
         ],
-        "play_link": "https://theyardgames.org/game/carbon.html",
-        "source_link": "https://github.com/fielddaylab/carbon",
-        "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.png",
-        "event_readme_link": "https://github.com/fielddaylab/carbon/blob/master/readme.md",
+        "play_link": "https://theyardgames.org/game/nitrogen.html",
+        "source_link": "https://github.com/fielddaylab/cycle",
+        "thumbnail_path" : "./assets/images/thumbs/cycle-nitrogen-thumb.png",
+        "event_readme_link": "https://github.com/fielddaylab/cycle/blob/master/readme.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_NITROGEN/readme.md",
         "studies": []
     },
@@ -119,9 +119,9 @@
             }
         ],
         "play_link": "https://theyardgames.org/game/water.html",
-        "source_link": "https://github.com/fielddaylab/water",
+        "source_link": "https://github.com/fielddaylab/cycle",
         "thumbnail_path" : "./assets/images/thumbs/cycle-water-thumb.png",
-        "event_readme_link": "https://github.com/fielddaylab/water/blob/master/readme.md",
+        "event_readme_link": "https://github.com/fielddaylab/cycle/blob/master/readme.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_WATER/readme.md",
         "studies": []
     },
