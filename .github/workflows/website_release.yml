@@ -72,7 +72,7 @@ jobs:
     - name: Upload to secondary web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
-        switches: -vrct --exclude-from 'rsync-exclude'
+        switches: -vrc --exclude-from 'rsync-exclude'
         path: /site/*
         remote_path: ${{ env.SECONDARY_PATH }}
         remote_host: ${{ env.SECONDARY_HOST }}
