@@ -14,7 +14,7 @@ on:
 env:
   TARGET_PATH: ${{ vars.WEB_PATH }}opengamedata/
   TARGET_HOST: ${{ vars.OGD_SERVICES_HOST }}
-  SECONDARY_HOST: ${{ vars.FD_WEB_HOST }}
+  SECONDARY_HOST: fieldday-web.wcer.wisc.edu
   
 jobs:
   production_deploy:
