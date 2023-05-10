@@ -12,7 +12,7 @@
         ],
         "play_link": "https://fielddaylab.org/play/wake/ci/production/",
         "source_link": "https://github.com/fielddaylab/wake",
-        "thumbnail_path" : "https://fielddaylab.wisc.edu/assets/img/gameplay/wake-gameplay.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/wake-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
         "studies": []
