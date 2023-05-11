@@ -1,4 +1,4 @@
-import axios from "./axios.min.js"
+import axios from "../scripts/axios.min.js"
 
 const getGameUsageByMonth = (gameId, year, month) => {
     const url = WEBSITE_API_URL_BASE + 'getGameUsageByMonth';

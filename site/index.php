@@ -33,7 +33,7 @@ foreach($gamelist as $key => $value)
         <p class="lead">We are leveraging data science to create meaningful insights out of mountains of player data.</p>
         <div class="text-nowrap">
             <a href="#gamelist" class="btn btn-primary me-3">View Games</a> 
-            <a href="/about.php" class="btn btn-dark">Learn More</a>
+            <a href="about.php" class="btn btn-dark">Learn More</a>
         </div>
     </div>
 </section>

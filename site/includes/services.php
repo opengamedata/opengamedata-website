@@ -6,7 +6,7 @@ namespace services;
  */ 
 function getGameList()
 { 
-    return file_get_contents('./data/game_list.json');
+    return file_get_contents('data/game_list.json');
 }
 
 /* Get single game details from game_list

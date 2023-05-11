@@ -86,7 +86,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             <div class="col-md-7 my-auto">
                 <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
                 <div class="d-flex align-items-center mb-3">
-                    <img class="avatar" src="/assets/images/avatar.png">
+                    <img class="avatar" src="assets/images/avatar.png">
                     <div class="button-bar">
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
@@ -152,7 +152,6 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                     <div class="mt-2 ms-3 pipeline-text">
                         <h4 class="mb-0">Feature Data</h4>
                         Descriptions of sessions, players or populations
-                        <!-- <p class="mt-2">No Features yet.</p> -->
                     </div>
                 </div>
                 <?php 
@@ -217,7 +216,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         echo '<h2 class="h3">No game data available.</h2>';
     endif; ?>
 </main>
-<script type="module" src="/assets/scripts/services.js"></script>
-<script type="module" src="/assets/scripts/game_usage.js"></script>
+<script type="module" src="assets/scripts/services.js"></script>
+<script type="module" src="assets/scripts/game_usage.js"></script>
 <!-- Begin Footer Include -->
 <?php require 'includes/footer.php'; ?>
