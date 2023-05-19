@@ -15,6 +15,7 @@ env:
   TARGET_PATH: ${{ vars.WEB_PATH }}opengamedata/
   TARGET_HOST: ${{ vars.OGD_SERVICES_HOST }}
   SECONDARY_HOST: fieldday-web.wcer.wisc.edu
+  SECONDARY_PATH: /var/www/opengamedata/
   
 jobs:
   production_deploy:
@@ -71,9 +72,9 @@ jobs:
     - name: Upload to secondary web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
-        switches: -vrct --delete --exclude-from 'rsync-exclude'
+        switches: -vrc --exclude-from 'rsync-exclude'
         path: /site/*
-        remote_path: ${{ env.TARGET_PATH }}
+        remote_path: ${{ env.SECONDARY_PATH }}
         remote_host: ${{ env.SECONDARY_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}
         remote_key:  ${{ secrets.DEPLOY_KEY }}
