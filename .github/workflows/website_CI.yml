@@ -5,10 +5,10 @@ name: OGD-Website CI Script
 # way of doing this.
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
-    inputs:
-      custom_branch:
-        description: "Custom API Branch: Set the site to use an API branch different from the website branch being deployed."
-        required: false
+    # inputs:
+    #   custom_branch:
+    #     description: "Custom API Branch: Set the site to use an API branch different from the website branch being deployed."
+    #     required: false
   push: # Trigger automatically when we do a merge to production
     paths:
     - '.github/workflows/website_CI.yml'
@@ -19,8 +19,8 @@ on:
 env:
   TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
   TARGET_PATH: ${{ vars.WEB_PATH }}${{ github.event.repository.name }}/${{ github.ref_name }}
-  API_HOST:    ${{ vars.OGD_STAGING_HOST }}
-  API_PATH:    wsgi-bin/${{ github.ref_name }}/app.wsgi
+  API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
+  API_PATH:    wsgi-bin/app.wsgi
   
 jobs:
   ci_deploy:
