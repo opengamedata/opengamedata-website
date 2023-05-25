@@ -37,7 +37,7 @@ jobs:
     - name: Set up Config File
       uses: ./.github/actions/web_config
       with:
-        api_base: http://${{env.API_HOST}}/${{env.API_PATH}}/
+        api_base: https://${{env.API_HOST}}/${{env.API_PATH}}/
     
     # 2. Build 
     - name: Install Node
