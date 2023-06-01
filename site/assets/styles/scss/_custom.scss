@@ -115,47 +115,6 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
     font-weight: 700;
 }
 
-/* Data Pipeline Popover */
-.pipeline-popover {
-    --bs-popover-border-width: 0;
-    --bs-popover-header-bg: white;
-    --bs-popover-font-size: #{$font-size-base};
-    --bs-popover-header-font-size: 2rem;
-    --bs-popover-header-padding-x: 0;
-    --bs-popover-max-width: 320px;
-    .popover-arrow {
-        display: none;
-    }
-    .btn-close {
-        width: 1.2em;
-        height: 1.2em;
-        background-image: url("../images/icon-close.png");
-        background-size: 1.2em;
-        color: #{$gray-900};
-        opacity: 1;
-        position: absolute;
-        right: -1em;
-        top: -1em;
-        &:hover {
-            opacity: .7;
-        }
-    }
-    .popover-header {
-        border-bottom: 4px solid #{$gray-100};
-        margin-top: 1rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
-        min-height: 130px;
-        padding-right: 100px;
-        small {
-            font-weight: normal;
-            font-size: 1rem;
-            display: block;
-            padding-top: 1rem;
-        }
-    }
-}
-
 .navbar {
     justify-content: start;
 }
