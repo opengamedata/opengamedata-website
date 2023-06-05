@@ -45,9 +45,9 @@ class PipelineButton
     {
         return '<div class="d-flex">
                     <div class="mt-3">
-                        <button id="'. $this->button_id . '" class="btn shadow btn-pipeline btn-pipeline-segment position-relative' . ($this->is_active ? ' btn-outline-secondary' : '') . '" type="button"' . $this->btn_disabled . '>
-                            <img id="btn-image-' . $this->selector . '" src="assets/images/' . $this->image . '" class="' . (!$this->is_active ? '' : 'd-none') . '" />
-                            <img id="btn-image-active-' . $this->selector . '" src="assets/images/' . $this->image_active . '" class="' . ($this->is_active ? '' : 'd-none') . '" />
+                        <button id="'. $this->button_id . '" class="text-nowrap btn shadow btn-pipeline btn-pipeline-segment position-relative' . ($this->is_active ? ' btn-outline-secondary' : '') . '" type="button"' . $this->btn_disabled . '>
+                            <img id="btn-image-' . $this->selector . '" src="assets/images/' . $this->image . '" class="btn-pipeline-segment-image' . (!$this->is_active ? '' : ' d-none') . '" />
+                            <img id="btn-image-active-' . $this->selector . '" src="assets/images/' . $this->image_active . '" class="btn-pipeline-segment-image-active' . ($this->is_active ? '' : ' d-none') . '" />
                             <span>' . htmlspecialchars($this->title) . '</span>
                         </button>
                     </div class="mt-3">
@@ -58,7 +58,7 @@ class PipelineButton
     protected function _renderTransitionSegment() {
         return '<div class="d-flex">
                     <div class="mt-3">
-                        <button id="'. $this->button_id . '" class="btn btn-pipeline btn-pipeline-transition position-relative' . ($this->is_active ? ' btn-outline-secondary' : '') . '" type="button"' . $this->btn_disabled . '>
+                        <button id="'. $this->button_id . '" class="text-nowrap btn shadow btn-pipeline btn-pipeline-transition position-relative' . ($this->is_active ? ' btn-outline-secondary' : '') . '" type="button"' . $this->btn_disabled . '>
                             <img id="btn-image-' . $this->selector . '" src="assets/images/' . $this->image . '" />
                             <span>' . htmlspecialchars($this->title) . '</span>
                         </button>

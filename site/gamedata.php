@@ -141,7 +141,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         <?php require 'includes/chart.php'; ?>
     </section>
     <div class="row mb-5">
-        <div class="col-md">
+        <div class="col-md col-lg-5">
             <?php echo '<section id="stats" class="mb-5" data-year="' . $selected_year . '" data-month="' . $selected_month . '">'; ?>
                 <!-- Stats -->
                 <h3 id="stats-header"><?php echo $month_name . " Stats:" ?></h3>
@@ -173,14 +173,14 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 </div>
             </section>
         </div>
-        <div class="col-md">
+        <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
             <section id="pipeline-target">
                 
                 <div class="pipeline-target-block<?php echo ($have_no_files ? '' : ' d-none'); ?>" id="pipeline-target-none">
                     <div class="d-flex">
                         <img src="assets/images/pipeline-none.svg" class="me-4 mb-3">
                         <div id="pipeline-target-summary">
-                            <h3>Raw Data</h3>
+                            <h3>No Data</h3>
                             <?php if($month_name): ?>
                                 <p class="pipeline-target-month">Month of <?php echo htmlspecialchars($month_name); ?></p>
                             <?php else: ?>

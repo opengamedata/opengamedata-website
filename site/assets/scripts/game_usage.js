@@ -86,11 +86,14 @@ let bindPipelineButtonClickEvents = function () {
             // If the clicked button isn't disabled
             if(!button.disabled)
             {
+
+                let selector = button.id.split('-')[0];
+
                 // Show/Hide the appropriate target blocks
                 Array.from(document.getElementsByClassName('pipeline-target-block')).forEach(target_block => {
 
                     // If it's the block we want to show
-                    if(target_block.id === 'pipeline-target-' + button.id.split('-')[0])
+                    if(target_block.id === 'pipeline-target-' + selector)
                     {
                         target_block.classList.remove('d-none');
                     }
@@ -102,13 +105,40 @@ let bindPipelineButtonClickEvents = function () {
 
                 });
 
-                // Remove the "active" class from the other pipeline buttons
+                // For each of the pipeline buttons
                 Array.from(document.getElementsByClassName('btn-pipeline')).forEach(buttonInner => {
-                    buttonInner.classList.remove('btn-outline-secondary');
-                });
+                    
+                    // If this isn't the clicked button
+                    if(buttonInner.id != button.id)
+                    {
+                        // Remove active attributes
+                        buttonInner.classList.remove('btn-outline-secondary');
 
-                // Add the "active" class to the clicked button
-                button.classList.add('btn-outline-secondary');
+                        // If this is a segment button (not a transition button)
+                        if(buttonInner.classList.contains('btn-pipeline-segment'))
+                        {
+                            // We need to show the inactive icon
+                            document.getElementById('btn-image-' + buttonInner.id.split('-')[0]).classList.remove('d-none');
+                            document.getElementById('btn-image-active-' + buttonInner.id.split('-')[0]).classList.add('d-none');
+                        }
+                        
+                    }
+                    else // this is the clicked button
+                    {
+                        // Add active attributes
+                        button.classList.add('btn-outline-secondary');
+
+                        // If this is a segment button (not a transition button)
+                        if(buttonInner.classList.contains('btn-pipeline-segment'))
+                        {
+                            // We need to show the active icon
+                            document.getElementById('btn-image-' + selector).classList.add('d-none');
+                            document.getElementById('btn-image-active-' + selector).classList.remove('d-none');
+                        }
+                    }
+                    
+                });
+               
             }
         });
     });
