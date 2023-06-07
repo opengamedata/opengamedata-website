@@ -79,6 +79,26 @@ class Game
         return $this->publications;
     }
 
+    public function getDeveloperIconFilename()
+    {
+        switch($this->developer_name)
+        {
+            case 'PBS Wisconsin':
+                return 'avatar-pbs-wi.png';
+            break;
+
+            case 'MIT Education Arcade':
+                return 'avatar-mit.png';
+            break;
+
+            case 'Field Day Lab':
+            default:
+                return 'avatar.png';
+            break;
+
+        }
+    }
+
     // Set methods
     public function setId($id)
     {

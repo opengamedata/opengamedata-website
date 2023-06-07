@@ -106,7 +106,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             <div class="col-md-7 my-auto">
                 <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
                 <div class="d-flex align-items-center mb-3">
-                    <img class="avatar" src="assets/images/avatar.png">
+                    <img class="avatar" src="assets/images/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
                     <div class="button-bar">
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
