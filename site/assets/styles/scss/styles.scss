@@ -122,6 +122,15 @@ img.avatar {
     .card {
         height: auto;
     }
+    .month-nav-wrapper{
+        @media (min-width: 992px){
+            width: 14rem;
+        }
+    }
+    #stats{
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
     #pipelines {
 
         .pipelines-wrapper{

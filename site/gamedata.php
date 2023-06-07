@@ -18,8 +18,6 @@ $prev_disabled = null;
 $next_disabled = null;
 $selected_year = null;
 $selected_month = null;
-$activity_text = 'No player activity to display.';
-$stats_text = '';
 $raw_files = [];
 $detectors_files = [];
 $event_files = [];
@@ -62,9 +60,6 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $prev_disabled = '';
             $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
         }
-
-        $activity_text = $month_name . ' ' . htmlspecialchars($selected_year);
-        $stats_text = 'In ' . $month_name;
 
         $raw_files = $game_files->getRawFile() ? array('Raw Data' => $game_files->getRawFile()) : [];
         $detectors_files = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink()) : [];
@@ -123,33 +118,34 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         </div>
     </section>
     <section>
-        <div class="row mb-5">
+        <div class="row mb-3">
             <div class="col">
-                <h3 class="mb-0">Player Activity</h3>
-                <?php echo '<strong><span id="player-activity-date">' . $activity_text . '</span></strong>' ?>
+                <h3 class="mb-0">Monthly Player Activity</h3>
             </div>
-            <?php if (isset($game_files)) : ?>
-                <div class="col text-end">
-                    <nav class="text-nowrap">
-                        <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
-                        <?php echo '<button id="month-next" type="button" class="btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
-                    </nav>
-                </div>
-            <?php endif; ?>
         </div>
         <!-- Chart -->
         <?php require 'includes/chart.php'; ?>
     </section>
+    
+    <div class="row mb-5 gy-2 ms-1">
+        <div class="<?php echo (isset($game_files) ? 'col' : 'me-1 col'); ?>">
+            <div class="bg-primary rounded p-2 row" id="stats" data-year="<?php echo $selected_year; ?>" data-month="<?php echo $selected_month; ?>">
+                <div class="col" id="stats-header"><?php echo htmlspecialchars($month_name . ' ' . $selected_year); ?></div>
+                <div class="col text-end" id="num-plays">No Plays</div>
+            </div>
+        </div>
+        <?php if (isset($game_files)) : ?>
+        <div class="month-nav-wrapper col-md-2 col-sm-4 gy-2 text-end me-5 me-lg-0">
+            <nav class="text-nowrap">
+                    <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
+                    <?php echo '<button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
+            </nav>
+        </div>
+        <?php endif; ?>
+    </div>
+    
     <div class="row mb-5">
         <div class="col-md col-lg-5">
-            <?php echo '<section id="stats" class="mb-5" data-year="' . $selected_year . '" data-month="' . $selected_month . '">'; ?>
-                <!-- Stats -->
-                <h3 id="stats-header"><?php echo $month_name . " Stats:" ?></h3>
-                <div class="stats bg-primary text-secondary rounded d-inline-block">
-                    <h4 id="num-plays" class="mb-0">No Plays</h4>
-                    <span id="stats-data-month"><?php echo $stats_text ?></span>
-                </div>
-            </section>
             <section id="pipelines" class="<?php echo count($game->getPublications()) > 0 ? '' : ' mb-5'; ?>">
                 <!-- Data Pipeline -->
                 <div class="pipelines-wrapper">

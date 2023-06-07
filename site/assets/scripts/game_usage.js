@@ -9,8 +9,6 @@ const prevMonth = document.getElementById('month-prev');
 const nextMonth = document.getElementById('month-next');
 const chartEl = document.getElementById('chart');
 const statsHeader = document.getElementById('stats-header');
-const statsData = document.getElementById('stats-data-month');
-const playerActivityDate = document.getElementById('player-activity-date');
 const numPlays = document.getElementById('num-plays');
 
 // Anchor elements in the Templates section
@@ -51,17 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // update the months and year
             var currentJSMonth = currentMonth - 1;
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
-            statsData.innerHTML = 'In ' + currentMonthName;
-            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
 
             gameUsage = new GameUsage(response.data.gameId, response.data.sessions);
             currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
             // update the game usage information
             var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
-            numPlays.innerHTML = monthlySessions + ' Plays';
+            numPlays.innerHTML = monthlySessions + ' sessions';
             // create the chart
             chartEl.style.height = '200px';
-            chartEl.classList.add('mb-5');
+            chartEl.classList.add('mb-3');
 
             if (gameUsage.chartSessions.length > 30) {
                 // slice the chart sessions array to 30 elements
@@ -203,17 +199,17 @@ if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false
 
 function updateHtml(gameId, currentYear, currentMonth) {
     // set loading values
-    numPlays.innerHTML = '-- Plays';
+    numPlays.innerHTML = '-- sessions';
 
     if (gameUsage) {
         currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
         var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
-        numPlays.innerHTML = currentSession.total_sessions > 0 ? monthlySessions + ' Plays' : 'No Plays';                    
+        numPlays.innerHTML = currentSession.total_sessions > 0 ? monthlySessions + ' sessions' : 'No sessions';                    
         // update or create the chart
         if (updateChart) {
             chartEl.style.height = '200px';
-            if (!chartEl.classList.contains('mb-5')) {
-                chartEl.classList.add('mb-5');
+            if (!chartEl.classList.contains('mb-3')) {
+                chartEl.classList.add('mb-3');
             }
             updateOrCreateChart(gameUsage.chartSessions, goToMonth); 
             updateChart = false;
@@ -234,9 +230,7 @@ function updateHtml(gameId, currentYear, currentMonth) {
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', {month: 'long'});
             prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
             nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
-            statsHeader.innerHTML = currentMonthName + ' Stats:';
-            statsData.innerHTML = 'In ' + currentMonthName;
-            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
+            statsHeader.innerHTML = currentMonthName + ' ' + currentYear;
             
             // update next / previous to be enabled or disabled depending on what other data exists
             nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
