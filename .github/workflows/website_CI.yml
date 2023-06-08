@@ -19,8 +19,8 @@ on:
 env:
   TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
   TARGET_PATH: ${{ vars.WEB_PATH }}${{ github.event.repository.name }}/${{ github.ref_name }}
-  API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
-  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi
+  API_HOST:    ${{ vars.OGD_STAGING_HOST }}
+  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
   
 jobs:
   ci_deploy:

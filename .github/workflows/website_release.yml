@@ -17,7 +17,7 @@ env:
   SECONDARY_HOST: fieldday-web.wcer.wisc.edu
   SECONDARY_PATH: /var/www/opengamedata/
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
-  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi
+  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
   
 jobs:
   production_deploy:
