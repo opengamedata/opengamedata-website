@@ -12,10 +12,12 @@ on:
      branches: [ production ]
 
 env:
-  TARGET_PATH: ${{ vars.WEB_PATH }}opengamedata/
   TARGET_HOST: ${{ vars.OGD_SERVICES_HOST }}
+  TARGET_PATH: ${{ vars.WEB_PATH }}opengamedata/
   SECONDARY_HOST: fieldday-web.wcer.wisc.edu
   SECONDARY_PATH: /var/www/opengamedata/
+  API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
+  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
   
 jobs:
   production_deploy:
@@ -32,6 +34,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         lfs: true  
+    - name: Set up Config File
+      uses: ./.github/actions/web_config
+      with:
+        api_base: https://${{env.API_HOST}}/${{env.API_PATH}}/
     
     # 2. Build 
     - name: Install Node
