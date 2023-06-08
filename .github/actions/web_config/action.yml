@@ -13,5 +13,5 @@ runs:
   using: "composite"
   steps:
     - name: Set API Base URL
-      run: sed -i 's@$APP_CONFIG['WEBSITE_API_URL_BASE'] = '.*';@$APP_CONFIG['WEBSITE_API_URL_BASE'] = '${{inputs.api_base}}';@g' site/includes/app_config.php
+      run: sed -i 's@$APP_CONFIG\['WEBSITE_API_URL_BASE'\]\s*=\s*'.*';@$APP_CONFIG['WEBSITE_API_URL_BASE'] = '${{inputs.api_base}}';@g' site/includes/app_config.php
       shell: bash
