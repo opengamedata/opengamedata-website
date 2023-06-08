@@ -5,6 +5,10 @@ name: OGD-Website CI Script
 # way of doing this.
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
+    # inputs:
+    #   custom_branch:
+    #     description: "Custom API Branch: Set the site to use an API branch different from the website branch being deployed."
+    #     required: false
   push: # Trigger automatically when we do a merge to production
     paths:
     - '.github/workflows/website_CI.yml'
@@ -13,8 +17,10 @@ on:
     - 'package.json'
 
 env:
-  TARGET_PATH: ${{ vars.WEB_PATH }}${{ github.event.repository.name }}/${{ github.ref_name }}
   TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
+  TARGET_PATH: ${{ vars.WEB_PATH }}${{ github.event.repository.name }}/${{ github.ref_name }}
+  API_HOST:    ${{ vars.OGD_STAGING_HOST }}
+  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
   
 jobs:
   ci_deploy:
@@ -31,6 +37,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         lfs: true  
+    - name: Set up Config File
+      uses: ./.github/actions/web_config
+      with:
+        api_base: https://${{env.API_HOST}}/${{env.API_PATH}}/
     
     # 2. Build 
     - name: Install Node
