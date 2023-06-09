@@ -129,13 +129,13 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     
     <div class="row mb-5 gy-2 ms-1">
         <div class="<?php echo (isset($game_files) ? 'col' : 'me-1 col'); ?>">
-            <div class="bg-primary rounded p-2 row" id="stats" data-year="<?php echo $selected_year; ?>" data-month="<?php echo $selected_month; ?>">
+            <div class="bg-primary rounded row" id="stats" data-year="<?php echo $selected_year; ?>" data-month="<?php echo $selected_month; ?>">
                 <div class="col" id="stats-header"><?php echo htmlspecialchars($month_name . ' ' . $selected_year); ?></div>
                 <div class="col text-end" id="num-plays">No Plays</div>
             </div>
         </div>
         <?php if (isset($game_files)) : ?>
-        <div class="month-nav-wrapper col-md-2 col-sm-4 gy-2 text-end me-5 me-lg-0">
+        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
             <nav class="text-nowrap">
                     <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
                     <?php echo '<button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>

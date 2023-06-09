@@ -123,13 +123,18 @@ img.avatar {
         height: auto;
     }
     .month-nav-wrapper{
-        @media (min-width: 992px){
+        @media (min-width: 576px){
             width: 14rem;
         }
     }
     #stats{
         font-weight: 600;
         font-size: 1.2rem;
+        padding: .355rem;
+       
+        @media(max-width: 575.98px) {
+            margin-right: .08rem;
+        }
     }
     #pipelines {
 
