@@ -296,6 +296,7 @@ img.avatar {
         overflow-x: scroll;
         scrollbar-color: var(--scrollbar-foreground) var(--scrollbar-background);
         scrollbar-width: thin;
+        padding-bottom: 0.5rem;
         &::-webkit-scrollbar {
             width: 15px;
             height: 15px;

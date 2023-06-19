@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (gameUsage.sessions.some(e => e.total_sessions > 0)) {
                 // create the chart
                 chartEl.style.height = '200px';
-                chartWrapEl.classList.add('mb-3');
+                chartWrapEl.classList.add('mb-4');
                 createChart(gameUsage.chartSessions, goToMonth);
             }
         }
