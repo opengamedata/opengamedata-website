@@ -1,4 +1,4 @@
-        <footer class="p-2 py-md-5 px-lg-5">
+        <footer class="container-fluid px-sm-4 py-md-5 px-lg-5">
             <div class="row">
                 <div id="footer-ogd" class="col-md mt-5 mb-5">
                     <img class="ogd-logo" src="assets/images/logos/OpenGameData-logo-black.png" alt="Field Day">
