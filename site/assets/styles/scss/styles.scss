@@ -122,6 +122,20 @@ img.avatar {
     .card {
         height: auto;
     }
+    .month-nav-wrapper{
+        @media (min-width: 576px){
+            width: fit-content;
+        }
+    }
+    #stats{
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding: .355rem;
+       
+        @media(max-width: 575.98px) {
+            margin-right: .08rem;
+        }
+    }
     #pipelines {
 
         .pipelines-wrapper{
