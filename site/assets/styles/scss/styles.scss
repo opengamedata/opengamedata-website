@@ -124,7 +124,7 @@ img.avatar {
     }
     .month-nav-wrapper{
         @media (min-width: 576px){
-            width: 14rem;
+            width: fit-content;
         }
     }
     #stats{
