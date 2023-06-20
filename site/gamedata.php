@@ -105,7 +105,10 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                     <div class="button-bar">
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Event Schema and Source Code</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
+                        <?php if (count($game->getPublications()) > 0) : ?>
+                            <a class="btn btn-secondary" href="#publications">Publications</a>
+                        <?php endif ?> 
                     </div>
                 </div>
                 <p>
@@ -222,7 +225,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     <hr>
     <div class="row mb-5 mt-3">
         <div class="col-md">
-            <section class="mb-5">
+            <section id="publications" class="mb-5">
                 <!-- Publications -->
                 <h3>Publications</h3>
                 <?php
