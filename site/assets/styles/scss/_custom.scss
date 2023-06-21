@@ -38,7 +38,7 @@
                             white,
                             $secondary, 
                             $secondary);
-    --bs-btn-hover-border-color: rgba($secondary,.7);
+    --bs-btn-hover-border-color: var(--bs-btn-hover-color);
     --bs-btn-padding-y: .563rem;
     --bs-btn-padding-x: .75rem;
     --bs-btn-font-size: .75rem;
@@ -89,13 +89,19 @@
     }
 }
 
-/* Add to btn-secondary for the publications template */
+/* Add to btn-outline-secondary for the publications template */
 .btn-publication {
-    --bs-btn-font-size: 1.25rem;
     text-transform: none;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    text-align: left;
+    color: #{$gray-900} !important;
+    font-weight: var(--bs-body-font-weight) !important;
+    --bs-btn-padding-y: .325rem;
+    &::before {
+        content: '</>';
+        color: #{$gray-500};
+        font-weight: 600;
+        padding-right: .5rem;
+        display: inline-block;
+    }
 }
 
 /* Cards */

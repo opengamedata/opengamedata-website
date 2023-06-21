@@ -1,4 +1,5 @@
 <?php
+require_once 'publication.php';
 class Game
 {
     protected $game_id;
@@ -25,17 +26,13 @@ class Game
     }
 
     public static function fromJson($id, $json) {
-        
-        // get game object from full game_list
-        //$data = json_decode($json)->{$id};
-        
         // game object returned from api
         $data = json_decode($json);
         
         // build the array for publications
         $publications = array();
         foreach ($data->{'studies'} as $value) {
-            array_push($publications, (object) ["StudyName" => $value->{'name'} , "Link" => $value->{'link'}]);
+            array_push($publications, Publication::fromObj($value));
         }
 
         return new static($id, $data->{'game_name'}, $data->{'game_description'}, $data->{'thumbnail_path'}, $data->{'play_link'}, $data->{'source_link'}, $data->{'developers'}[0]->{'name'}, $data->{'developers'}[0]->{'link'}, $publications);
