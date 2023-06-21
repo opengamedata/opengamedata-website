@@ -45,10 +45,13 @@ class Publication
     {
         $paperLink = htmlspecialchars($this->paper_link);
         $projectLink = htmlspecialchars($this->project_code_link);
+        $pubName = htmlspecialchars($this->name);
+        $pubYear = htmlspecialchars($this->year);
+        $pubAuthors = htmlspecialchars($this->authors);
         $formatted = '';
-        if (!empty($this->authors)) $formatted.= "{$this->authors}. ";
-        if (!empty($this->year)) $formatted.= "({$this->year}). ";
-        $formatted.= !empty($this->paper_link) ? "<a href=\"{$paperLink}\" target=\"_blank\">{$this->name}.</a> " : "{$this->name}. "; 
+        if (!empty($this->authors)) $formatted.= "{$pubAuthors}. ";
+        if (!empty($this->year)) $formatted.= "({$pubYear}). ";
+        $formatted.= !empty($this->paper_link) ? "<a href=\"{$paperLink}\" target=\"_blank\">{$pubName}.</a> " : "{$pubName}. "; 
         if (!empty($this->project_code_link)) $formatted.= "<br><a class=\"btn btn-outline-secondary btn-publication mt-3\" href=\"{$projectLink}\" target=\"_blank\">View Project Code</a>";
         return $formatted;
     }
