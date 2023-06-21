@@ -343,11 +343,42 @@ img.avatar {
         .btn-group-vertical>.btn~.btn{
             border-top-left-radius: .25rem;
             border-top-right-radius: .25rem;
-        }
+        }      
         .btn-group-vertical>.btn:not(:last-child):not(.dropdown-toggle){
             border-bottom-left-radius: .25rem;
             border-bottom-right-radius: .25rem;
         }
+    }
+    .scrollbar {
+        --scrollbar-foreground: #4D459E;
+        --scrollbar-background: #D7D4F1;
+        overflow-x: scroll;
+        scrollbar-color: var(--scrollbar-foreground) var(--scrollbar-background);
+        scrollbar-width: thin;
+        padding-bottom: 0.5rem;
+        &::-webkit-scrollbar {
+            width: 15px;
+            height: 15px;
+        }
+        &::-webkit-scrollbar-thumb { /* Foreground */
+            background-color: var(--scrollbar-foreground);
+            border-radius: 7.5px;
+        }
+        &::-webkit-scrollbar-track { /* Background */
+            background: no-repeat linear-gradient(to bottom, white 20%, var(--scrollbar-background) 20%, var(--scrollbar-background) 80%, white 80%);
+        }
+    }
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #chart {
+        width: auto;        
+    }
+    #chartYAxis {
+        background-color: white;
+        left: -1px;
     }
 
     #templates{

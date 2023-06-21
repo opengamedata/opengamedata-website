@@ -1,5 +1,5 @@
 import { getGameUsage, getGameFiles } from "../scripts/services.js";
-import { createChart, updateOrCreateChart, setActiveBar } from "../scripts/chart.js";
+import { createChart, setActiveBar } from "../scripts/chart.js";
 import { GameUsage } from "../scripts/models.js";
 
 let gameId = null;
@@ -7,6 +7,7 @@ let currentMonth = null;
 let currentYear = null;
 const prevMonth = document.getElementById('month-prev');
 const nextMonth = document.getElementById('month-next');
+const chartWrapEl = document.getElementById('chart-wrapper');
 const chartEl = document.getElementById('chart');
 const statsHeader = document.getElementById('stats-header');
 const numPlays = document.getElementById('num-plays');
@@ -26,7 +27,6 @@ const featureBtn = document.getElementById('feature-btn');
 
 let gameUsage = null;
 let currentSession = null;
-let updateChart = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
@@ -55,15 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // update the game usage information
             var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
             numPlays.innerHTML = monthlySessions + ' sessions';
-            // create the chart
-            chartEl.style.height = '200px';
-            chartEl.classList.add('mb-3');
-
-            if (gameUsage.chartSessions.length > 30) {
-                // slice the chart sessions array to 30 elements
-                gameUsage.chartSlice(gameUsage.chartSessions.length-30, gameUsage.chartSessions.length);    
-            } 
-            createChart(gameUsage.chartSessions, goToMonth);
+            if (gameUsage.sessions.some(e => e.total_sessions > 0)) {
+                // create the chart
+                chartEl.style.height = '200px';
+                chartWrapEl.classList.add('mb-4');
+                createChart(gameUsage.chartSessions, goToMonth);
+            }
         }
     });
 
@@ -141,15 +138,6 @@ let bindPipelineButtonClickEvents = function () {
 }
 
 var prevMonthFunc = function () {
-    // find the current chart array index
-    var chartIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    // find the full sessions array index
-    var sessionIndex = gameUsage.sessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    if (chartIndex === 0) {
-        // update the chart array with subset of full sessions array
-        gameUsage.chartSlice(Math.max(0,sessionIndex - 30), sessionIndex);
-        updateChart = true;
-    }
     // setup year and month
     // we were in January, move back to December of previous year
     if (currentMonth === 1) {
@@ -164,15 +152,6 @@ var prevMonthFunc = function () {
 }
 
 var nextMonthFunc = function () {
-    // find the current chart array index
-    var chartIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    // find the full sessions array index
-    var sessionIndex = gameUsage.sessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    if (chartIndex === gameUsage.chartSessions.length-1) {
-        // update the chart array with subset of full sessions array
-        gameUsage.chartSlice(sessionIndex+1, Math.min(sessionIndex+31, gameUsage.sessions.length));
-        updateChart = true;
-    }
     // setup year and month
     // we were in December, move to January of next year
     if (currentMonth === 12) {
@@ -205,17 +184,10 @@ function updateHtml(gameId, currentYear, currentMonth) {
         currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
         var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
         numPlays.innerHTML = currentSession.total_sessions > 0 ? monthlySessions + ' sessions' : 'No sessions';                    
-        // update or create the chart
-        if (updateChart) {
-            chartEl.style.height = '200px';
-            if (!chartEl.classList.contains('mb-3')) {
-                chartEl.classList.add('mb-3');
-            }
-            updateOrCreateChart(gameUsage.chartSessions, goToMonth); 
-            updateChart = false;
-        }
         var currentIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-        setActiveBar(currentIndex);    
+        if (gameUsage.sessions.some(e => e.total_sessions > 0)) {
+            setActiveBar(currentIndex);
+        }
     }
 
     // get game files for that month

@@ -19,13 +19,6 @@ class GameUsage {
         });
         return chartSessions;
     }
-
-    // Slice chart sessions array 
-    chartSlice(start, end) {
-        this.chartSessions = this.getChartSessions().slice(start, end);
-    }
-
-
 }
 
 class MonthlyUsage {
@@ -39,7 +32,6 @@ class MonthlyUsage {
     getMonthName() {
         return new Date(this.year, Number(this.month)-1).toLocaleString('default', { month: 'long' });
     }
-
 }
 
 export { GameUsage, MonthlyUsage };
