@@ -374,6 +374,16 @@ img.avatar {
         }
     }
 
+    #publications {
+        a {
+            color: var(--bs-secondary);
+            font-weight: 700;
+        }
+        a:hover {
+            opacity: .7;
+        }
+    }
+
 }
 .pipeline-pop {
     position: absolute;

@@ -220,7 +220,6 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         </div> <!-- end column -->
     </div> <!-- end row --> 
 
-    <!-- TODO: Refactor this section in FD-48 -->
     <?php if (count($game->getPublications()) > 0) : ?>
     <hr>
     <div class="row mb-5 mt-3">
@@ -228,15 +227,16 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             <section id="publications" class="mb-5">
                 <!-- Publications -->
                 <h3>Publications</h3>
+                <ul class="list-unstyled mt-4">
                 <?php
                     foreach ($game->getPublications() as $value) {
-                        echo '<div class="card shadow mb-4">
-                            <div class="card-body">
-                                <a class="btn btn-secondary btn-publication" href="' . htmlspecialchars($value->Link) . '">' . htmlspecialchars($value->StudyName) . '</a>
-                            </div>
-                        </div>';
+                        echo '<li class="mb-4 d-flex align-items-start">
+                                <img class="me-3" src="assets/images/publication.svg">
+                                <div>'. $value->getFormattedPublication() . '</div>
+                            </li>';
                     }
                 ?>
+                </ul>
             </section>
         </div>
     </div>
