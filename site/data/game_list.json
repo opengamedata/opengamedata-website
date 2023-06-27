@@ -172,7 +172,7 @@
                 "link": "https://fielddaylab.wisc.edu/"
             }
         ],
-        "play_link": "https://fielddaylab.wisc.edu/play/journalism/ci/develop/",
+        "play_link": "https://fielddaylab.wisc.edu/play/headlines/ci/production/",
         "source_link": "https://github.com/fielddaylab/journalism-unity",
         "thumbnail_path" : "./assets/images/thumbs/journalism-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/journalism-unity/blob/master/README.md",
