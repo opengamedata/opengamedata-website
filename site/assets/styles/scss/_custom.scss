@@ -73,20 +73,28 @@
 .btn-header {
     @include button-variant(transparent,
                             transparent,
-                            #5D5FEF,
+                            $secondary,
                             transparent,
                             transparent,
-                            rgba(#5D5FEF,.7),
+                            rgba($secondary,.7),
                             transparent,
                             transparent,
-                            #5D5FEF);
+                            $secondary);
     --bs-btn-padding-y: .157rem;
     --bs-btn-padding-x: .5rem;
-    --bs-btn-font-size: .75rem;
+    //--bs-btn-font-size: .75rem;
     &:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
     }
+}
+
+.btn-header-dark {
+    @include button-variant($dark, 
+                            transparent,
+                            color-contrast($dark),
+                            rgba($dark,.7)
+                            );
 }
 
 /* Add to btn-outline-secondary for the publications template */
