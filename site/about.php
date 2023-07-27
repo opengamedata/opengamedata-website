@@ -10,7 +10,7 @@
     </div>
 </section>
 <main id="about">
-    <section id="about" class="container-fluid mb-5">
+    <section class="container-fluid mb-5">
         <div class="row">
             <div class="col-sm my-auto">
                 <h2>How Open Game Data Works</h2>
