@@ -1,6 +1,6 @@
 <svg width="90" height="113" viewBox="0 0 90 113" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_361_3403)">
-<path d="M1 4C1 2.34314 2.34314 1 4 1H86C87.6569 1 89 2.34315 89 4V87.7611C89 88.9543 88.2928 90.0342 87.199 90.5111L46.199 108.386C45.4344 108.72 44.5656 108.72 43.801 108.386L2.80105 90.5111L2.4014 91.4277L2.80105 90.5111C1.70721 90.0342 1 88.9543 1 87.7611V4Z" fill="white" stroke="#8B85C1" stroke-width="2"/>
+<path d="M1 4C1 2.34314 2.34314 1 4 1H86C87.6569 1 89 2.34315 89 4V87.7611C89 88.9543 88.2928 90.0342 87.199 90.5111L46.199 108.386C45.4344 108.72 44.5656 108.72 43.801 108.386L2.80105 90.5111L2.4014 91.4277L2.80105 90.5111C1.70721 90.0342 1 88.9543 1 87.7611V4Z" fill="white" stroke="#8B85C1" stroke-width="2" vector-effect="non-scaling-stroke"/>
 <path d="M31 76L31 65.0909" stroke="#8B85C1" stroke-width="5" stroke-linecap="round"/>
 <path d="M44.3333 76L44.3333 60.0909" stroke="#8B85C1" stroke-width="5" stroke-linecap="round"/>
 <path d="M57.6666 76L57.6666 56" stroke="#8B85C1" stroke-width="5" stroke-linecap="round"/>

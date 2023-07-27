@@ -15,7 +15,7 @@ class Card
         $this->game_usage = $game_usage;
         $this->game_link .= $this->game->getId();
         if (isset($game_usage)) {
-            $this->monthly_sessions = num_in_kilo($this->game_usage->getLatestMonthlySessions());
+            $this->monthly_sessions = num_in_kilo($this->game_usage->getAverageMonthlySessionsOverMostRecentActiveYear());
         }
     }
 
@@ -29,7 +29,7 @@ class Card
                                 <p class="card-subtitle small">' . htmlspecialchars($this->monthly_sessions) . ' Monthly Sessions</p>
                             </div>
                             <div class="card-footer d-flex align-items-center">
-                                <img class="avatar me-2" src="assets/images/avatar.png" alt="avatar"> 
+                                <img class="avatar me-2" src="assets/images/' . htmlspecialchars($this->game->getDeveloperIconFilename()) . '" alt="avatar"> 
                                 <h5 class="mb-0">' . htmlspecialchars($this->game->getDeveloperName()) . '</h5> 
                             </div>
                         </div>
