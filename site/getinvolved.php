@@ -71,8 +71,8 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Stay Up to Date</h2>
-                <p>Sign up to our email for updates on events, publications, news, and grant opportunities.<br/> 
-                    Or, check us out on substack!</p>
+                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Sign up to our email</a> for updates on events, publications, news, and grant opportunities.<br/> 
+                    Or, <a href="https://fielddaylab.substack.com/" target="_blank">check us out on substack!</a></p>
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
