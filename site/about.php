@@ -5,8 +5,7 @@
 <section class="hero-about w-100 px-3 py-5 px-md-5 bg-dark text-white d-flex">
     <div class="col-sm-6 mt-auto my-md-auto">
         <h1 class="display-1">All About Open Game Data</h1>
-        <p class="lead">What even is this?<br/>How do I get involved?</p>
-        <p class="lead">We have answers:</p>
+        <p class="lead">Open Game Data is an open-source and community-maintained technology for conducting design research with educational game data. </p>
     </div>
 </section>
 <main id="about">
