@@ -12,7 +12,7 @@
         ],
         "play_link": "https://fielddaylab.org/play/wake/ci/production/",
         "source_link": "https://github.com/fielddaylab/wake",
-        "thumbnail_path" : "https://fielddaylab.wisc.edu/assets/img/gameplay/wake-gameplay.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/wake-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
         "studies": []
@@ -202,7 +202,10 @@
                     "David J Gagnon", "Ryan S Baker", "Sarah Gagnon", "Luke Swanson", "Nick Spevacek", "Juliana Andres", "Erik Harpstead", "Jennifer Scianna", "Stefan Slater", "Maria OCZ San Pedro"
                 ],
                 "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
-                "link": "https://arxiv.org/abs/2210.09906"
+                "paper_link": "https://arxiv.org/abs/2210.09906",
+                "year" : "2022",
+                "project_code_link": "https://github.com/opengamedata/opengamedata-samples/tree/jo-wilder/JOWILDER/2022-snark",
+                "published_in": ""
             },
             {
                 "name": "Changing Students’ Perceptions of a History Exploration Game Using Different Scripts",
@@ -210,7 +213,10 @@
                     "Stefan Slater", "Ryan S Baker", "David Gagnon", "Erik Harpstead", "Juliana Ma", "Alexandra L Andres", "Luke Swanson"
                 ],
                 "abstract": "As digital games and simulations continue to see use in both formal and informal learning contexts, it becomes increasingly important to understand the goals, motivations, and interests of the learners using them. Recently, there has been increased interest in identifying the different engagement profiles of learners playing games, descriptions of groups of learners’ tendencies and preferences when playing digital games. These engagement profiles represent a powerful tool for designers looking to create personalized and adaptive learning environments. In this work, we explore two aspects of these engagement profiles. First, we explore the different profiles of engagement in a large sample of elementary and middle school learners playing the history game Jo Wilder and the Capitol Case (2019) in a variety of contexts, using the data from a self-report survey. Second, we explore the effect that minor game dialogue changes had on learners’ perceptions of different game elements, such as character likeability and humor, as well as personal preferences, such as enjoyment of history. These findings highlight opportunities for personalized and adaptive game design that leverage players’ goals and motivations.",
-                "link": "https://learninganalytics.upenn.edu/ryanbaker/ICCE2022_paper_58.pdf"
+                "paper_link": "https://learninganalytics.upenn.edu/ryanbaker/ICCE2022_paper_58.pdf",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": ""
             }
         ]
     },
@@ -237,7 +243,10 @@
                     "Luke Swanson", "David Gagnon", "Jennifer Scianna", "John McCloskey", "Nicholas Spevacek", "Stefan Slater", "Erik Harpstead"
                 ],
                 "abstract": "The ability for an educational game designer to understand their audience's play styles and resulting experience is an essential tool for improving their game's design. As a game is subjected to large-scale player testing, the designers require inexpensive, automated methods for categorizing patterns of player-game interactions. In this paper we present a simple, reusable process using best practices for data clustering, feasible for use within a small educational game studio. We utilize the method to analyze a real-time strategy game, processing game telemetry data to determine categories of players based on their in-game actions, the feedback they received, and their progress through the game. An interpretive analysis of these clusters results in actionable insights for the game's designers.",
-                "link": "https://arxiv.org/abs/2210.09911"
+                "paper_link": "https://arxiv.org/abs/2210.09911",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": ""
             },
             {
                 "name": "A Pilot Study on Teacher-Facing Real-Time Classroom Game Dashboards",
@@ -245,7 +254,10 @@
                     "Luke Swanson", "David Gagnon", "Jennifer Scianna"
                 ],
                 "abstract": "Educational games are an increasingly popular teaching tool in modern classrooms. However, the development of complementary tools for teachers facilitating classroom gameplay is lacking. We present the results of a participatory design process for a teacher-facing, real-time game data dashboard. This two-phase process included a workshop to elicit teachers' requirements for such a tool, and a pilot study of our dashboard prototype. We analyze post-gameplay survey and interview data to understand teachers' experiences with the tool in terms of evidence of co-design, feasibility, and effectiveness. Our results indicate the participatory design yielded a tool both useful for and usable by teachers within the context of a real class gameplay session. We advocate for the continued development of data-driven teacher tools to improve the effectiveness of games deployed in the classroom.",
-                "link": "https://arxiv.org/abs/2210.09427"
+                "paper_link": "https://arxiv.org/abs/2210.09427",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": ""
             }
         ]
     },

@@ -6,7 +6,7 @@ namespace services;
  */ 
 function getGameList()
 { 
-    return file_get_contents('./data/game_list.json');
+    return file_get_contents('data/game_list.json');
 }
 
 /* Get single game details from game_list
@@ -38,6 +38,7 @@ function getGameUsageByMonth($game_id, $year = null, $month = null)
 
     $curl = curl_init($usage_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
     $response = curl_exec($curl);
     curl_close($curl);
 
@@ -61,6 +62,7 @@ function getGameFileInfoByMonth($game_id, $year = null, $month = null)
 
     $curl = curl_init($info_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
     $response = curl_exec($curl);
     curl_close($curl);
 
@@ -75,11 +77,12 @@ function getGameUsage($game_id)
     $params = array(
         'game_id' => $game_id
     );
-
+    
     $usage_url = \AppConfig::GetConfig()['WEBSITE_API_URL_BASE'] . 'getMonthlyGameUsage';
 
     $curl = curl_init($usage_url . '?' . http_build_query($params));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
     $response = curl_exec($curl);
     curl_close($curl);
 

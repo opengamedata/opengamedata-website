@@ -1,51 +1,32 @@
-import { getGameUsage, getGameFiles } from "./services.js";
-import { createChart, updateOrCreateChart, setActiveBar } from "./chart.js";
-import { GameUsage } from "./models.js";
+import { getGameUsage, getGameFiles } from "../scripts/services.js";
+import { createChart, setActiveBar } from "../scripts/chart.js";
+import { GameUsage } from "../scripts/models.js";
 
 let gameId = null;
 let currentMonth = null;
 let currentYear = null;
 const prevMonth = document.getElementById('month-prev');
 const nextMonth = document.getElementById('month-next');
+const chartWrapEl = document.getElementById('chart-wrapper');
 const chartEl = document.getElementById('chart');
 const statsHeader = document.getElementById('stats-header');
-const statsData = document.getElementById('stats-data-month');
-const playerActivityDate = document.getElementById('player-activity-date');
 const numPlays = document.getElementById('num-plays');
+
+// Anchor elements in the Templates section
 const eventsData = document.getElementById('events-data');
 const playersData = document.getElementById('players-data');
 const populationData = document.getElementById('population-data');
 const sessionsData = document.getElementById('sessions-data');
-// Pipeline dynamic elements
-const pipeHeader = document.getElementById('pipeline-header');
-const rawBtn = document.getElementById('raw-btn');
-const rawLink = document.getElementById('raw-link-0');
-const rawMonth = document.getElementById('raw-month');
-const rawHead = document.getElementById("raw-header");
-const rawBody = document.getElementById('raw-body');
-const eventBtn = document.getElementById('event-btn');
-const eventLink = document.getElementById('event-link-0');
-const eventMonth = document.getElementById('event-month');
-const eventHead = document.getElementById("event-header");
-const eventBody = document.getElementById('event-body');
-const featureBtn = document.getElementById('feature-btn');
-const featureLinks = [];
-const featureMonth = document.getElementById('feature-month');
-const featureHead = document.getElementById("feature-header");
-const featureBody = document.getElementById('feature-body');
-// Add link elements to featureLinks
-if (document.getElementById('feature-link-0')) featureLinks.push(document.getElementById('feature-link-0'));
-if (document.getElementById('feature-link-1')) featureLinks.push(document.getElementById('feature-link-1'));
-if (document.getElementById('feature-link-2')) featureLinks.push(document.getElementById('feature-link-2'));
 
-// Pipeline popovers
-const rawPop = bootstrap.Popover.getOrCreateInstance('#raw-btn');
-const eventPop = bootstrap.Popover.getOrCreateInstance('#event-btn');
-const featurePop = bootstrap.Popover.getOrCreateInstance('#feature-btn');
+// Pipeline buttons
+const rawBtn = document.getElementById('raw-btn');
+const detectorBtn = document.getElementById('detector-btn');
+const eventBtn = document.getElementById('event-btn');
+const extractorBtn = document.getElementById('extractor-btn');
+const featureBtn = document.getElementById('feature-btn');
 
 let gameUsage = null;
 let currentSession = null;
-let updateChart = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     let params = new URLSearchParams(document.location.search);
@@ -68,57 +49,95 @@ document.addEventListener('DOMContentLoaded', () => {
             // update the months and year
             var currentJSMonth = currentMonth - 1;
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
-            statsData.innerHTML = 'In ' + currentMonthName;
-            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
 
             gameUsage = new GameUsage(response.data.gameId, response.data.sessions);
             currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
             // update the game usage information
             var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
-            numPlays.innerHTML = monthlySessions + ' Plays';
-            // create the chart
-            chartEl.style.height = '200px';
-            chartEl.classList.add('mb-5');
-
-            if (gameUsage.chartSessions.length > 30) {
-                // slice the chart sessions array to 30 elements
-                gameUsage.chartSlice(gameUsage.chartSessions.length-30, gameUsage.chartSessions.length);    
-            } 
-            createChart(gameUsage.chartSessions, goToMonth);
+            numPlays.innerHTML = monthlySessions + ' sessions';
+            if (gameUsage.sessions.some(e => e.total_sessions > 0)) {
+                // create the chart
+                chartEl.style.height = '200px';
+                chartWrapEl.classList.add('mb-4');
+                createChart(gameUsage.chartSessions, goToMonth);
+            }
         }
     });
 
-    // Pipeline close button listeners
-    rawBtn.addEventListener('inserted.bs.popover', () => {
-        const closeBtn = document.querySelector('.popover-header #raw-close');
-        closeBtn.addEventListener('click', () => {
-            rawPop.hide();
-        });
-    });
-    eventBtn.addEventListener('inserted.bs.popover', () => {
-        const closeBtn = document.querySelector('.popover-header #event-close');
-        closeBtn.addEventListener('click', () => {
-            eventPop.hide();
-        });
-    });
-    featureBtn.addEventListener('inserted.bs.popover', () => {
-        const closeBtn = document.querySelector('.popover-header #feature-close');
-        closeBtn.addEventListener('click', () => {
-            featurePop.hide();
-        });
-    });
+    // Bind to the click event on all of the Data Pipeline buttons
+    bindPipelineButtonClickEvents();
+
 });
 
+// Bind to click events on the Data Pipeline buttons
+let bindPipelineButtonClickEvents = function () {
+
+    Array.from(document.getElementsByClassName('btn-pipeline')).forEach(button => {
+
+        button.addEventListener('click', () => {
+
+            // If the clicked button isn't disabled
+            if(!button.disabled)
+            {
+
+                let selector = button.id.split('-')[0];
+
+                // Show/Hide the appropriate target blocks
+                Array.from(document.getElementsByClassName('pipeline-target-block')).forEach(target_block => {
+
+                    // If it's the block we want to show
+                    if(target_block.id === 'pipeline-target-' + selector)
+                    {
+                        target_block.classList.remove('d-none');
+                    }
+                    else
+                    {
+                        // Hide this block
+                        target_block.classList.add('d-none');
+                    }
+
+                });
+
+                // For each of the pipeline buttons
+                Array.from(document.getElementsByClassName('btn-pipeline')).forEach(buttonInner => {
+                    
+                    // If this isn't the clicked button
+                    if(buttonInner.id != button.id)
+                    {
+                        // Remove active attributes
+                        buttonInner.classList.remove('btn-outline-secondary');
+
+                        // If this is a segment button (not a transition button)
+                        if(buttonInner.classList.contains('btn-pipeline-segment'))
+                        {
+                            // We need to show the inactive icon
+                            document.getElementById('btn-image-' + buttonInner.id.split('-')[0]).classList.remove('d-none');
+                            document.getElementById('btn-image-active-' + buttonInner.id.split('-')[0]).classList.add('d-none');
+                        }
+                        
+                    }
+                    else // this is the clicked button
+                    {
+                        // Add active attributes
+                        button.classList.add('btn-outline-secondary');
+
+                        // If this is a segment button (not a transition button)
+                        if(buttonInner.classList.contains('btn-pipeline-segment'))
+                        {
+                            // We need to show the active icon
+                            document.getElementById('btn-image-' + selector).classList.add('d-none');
+                            document.getElementById('btn-image-active-' + selector).classList.remove('d-none');
+                        }
+                    }
+                    
+                });
+               
+            }
+        });
+    });
+}
+
 var prevMonthFunc = function () {
-    // find the current chart array index
-    var chartIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    // find the full sessions array index
-    var sessionIndex = gameUsage.sessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    if (chartIndex === 0) {
-        // update the chart array with subset of full sessions array
-        gameUsage.chartSlice(Math.max(0,sessionIndex - 30), sessionIndex);
-        updateChart = true;
-    }
     // setup year and month
     // we were in January, move back to December of previous year
     if (currentMonth === 1) {
@@ -133,15 +152,6 @@ var prevMonthFunc = function () {
 }
 
 var nextMonthFunc = function () {
-    // find the current chart array index
-    var chartIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    // find the full sessions array index
-    var sessionIndex = gameUsage.sessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-    if (chartIndex === gameUsage.chartSessions.length-1) {
-        // update the chart array with subset of full sessions array
-        gameUsage.chartSlice(sessionIndex+1, Math.min(sessionIndex+31, gameUsage.sessions.length));
-        updateChart = true;
-    }
     // setup year and month
     // we were in December, move to January of next year
     if (currentMonth === 12) {
@@ -168,29 +178,23 @@ if (nextMonth !== null) nextMonth.addEventListener('click', nextMonthFunc, false
 
 function updateHtml(gameId, currentYear, currentMonth) {
     // set loading values
-    numPlays.innerHTML = '-- Plays';
+    numPlays.innerHTML = '-- sessions';
 
     if (gameUsage) {
         currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
         var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
-        numPlays.innerHTML = currentSession.total_sessions > 0 ? monthlySessions + ' Plays' : 'No Plays';                    
-        // update or create the chart
-        if (updateChart) {
-            chartEl.style.height = '200px';
-            if (!chartEl.classList.contains('mb-5')) {
-                chartEl.classList.add('mb-5');
-            }
-            updateOrCreateChart(gameUsage.chartSessions, goToMonth); 
-            updateChart = false;
-        }
+        numPlays.innerHTML = currentSession.total_sessions > 0 ? monthlySessions + ' sessions' : 'No sessions';                    
         var currentIndex = gameUsage.chartSessions.findIndex(e => e.month === currentMonth && e.year === currentYear);
-        setActiveBar(currentIndex);    
+        if (gameUsage.sessions.some(e => e.total_sessions > 0)) {
+            setActiveBar(currentIndex);
+        }
     }
 
     // get game files for that month
     getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
 
         if (response.success) {
+            
             // update the months and year
             var currentJSMonth = currentMonth - 1;
             var nextMonthName = new Date(currentYear, (currentJSMonth + 1) % 12).toLocaleString('default', {month: 'long'});
@@ -198,61 +202,238 @@ function updateHtml(gameId, currentYear, currentMonth) {
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', {month: 'long'});
             prevMonth.innerHTML = '<i class="bi bi-chevron-left"></i> ' + prevMonthName;
             nextMonth.innerHTML = nextMonthName + ' <i class="bi bi-chevron-right"></i>';
-            statsHeader.innerHTML = currentMonthName + ' Stats:';
-            statsData.innerHTML = 'In ' + currentMonthName;
-            playerActivityDate.innerHTML = currentMonthName + ' ' + currentYear;
-            pipeHeader.innerHTML = currentMonthName + ' Data Downloads:';
+            statsHeader.innerHTML = currentMonthName + ' ' + currentYear;
+            
             // update next / previous to be enabled or disabled depending on what other data exists
             nextMonth.disabled = (response.data.last_year < currentYear || (response.data.last_year === currentYear && response.data.last_month <= currentMonth)) ? true : false;
-            prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;            
-            // update general templates
-            eventsData.href = response.data.events_template;
-            playersData.href = response.data.players_template;
-            populationData.href = response.data.population_template;
-            sessionsData.href = response.data.sessions_template;
-            // update pipelines
-            const pipelineMonth = 'Month of ' + currentMonthName;
-            if (rawLink) {
-                rawLink.href = response.data.raw_file;
-                rawMonth.innerHTML = pipelineMonth; 
-                // Set Popover content to updated elements
-                rawPop.setContent({
-                    '.popover-header': rawHead,
-                    '.popover-body': rawBody
-                });
-            } 
-            rawBtn.disabled = response.data.raw_file ? false : true;
-            if (eventLink) { 
-                eventLink.href = response.data.events_file;
-                eventMonth.innerHTML = pipelineMonth;
-                // Set Popover content to updated elements
-                eventPop.setContent({
-                    '.popover-header': eventHead,
-                    '.popover-body': eventBody
-                });
-            } 
-            eventBtn.disabled = response.data.events_file ? false : true;
+            prevMonth.disabled = (response.data.first_year > currentYear || (response.data.first_year === currentYear && response.data.first_month >= currentMonth)) ? true : false;
 
-            featureBtn.disabled = true;
-            // Build array for Feature Data links
-            const responseLinks = [];
-            responseLinks.push({link: response.data.population_file});
-            responseLinks.push({link: response.data.players_file});
-            responseLinks.push({link: response.data.sessions_file});
-            // Update Feature file links
-            featureLinks.forEach((link, index) => { 
-                link.href = responseLinks[index].link ? responseLinks[index].link : '';
-                link.classList = responseLinks[index].link ? 'btn btn-primary mb-2' : 'd-none';
-                if (responseLinks[index].link) { featureBtn.disabled = false; }
+            // Update the general template links, showing/hiding as appropriate
+            
+            if(response.data.events_template)
+            {
+                eventsData.href = response.data.events_template;
+                eventsData.classList.remove('d-none');
+            
+            }
+            else
+            {
+                eventsData.classList.add('d-none');
+            }
+
+              
+            if(response.data.players_template)
+            {
+                playersData.href = response.data.players_template;
+                playersData.classList.remove('d-none');
+            
+            }
+            else
+            {
+                playersData.classList.add('d-none');
+            }
+
+              
+            if(response.data.population_template)
+            {
+                populationData.href = response.data.population_template;
+                populationData.classList.remove('d-none');
+            
+            }
+            else
+            {
+                populationData.classList.add('d-none');
+            }
+
+              
+            if(response.data.sessions_template)
+            {
+                sessionsData.href = response.data.sessions_template;
+                sessionsData.classList.remove('d-none');
+            
+            }
+            else
+            {
+                sessionsData.classList.add('d-none');
+            }
+
+            // Data Pipeline updates
+
+            document.getElementById('pipeline-month').innerText = 'Month of ' + currentMonthName;
+
+            // Enable/disable buttons in pipeline
+            rawBtn.disabled = response.data.raw_file ? false : true;
+            detectorBtn.disabled = response.data.detectors_link ? false : true;
+            eventBtn.disabled = response.data.events_file ? false : true;
+            extractorBtn.disabled = response.data.features_link ? false : true;
+            featureBtn.disabled = response.data.population_file || response.data.players_file || response.data.sessions_file ? false : true;
+
+            // Determine the selector for the earliest data pipeline button that has data
+            // We'll make that button active
+            let activeSelector = '';
+
+            if(!featureBtn.disabled)
+            {
+                activeSelector = 'feature';
+            }
+            
+            if(!extractorBtn.disabled)
+            {
+                activeSelector = 'extractor';
+            }
+            
+            if(!eventBtn.disabled)
+            {
+                activeSelector = 'event';
+            }
+
+            if(!detectorBtn.disabled)
+            {
+                activeSelector = 'detector';
+            }
+
+            if(!rawBtn.disabled)
+            {
+                activeSelector = 'raw';
+            }
+
+            // For every pipeline button
+            Array.from(document.getElementsByClassName('btn-pipeline')).forEach(button => {
+
+                // If this is our active button
+                if(activeSelector + '-btn' == button.id)
+                {
+                    // Make active
+                    button.classList.add('btn-outline-secondary');
+
+                    // If this is a segment button (not a transition button)
+                    if(button.classList.contains('btn-pipeline-segment'))
+                    {
+                        // We need to show the active icon
+                        document.getElementById('btn-image-' + activeSelector).classList.add('d-none');
+                        document.getElementById('btn-image-active-' + activeSelector).classList.remove('d-none');
+                    }
+
+                }
+                else // Not our active button
+                {
+                    // Make not active
+                    button.classList.remove('btn-outline-secondary');
+                    
+                    // If this is a segment button (not a transition button)
+                    if(button.classList.contains('btn-pipeline-segment'))
+                    {
+                        // We need to show the inactive icon
+                        document.getElementById('btn-image-' + button.id.split('-')[0]).classList.remove('d-none');
+                        document.getElementById('btn-image-active-' + button.id.split('-')[0]).classList.add('d-none');
+                    }
+
+                }                
+
             });
-            if (featureLinks.length > 0) {
-                featureMonth.innerHTML = pipelineMonth;
-                // Set Popover content to updated elements
-                featurePop.setContent({
-                    '.popover-header': featureHead,
-                    '.popover-body': featureBody
-                }); 
-            } 
+
+
+            // Pipeline target update
+
+            // For every pipeline target block, update the current month text
+            Array.from(document.getElementsByClassName('pipeline-target-month')).forEach(curMonthElement => {
+                curMonthElement.innerText = 'Month of ' + currentMonthName;
+            });
+
+            // For the "no data" target block, update the error message as well
+            document.getElementById('pipeline-target-no-data-for-month').innerText = "There is currently no data for the month of " + currentMonthName;
+
+
+            // Update the links in each of the target blocks
+            let linksRaw = '';
+
+            if(response.data.raw_file)
+            {
+                linksRaw = '<a class="btn btn-primary mb-2" href="' + response.data.raw_file + '">Raw Data<i class="bi bi-arrow-down"></i></a>';
+            }
+
+            document.getElementById('pipeline-target-links-raw').innerHTML = linksRaw;
+
+            let linksDetectors = '';
+
+            if(response.data.detectors_link)
+            {
+                linksDetectors = '<a class="btn btn-primary mb-2" href="' + response.data.detectors_link + '">Detectors<i class="bi bi-arrow-down"></i></a>';
+            }
+
+
+            document.getElementById('pipeline-target-links-detector').innerHTML = linksDetectors;
+
+            let linksEvents = '';
+
+            if(response.data.events_file)
+            {
+                linksEvents = '<a class="btn btn-primary mb-2" href="' + response.data.events_file + '">Calculated Events<i class="bi bi-arrow-down"></i></a>';
+            }
+
+            document.getElementById('pipeline-target-links-event').innerHTML = linksEvents;
+
+            let linksExtractors = '';
+            
+            if(response.data.features_link)
+            {
+                linksExtractors = '<a class="btn btn-primary mb-2" href="' + response.data.features_link + '">Extractors<i class="bi bi-arrow-down"></i></a>';
+            }
+            
+            document.getElementById('pipeline-target-links-extractor').innerHTML = linksExtractors;
+
+            let linksFeature = '';
+            
+            if(response.data.population_file)
+            {
+                linksFeature += '<a class="btn btn-primary mb-2" href="' + response.data.population_file + '">Population Features<i class="bi bi-arrow-down"></i></a>';
+            }
+
+            if(response.data.players_file)
+            {
+                linksFeature += '<a class="btn btn-primary mb-2" href="' + response.data.players_file + '">Player Features<i class="bi bi-arrow-down"></i></a>';
+            }
+
+            if(response.data.sessions_file)
+            {
+                linksFeature += '<a class="btn btn-primary mb-2" href="' + response.data.sessions_file + '">Session Features<i class="bi bi-arrow-down"></i></a>';
+            }
+            
+            document.getElementById('pipeline-target-links-feature').innerHTML = linksFeature;
+
+            // For every pipeline target block
+            Array.from(document.getElementsByClassName('pipeline-target-block')).forEach(block => {
+                
+                // If this is the "No Data" block
+                if(block.id == 'pipeline-target-none')
+                {
+                    // None of the pipeline segments have data
+                    if(activeSelector === '')
+                    {
+                        block.classList.remove('d-none');
+                    }
+                    else
+                    {
+                        block.classList.add('d-none');
+                    }
+                    
+                }
+                else // This is a target block
+                {
+                    // If this is the active block
+                    if(block.id == 'pipeline-target-' + activeSelector)
+                    {
+                        block.classList.remove('d-none');
+                    }
+                    else // not the active block
+                    {
+                        block.classList.add('d-none');
+                    }
+                }
+
+            });
+
+
         }
     });
 
