@@ -24,25 +24,25 @@
         </div>
         <h2 class="text-sm-center py-4 mx-md-5">Research Insights are only valuable if you can access them:</h2>
         <div class="row row-cols-sm-2 blue-grad text-dark mb-5">
-            <div class="col-sm text-center p-5">
+            <div class="col-sm text-center p-5 pb-4">
                 <img class="mb-2" src="assets/images/graphics/open-data.png" alt="">
                 <h3 class="h4">Open Data:</h3>
-                <p class="lead mx-3 mx-sm-0 mx-md-4">We share the raw data produced as part of an experiment.</p>
+                <p class="lead mx-3 mx-sm-0 mx-md-3">We share the raw data produced as part of an experiment.</p>
             </div>
-            <div class="col-sm text-center p-5">
+            <div class="col-sm text-center p-5 pb-4">
                 <img class="mb-2" src="assets/images/graphics/open-analysis.png" alt="">
                 <h3 class="h4">Open Analysis:</h3>
-                <p class="lead mx-3 mx-sm-0 mx-md-4">Access to code that shows how we do statistical analysis on the data associated with each publication.</p>
+                <p class="lead mx-3 mx-sm-0 mx-md-3">Access to code that shows how we do statistical analysis on the data associated with each publication.</p>
             </div>
-            <div class="col-sm text-center p-5">
+            <div class="col-sm text-center p-5 pb-4">
                 <img class="mb-2" src="assets/images/graphics/open-material.png" alt="">
                 <h3 class="h4">Open Materials:</h3>
-                <p class="lead mx-3 mx-sm-0 mx-md-4">Access to game source code, assessment and interview instruments.</p>
+                <p class="lead mx-3 mx-sm-0 mx-md-3">Access to game source code, assessment and interview instruments.</p>
             </div>
-            <div class="col-sm text-center p-5">
+            <div class="col-sm text-center p-5 pb-4">
                 <img class="mb-2" src="assets/images/graphics/open-access.png" alt="">
                 <h3 class="h4">Open Access:</h3>
-                <p class="lead mx-3 mx-sm-0 mx-md-4">We encourage researchers to make their research outputs available (freely) to everyone.</p>
+                <p class="lead mx-3 mx-sm-0 mx-md-3">We encourage researchers to make their research outputs available (freely) to everyone.</p>
             </div>
         </div>
         <div class="row py-5">

@@ -494,6 +494,9 @@ img.avatar {
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            > p {
+                max-width: 20rem;
+            }
         }
     }
     .img-fluid-box {
