@@ -497,14 +497,17 @@ img.avatar {
         height: auto;
     }
     hr { color: #C2CCDA; border-top: 6px solid; border-radius: .625rem !important; }
-    h4 {
+    h3 {
         font-size: 1.875rem;
     }
     .staff-photo {
         width: 100%;
         max-width: 330px;
         height: auto;
-        margin-top: 4.75rem;
+        margin-top: 6rem;
+        @media (max-width: 575.98px) {
+            margin-top: 4rem;
+        }
     }
 }
 
