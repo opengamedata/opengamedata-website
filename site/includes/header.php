@@ -9,7 +9,7 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
         </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Inter:wght@400;700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Inter:wght@400;500;700">
         <link rel="stylesheet" href="https://use.typekit.net/zra8nem.css">
         <link rel="stylesheet" href="assets/styles/bootstrap.css">
         <link rel="stylesheet" href="assets/styles/styles.css">
