@@ -68,6 +68,9 @@ class PipelineButton
 
     public function renderPipelineTarget()
     {
+        // Set button icon and link target for transition (Detectors/Extractors) buttons vs. regular pipeline file downloads
+        $icon = $this->is_a_transition_button ? 'bi-box-arrow-up-right' : 'bi-arrow-down';
+        $target = $this->is_a_transition_button ? ' target="_blank"' : '';
 
         $output = '<div class="pipeline-target-block' . ($this->is_active ? '' : ' d-none') . '" id="pipeline-target-' . $this->selector . '">
                     <div class="d-flex">
@@ -82,7 +85,7 @@ class PipelineButton
 
         foreach($this->file_links as $link_text => $href)
         {
-            $output .= '<a class="btn btn-primary mb-2" href="' . htmlspecialchars($href) . '">' . htmlspecialchars($link_text) . '<i class="bi bi-arrow-down"></i></a>';
+            $output .= '<a class="btn btn-primary mb-2" href="' . htmlspecialchars($href) . '"'. $target . '>' . htmlspecialchars($link_text) . '<i class="bi ' . $icon . '"></i></a>';
         }
 
         $output .='   </div>                    
