@@ -10,7 +10,7 @@ function createChart (sessions, fnCallback) {
 
     sessions.forEach(element => {
         hoverLabels.push(element.label);
-        displaySessions.push(element.totalSessions);
+        displaySessions.push(element.totalSessions > 0 ? element.totalSessions : null);
     });
 
     const ctx = document.getElementById('activityChart');
@@ -26,6 +26,7 @@ function createChart (sessions, fnCallback) {
                 hoverBackgroundColor: '#A2FFEB',
                 hoverBorderColor: '#3E3498',
                 hoverBorderWidth: 2,
+                minBarLength: 9
             }]
         },
         options: {
