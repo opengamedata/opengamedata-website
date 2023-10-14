@@ -34,7 +34,9 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Cite OGD in your projects</h2>
-                <p>Gagnon, D. J. (n.d.). Open Game Data. <a href="https://opengamedata.fielddaylab.wisc.edu/" target="_blank">https://opengamedata.fielddaylab.wisc.edu/</a></p>
+                <p>
+                    Gagnon, D., Swanson, L. (2023). Open Game Data: A Technical Infrastructure for Open Science with Educational Games. In: Haahr, M., Rojas-Salazar, A., Göbel, S. (eds) Serious Games. JCSG 2023. Lecture Notes in Computer Science, vol 14309. Springer, Cham. <a href ="https://doi.org/10.1007/978-3-031-44751-8_1">https://doi.org/10.1007/978-3-031-44751-8_1</a>
+                </p>
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
