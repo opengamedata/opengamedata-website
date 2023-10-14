@@ -15,7 +15,30 @@
         "thumbnail_path" : "./assets/images/thumbs/wake-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
-        "studies": []
+        "studies": [
+            {
+                "name": "Struggling to Detect Struggle in Students Playing a Science Exploration Game",
+                "authors" : [
+                    "Liu, X.", "Slater, S.", "Andres, J.", "Swanson, L.", "Scianna, J.", "Gagnon, D.", "Baker, R.S."
+                ],
+                "abstract": "The real-time detection of when a player is struggling presents an opportunity for game designers to design timely and meaningful interventions, as well as to provide targeted support that improves student learning and engagement. In this paper, we present a struggle detector in the context of students playing the learning game, Wake: Tales from the Aqualab. Using the interaction log data of the game, we engineered four sets of features that captured distinct aspects of gameplay and trained prediction models to identify human-coded cases of students struggling, cross-validating at the student level. Our best-performing detectors have shown some capability in identifying student struggles with modest performance, at an AUC (Area Under the Curve) value of 0.635. We discuss current limitations of this approach, as well as next steps towards providing real-time support within the game.",
+                "paper_link": "https://dl.acm.org/doi/10.1145/3573382.3616080",
+                "year": "2023",
+                "project_code_link": "",
+                "published_in": "CHI PLAY Companion '23: Companion Proceedings of the Annual Symposium on Computer-Human Interaction in Play"
+            },
+            {
+                "name": "Aqualab: Establishing Validity of an Adventure Game for Middle School Science Practices",
+                "authors" : [
+                    "Yoon Jeon Kim", " Shari J. Metcalf", "Jennifer Scianna", "Glenda Perez", "David Gagnon"
+                ],
+                "abstract": "In this work-in-progress poster, we will present how a team including game designers, learning scientists, and assessment scientists collaborated on an online adventure game, Aqualab, with the goal of creating a comprehensive long-format game that can be used across multiple classroom sessions to support development science inquiry practices as well as assess different learning pathways within the game. In this work-in-progress poster, we discuss how the team approached design and development of the game to ensure validity of the game, and how we are planning to further investigate validity evidence of the game as a whole. ",
+                "paper_link": "https://icce2022.apsce.net/uploads/P2_WIPP_093.pdf",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": "Iyer, S. et al. (Eds.) (2022). Proceedings of the 30th International Conference on Computers in Education. Asia-Pacific Society for Computers in Education"
+            }
+        ]
     },
     "BACTERIA": {
         "game_name": "Antibiotic Resistance",
