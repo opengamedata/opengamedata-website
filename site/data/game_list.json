@@ -318,7 +318,30 @@
         "thumbnail_path" : "./assets/images/thumbs/waddle-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/penguinsVR/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/PENGUINS/readme.md",
-        "studies": []
+        "studies": [
+            {
+                "name": "Waddle: Developing Empathy for Adélie Penguins By Direct Embodiment in Virtual Reality",
+                "authors" : [
+                    "Gagnon, D.J.","Ponto, K.","Verbeke, M.","Nathan, M.","Kopp, K.","Tredinnick, R."
+                ],
+                "abstract": "Empathy is important for fostering social engagement with ecology. In this study we describe Waddle, a virtual reality (VR) experience designed to facilitate the direct embodiment of an Adélie Penguin moving through the key stages of their life cycle as an intervention to increase empathy. By collecting pre and post questionnaire data from forty-three grade 3 through 8 students attending a science festival, we find that Waddle was successful in facilitating an embodied experience and supported a significant increase in the participants’ empathy toward penguins. We also find that greater embodiment was correlated with increased empathy, suggesting a casual relation that invites additional research into designing embodied experiences using immersive technologies as a method for developing empathy and fostering greater social engagement.",
+                "paper_link": "https://doi.org/10.1007/978-3-031-44751-8_17",
+                "year": "2023",
+                "project_code_link": "",
+                "published_in": "In: Haahr, M., Rojas-Salazar, A., Göbel, S. (eds) Serious Games. JCSG 2023. Lecture Notes in Computer Science, vol 14309. Springer, Cham."
+            },
+            {
+                "name": "Waddle: using virtual penguin embodiment as a vehicle for empathy and informal learning",
+                "authors" : [
+                    "Ponto, K.", "Tredinnick, R.", "Verbeke, M.", "Kopp, K.", "Swanson, L.","Gagnon, D."
+                ],
+                "abstract": "This paper presents, Waddle, a virtual experience to promote informal learning by embodying the user as an Adélie Penguin to partake in a narrative-based virtual reality application that shares the story of the lives of these unique animals. We test the effects of this experience on informal learning and empathy, an important component for fostering social engagement with ecology. The research demonstrates that the developed experience is able to support informal learning, virtual embodiment, and is able to create a positive change in empathy.",
+                "paper_link": "https://doi.org/10.1145/3611659.3617211",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": "In 29th ACM Symposium on Virtual Reality Software and Technology (VRST 2023), October 09--11, 2023, Christchurch, New Zealand. ACM, New York, NY, USA"
+            }
+        ]
     },
     "SHADOWSPECT": {
         "game_name": "Shadowspect",
