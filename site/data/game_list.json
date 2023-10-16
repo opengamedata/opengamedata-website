@@ -15,7 +15,30 @@
         "thumbnail_path" : "./assets/images/thumbs/wake-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
-        "studies": []
+        "studies": [
+            {
+                "name": "Struggling to Detect Struggle in Students Playing a Science Exploration Game",
+                "authors" : [
+                    "Liu, X.", "Slater, S.", "Andres, J.", "Swanson, L.", "Scianna, J.", "Gagnon, D.", "Baker, R.S."
+                ],
+                "abstract": "The real-time detection of when a player is struggling presents an opportunity for game designers to design timely and meaningful interventions, as well as to provide targeted support that improves student learning and engagement. In this paper, we present a struggle detector in the context of students playing the learning game, Wake: Tales from the Aqualab. Using the interaction log data of the game, we engineered four sets of features that captured distinct aspects of gameplay and trained prediction models to identify human-coded cases of students struggling, cross-validating at the student level. Our best-performing detectors have shown some capability in identifying student struggles with modest performance, at an AUC (Area Under the Curve) value of 0.635. We discuss current limitations of this approach, as well as next steps towards providing real-time support within the game.",
+                "paper_link": "https://dl.acm.org/doi/10.1145/3573382.3616080",
+                "year": "2023",
+                "project_code_link": "",
+                "published_in": "CHI PLAY Companion '23: Companion Proceedings of the Annual Symposium on Computer-Human Interaction in Play"
+            },
+            {
+                "name": "Aqualab: Establishing Validity of an Adventure Game for Middle School Science Practices",
+                "authors" : [
+                    "Yoon Jeon Kim", " Shari J. Metcalf", "Jennifer Scianna", "Glenda Perez", "David Gagnon"
+                ],
+                "abstract": "In this work-in-progress poster, we will present how a team including game designers, learning scientists, and assessment scientists collaborated on an online adventure game, Aqualab, with the goal of creating a comprehensive long-format game that can be used across multiple classroom sessions to support development science inquiry practices as well as assess different learning pathways within the game. In this work-in-progress poster, we discuss how the team approached design and development of the game to ensure validity of the game, and how we are planning to further investigate validity evidence of the game as a whole. ",
+                "paper_link": "https://icce2022.apsce.net/uploads/P2_WIPP_093.pdf",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": "Iyer, S. et al. (Eds.) (2022). Proceedings of the 30th International Conference on Computers in Education. Asia-Pacific Society for Computers in Education"
+            }
+        ]
     },
     "BACTERIA": {
         "game_name": "Antibiotic Resistance",
@@ -172,7 +195,7 @@
                 "link": "https://fielddaylab.wisc.edu/"
             }
         ],
-        "play_link": "https://fielddaylab.wisc.edu/play/journalism/ci/develop/",
+        "play_link": "https://fielddaylab.wisc.edu/play/headlines/ci/production/",
         "source_link": "https://github.com/fielddaylab/journalism-unity",
         "thumbnail_path" : "./assets/images/thumbs/journalism-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/journalism-unity/blob/master/README.md",
@@ -202,7 +225,10 @@
                     "David J Gagnon", "Ryan S Baker", "Sarah Gagnon", "Luke Swanson", "Nick Spevacek", "Juliana Andres", "Erik Harpstead", "Jennifer Scianna", "Stefan Slater", "Maria OCZ San Pedro"
                 ],
                 "abstract": "In this paper we use an existing history learning game with an active audience as a research platform for exploring how humor and 'snarkiness' in the dialog script affect students' progression and attitudes about the game. We conducted a 2x2 randomized experiment with 11,804 anonymous 3rd-6th grade students. Using one-way ANOVA and Kruskall-Wallis tests, we find that changes to the script produced measurable results in the self-reported perceived humor of the game and the likeability of the player character. Different scripts did not produce significant differences in player completion of the game, or how much of the game was played. Perceived humor and enjoyment of the game and its main character contributed significantly to progress in the game, as did self-perceived reading skill.",
-                "link": "https://arxiv.org/abs/2210.09906"
+                "paper_link": "https://arxiv.org/abs/2210.09906",
+                "year" : "2022",
+                "project_code_link": "https://github.com/opengamedata/opengamedata-samples/tree/jo-wilder/JOWILDER/2022-snark",
+                "published_in": ""
             },
             {
                 "name": "Changing Students’ Perceptions of a History Exploration Game Using Different Scripts",
@@ -210,7 +236,10 @@
                     "Stefan Slater", "Ryan S Baker", "David Gagnon", "Erik Harpstead", "Juliana Ma", "Alexandra L Andres", "Luke Swanson"
                 ],
                 "abstract": "As digital games and simulations continue to see use in both formal and informal learning contexts, it becomes increasingly important to understand the goals, motivations, and interests of the learners using them. Recently, there has been increased interest in identifying the different engagement profiles of learners playing games, descriptions of groups of learners’ tendencies and preferences when playing digital games. These engagement profiles represent a powerful tool for designers looking to create personalized and adaptive learning environments. In this work, we explore two aspects of these engagement profiles. First, we explore the different profiles of engagement in a large sample of elementary and middle school learners playing the history game Jo Wilder and the Capitol Case (2019) in a variety of contexts, using the data from a self-report survey. Second, we explore the effect that minor game dialogue changes had on learners’ perceptions of different game elements, such as character likeability and humor, as well as personal preferences, such as enjoyment of history. These findings highlight opportunities for personalized and adaptive game design that leverage players’ goals and motivations.",
-                "link": "https://learninganalytics.upenn.edu/ryanbaker/ICCE2022_paper_58.pdf"
+                "paper_link": "https://learninganalytics.upenn.edu/ryanbaker/ICCE2022_paper_58.pdf",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": ""
             }
         ]
     },
@@ -237,7 +266,10 @@
                     "Luke Swanson", "David Gagnon", "Jennifer Scianna", "John McCloskey", "Nicholas Spevacek", "Stefan Slater", "Erik Harpstead"
                 ],
                 "abstract": "The ability for an educational game designer to understand their audience's play styles and resulting experience is an essential tool for improving their game's design. As a game is subjected to large-scale player testing, the designers require inexpensive, automated methods for categorizing patterns of player-game interactions. In this paper we present a simple, reusable process using best practices for data clustering, feasible for use within a small educational game studio. We utilize the method to analyze a real-time strategy game, processing game telemetry data to determine categories of players based on their in-game actions, the feedback they received, and their progress through the game. An interpretive analysis of these clusters results in actionable insights for the game's designers.",
-                "link": "https://arxiv.org/abs/2210.09911"
+                "paper_link": "https://arxiv.org/abs/2210.09911",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": ""
             },
             {
                 "name": "A Pilot Study on Teacher-Facing Real-Time Classroom Game Dashboards",
@@ -245,7 +277,10 @@
                     "Luke Swanson", "David Gagnon", "Jennifer Scianna"
                 ],
                 "abstract": "Educational games are an increasingly popular teaching tool in modern classrooms. However, the development of complementary tools for teachers facilitating classroom gameplay is lacking. We present the results of a participatory design process for a teacher-facing, real-time game data dashboard. This two-phase process included a workshop to elicit teachers' requirements for such a tool, and a pilot study of our dashboard prototype. We analyze post-gameplay survey and interview data to understand teachers' experiences with the tool in terms of evidence of co-design, feasibility, and effectiveness. Our results indicate the participatory design yielded a tool both useful for and usable by teachers within the context of a real class gameplay session. We advocate for the continued development of data-driven teacher tools to improve the effectiveness of games deployed in the classroom.",
-                "link": "https://arxiv.org/abs/2210.09427"
+                "paper_link": "https://arxiv.org/abs/2210.09427",
+                "year": "2022",
+                "project_code_link": "",
+                "published_in": ""
             }
         ]
     },
@@ -283,7 +318,30 @@
         "thumbnail_path" : "./assets/images/thumbs/waddle-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/penguinsVR/blob/master/README.md",
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/PENGUINS/readme.md",
-        "studies": []
+        "studies": [
+            {
+                "name": "Waddle: Developing Empathy for Adélie Penguins By Direct Embodiment in Virtual Reality",
+                "authors" : [
+                    "Gagnon, D.J.","Ponto, K.","Verbeke, M.","Nathan, M.","Kopp, K.","Tredinnick, R."
+                ],
+                "abstract": "Empathy is important for fostering social engagement with ecology. In this study we describe Waddle, a virtual reality (VR) experience designed to facilitate the direct embodiment of an Adélie Penguin moving through the key stages of their life cycle as an intervention to increase empathy. By collecting pre and post questionnaire data from forty-three grade 3 through 8 students attending a science festival, we find that Waddle was successful in facilitating an embodied experience and supported a significant increase in the participants’ empathy toward penguins. We also find that greater embodiment was correlated with increased empathy, suggesting a casual relation that invites additional research into designing embodied experiences using immersive technologies as a method for developing empathy and fostering greater social engagement.",
+                "paper_link": "https://doi.org/10.1007/978-3-031-44751-8_17",
+                "year": "2023",
+                "project_code_link": "",
+                "published_in": "In: Haahr, M., Rojas-Salazar, A., Göbel, S. (eds) Serious Games. JCSG 2023. Lecture Notes in Computer Science, vol 14309. Springer, Cham."
+            },
+            {
+                "name": "Waddle: using virtual penguin embodiment as a vehicle for empathy and informal learning",
+                "authors" : [
+                    "Ponto, K.", "Tredinnick, R.", "Verbeke, M.", "Kopp, K.", "Swanson, L.","Gagnon, D."
+                ],
+                "abstract": "This paper presents, Waddle, a virtual experience to promote informal learning by embodying the user as an Adélie Penguin to partake in a narrative-based virtual reality application that shares the story of the lives of these unique animals. We test the effects of this experience on informal learning and empathy, an important component for fostering social engagement with ecology. The research demonstrates that the developed experience is able to support informal learning, virtual embodiment, and is able to create a positive change in empathy.",
+                "paper_link": "https://doi.org/10.1145/3611659.3617211",
+                "year": "2023",
+                "project_code_link": "",
+                "published_in": "In 29th ACM Symposium on Virtual Reality Software and Technology (VRST 2023), October 09--11, 2023, Christchurch, New Zealand. ACM, New York, NY, USA"
+            }
+        ]
     },
     "SHADOWSPECT": {
         "game_name": "Shadowspect",

@@ -16,8 +16,12 @@ class GameFileInfo
     protected $sessions_file;
     protected $sessions_template;
     protected $feature_files = [];
+    protected $detectors_link;
+    protected $features_link; // Extractors in the UI
     
-    public function __construct($first_month, $first_year, $last_month, $last_year, $found_matching_range, $events_file = null, $events_template = null, $players_file = null, $players_template = null, $population_file = null, $population_template = null, $raw_file = null, $sessions_file = null, $sessions_template = null)
+    public function __construct($first_month, $first_year, $last_month, $last_year, $found_matching_range, $events_file = null, $events_template = null,
+     $players_file = null, $players_template = null, $population_file = null, $population_template = null, $raw_file = null, $sessions_file = null,
+     $sessions_template = null, $detectors_link = null, $features_link = null)
     {
         $this->first_month = $first_month;
         $this->first_year = $first_year;
@@ -33,10 +37,14 @@ class GameFileInfo
         $this->raw_file = $raw_file;
         $this->sessions_file = $sessions_file;
         $this->sessions_template = $sessions_template;
+        $this->detectors_link = $detectors_link;
+        $this->features_link = $features_link;
     }
 
     public static function fromObj($obj) {
-        return new static($obj->{'first_month'},$obj->{'first_year'},$obj->{'last_month'},$obj->{'last_year'},$obj->{'found_matching_range'},$obj->{'events_file'},$obj->{'events_template'},$obj->{'players_file'},$obj->{'players_template'},$obj->{'population_file'},$obj->{'population_template'},$obj->{'raw_file'},$obj->{'sessions_file'},$obj->{'sessions_template'});
+        return new static($obj->{'first_month'}, $obj->{'first_year'}, $obj->{'last_month'}, $obj->{'last_year'}, $obj->{'found_matching_range'},
+        $obj->{'events_file'}, $obj->{'events_template'}, $obj->{'players_file'}, $obj->{'players_template'}, $obj->{'population_file'}, $obj->{'population_template'},
+        $obj->{'raw_file'}, $obj->{'sessions_file'}, $obj->{'sessions_template'}, $obj->{'detectors_link'}, $obj->{'features_link'});
     }
 
     // Get methods
@@ -103,6 +111,16 @@ class GameFileInfo
         $this->feature_files['Session Features'] = $this->sessions_file;
         
         return $this->feature_files;
+    }
+
+    public function getDetectorsLink()
+    {
+        return $this->detectors_link;
+    }
+
+    public function getFeaturesLink()
+    {
+        return $this->features_link;
     }
 
     // Prev/next month functions

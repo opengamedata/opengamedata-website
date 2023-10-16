@@ -38,7 +38,7 @@
                             white,
                             $secondary, 
                             $secondary);
-    --bs-btn-hover-border-color: rgba($secondary,.7);
+    --bs-btn-hover-border-color: var(--bs-btn-hover-color);
     --bs-btn-padding-y: .563rem;
     --bs-btn-padding-x: .75rem;
     --bs-btn-font-size: .75rem;
@@ -73,29 +73,43 @@
 .btn-header {
     @include button-variant(transparent,
                             transparent,
-                            #5D5FEF,
+                            $secondary,
                             transparent,
                             transparent,
-                            rgba(#5D5FEF,.7),
+                            rgba($secondary,.7),
                             transparent,
                             transparent,
-                            #5D5FEF);
+                            $secondary);
     --bs-btn-padding-y: .157rem;
     --bs-btn-padding-x: .5rem;
-    --bs-btn-font-size: .75rem;
+    //--bs-btn-font-size: .75rem;
     &:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
     }
 }
 
-/* Add to btn-secondary for the publications template */
+.btn-header-dark {
+    @include button-variant($dark, 
+                            transparent,
+                            color-contrast($dark),
+                            rgba($dark,.7)
+                            );
+}
+
+/* Add to btn-outline-secondary for the publications template */
 .btn-publication {
-    --bs-btn-font-size: 1.25rem;
     text-transform: none;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    text-align: left;
+    color: #{$gray-900} !important;
+    font-weight: var(--bs-body-font-weight) !important;
+    --bs-btn-padding-y: .325rem;
+    &::before {
+        content: '</>';
+        color: #{$gray-500};
+        font-weight: 600;
+        padding-right: .5rem;
+        display: inline-block;
+    }
 }
 
 /* Cards */
@@ -113,47 +127,6 @@
 /* Text */
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
     font-weight: 700;
-}
-
-/* Data Pipeline Popover */
-.pipeline-popover {
-    --bs-popover-border-width: 0;
-    --bs-popover-header-bg: white;
-    --bs-popover-font-size: #{$font-size-base};
-    --bs-popover-header-font-size: 2rem;
-    --bs-popover-header-padding-x: 0;
-    --bs-popover-max-width: 320px;
-    .popover-arrow {
-        display: none;
-    }
-    .btn-close {
-        width: 1.2em;
-        height: 1.2em;
-        background-image: url("../images/icon-close.png");
-        background-size: 1.2em;
-        color: #{$gray-900};
-        opacity: 1;
-        position: absolute;
-        right: -1em;
-        top: -1em;
-        &:hover {
-            opacity: .7;
-        }
-    }
-    .popover-header {
-        border-bottom: 4px solid #{$gray-100};
-        margin-top: 1rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
-        min-height: 130px;
-        padding-right: 100px;
-        small {
-            font-weight: normal;
-            font-size: 1rem;
-            display: block;
-            padding-top: 1rem;
-        }
-    }
 }
 
 .navbar {
