@@ -33,7 +33,7 @@ class Card
                                 <h5 class="mb-0">' . htmlspecialchars($this->game->getDeveloperName()) . '</h5> 
                             </div>
                             <div>
-                                <img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($this->game->getName())) . '.yml/badge.svg">
+                                <img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($this->game->getId())) . '.yml/badge.svg">
                             </div>
                         </div>
                     </a>
