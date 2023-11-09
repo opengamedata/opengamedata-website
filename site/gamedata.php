@@ -114,6 +114,9 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <p>
                     <?php echo htmlspecialchars($game->getDescription()) ?>
                 </p>
+                <p>
+                        <?php echo '<img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($game_id)) . '.yml">'; ?>
+                </p>
             </div>
             <div class="col">
                 <?php echo '<img class="img-fluid rounded" src="' . htmlspecialchars($game->getThumbPath()) . '">'; ?>
