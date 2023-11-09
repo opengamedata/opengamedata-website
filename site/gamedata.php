@@ -115,7 +115,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                     <?php echo htmlspecialchars($game->getDescription()) ?>
                 </p>
                 <p>
-                        <?php echo '<img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($game_id)) . '.yml">'; ?>
+                        <?php echo '<img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($game_id)) . '.yml/badge.svg">'; ?>
                 </p>
             </div>
             <div class="col">
