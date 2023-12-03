@@ -9,8 +9,6 @@ env:
   TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
   TARGET_PATH: ${{ vars.WEB_PATH }}${{ github.event.repository.name }}/${{ github.ref_name }}
   TARGET_URL:  ${{ vars.OGD_STAGING_HOST }}${{ github.event.repository.name }}/${{ github.ref_name }}
-  API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
-  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
     
 jobs:
   branch_delete:
