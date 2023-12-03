@@ -29,7 +29,7 @@ foreach($gamelist as $key => $value)
 <?php require 'includes/header.php'; ?>
 <section class="hero w-100 px-3 py-5 px-md-5 bg-dark text-white d-flex">
     <div class="col-sm-6 mt-auto my-md-auto">
-        <h1 class="display-1">Welcome to Open Game Data</h1>
+        <h1 class="display-1">Welcome to Open Game Data; This version of the site is a test of branch cleanup</h1>
         <p class="lead">We are leveraging data science to create meaningful insights out of mountains of player data.</p>
         <div class="text-nowrap">
             <a href="#gamelist" class="btn btn-primary me-3">View Games</a> 
