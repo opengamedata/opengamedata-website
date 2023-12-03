@@ -1,15 +1,12 @@
 name: OGD-Website CI Script
 
-# Controls when the action will run. Triggers the workflow on creation of 
-# tags.  Creating new 'versions' via github is the most straightforward 
-# way of doing this.
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
     # inputs:
     #   custom_branch:
     #     description: "Custom API Branch: Set the site to use an API branch different from the website branch being deployed."
     #     required: false
-  push: # Trigger automatically when we do a merge to production
+  push: # Trigger automatically when we do a push to the site.
     paths:
     - '.github/workflows/website_CI.yml'
     - 'site/**'
@@ -82,4 +79,3 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         path: ./*.log
-    
