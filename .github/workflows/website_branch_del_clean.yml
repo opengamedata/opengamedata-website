@@ -14,7 +14,7 @@ env:
 jobs:
   branch_delete:
     name: Branch Deletion Cleanup of Website
-    if: github.event.ref_type == 'branch'
+    if: ${{ (github.event.ref_type == 'branch') || (github.event.action == 'workflow_dispatch') }}
     runs-on: ubuntu-22.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
