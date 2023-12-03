@@ -4,6 +4,7 @@ name: OGD-Website Branch Delete Cleanup
 # Controls when the action will run. Triggers the workflow on deletion of branches. 
 on:
   delete: # Trigger automatically when we do a deletion of a branch
+  workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
 
 env:
   TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
