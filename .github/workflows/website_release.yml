@@ -12,8 +12,10 @@ on:
      branches: [ production ]
 
 env:
-  TARGET_HOST: ${{ vars.OGD_SERVICES_HOST }}
-  TARGET_PATH: ${{ vars.WEB_PATH }}opengamedata/
+  DEPLOY_HOST: ${{ vars.OGD_SERVICES_HOST }}
+  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/opengamedata/
+  DEPLOY_URL:  ${{ vars.OGD_SERVICES_HOST }}/opengamedata/
+  URL_PATH:    /opengamedata/
   SECONDARY_HOST: fieldday-web.wcer.wisc.edu
   SECONDARY_PATH: /var/www/opengamedata/
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
@@ -29,7 +31,7 @@ jobs:
     
     steps:
 
-    # 1. Local checkout & config
+  # 1. Local checkout & config
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
@@ -39,7 +41,7 @@ jobs:
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
     
-    # 2. Build 
+  # 2. Build 
     - name: Install Node
       uses: actions/setup-node@v3
       with:
@@ -49,7 +51,7 @@ jobs:
     - name: Build
       run: gulp build   
 
-    # 3. Remote config & deploy
+  # 3. Remote config & deploy
     - name: Install OpenConnect
       run: sudo apt-get -q update && sudo apt-get -q install openconnect | 
             sudo pip3 install https://github.com/dlenski/vpn-slice/archive/master.zip
@@ -62,17 +64,17 @@ jobs:
         echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.TARGET_HOST }} "mkdir -p ${{ env.TARGET_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     - name: Ensure directory exists on secondary target
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.TARGET_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
         switches: -vrct --delete --exclude-from 'rsync-exclude'
         path: /site/*
-        remote_path: ${{ env.TARGET_PATH }}
-        remote_host: ${{ env.TARGET_HOST }}
+        remote_path: ${{ env.DEPLOY_DIR }}
+        remote_host: ${{ env.DEPLOY_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}
         remote_key:  ${{ secrets.DEPLOY_KEY }}
     
@@ -85,3 +87,7 @@ jobs:
         remote_host: ${{ env.SECONDARY_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}
         remote_key:  ${{ secrets.DEPLOY_KEY }}
+
+  # 4. Cleanup & complete
+    - name: Announce deploy
+      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
