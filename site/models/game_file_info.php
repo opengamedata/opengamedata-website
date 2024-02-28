@@ -42,9 +42,24 @@ class GameFileInfo
     }
 
     public static function fromObj($obj) {
-        return new static($obj->{'first_month'}, $obj->{'first_year'}, $obj->{'last_month'}, $obj->{'last_year'}, $obj->{'found_matching_range'},
-        $obj->{'events_file'}, $obj->{'events_template'}, $obj->{'players_file'}, $obj->{'players_template'}, $obj->{'population_file'}, $obj->{'population_template'},
-        $obj->{'raw_file'}, $obj->{'sessions_file'}, $obj->{'sessions_template'}, $obj->{'detectors_link'}, $obj->{'features_link'});
+        return new static(
+            $obj->{'first_month'},
+            $obj->{'first_year'},
+            $obj->{'last_month'},
+            $obj->{'last_year'},
+            $obj->{'found_matching_range'},
+            $obj->{'events_file'},
+            $obj->{'events_template'},
+            $obj->{'players_file'},
+            $obj->{'players_template'},
+            $obj->{'population_file'},
+            $obj->{'population_template'},
+            $obj->{'raw_file'},
+            $obj->{'sessions_file'},
+            $obj->{'sessions_template'},
+            $obj->{'detectors_link'},
+            $obj->{'features_link'}
+        );
     }
 
     // Get methods
