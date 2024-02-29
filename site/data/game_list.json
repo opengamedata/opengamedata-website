@@ -333,6 +333,24 @@
         "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md",
         "studies": []
     },
+    "TRANSFORMATION_QUEST": {
+        "game_name": "Transformation Quest",
+        "game_description": "A game by MindFuel to help teach the concepts of geometric transformations in a fun and engaging way to students!",
+        "target_audience": "",
+        "subject": "Geometry",
+        "developers": [
+            {
+                "name": "MindFuel",
+                "link": "https://mindfuel.ca/"
+            }
+        ],
+        "play_link": "https://fielddaylab.wisc.edu/play/partner/transformation-quest/ci/develop/",
+        "source_link": "https://github.com/fielddaylab/transformation-quest",
+        "thumbnail_path" : "./assets/images/thumbs/transformation-quest-thumb.jpg",
+        "event_readme_link": "https://github.com/fielddaylab/transformation-quest/blob/develop/README.MD",
+        "feature_readme_link": "",
+        "studies": []
+    },
     "WAVES": {
         "game_name": "Wave Combinator",
         "game_description": "This game invites kids to explore how waves interact. Kids can use the Wave Combinator to learn about concepts like amplitude, offset, wavelength, and frequency.",
