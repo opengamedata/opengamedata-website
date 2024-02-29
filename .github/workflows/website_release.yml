@@ -13,7 +13,7 @@ on:
 
 env:
   TARGET_HOST: ${{ vars.OGD_SERVICES_HOST }}
-  TARGET_PATH: ${{ vars.WEB_PATH }}opengamedata/
+  TARGET_PATH: ${{ vars.WEB_PATH }}/opengamedata/
   SECONDARY_HOST: fieldday-web.wcer.wisc.edu
   SECONDARY_PATH: /var/www/opengamedata/
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
