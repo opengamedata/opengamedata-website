@@ -346,7 +346,7 @@
         ],
         "play_link": "https://fielddaylab.wisc.edu/play/partner/transformation-quest/ci/develop/",
         "source_link": "https://github.com/fielddaylab/transformation-quest",
-        "thumbnail_path" : "./assets/images/thumbs/transformation-quest-thumb.jpg",
+        "thumbnail_path" : "./assets/images/thumbs/transformation-quest-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/transformation-quest/blob/develop/README.MD",
         "feature_readme_link": "",
         "studies": []
