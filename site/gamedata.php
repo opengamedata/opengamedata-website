@@ -208,19 +208,19 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
 
                 <div class="btn-group-vertical">
-                    <a id="events-data"     class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getEventsTemplate());     ?>">Events Template</a>
-                    <a id="events-cspace"   class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getEventsCodespace()    ? '' : ' d-none'); ?>" href='<?php echo htmlspecialchars($game_files->getEventsCodespace());    ?>'>
+                    <a id="events-tplate"     class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getEventsTemplate());     ?>">Events Template</a>
+                    <a id="events-cspace"     class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getEventsCodespace()    ? '' : ' d-none'); ?>" href='<?php echo htmlspecialchars($game_files->getEventsCodespace());    ?>'>
                         <img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'>
                     </a>
-                    <a id="sessions-data"   class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getSessionsTemplate());   ?>">Session Features Template</a>
-                    <a id="sessions-cspace" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getSessionsCodespace()  ? '' : ' d-none'); ?>" href='<?php echo htmlspecialchars($game_files->getSessionsCodespace());  ?>'>
+                    <a id="sessions-tplate"   class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getSessionsTemplate());   ?>">Session Features Template</a>
+                    <a id="sessions-cspace"   class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getSessionsCodespace()  ? '' : ' d-none'); ?>" href='<?php echo htmlspecialchars($game_files->getSessionsCodespace());  ?>'>
                         <img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'>
                     </a>
-                    <a id="players-data"    class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPlayersTemplate());    ?>">Player Features Template</a>
-                    <a id="players-cspace"  class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPlayersCodespace()   ? '' : ' d-none'); ?>" href='<?php echo htmlspecialchars($game_files->getPlayersCodespace());   ?>'>
+                    <a id="players-tplate"    class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPlayersTemplate());    ?>">Player Features Template</a>
+                    <a id="players-cspace"    class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPlayersCodespace()   ? '' : ' d-none'); ?>" href='<?php echo htmlspecialchars($game_files->getPlayersCodespace());   ?>'>
                         <img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'>
                     </a>
-                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPopulationTemplate()); ?>">Population Features Template</a>
+                    <a id="population-tplate" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPopulationTemplate()); ?>">Population Features Template</a>
                 </div>
 
             </section>

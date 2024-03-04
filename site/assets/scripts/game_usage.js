@@ -13,10 +13,10 @@ const statsHeader = document.getElementById('stats-header');
 const numPlays = document.getElementById('num-plays');
 
 // Anchor elements in the Templates section
-const eventsData = document.getElementById('events-data');
-const playersData = document.getElementById('players-data');
-const populationData = document.getElementById('population-data');
-const sessionsData = document.getElementById('sessions-data');
+const eventsTemplate = document.getElementById('events-tplate');
+const playersTemplate = document.getElementById('players-tplate');
+const populationTemplate = document.getElementById('population-tplate');
+const sessionsTemplate = document.getElementById('sessions-tplate');
 
 // Pipeline buttons
 const rawBtn = document.getElementById('raw-btn');
@@ -212,49 +212,49 @@ function updateHtml(gameId, currentYear, currentMonth) {
             
             if(response.data.events_template)
             {
-                eventsData.href = response.data.events_template;
-                eventsData.classList.remove('d-none');
+                eventsTemplate.href = response.data.events_template;
+                eventsTemplate.classList.remove('d-none');
             
             }
             else
             {
-                eventsData.classList.add('d-none');
+                eventsTemplate.classList.add('d-none');
             }
 
               
             if(response.data.players_template)
             {
-                playersData.href = response.data.players_template;
-                playersData.classList.remove('d-none');
+                playersTemplate.href = response.data.players_template;
+                playersTemplate.classList.remove('d-none');
             
             }
             else
             {
-                playersData.classList.add('d-none');
+                playersTemplate.classList.add('d-none');
             }
 
               
             if(response.data.population_template)
             {
-                populationData.href = response.data.population_template;
-                populationData.classList.remove('d-none');
+                populationTemplate.href = response.data.population_template;
+                populationTemplate.classList.remove('d-none');
             
             }
             else
             {
-                populationData.classList.add('d-none');
+                populationTemplate.classList.add('d-none');
             }
 
               
             if(response.data.sessions_template)
             {
-                sessionsData.href = response.data.sessions_template;
-                sessionsData.classList.remove('d-none');
+                sessionsTemplate.href = response.data.sessions_template;
+                sessionsTemplate.classList.remove('d-none');
             
             }
             else
             {
-                sessionsData.classList.add('d-none');
+                sessionsTemplate.classList.add('d-none');
             }
 
             // Data Pipeline updates
