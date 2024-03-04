@@ -43,7 +43,7 @@ jobs:
       with:
         lfs: true  
     - name: Set up Config File (with Default API Endpoint)
-      if: "${{ github.event.inputs.use_custom_api == 'false' }}"
+      if: "${{ github.event.inputs.use_custom_api == 'false' || github.event_name == 'push' }}"
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
