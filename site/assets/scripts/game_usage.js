@@ -13,10 +13,13 @@ const statsHeader = document.getElementById('stats-header');
 const numPlays = document.getElementById('num-plays');
 
 // Anchor elements in the Templates section
-const eventsTemplate = document.getElementById('events-tplate');
-const playersTemplate = document.getElementById('players-tplate');
+const eventsTemplate     = document.getElementById('events-tplate');
+const eventsCodespace    = document.getElementById('events-cspace');
+const sessionsTemplate   = document.getElementById('sessions-tplate');
+const sessionsCodespace  = document.getElementById('sessions-cspace');
+const playersTemplate    = document.getElementById('players-tplate');
+const playersCodespace   = document.getElementById('players-cspace');
 const populationTemplate = document.getElementById('population-tplate');
-const sessionsTemplate = document.getElementById('sessions-tplate');
 
 // Pipeline buttons
 const rawBtn = document.getElementById('raw-btn');
