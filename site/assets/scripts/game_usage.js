@@ -217,11 +217,31 @@ function updateHtml(gameId, currentYear, currentMonth) {
             {
                 eventsTemplate.href = response.data.events_template;
                 eventsTemplate.classList.remove('d-none');
-            
             }
             else
             {
                 eventsTemplate.classList.add('d-none');
+            }
+            if(response.data.events_codespace)
+            {
+                eventsCodespace.href = response.data.events_codespace;
+                eventsCodespace.classList.remove('d-none');
+            }
+            else
+            {
+                eventsCodespace.classList.add('d-none');
+            }
+
+              
+            if(response.data.sessions_codespace)
+            {
+                sessionsCodespace.href = response.data.sessions_codespace;
+                sessionsCodespace.classList.remove('d-none');
+            
+            }
+            else
+            {
+                sessionsCodespace.classList.add('d-none');
             }
 
               
@@ -235,6 +255,16 @@ function updateHtml(gameId, currentYear, currentMonth) {
             {
                 playersTemplate.classList.add('d-none');
             }
+            if(response.data.players_codespace)
+            {
+                playersCodespace.href = response.data.players_codespace;
+                playersCodespace.classList.remove('d-none');
+            
+            }
+            else
+            {
+                playersCodespace.classList.add('d-none');
+            }
 
               
             if(response.data.population_template)
@@ -246,18 +276,6 @@ function updateHtml(gameId, currentYear, currentMonth) {
             else
             {
                 populationTemplate.classList.add('d-none');
-            }
-
-              
-            if(response.data.sessions_template)
-            {
-                sessionsTemplate.href = response.data.sessions_template;
-                sessionsTemplate.classList.remove('d-none');
-            
-            }
-            else
-            {
-                sessionsTemplate.classList.add('d-none');
             }
 
             // Data Pipeline updates
