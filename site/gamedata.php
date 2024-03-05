@@ -61,11 +61,11 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
         }
 
-        $raw_files = $game_files->getRawFile() ? array('Raw Data' => $game_files->getRawFile()) : [];
-        $detectors_files = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink()) : [];
-        $event_files = $game_files->getEventsFile() ? array('Calculated Events' => $game_files->getEventsFile()) : [];
-        $extractors_files = $game_files->getFeaturesLink() ? array('Extractors' => $game_files->getFeaturesLink()) : []; // aka Extractors or Feature Extractors
-        $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
+        $raw_files        = $game_files->getRawFile()       ? array('Raw Data'          => $game_files->getRawFile())       : [];
+        $detectors_files  = $game_files->getDetectorsLink() ? array('Detectors'         => $game_files->getDetectorsLink()) : [];
+        $event_files      = $game_files->getEventsFile()    ? array('Calculated Events' => $game_files->getEventsFile())    : [];
+        $extractors_files = $game_files->getFeaturesLink()  ? array('Extractors'        => $game_files->getFeaturesLink())  : []; // aka Extractors or Feature Extractors
+        $feature_files    = $game_files->getFeatureFiles()  ?                              $game_files->getFeatureFiles()   : [];
     
     }
     

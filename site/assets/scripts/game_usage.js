@@ -194,8 +194,8 @@ function updateHtml(gameId, currentYear, currentMonth) {
     }
 
     // get game files for that month
-    getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
-
+    getGameFiles(gameId, currentYear, currentMonth)
+    .then(function (response) {
         if (response.success) {
             
             // update the months and year
@@ -283,11 +283,11 @@ function updateHtml(gameId, currentYear, currentMonth) {
             document.getElementById('pipeline-month').innerText = 'Month of ' + currentMonthName;
 
             // Enable/disable buttons in pipeline
-            rawBtn.disabled = response.data.raw_file ? false : true;
-            detectorBtn.disabled = response.data.detectors_link ? false : true;
-            eventBtn.disabled = response.data.events_file ? false : true;
+            rawBtn.disabled       = response.data.raw_file ? false : true;
+            detectorBtn.disabled  = response.data.detectors_link ? false : true;
+            eventBtn.disabled     = response.data.events_file ? false : true;
             extractorBtn.disabled = response.data.features_link ? false : true;
-            featureBtn.disabled = response.data.population_file || response.data.players_file || response.data.sessions_file ? false : true;
+            featureBtn.disabled   = response.data.population_file || response.data.players_file || response.data.sessions_file ? false : true;
 
             // Determine the selector for the earliest data pipeline button that has data
             // We'll make that button active
