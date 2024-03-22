@@ -1,15 +1,18 @@
 name: OGD-Website CI Script
 
-# Controls when the action will run. Triggers the workflow on creation of 
-# tags.  Creating new 'versions' via github is the most straightforward 
-# way of doing this.
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
-    # inputs:
-    #   custom_branch:
-    #     description: "Custom API Branch: Set the site to use an API branch different from the website branch being deployed."
-    #     required: false
-  push: # Trigger automatically when we do a merge to production
+    inputs:
+      use_custom_api:
+        type: boolean
+        description: "Use Custom API: If true, website will use the given alternate API endpoint."
+        required: true
+        default: false
+      CUSTOM_API_ENDPOINT:
+        description: "Custom API Endpoint: Set an alternate path to a website API wsgi app."
+        required: false
+        default: "https://ogd-services.fielddaylab.wisc.edu/wsgi-bin/opengamedata-website-api/production/app.wsgi/"
+  push: # Trigger automatically when we do a push to the site.
     paths:
     - '.github/workflows/website_CI.yml'
     - 'site/**'
@@ -17,8 +20,10 @@ on:
     - 'package.json'
 
 env:
-  TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
-  TARGET_PATH: ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
+  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
   API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
   
@@ -32,17 +37,23 @@ jobs:
     
     steps:
 
-    # 1. Local checkout & config
+  # 1. Local checkout & config
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         lfs: true  
-    - name: Set up Config File
+    - name: Set up Config File (with Default API Endpoint)
+      if: "${{ github.event.inputs.use_custom_api == 'false' }}"
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
+    - name: Set up Config File (with Custom API Endpoint)
+      if: "${{ github.event.inputs.use_custom_api == 'true' }}"
+      uses: ./.github/actions/web_config
+      with:
+        api_base: ${{ github.event.inputs.CUSTOM_API_ENDPOINT }}
     
-    # 2. Build 
+  # 2. Build 
     - name: Install Node
       uses: actions/setup-node@v3
       with:
@@ -52,7 +63,7 @@ jobs:
     - name: Build
       run: gulp build   
 
-    # 3. Remote config & deploy
+  # 3. Remote config & deploy
     - name: Install OpenConnect
       run: sudo apt-get -q update && sudo apt-get -q install openconnect
     - name: Connect to VPN
@@ -64,15 +75,22 @@ jobs:
         echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.TARGET_HOST }} "mkdir -p ${{ env.TARGET_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
         switches: -vrct --delete --exclude-from 'rsync-exclude'
         path: /site/*
-        remote_path: ${{ env.TARGET_PATH }}
-        remote_host: ${{ env.TARGET_HOST }}
+        remote_path: ${{ env.DEPLOY_DIR }}
+        remote_host: ${{ env.DEPLOY_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}
         remote_key: ${{ secrets.DEPLOY_KEY }}
-    
+
+  # 4. Cleanup & complete
+    - name: Announce deploy
+      run: echo "Deployed to ${{ env.TARGET_URL }}"
+    - name: Upload logs as artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        path: ./*.log

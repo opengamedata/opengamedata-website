@@ -1,0 +1,51 @@
+# Workflow to clean out the directory where a deleted branch's files were deployed by CI
+name: OGD-Website Branch Delete Cleanup
+
+# Controls when the action will run. Triggers the workflow on deletion of branches. 
+on:
+  delete: # Trigger automatically when we do a deletion of a branch
+  workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
+
+env:
+  TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
+  TARGET_PATH: ${{ vars.WEB_PATH }}${{ github.event.repository.name }}/${{ github.event.ref }}
+  TARGET_URL:  ${{ vars.OGD_STAGING_HOST }}${{ github.event.repository.name }}/${{ github.event.ref }}
+    
+jobs:
+  branch_delete:
+    name: Branch Deletion Cleanup of Website
+    if: github.event.ref_type == 'branch'
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
+    
+    steps:
+
+    # 1. Local checkout & config
+    
+    # 2. Build 
+
+    # 3. Remote config & deploy
+    - name: Install OpenConnect
+      run: sudo apt-get -q update && sudo apt-get -q install openconnect
+    - name: Connect to VPN
+      run: echo ${{ secrets.VPN_PASS }} | sudo openconnect --protocol=gp -u ${{ secrets.VPN_USER}} --passwd-on-stdin soe.vpn.wisc.edu &
+
+    - name: Setup Access Key
+      run: |
+        mkdir -p ~/.ssh
+        echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
+        chmod 600 ./key.txt
+
+    # - name: Remove branch folder
+    #   run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.TARGET_HOST }} "rm -r ${{ env.TARGET_PATH }}"
+    
+    - name: Announce cleanup
+      run: echo "Removed branch deploy at ${{ env.TARGET_URL }}"
+
+    - name: Upload logs as artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        path: ./*.log
+    
