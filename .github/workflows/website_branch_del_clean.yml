@@ -26,7 +26,7 @@ jobs:
     
     # 2. Build 
 
-    # 3. Remote config & deploy
+    # 3. Remote config & clean
     - name: Install OpenConnect
       run: sudo apt-get -q update && sudo apt-get -q install openconnect
     - name: Connect to VPN
@@ -35,11 +35,11 @@ jobs:
     - name: Setup Access Key
       run: |
         mkdir -p ~/.ssh
-        echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
+        echo '${{secrets.CLEAN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
 
     # - name: Remove branch folder
-    #   run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.TARGET_HOST }} "rm -r ${{ env.TARGET_PATH }}"
+    #   run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.TARGET_HOST }} "rm -r ${{ env.TARGET_PATH }}"
     
     - name: Announce cleanup
       run: echo "Removed branch deploy at ${{ env.TARGET_URL }}"
