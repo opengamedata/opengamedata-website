@@ -14,7 +14,7 @@
         "source_link": "https://github.com/fielddaylab/wake",
         "thumbnail_path" : "./assets/images/thumbs/wake-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/wake/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/AQUALAB/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/AQUALAB/README.md",
         "studies": [
             {
                 "name": "Struggling to Detect Struggle in Students Playing a Science Exploration Game",
@@ -91,7 +91,7 @@
         "source_link": "https://github.com/fielddaylab/crystal",
         "thumbnail_path" : "./assets/images/thumbs/crystal-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/crystal/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CRYSTAL/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/CRYSTAL/README.md",
         "studies": []
     },
     "CYCLE_CARBON": {
@@ -109,7 +109,7 @@
         "source_link": "https://github.com/fielddaylab/cycle",
         "thumbnail_path" : "./assets/images/thumbs/cycle-carbon-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/cycle/blob/master/readme.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_CARBON/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/CYCLE_CARBON/README.md",
         "studies": []
     },
     "CYCLE_NITROGEN": {
@@ -127,7 +127,7 @@
         "source_link": "https://github.com/fielddaylab/cycle",
         "thumbnail_path" : "./assets/images/thumbs/cycle-nitrogen-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/cycle/blob/master/readme.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_NITROGEN/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/CYCLE_NITROGEN/README.md",
         "studies": []
     },
     "CYCLE_WATER": {
@@ -145,7 +145,7 @@
         "source_link": "https://github.com/fielddaylab/cycle",
         "thumbnail_path" : "./assets/images/thumbs/cycle-water-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/cycle/blob/master/readme.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/CYCLE_WATER/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/CYCLE_WATER/README.md",
         "studies": []
     },
     "EARTHQUAKE": {
@@ -181,12 +181,12 @@
         "source_link": "https://github.com/fielddaylab/ICECUBEVR",
         "thumbnail_path" : "./assets/images/thumbs/icecube-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/ICECUBEVR/blob/master/README.md",
-        "feature_readme_link": "https://github.com/fielddaylab/ICECUBEVR/blob/master/README.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/ICECUBE/README.md",
         "studies": []
     },
     "JOURNALISM": {
         "game_name": "Headlines & High Waters",
-        "game_description": "Not yet released",
+        "game_description": "Play as a young journalist covering events as they unfold in the fictional town of Twin Lakes. Made in partnership with UW School of Journalism and Mass Communication with funding from the Baldwin Wisconsin Idea Endowment.",
         "target_audience": "N/A",
         "subject": "Journalistic Practices",
         "developers": [
@@ -199,7 +199,7 @@
         "source_link": "https://github.com/fielddaylab/journalism-unity",
         "thumbnail_path" : "./assets/images/thumbs/journalism-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/journalism-unity/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/JOURNALISM/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/JOURNALISM/README.md",
         "studies": []
     },
     "JOWILDER": {
@@ -217,7 +217,7 @@
         "source_link": "https://github.com/fielddaylab/jo_wilder",
         "thumbnail_path" : "./assets/images/thumbs/jowilder-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/jo_wilder/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/JOWILDER/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/JOWILDER/README.md",
         "studies": [
             {
                 "name": "Exploring players' experience of humor and snark in a grade 3-6 history practices game",
@@ -228,7 +228,7 @@
                 "paper_link": "https://arxiv.org/abs/2210.09906",
                 "year" : "2022",
                 "project_code_link": "https://github.com/opengamedata/opengamedata-samples/tree/jo-wilder/JOWILDER/2022-snark",
-                "published_in": ""
+                "published_in": "2022 Games + Learning + Society Conference Proceedings"
             },
             {
                 "name": "Changing Students’ Perceptions of a History Exploration Game Using Different Scripts",
@@ -239,7 +239,7 @@
                 "paper_link": "https://learninganalytics.upenn.edu/ryanbaker/ICCE2022_paper_58.pdf",
                 "year": "2022",
                 "project_code_link": "",
-                "published_in": ""
+                "published_in": "Iyer, S. et al. (Eds.) (2022). Proceedings of the 30th International Conference on Computers in Education. Asia-Pacific Society for Computers in Education"
             }
         ]
     },
@@ -258,7 +258,7 @@
         "source_link": "https://github.com/fielddaylab/lakeland",
         "thumbnail_path" : "./assets/images/thumbs/lakeland-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/lakeland/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/LAKELAND/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/LAKELAND/README.md",
         "studies": [
             {
                 "name": "Leveraging Cluster Analysis to Understand Educational Game Player Experiences and Support Design",
@@ -269,7 +269,7 @@
                 "paper_link": "https://arxiv.org/abs/2210.09911",
                 "year": "2022",
                 "project_code_link": "",
-                "published_in": ""
+                "published_in": "2022 Games + Learning + Society Conference Proceedings"
             },
             {
                 "name": "A Pilot Study on Teacher-Facing Real-Time Classroom Game Dashboards",
@@ -280,7 +280,7 @@
                 "paper_link": "https://arxiv.org/abs/2210.09427",
                 "year": "2022",
                 "project_code_link": "",
-                "published_in": ""
+                "published_in": "Meaningful Play 2022"
             }
         ]
     },
@@ -299,7 +299,7 @@
         "source_link": "https://github.com/fielddaylab/magnetism",
         "thumbnail_path" : "./assets/images/thumbs/magnetism-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/magnetism/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/MAGNET/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/MAGNET/README.md",
         "studies": []
     },
     "PENGUINS": {
@@ -317,7 +317,7 @@
         "source_link": "https://github.com/fielddaylab/penguinsVR",
         "thumbnail_path" : "./assets/images/thumbs/waddle-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/penguinsVR/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/PENGUINS/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/PENGUINS/README.md",
         "studies": [
             {
                 "name": "Waddle: Developing Empathy for Adélie Penguins By Direct Embodiment in Virtual Reality",
@@ -358,7 +358,7 @@
         "source_link": "https://github.com/fielddaylab/shadowspect",
         "thumbnail_path" : "./assets/images/thumbs/shadowspect-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/shadowspect/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/SHADOWSPECT/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/SHADOWSPECT/README.md",
         "studies": []
     },
     "SHIPWRECKS": {
@@ -376,7 +376,25 @@
         "source_link": "https://github.com/fielddaylab/lost_emerald",
         "thumbnail_path" : "./assets/images/thumbs/emerald-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/lost_emerald/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/SHIPWRECKS/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/SHIPWRECKS/README.md",
+        "studies": []
+    },
+    "TRANSFORMATION_QUEST": {
+        "game_name": "Transformations Quest",
+        "game_description": "A game by MindFuel to help teach the concepts of geometric transformations in a fun and engaging way to students!",
+        "target_audience": "",
+        "subject": "Geometry",
+        "developers": [
+            {
+                "name": "MindFuel",
+                "link": "https://mindfuel.ca/"
+            }
+        ],
+        "play_link": "https://fielddaylab.wisc.edu/play/partner/transformation-quest/ci/develop/",
+        "source_link": "https://github.com/fielddaylab/transformation-quest",
+        "thumbnail_path" : "./assets/images/thumbs/transformation-quest-thumb.png",
+        "event_readme_link": "https://github.com/fielddaylab/transformation-quest/blob/develop/README.MD",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/TRANSFORMATION_QUEST/README.md",
         "studies": []
     },
     "WAVES": {
@@ -394,7 +412,25 @@
         "source_link": "https://github.com/fielddaylab/waves",
         "thumbnail_path" : "./assets/images/thumbs/waves-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/waves/blob/master/README.md",
-        "feature_readme_link": "https://opengamedata.fielddaylab.wisc.edu/data/WAVES/readme.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WAVES/README.md",
+        "studies": []
+    },
+    "WIND": {
+        "game_name": "Wind Simulator",
+        "game_description": "When the kids try their hand at a tower building contest, a low pressure system moves in and changes their plans.",
+        "target_audience": "Grades 5-8",
+        "subject": "Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://theyardgames.org/game/wind.html",
+        "source_link": "https://github.com/fielddaylab/wind",
+        "thumbnail_path" : "./assets/images/thumbs/wind-thumb.png",
+        "event_readme_link": "https://github.com/fielddaylab/wind/blob/master/README.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WAVES/README.md",
         "studies": []
     }
 }

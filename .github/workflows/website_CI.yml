@@ -2,10 +2,16 @@ name: OGD-Website CI Script
 
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
-    # inputs:
-    #   custom_branch:
-    #     description: "Custom API Branch: Set the site to use an API branch different from the website branch being deployed."
-    #     required: false
+    inputs:
+      use_custom_api:
+        type: boolean
+        description: "Use Custom API: If true, website will use the given alternate API endpoint."
+        required: true
+        default: false
+      CUSTOM_API_ENDPOINT:
+        description: "Custom API Endpoint: Set an alternate path to a website API wsgi app."
+        required: false
+        default: "https://ogd-services.fielddaylab.wisc.edu/wsgi-bin/opengamedata-website-api/production/app.wsgi/"
   push: # Trigger automatically when we do a push to the site.
     paths:
     - '.github/workflows/website_CI.yml'
@@ -36,10 +42,16 @@ jobs:
       uses: actions/checkout@v3
       with:
         lfs: true  
-    - name: Set up Config File
+    - name: Set up Config File (with Default API Endpoint)
+      if: "${{ github.event.inputs.use_custom_api == 'false' }}"
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
+    - name: Set up Config File (with Custom API Endpoint)
+      if: "${{ github.event.inputs.use_custom_api == 'true' }}"
+      uses: ./.github/actions/web_config
+      with:
+        api_base: ${{ github.event.inputs.CUSTOM_API_ENDPOINT }}
     
   # 2. Build 
     - name: Install Node
@@ -68,7 +80,16 @@ jobs:
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
-        switches: -vrct --delete --exclude-from 'rsync-exclude'
+        # switches:
+        # -v : verbose output
+        # -r : recurse into subdirectories
+        # -c : use checksum to determine what files to update/skip
+        # -t : preserve modification times
+        # --delete : delete extraneous files from destination directories
+        # --exclude-from : skip any files in rsync-exclude
+        # --chmod : For each directory (D) and file (F), give user (u) and group (g) rwx permissions.
+        #           Give others (o) only read permissions, plus execute for directories.
+        switches: -vrct --delete --exclude-from 'rsync-exclude' --chmod=Du=rwx,Dg=rwx,Do=rx,Fu=rwx,Fg=rwx,Fo=r
         path: /site/*
         remote_path: ${{ env.DEPLOY_DIR }}
         remote_host: ${{ env.DEPLOY_HOST }}
@@ -77,7 +98,7 @@ jobs:
 
   # 4. Cleanup & complete
     - name: Announce deploy
-      run: echo "Deployed to ${{ env.TARGET_URL }}"
+      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
       uses: actions/upload-artifact@v2
       with:

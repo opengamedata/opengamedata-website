@@ -20,13 +20,14 @@ class Card
     }
 
     public function render() {
+        $_monthly_sessions = htmlspecialchars($this->monthly_sessions);
         return '<div class="col">
                     <a href="' . htmlspecialchars($this->game_link) . '" class="text-reset text-decoration-none">
                         <div class="card shadow">
                             <img src="' . htmlspecialchars($this->game->getThumbPath()) . '" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h4 class="card-title">' . htmlspecialchars($this->game->getName()) . '</h4>
-                                <p class="card-subtitle small">' . htmlspecialchars($this->monthly_sessions) . ' Monthly Sessions</p>
+                                <p class="card-subtitle small">' . ($_monthly_sessions ? $_monthly_sessions . ' Monthly Sessions' : 'Coming Soon!') . '</p>
                             </div>
                             <div class="card-footer d-flex align-items-center">
                                 <img class="avatar me-2" src="assets/images/' . htmlspecialchars($this->game->getDeveloperIconFilename()) . '" alt="avatar"> 
