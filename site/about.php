@@ -11,7 +11,8 @@
 <main id="about">
     <section class="container-fluid mb-5">
         <h2 class="text-sm-center pb-2">Open Science for Educational Games</h2>
-        <p class="text-sm-center mx-sm-5 px-md-5 my-4">Open Science for Education Games<br />
+        <p class="text-sm-center mx-sm-5 px-md-5 my-4">
+           <!-- Open Science for Education Games<br /> -->
            From the logging libraries that studios can integrate into their games, all the way to the final visualizations that allow design researchers to build new theories, we are thinking about modularity, scalability and performance.</p>
         <div class="row py-5">
             <div class="col-sm order-sm-last my-auto text-center">
