@@ -38,8 +38,9 @@ jobs:
         echo '${{secrets.CLEAN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
 
-    # - name: Remove branch folder
+    - name: Remove branch folder
     #   run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.TARGET_HOST }} "rm -r ${{ env.TARGET_PATH }}"
+      run: echo "Here we would run an rm on ${{ env.TARGET_PATH }}"
     
     - name: Announce cleanup
       run: echo "Removed branch deploy at ${{ env.TARGET_URL }}"
