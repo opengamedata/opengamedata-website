@@ -7,9 +7,9 @@ on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
 
 env:
-  TARGET_HOST: ${{ vars.OGD_STAGING_HOST }}
-  TARGET_PATH: ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.event.ref }}
-  TARGET_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.event.ref }}
+  DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
+  DEPLOY_PATH: ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.event.ref }}
+  DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.event.ref }}
     
 jobs:
   branch_delete:
@@ -39,10 +39,10 @@ jobs:
         chmod 600 ./key.txt
 
     - name: Remove branch folder
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.TARGET_HOST }} "rm -r ${{ env.TARGET_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.DEPLOY_HOST }} "rm -r ${{ env.DEPLOY_PATH }}"
     
     - name: Announce cleanup
-      run: echo "Removed branch deploy at ${{ env.TARGET_URL }}"
+      run: echo "Removed branch deploy at ${{ env.DEPLOY_URL }}"
 
     - name: Upload logs as artifacts
       uses: actions/upload-artifact@v2
