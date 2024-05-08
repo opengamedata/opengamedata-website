@@ -42,11 +42,11 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         $game_files = GameFileInfo::fromObj($response_obj->{'data'});
         if (!isset($game_files) || $game_files == null) {
             $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
-            error_log($err_str);
+            print($err_str);
         }
         else {
             $err_str = "Got game_files successfully, with year=".$game_files->getLastYear()." and month=".$game_files->getLastMonth();
-            error_log($err_str);
+            print($err_str);
         }
 
         $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
