@@ -208,10 +208,10 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
 
                 <div class="btn-group-vertical">
-                    <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getEventsTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getEventsTemplate()); ?>">Events Template</a>
-                    <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPlayersTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPlayersTemplate()); ?>">Player Features Template</a>
-                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPopulationTemplate()); ?>">Population Features Template</a>
-                    <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getSessionsTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getSessionsTemplate()); ?>">Session Features Template</a>
+                    <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2<?php     echo (isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getEventsTemplate()     : ""); ?>">Events Template</a>
+                    <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2<?php    echo (isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPlayersTemplate()    : ""); ?>">Player Features Template</a>
+                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPopulationTemplate() : ""); ?>">Population Features Template</a>
+                    <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2<?php   echo (isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getSessionsTemplate()   : ""); ?>">Session Features Template</a>
                 </div>
 
             </section>
