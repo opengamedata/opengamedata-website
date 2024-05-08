@@ -62,32 +62,32 @@ jobs:
     - name: Setup Access Key
       run: |
         mkdir -p ~/.ssh
-        echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
+        echo '${{secrets.VPN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
+    # - name: Ensure directory exists
+    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
-    # - name: Ensure directory exists on secondary target
-    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
     
-    - name: Upload to web server via rsync
-      uses: burnett01/rsync-deployments@5.2
-      with:
-        switches: -vrct --delete --exclude-from 'rsync-exclude'
-        path: /site/*
-        remote_path: ${{ env.DEPLOY_DIR }}
-        remote_host: ${{ env.DEPLOY_HOST }}
-        remote_user: ${{ secrets.DEPLOY_USER }}
-        remote_key:  ${{ secrets.DEPLOY_KEY }}
-    
-    # - name: Upload to secondary web server via rsync
+    # - name: Upload to web server via rsync
     #   uses: burnett01/rsync-deployments@5.2
     #   with:
-    #     switches: -vrc --exclude-from 'rsync-exclude'
+    #     switches: -vrct --delete --exclude-from 'rsync-exclude'
     #     path: /site/*
-    #     remote_path: ${{ env.SECONDARY_PATH }}
-    #     remote_host: ${{ env.SECONDARY_HOST }}
+    #     remote_path: ${{ env.DEPLOY_DIR }}
+    #     remote_host: ${{ env.DEPLOY_HOST }}
     #     remote_user: ${{ secrets.DEPLOY_USER }}
     #     remote_key:  ${{ secrets.DEPLOY_KEY }}
+    
+    - name: Upload to secondary web server via rsync
+      uses: burnett01/rsync-deployments@5.2
+      with:
+        switches: -vrc --exclude-from 'rsync-exclude'
+        path: /site/*
+        remote_path: ${{ env.SECONDARY_PATH }}
+        remote_host: ${{ env.SECONDARY_HOST }}
+        remote_user: ${{ secrets.VPN_USER }}
+        remote_key:  ${{ secrets.VPN_KEY }}
 
   # 4. Cleanup & complete
     - name: Announce deploy
