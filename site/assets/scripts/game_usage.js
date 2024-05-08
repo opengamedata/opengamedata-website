@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         currentYear = date.getFullYear();    
     }
 
-    getGameUsage(gameId).then(function (response) {
+    getGameUsage(gameId)
+    .then(function (response) {
         if (response.success) {
             // update the months and year
             var currentJSMonth = currentMonth - 1;
@@ -191,7 +192,8 @@ function updateHtml(gameId, currentYear, currentMonth) {
     }
 
     // get game files for that month
-    getGameFiles(gameId, currentYear, currentMonth).then(function (response) {
+    getGameFiles(gameId, currentYear, currentMonth)
+    .then(function (response) {
 
         if (response.success) {
             
