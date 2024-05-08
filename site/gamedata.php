@@ -40,7 +40,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
 
     if (isset($response_obj) && $response_obj->{'success'}) {
         $game_files = GameFileInfo::fromObj($response_obj->{'data'});
-        if ($game_files == null) {
+        if (!isset($game_files) || $game_files == null) {
             $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
             error_log($err_str);
         }
