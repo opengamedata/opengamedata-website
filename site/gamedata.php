@@ -38,43 +38,52 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     // Get game file info from API
     $response_obj = services\getGameFileInfoByMonth($game_id);
 
-    if (isset($response_obj) && $response_obj->{'success'}) {
-        $game_files = GameFileInfo::fromObj($response_obj->{'data'});
-        if (!isset($game_files) || $game_files == null) {
-            $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
-            throw new ErrorException($err_str);
+    if (isset($response_obj)) {
+        if ($response_obj->{'success'}) {
+            $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+            if (!isset($game_files) || $game_files == null) {
+                $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
+                throw new ErrorException($err_str);
+            }
+            else {
+                $err_str = "Got game_files successfully, with year=".$game_files->getLastYear()." and month=".$game_files->getLastMonth();
+                throw new ErrorException($err_str);
+            }
+
+            $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
+            $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
+            $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
+            $month_name = $selected_date->format('F');
+            // Populate current, previous, and next dates
+            if ($game_files->getNextMonth($selected_date) == $selected_date) {
+                $next_disabled = 'disabled';
+                $next_month = $selected_date->modify('+1 month')->format('F');
+            } else {
+                $next_disabled = '';
+                $next_month = $game_files->getNextMonth($selected_date)->format('F');
+            }
+            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+                $prev_disabled = 'disabled';
+                $prev_month = $selected_date->modify('-1 month')->format('F');
+            } else {
+                $prev_disabled = '';
+                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            }
+
+            $raw_files = $game_files->getRawFile() ? array('Raw Data' => $game_files->getRawFile()) : [];
+            $detectors_files = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink()) : [];
+            $event_files = $game_files->getEventsFile() ? array('Calculated Events' => $game_files->getEventsFile()) : [];
+            $extractors_files = $game_files->getFeaturesLink() ? array('Extractors' => $game_files->getFeaturesLink()) : []; // aka Extractors or Feature Extractors
+            $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
         }
         else {
-            $err_str = "Got game_files successfully, with year=".$game_files->getLastYear()." and month=".$game_files->getLastMonth();
+            $err_str = "Got a response object that was unsuccessful!";
             throw new ErrorException($err_str);
         }
-
-        $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
-        $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
-        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-        $month_name = $selected_date->format('F');
-        // Populate current, previous, and next dates
-        if ($game_files->getNextMonth($selected_date) == $selected_date) {
-            $next_disabled = 'disabled';
-            $next_month = $selected_date->modify('+1 month')->format('F');
-        } else {
-            $next_disabled = '';
-            $next_month = $game_files->getNextMonth($selected_date)->format('F');
-        }
-        if ($game_files->getPrevMonth($selected_date) == $selected_date) {
-            $prev_disabled = 'disabled';
-            $prev_month = $selected_date->modify('-1 month')->format('F');
-        } else {
-            $prev_disabled = '';
-            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
-        }
-
-        $raw_files = $game_files->getRawFile() ? array('Raw Data' => $game_files->getRawFile()) : [];
-        $detectors_files = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink()) : [];
-        $event_files = $game_files->getEventsFile() ? array('Calculated Events' => $game_files->getEventsFile()) : [];
-        $extractors_files = $game_files->getFeaturesLink() ? array('Extractors' => $game_files->getFeaturesLink()) : []; // aka Extractors or Feature Extractors
-        $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
-    
+    }
+    else {
+        $err_str = "Got no response object!";
+        throw new ErrorException($err_str);
     }
     
     // Create Pipeline buttons (including the transition buttons)
@@ -98,6 +107,10 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     // If we don't have files for the selected month
     $have_no_files = count($raw_files) === 0 && count($event_files) === 0 && count($extractors_files) === 0 && count($feature_files) == 0;
 
+}
+else {
+    $err_str = "Got request with no game parameter!";
+    throw new ErrorException($err_str);
 }
 
 ?>
