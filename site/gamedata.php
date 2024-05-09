@@ -78,7 +78,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         }
         else {
             $err_str = "Got a response object that was unsuccessful!";
-            throw new ErrorException($err_str);
+            error_log($err_str);
         }
     }
     else {
