@@ -40,6 +40,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
        "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
        and will say "that's alright good buddy, I'll just give you info on the most recent month."
        As if it's obvious that a thing that says "request a month" would consider the month optional...
+       But not fixing yet because leaving a hack in place is easier than fucking around with which end is responsible for what.
     */
     $response_obj = services\getGameFileInfoByMonth($game_id);
 
