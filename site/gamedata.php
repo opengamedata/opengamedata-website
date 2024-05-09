@@ -43,11 +43,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $game_files = GameFileInfo::fromObj($response_obj->{'data'});
             if (!isset($game_files) || $game_files == null) {
                 $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
-                throw new ErrorException($err_str);
-            }
-            else {
-                $err_str = "Got game_files successfully, with year=".$game_files->getLastYear()." and month=".$game_files->getLastMonth();
-                throw new ErrorException($err_str);
+                error_log($err_str);
             }
 
             $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
@@ -77,13 +73,13 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
         }
         else {
-            $err_str = "Got a response object that was unsuccessful!";
+            $err_str = "Got a response object from getGameFileInfoByMonth that was unsuccessful!";
             error_log($err_str);
         }
     }
     else {
         $err_str = "Got no response object!";
-        throw new ErrorException($err_str);
+        error_log($err_str);
     }
     
     // Create Pipeline buttons (including the transition buttons)
