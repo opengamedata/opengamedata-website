@@ -36,6 +36,11 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
    
 
     // Get game file info from API
+    /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
+       "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
+       and will say "that's alright good buddy, I'll just give you info on the most recent month."
+       As if it's obvious that a thing that says "request a month" would consider the month optional...
+    */
     $response_obj = services\getGameFileInfoByMonth($game_id);
 
     if (isset($response_obj)) {
@@ -73,7 +78,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
         }
         else {
-            $err_str = "Got a response object from getGameFileInfoByMonth that was unsuccessful!";
+            $err_str = "getGameFileInfoByMonth request, with year=null and month=null, was unsuccessful! Damn, maybe the authors shouldn't have written in a request for a specific month's data, but failed to supply a month! Who'd have thought?!?";
             error_log($err_str);
         }
     }
