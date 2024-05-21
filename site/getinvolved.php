@@ -50,16 +50,6 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/coins.svg" alt="">
-            </div>
-            <div class="flex-fill mt-4">
-                <h2>Conference Travel Grant</h2>
-                <p>We want to support publication and dissemination of this research and we are offering travel grants to support this.</p>
-                <a href="https://forms.gle/TbLNSRw9EGQm7ZYJA" class="btn btn-header-dark" target="_blank">More Information</a>
-            </div>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
-            <div class="img-col mx-auto my-auto">
                 <img class="img-fluid" src="assets/images/graphics/ogd-community.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
