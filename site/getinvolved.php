@@ -72,9 +72,8 @@
                 <img class="img-fluid" src="assets/images/graphics/mail.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
-                <h2>Stay Up to Date</h2>
-                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Sign up to our email</a> for updates on events, publications, news, and grant opportunities.<br/> 
-                    Or, <a href="https://fielddaylab.substack.com/" target="_blank">check us out on substack!</a></p>
+                <h2>Join the Community</h2>
+                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
