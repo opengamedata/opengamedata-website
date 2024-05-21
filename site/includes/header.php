@@ -31,6 +31,7 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
                     <a class="navbar-brand" href="index.php"><img class="logo" src="assets/images/logos/OpenGameData-logo.png" alt="Open Game Data"></a>
                 </div>
                 <ul class="navbar-nav flex-fill flex-row justify-content-end align-items-center">
+                    <li class="nav-item"><a href="https://opengamedata-doc.readthedocs.io/en/latest" class="btn btn-header mx-3">Technical Documentation</a></li>
                     <li class="nav-item"><a href="about.php" class="btn btn-header mx-3">About Us</a></li>
                     <li class="nav-item"><a href="getinvolved.php" class="btn btn-header-dark">Get Involved</a></li>
                 </ul>                
