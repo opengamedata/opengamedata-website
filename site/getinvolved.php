@@ -63,15 +63,6 @@
                 <img class="img-fluid" src="assets/images/graphics/ogd-community.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
-                <h2>Join the OGD Community for support</h2>
-                <a href="https://forms.gle/z9HGvu5Kmsuf6xDD8" class="btn btn-header-dark" target="_blank">Join the Google Community</a>
-            </div>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
-            <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/mail.svg" alt="">
-            </div>
-            <div class="flex-fill mt-4">
                 <h2>Join the Community</h2>
                 <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
             </div>
