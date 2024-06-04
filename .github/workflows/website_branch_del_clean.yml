@@ -39,7 +39,7 @@ jobs:
         chmod 600 ./key.txt
 
     - name: Remove branch folder
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.DEPLOY_HOST }} "rm -r ${{ env.DEPLOY_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.DEPLOY_HOST }} "rm -r ${{ env.DEPLOY_PATH }}"
     
     - name: Announce cleanup
       run: echo "Removed branch deploy at ${{ env.DEPLOY_URL }}"
