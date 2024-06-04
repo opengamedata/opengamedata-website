@@ -25,7 +25,7 @@ env:
   DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
   URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
-  API_PATH:    ${{ vars.API_BASE_PATH }}/files/app.wsgi/
+  API_PATH:    ${{ vars.API_BASE_URL }}/files/app.wsgi/
   
 jobs:
   ci_deploy:
