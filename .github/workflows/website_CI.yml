@@ -25,6 +25,7 @@ env:
   DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
   URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
+  API_PATH:    ${{ vars.API_BASE_PATH }}/files/app.wsgi/
   
 jobs:
   ci_deploy:
@@ -45,7 +46,7 @@ jobs:
       if: "${{ github.event.inputs.use_custom_api == 'false' || github.event_name == 'push' }}"
       uses: ./.github/actions/web_config
       with:
-        api_base: https://${{env.API_HOST}}/${{vars.API_BASE_URL}}
+        api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
     - name: Set up Config File (with Custom API Endpoint)
       if: "${{ github.event.inputs.use_custom_api == 'true' }}"
       uses: ./.github/actions/web_config
