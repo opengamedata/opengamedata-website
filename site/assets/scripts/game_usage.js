@@ -95,7 +95,30 @@ let bindPipelineButtonClickEvents = function () {
             // For each of the pipeline buttons
             let pipeline_btns = document.getElementsByClassName('btn-pipeline');
             Array.from(pipeline_btns)
-            .forEach( setPipelineButtonVisibility );
+            .forEach( buttonInner => {
+               // If this isn't the clicked button
+               if (buttonInner.id != button.id) {
+                  // Remove active attributes
+                  buttonInner.classList.remove('btn-outline-secondary');
+                  // If this is a segment button (not a transition button)
+                  if (buttonInner.classList.contains('btn-pipeline-segment')) {
+                     // We need to show the inactive icon
+                     document.getElementById('btn-image-' + buttonInner.id.split('-')[0]).classList.remove('d-none');
+                     document.getElementById('btn-image-active-' + buttonInner.id.split('-')[0]).classList.add('d-none');
+                  }
+               }
+               else // this is the clicked button
+               {
+                  // Add active attributes
+                  button.classList.add('btn-outline-secondary');
+                  // If this is a segment button (not a transition button)
+                  if (buttonInner.classList.contains('btn-pipeline-segment')) {
+                     // We need to show the active icon
+                     document.getElementById('btn-image-' + selector).classList.add('d-none');
+                     document.getElementById('btn-image-active-' + selector).classList.remove('d-none');
+                  }
+               }
+            });
          }
       });
    });
@@ -109,31 +132,6 @@ var setPipelineTargetBlockVisibility = function (target_block) {
    else {
       // Hide this block
       target_block.classList.add('d-none');
-   }
-}
-
-var setPipelineButtonVisibility = function (buttonInner) {
-   // If this isn't the clicked button
-   if (buttonInner.id != button.id) {
-      // Remove active attributes
-      buttonInner.classList.remove('btn-outline-secondary');
-      // If this is a segment button (not a transition button)
-      if (buttonInner.classList.contains('btn-pipeline-segment')) {
-         // We need to show the inactive icon
-         document.getElementById('btn-image-' + buttonInner.id.split('-')[0]).classList.remove('d-none');
-         document.getElementById('btn-image-active-' + buttonInner.id.split('-')[0]).classList.add('d-none');
-      }
-   }
-   else // this is the clicked button
-   {
-      // Add active attributes
-      button.classList.add('btn-outline-secondary');
-      // If this is a segment button (not a transition button)
-      if (buttonInner.classList.contains('btn-pipeline-segment')) {
-         // We need to show the active icon
-         document.getElementById('btn-image-' + selector).classList.add('d-none');
-         document.getElementById('btn-image-active-' + selector).classList.remove('d-none');
-      }
    }
 }
 
