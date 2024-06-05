@@ -22,7 +22,7 @@ foreach($gamelist as $key => $value)
             $game_usage = GameUsage::fromObj($response_obj->{'val'});
         }
         else {
-            $err_str = "getGameUsage request, with year=".$key.", was unsuccessful:\n".$response_obj->{'msg'};
+            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$response_obj->{'msg'};
             error_log($err_str);
         }
     }
