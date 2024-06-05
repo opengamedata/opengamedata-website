@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
    getGameUsage(gameId)
       .then(function (response) {
-         if (response.Stats() == "SUCCESS") {
+         if (response.Status() == "SUCCESS") {
             // update the months and year
             var currentJSMonth = currentMonth - 1;
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
