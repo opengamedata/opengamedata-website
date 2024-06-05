@@ -46,12 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
    getGameUsage(gameId)
       .then(function (response) {
-         if (response.Status() == "SUCCESS") {
+         if (response.Status == "SUCCESS") {
             // update the months and year
             var currentJSMonth = currentMonth - 1;
             var currentMonthName = new Date(currentYear, currentJSMonth).toLocaleString('default', { month: 'long' });
 
-            gameUsage = new GameUsage(response.Value().gameId, response.Value().sessions);
+            gameUsage = new GameUsage(response.Value.gameId, response.Value.sessions);
             currentSession = gameUsage.sessions.find(e => e.month === currentMonth && e.year === currentYear);
             // update the game usage information
             var monthlySessions = currentSession.total_sessions < 1000 ? currentSession.total_sessions : (currentSession.total_sessions / 1000).toFixed(0) + 'K';
@@ -188,7 +188,7 @@ function updateHtml(gameId, currentYear, currentMonth) {
    // get game files for that month
    getGameFiles(gameId, currentYear, currentMonth)
    .then(function (response) {
-      if (response.Status() == "SUCCESS") {
+      if (response.Status == "SUCCESS") {
 
          // update the months and year
          var currentJSMonth = currentMonth - 1;
@@ -200,37 +200,37 @@ function updateHtml(gameId, currentYear, currentMonth) {
          statsHeader.innerHTML = currentMonthName + ' ' + currentYear;
 
          // update next / previous to be enabled or disabled depending on what other data exists
-         nextMonth.disabled = (response.Value().last_year < currentYear  || (response.Value().last_year === currentYear  && response.Value().last_month <= currentMonth)) ? true : false;
-         prevMonth.disabled = (response.Value().first_year > currentYear || (response.Value().first_year === currentYear && response.Value().first_month >= currentMonth)) ? true : false;
+         nextMonth.disabled = (response.Value.last_year < currentYear  || (response.Value.last_year === currentYear  && response.Value.last_month <= currentMonth)) ? true : false;
+         prevMonth.disabled = (response.Value.first_year > currentYear || (response.Value.first_year === currentYear && response.Value.first_month >= currentMonth)) ? true : false;
 
          // Update the general template links, showing/hiding as appropriate
 
-         if (response.Value().events_template) {
-            eventsData.href = response.Value().events_template;
+         if (response.Value.events_template) {
+            eventsData.href = response.Value.events_template;
             eventsData.classList.remove('d-none');
          }
          else {
             eventsData.classList.add('d-none');
          }
 
-         if (response.Value().players_template) {
-            playersData.href = response.Value().players_template;
+         if (response.Value.players_template) {
+            playersData.href = response.Value.players_template;
             playersData.classList.remove('d-none');
          }
          else {
             playersData.classList.add('d-none');
          }
 
-         if (response.Value().population_template) {
-            populationData.href = response.Value().population_template;
+         if (response.Value.population_template) {
+            populationData.href = response.Value.population_template;
             populationData.classList.remove('d-none');
          }
          else {
             populationData.classList.add('d-none');
          }
 
-         if (response.Value().sessions_template) {
-            sessionsData.href = response.Value().sessions_template;
+         if (response.Value.sessions_template) {
+            sessionsData.href = response.Value.sessions_template;
             sessionsData.classList.remove('d-none');
          }
          else {
@@ -241,11 +241,11 @@ function updateHtml(gameId, currentYear, currentMonth) {
          document.getElementById('pipeline-month').innerText = 'Month of ' + currentMonthName;
 
          // Enable/disable buttons in pipeline
-         rawBtn.disabled       = response.Value().raw_file ? false : true;
-         detectorBtn.disabled  = response.Value().detectors_link ? false : true;
-         eventBtn.disabled     = response.Value().events_file ? false : true;
-         extractorBtn.disabled = response.Value().features_link ? false : true;
-         featureBtn.disabled   = response.Value().population_file || response.Value().players_file || response.Value().sessions_file ? false : true;
+         rawBtn.disabled       = response.Value.raw_file ? false : true;
+         detectorBtn.disabled  = response.Value.detectors_link ? false : true;
+         eventBtn.disabled     = response.Value.events_file ? false : true;
+         extractorBtn.disabled = response.Value.features_link ? false : true;
+         featureBtn.disabled   = response.Value.population_file || response.Value.players_file || response.Value.sessions_file ? false : true;
 
          // Determine the selector for the earliest data pipeline button that has data
          // We'll make that button active
@@ -311,16 +311,16 @@ function updateHtml(gameId, currentYear, currentMonth) {
          // Update the links in each of the target blocks
          let linksRaw = '';
 
-         if (response.Value().raw_file) {
-            linksRaw = '<a class="btn btn-primary mb-2" href="' + response.Value().raw_file + '">Raw Data<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.raw_file) {
+            linksRaw = '<a class="btn btn-primary mb-2" href="' + response.Value.raw_file + '">Raw Data<i class="bi bi-arrow-down"></i></a>';
          }
 
          document.getElementById('pipeline-target-links-raw').innerHTML = linksRaw;
 
          let linksDetectors = '';
 
-         if (response.Value().detectors_link) {
-            linksDetectors = '<a class="btn btn-primary mb-2" href="' + response.Value().detectors_link + '">Detectors<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.detectors_link) {
+            linksDetectors = '<a class="btn btn-primary mb-2" href="' + response.Value.detectors_link + '">Detectors<i class="bi bi-arrow-down"></i></a>';
          }
 
 
@@ -328,32 +328,32 @@ function updateHtml(gameId, currentYear, currentMonth) {
 
          let linksEvents = '';
 
-         if (response.Value().events_file) {
-            linksEvents = '<a class="btn btn-primary mb-2" href="' + response.Value().events_file + '">Calculated Events<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.events_file) {
+            linksEvents = '<a class="btn btn-primary mb-2" href="' + response.Value.events_file + '">Calculated Events<i class="bi bi-arrow-down"></i></a>';
          }
 
          document.getElementById('pipeline-target-links-event').innerHTML = linksEvents;
 
          let linksExtractors = '';
 
-         if (response.Value().features_link) {
-            linksExtractors = '<a class="btn btn-primary mb-2" href="' + response.Value().features_link + '">Extractors<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.features_link) {
+            linksExtractors = '<a class="btn btn-primary mb-2" href="' + response.Value.features_link + '">Extractors<i class="bi bi-arrow-down"></i></a>';
          }
 
          document.getElementById('pipeline-target-links-extractor').innerHTML = linksExtractors;
 
          let linksFeature = '';
 
-         if (response.Value().population_file) {
-            linksFeature += '<a class="btn btn-primary mb-2" href="' + response.Value().population_file + '">Population Features<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.population_file) {
+            linksFeature += '<a class="btn btn-primary mb-2" href="' + response.Value.population_file + '">Population Features<i class="bi bi-arrow-down"></i></a>';
          }
 
-         if (response.Value().players_file) {
-            linksFeature += '<a class="btn btn-primary mb-2" href="' + response.Value().players_file + '">Player Features<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.players_file) {
+            linksFeature += '<a class="btn btn-primary mb-2" href="' + response.Value.players_file + '">Player Features<i class="bi bi-arrow-down"></i></a>';
          }
 
-         if (response.Value().sessions_file) {
-            linksFeature += '<a class="btn btn-primary mb-2" href="' + response.Value().sessions_file + '">Session Features<i class="bi bi-arrow-down"></i></a>';
+         if (response.Value.sessions_file) {
+            linksFeature += '<a class="btn btn-primary mb-2" href="' + response.Value.sessions_file + '">Session Features<i class="bi bi-arrow-down"></i></a>';
          }
 
          document.getElementById('pipeline-target-links-feature').innerHTML = linksFeature;
