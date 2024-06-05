@@ -48,7 +48,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         if ($response_obj->{'status'} == "SUCCESS") {
             $game_files = GameFileInfo::fromObj($response_obj->{'val'});
             if (!isset($game_files) || $game_files == null) {
-                $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
+                $err_str = "Got empty game_files from request that had status=".$response_obj->{'status'}." and val=".json_encode($response_obj->{'val'});
                 error_log($err_str);
             }
 
