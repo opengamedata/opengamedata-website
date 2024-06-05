@@ -2,6 +2,7 @@
 
 require_once 'includes/app_config.php';
 require_once 'includes/services.php';
+require_once 'models/APIResponse.php';
 require_once 'models/game.php';
 require_once 'models/game_usage.php';
 require_once 'models/game_card.php';
@@ -18,11 +19,12 @@ foreach($gamelist as $key => $value)
     $response_obj = services\getGameUsage($key);
     $game_usage = null;
     if (isset($response_obj)) {
-        if ($response_obj->{'status'} == "SUCCESS") {
-            $game_usage = GameUsage::fromObj($response_obj->{'val'});
+        $api_response = APIResponse::fromObj($response_obj);
+        if ($api_response->Status() == "SUCCESS") {
+            $game_usage = GameUsage::fromObj($api_response->Value());
         }
         else {
-            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$response_obj->{'msg'};
+            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$api_response->Message();
             error_log($err_str);
         }
     }
