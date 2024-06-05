@@ -24,7 +24,7 @@ foreach($gamelist as $key => $value)
             $game_usage = GameUsage::fromObj($api_response->Value());
         }
         else {
-            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$api_response->Message();
+            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$api_response->Message()."\nFull response: ".json_encode($response_obj);
             error_log($err_str);
         }
     }
