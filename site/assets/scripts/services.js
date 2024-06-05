@@ -11,7 +11,7 @@ const getGameUsageByMonth = (gameId, year, month) => {
         }
     })
     .then(function (response) {
-        return new APIResponse(response);
+        return new APIResponse(response.data);
     });
 
     return data;
@@ -27,7 +27,7 @@ const getGameFiles = (gameId, year, month) => {
         }
     })
     .then(function (response) {
-        return new APIResponse(response);
+        return new APIResponse(response.data);
     });
 
     return data;
@@ -41,7 +41,7 @@ const getGameUsage = (gameId) => {
         }
     })
     .then(function (response) {
-        return new APIResponse(response);
+        return new APIResponse(response.data);
     });
 
     return data;
