@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
          }
       }
    );
-
    // Bind to the click event on all of the Data Pipeline buttons
    bindPipelineButtonClickEvents();
 });
