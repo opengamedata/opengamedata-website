@@ -9,26 +9,26 @@ import APIResponse from "./APIResponse.js";
 
 let gameId = null;
 let currentMonth = null;
-let currentYear = null;
-const prevMonth = document.getElementById('month-prev');
-const nextMonth = document.getElementById('month-next');
+let currentYear  = null;
+const prevMonth   = document.getElementById('month-prev');
+const nextMonth   = document.getElementById('month-next');
 const chartWrapEl = document.getElementById('chart-wrapper');
-const chartEl = document.getElementById('chart');
+const chartEl     = document.getElementById('chart');
 const statsHeader = document.getElementById('stats-header');
-const numPlays = document.getElementById('num-plays');
+const numPlays    = document.getElementById('num-plays');
 
 // Anchor elements in the Templates section
-const eventsData = document.getElementById('events-data');
-const playersData = document.getElementById('players-data');
+const eventsData     = document.getElementById('events-data');
+const playersData    = document.getElementById('players-data');
 const populationData = document.getElementById('population-data');
-const sessionsData = document.getElementById('sessions-data');
+const sessionsData   = document.getElementById('sessions-data');
 
 // Pipeline buttons
-const rawBtn = document.getElementById('raw-btn');
-const detectorBtn = document.getElementById('detector-btn');
-const eventBtn = document.getElementById('event-btn');
+const rawBtn       = document.getElementById('raw-btn');
+const detectorBtn  = document.getElementById('detector-btn');
+const eventBtn     = document.getElementById('event-btn');
 const extractorBtn = document.getElementById('extractor-btn');
-const featureBtn = document.getElementById('feature-btn');
+const featureBtn   = document.getElementById('feature-btn');
 
 let gameUsage = null;
 let currentSession = null;
