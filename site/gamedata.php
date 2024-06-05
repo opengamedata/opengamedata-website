@@ -45,8 +45,8 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     $response_obj = services\getGameFileInfoByMonth($game_id);
 
     if (isset($response_obj)) {
-        if ($response_obj->{'success'}) {
-            $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+        if ($response_obj->{'status'} == "SUCCESS") {
+            $game_files = GameFileInfo::fromObj($response_obj->{'val'});
             if (!isset($game_files) || $game_files == null) {
                 $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
                 error_log($err_str);
@@ -79,12 +79,12 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
         }
         else {
-            $err_str = "getGameFileInfoByMonth request, with year=null and month=null, was unsuccessful! Damn, maybe the authors shouldn't have written in a request for a specific month's data, but failed to supply a month! Who'd have thought?!?";
+            $err_str = "getGameFileInfoByMonth request, with year=null and month=null, was unsuccessful:\n".$response_obj->{'msg'}."\nDamn, maybe the authors shouldn't have written in a request for a specific month's data, but failed to supply a month! Who'd have thought?!?";
             error_log($err_str);
         }
     }
     else {
-        $err_str = "Got no response object!";
+        $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
         error_log($err_str);
     }
     
