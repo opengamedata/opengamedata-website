@@ -21,7 +21,7 @@ foreach($gamelist as $key => $value)
         $game_usage = GameUsage::fromObj($response_obj->{'data'});
     }
 
-    $game_card = new GameCard(Game::fromJson($key, json_encode($value)), $game_usage);
+    $game_card = new GameCard(GameDetails::fromJson($key, json_encode($value)), $game_usage);
     array_push($games, $game_card);
 }
 

@@ -1,6 +1,6 @@
 <?php
 require_once 'publication.php';
-class Game
+class GameDetails
 {
     protected $game_id;
     protected $game_name;

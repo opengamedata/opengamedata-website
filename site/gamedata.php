@@ -32,7 +32,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     
     // Get game details from api
     $game_json = services\getGameDetails($game_id);
-    $game = $game_json ? Game::fromJson($game_id, $game_json) : null;
+    $game = $game_json ? GameDetails::fromJson($game_id, $game_json) : null;
    
 
     // Get game file info from API
