@@ -76,6 +76,24 @@
         "feature_readme_link": null,
         "studies": []
     },
+    "BLOOM": {
+        "game_name": "TODO",
+        "game_description": "TODO",
+        "target_audience": "TODO",
+        "subject": "TODO",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "TODO",
+        "source_link": "TODO",
+        "thumbnail_path" : "./assets/images/thumbs/bloom-thumb.png",
+        "event_readme_link": "TODO",
+        "feature_readme_link": null,
+        "studies": []
+    },
     "CRYSTAL": {
         "game_name": "Crystal Cave",
         "game_description": "This simple puzzle game introduces kids to crystals! Players try their hand at arranging molecules with different shapes and properties into an ordered, stable configuration.",
@@ -379,6 +397,24 @@
         "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/SHIPWRECKS/README.md",
         "studies": []
     },
+    "THERMOVR": {
+        "game_name": "TODO",
+        "game_description": "TODO",
+        "target_audience": "TODO",
+        "subject": "TODO",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "TODO",
+        "source_link": "TODO",
+        "thumbnail_path" : "./assets/images/thumbs/thermovr-thumb.png",
+        "event_readme_link": "TODO",
+        "feature_readme_link": null,
+        "studies": []
+    },
     "TRANSFORMATION_QUEST": {
         "game_name": "Transformations Quest",
         "game_description": "A game by MindFuel to help teach the concepts of geometric transformations in a fun and engaging way to students!",
@@ -413,6 +449,24 @@
         "thumbnail_path" : "./assets/images/thumbs/waves-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/waves/blob/master/README.md",
         "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WAVES/README.md",
+        "studies": []
+    },
+    "WEATHER_STATION": {
+        "game_name": "TODO",
+        "game_description": "TODO",
+        "target_audience": "TODO",
+        "subject": "TODO",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "TODO",
+        "source_link": "TODO",
+        "thumbnail_path" : "./assets/images/thumbs/weather-station-thumb.png",
+        "event_readme_link": "TODO",
+        "feature_readme_link": null,
         "studies": []
     },
     "WIND": {
