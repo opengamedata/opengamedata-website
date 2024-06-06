@@ -1,5 +1,5 @@
 <?php
-require_once 'game.php';
+require_once 'GameDetails.php';
 require_once 'game_usage.php';
 
 class GameCard
