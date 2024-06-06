@@ -4,7 +4,7 @@ require_once 'includes/app_config.php';
 require_once 'includes/services.php';
 require_once 'models/game.php';
 require_once 'models/game_usage.php';
-require_once 'models/game_card.php';
+require_once 'models/GameCard.php';
 require_once 'components/card.php';
 
 // Get game list
