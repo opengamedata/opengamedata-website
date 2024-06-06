@@ -90,7 +90,16 @@ let bindPipelineButtonClickEvents = function () {
             // Show/Hide the appropriate target blocks
             let pipeline_target_blocks = document.getElementsByClassName('pipeline-target-block');
             Array.from(pipeline_target_blocks)
-            .forEach( setPipelineTargetBlockVisibility );
+            .forEach( target_block => {
+               // If it's the block we want to show
+               if (target_block.id === 'pipeline-target-' + selector) {
+                  target_block.classList.remove('d-none');
+               }
+               else {
+                  // Hide this block
+                  target_block.classList.add('d-none');
+               }
+            });
 
             // For each of the pipeline buttons
             let pipeline_btns = document.getElementsByClassName('btn-pipeline');
@@ -122,17 +131,6 @@ let bindPipelineButtonClickEvents = function () {
          }
       });
    });
-}
-
-var setPipelineTargetBlockVisibility = function (target_block) {
-   // If it's the block we want to show
-   if (target_block.id === 'pipeline-target-' + selector) {
-      target_block.classList.remove('d-none');
-   }
-   else {
-      // Hide this block
-      target_block.classList.add('d-none');
-   }
 }
 
 var prevMonthFunc = function () {
