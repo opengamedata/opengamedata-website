@@ -3,7 +3,7 @@
 require_once 'includes/app_config.php';
 require_once 'includes/services.php';
 require_once 'models/GameDetails.php';
-require_once 'models/game_usage.php';
+require_once 'models/GameUsage.php';
 require_once 'models/GameCard.php';
 require_once 'components/card.php';
 

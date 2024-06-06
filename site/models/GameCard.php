@@ -1,6 +1,6 @@
 <?php
 require_once 'GameDetails.php';
-require_once 'game_usage.php';
+require_once 'GameUsage.php';
 
 class GameCard
 {
