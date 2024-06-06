@@ -3,7 +3,7 @@
 require_once 'includes/app_config.php';
 require_once 'includes/services.php';
 require_once 'models/GameDetails.php';
-require_once 'models/game_file_info.php';
+require_once 'models/GameFileInfo.php';
 require_once 'components/pipeline_button.php';
 
 // Declare variables
