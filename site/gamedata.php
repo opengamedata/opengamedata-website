@@ -2,6 +2,7 @@
 
 require_once 'includes/app_config.php';
 require_once 'includes/services.php';
+require_once 'models/APIResponse.php';
 require_once 'models/GameDetails.php';
 require_once 'models/GameFileInfo.php';
 require_once 'components/pipeline_button.php';
@@ -45,10 +46,12 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     $response_obj = services\getGameFileInfoByMonth($game_id);
 
     if (isset($response_obj)) {
-        if ($response_obj->{'success'}) {
-            $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+        $api_response = APIResponse::fromObj($response_obj);
+
+        if ($api_response->Status() == "SUCCESS") {
+            $game_files = GameFileInfo::fromObj($api_response->Value());
             if (!isset($game_files) || $game_files == null) {
-                $err_str = "Got empty game_files from request that had success=".$response_obj->{'success'}." and data=".json_encode($response_obj->{'data'});
+                $err_str = "Got empty game_files from request that had status=".$api_response->Status()." and val=".json_encode($api_response->Value());
                 error_log($err_str);
             }
 
@@ -79,12 +82,12 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
         }
         else {
-            $err_str = "getGameFileInfoByMonth request, with year=null and month=null, was unsuccessful! Damn, maybe the authors shouldn't have written in a request for a specific month's data, but failed to supply a month! Who'd have thought?!?";
+            $err_str = "getGameFileInfoByMonth request, with year=null and month=null, was unsuccessful:\n".$api_response->Message()."\nDamn, maybe the authors shouldn't have written in a request for a specific month's data, but failed to supply a month! Who'd have thought?!?";
             error_log($err_str);
         }
     }
     else {
-        $err_str = "Got no response object!";
+        $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
         error_log($err_str);
     }
     

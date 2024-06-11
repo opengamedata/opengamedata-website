@@ -2,6 +2,7 @@
 
 require_once 'includes/app_config.php';
 require_once 'includes/services.php';
+require_once 'models/APIResponse.php';
 require_once 'models/GameDetails.php';
 require_once 'models/GameUsage.php';
 require_once 'models/GameCard.php';
@@ -17,8 +18,19 @@ foreach($gamelist as $key => $value)
     // Get game usage from api for each game
     $response_obj = services\getGameUsage($key);
     $game_usage = null;
-    if (isset($response_obj) && $response_obj->{'success'}) {
-        $game_usage = GameUsage::fromObj($response_obj->{'data'});
+    if (isset($response_obj)) {
+        $api_response = APIResponse::fromObj($response_obj);
+        if ($api_response->Status() == "SUCCESS") {
+            $game_usage = GameUsage::fromObj($api_response->Value());
+        }
+        else {
+            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$api_response->Message()."\nFull response: ".json_encode($response_obj);
+            error_log($err_str);
+        }
+    }
+    else {
+        $err_str = "getGameUsage request, with game_id=".$key.", got no response object!";
+        error_log($err_str);
     }
 
     $game_card = new GameCard(GameDetails::fromJson($key, json_encode($value)), $game_usage);
