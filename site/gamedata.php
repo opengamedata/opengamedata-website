@@ -153,7 +153,7 @@ else {
             </div>
         </div>
         <!-- Chart -->
-        <?php require 'components/chart.php'; ?>
+        <?php require 'includes/chart.php'; ?>
     </section>
     
     <div class="row mb-5 gy-2 ms-1">
