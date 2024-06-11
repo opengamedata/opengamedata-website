@@ -6,7 +6,7 @@ require_once 'models/APIResponse.php';
 require_once 'models/GameDetails.php';
 require_once 'models/GameUsage.php';
 require_once 'models/GameCard.php';
-require_once 'components/card.php';
+require_once 'components/Card.php';
 
 // Get game list
 $gamelist_json = services\getGameList();

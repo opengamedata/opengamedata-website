@@ -5,7 +5,7 @@ require_once 'includes/services.php';
 require_once 'models/APIResponse.php';
 require_once 'models/GameDetails.php';
 require_once 'models/GameFileInfo.php';
-require_once 'components/pipeline_button.php';
+require_once 'components/PipelineButton.php';
 
 // Declare variables
 $game_id = null;
