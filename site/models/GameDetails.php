@@ -1,5 +1,5 @@
 <?php
-require_once 'publication.php';
+require_once 'Publication.php';
 class GameDetails
 {
     protected $game_id;
