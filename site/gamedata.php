@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config/app_config.php';
+require_once 'config/AppConfig.php';
 require_once 'includes/services.php';
 require_once 'models/APIResponse.php';
 require_once 'models/GameDetails.php';
