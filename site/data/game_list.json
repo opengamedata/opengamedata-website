@@ -372,7 +372,7 @@
                 "link": "https://education.mit.edu/project-type/games/"
             }
         ],
-        "play_link": "https://fielddaylab.wisc.edu/play/shadowspect/",
+        "play_link": "https://fielddaylab.wisc.edu/play/partner/shadowspect/ci/main/",
         "source_link": "https://github.com/fielddaylab/shadowspect",
         "thumbnail_path" : "./assets/images/thumbs/shadowspect-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/shadowspect/blob/master/README.md",

@@ -86,5 +86,6 @@ function getGameUsage($game_id)
     $response = curl_exec($curl);
     curl_close($curl);
 
+    error_log("Sent a request for getGameUsage to ".$usage_url);
     return $response ? json_decode(($response)) : null;
 }

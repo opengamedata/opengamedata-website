@@ -6,7 +6,7 @@ branding:
   color: 'blue'
 inputs:
   api_base:
-    description: "Base URL for ."
+    description: "Base URL for the API."
     required: true
     default: 'user placeholder'
 runs:
