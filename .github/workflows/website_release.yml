@@ -64,9 +64,9 @@ jobs:
         echo '${{secrets.VPN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     # - name: Ensure directory exists
-    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
+    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
