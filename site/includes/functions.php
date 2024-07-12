@@ -22,6 +22,7 @@ function profile_point($msg) {
  */
 function profiler_print() {
     global $profiler_timing, $profiler_messages;
+    $final_timing = microtime(true);
     $count = count($profiler_timing);
     echo "<div>";
     for ($i = 0; $i < $count-1; $i++) {
@@ -29,5 +30,6 @@ function profiler_print() {
         echo sprintf("&nbsp&nbsp;&nbsp;%f<br>", $profiler_timing[$i+1]-$profiler_timing[$i]);
     }
     echo "<b>{$profiler_messages[$count-1]}</b><br>";
+    echo sprintf("&nbsp&nbsp;&nbsp;%f<br>", $final_timing-$profiler_timing[$count]);
     echo "</div>";
 }
