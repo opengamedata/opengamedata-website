@@ -52,7 +52,7 @@ jobs:
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
-        debug_env: true
+        debug_env: "true"
     - name: Set up Config File (with Default API Endpoint)
       if: "${{ github.event_name == 'workflow_dispatch' && github.event.inputs.use_custom_api == 'false' }}"
       uses: ./.github/actions/web_config
