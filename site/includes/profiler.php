@@ -5,10 +5,12 @@ class Profiler
    private $profiler_timing;
    private $profiler_messages;
    private $subprofiler = null;
-   private int $indent_level = 0;
+   private int $indent_level;
 
-   public function __construct($indent_level)
+   public function __construct($indent_level=0)
    {
+      $this->profiler_timing   = [];
+      $this->profiler_messages = [];
       $this->indent_level = $indent_level;
    }
 
