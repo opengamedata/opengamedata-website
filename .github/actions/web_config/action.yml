@@ -20,5 +20,5 @@ runs:
       run: sed -i 's@$APP_CONFIG\['\''WEBSITE_API_URL_BASE'\''\]\s*=\s*'\''.*'\'';@$APP_CONFIG['\''WEBSITE_API_URL_BASE'\''] = '\''${{inputs.api_base}}'\'';@g' site/includes/app_config.php
       shell: bash
     - name: Set whether to run debugging code or not
-      run: sed -i 's@$APP_CONFIG\['\''DEBUG_ENV'\''\]\s*=\s*[a-z]+;@$APP_CONFIG['\''DEBUG_ENV'\''] = '\''${{inputs.debug_env}}'\'';@g' site/includes/app_config.php
+      run: sed -i 's@$APP_CONFIG\['\''DEBUG_ENV'\''\]\s*=\s*[a-z]+;@$APP_CONFIG['\''DEBUG_ENV'\''] = ${{inputs.debug_env}};@g' site/includes/app_config.php
       shell: bash
