@@ -24,8 +24,11 @@ class Profiler
 
    public function ResetSubprofiler()
    {
-      $this->getSubprofiler()->Complete();
-      return $this->subprofiler = new Profiler($this->getIndent() + 1);
+      if ($this->getSubprofiler() != null)
+      {
+         $this->getSubprofiler()->Complete();
+      }
+      $this->subprofiler = new Profiler($this->getIndent() + 1);
    }
 
    /** Set next "breakpoint" for profiling.
