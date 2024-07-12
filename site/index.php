@@ -10,10 +10,12 @@ require_once 'components/card.php';
 require_once 'includes/functions.php';
 
 // Get game list
+profile_point("Get game data list from server");
 $gamelist_json = services\getGameList();
 $gamelist = $gamelist_json ? json_decode($gamelist_json) : [];
 
 $games = [];
+profile_point("Process game list");
 foreach($gamelist as $key => $value)
 {
     // Get game usage from api for each game
@@ -37,7 +39,6 @@ foreach($gamelist as $key => $value)
     $game_card = new GameCard(Game::fromJson($key, json_encode($value)), $game_usage);
     array_push($games, $game_card);
 }
-
 ?>
 <?php require 'includes/header.php'; ?>
 <section class="hero w-100 px-3 py-5 px-md-5 bg-dark text-white d-flex">
@@ -55,6 +56,7 @@ foreach($gamelist as $key => $value)
         <h2 class="mb-5 text-center">Featured Data Sets</h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <?php 
+                profile_point("Render game cards");
                 foreach($games as $game_card) {
                     $card = new Card($game_card->getGame(),$game_card->getGameUsage());
                     echo $card->render();
@@ -64,4 +66,4 @@ foreach($gamelist as $key => $value)
     </section>
 </main>
 <!-- Begin Footer Include -->
-<?php require 'includes/footer.php'; ?>
+<?php require 'includes/footer.php'; profiler_print();?>
