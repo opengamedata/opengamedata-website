@@ -1,4 +1,5 @@
 import axios from "../scripts/axios.min.js"
+import APIResponse from "../scripts/APIResponse.js"
 
 const getGameUsageByMonth = (gameId, year, month) => {
     const url = WEBSITE_API_URL_BASE + 'getGameUsageByMonth';
@@ -10,7 +11,7 @@ const getGameUsageByMonth = (gameId, year, month) => {
         }
     })
     .then(function (response) {
-        return response.data;
+        return new APIResponse(response.data);
     });
 
     return data;
@@ -26,7 +27,7 @@ const getGameFiles = (gameId, year, month) => {
         }
     })
     .then(function (response) {
-        return response.data;
+        return new APIResponse(response.data);
     });
 
     return data;
@@ -40,7 +41,7 @@ const getGameUsage = (gameId) => {
         }
     })
     .then(function (response) {
-        return response.data;
+        return new APIResponse(response.data);
     });
 
     return data;

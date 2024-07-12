@@ -1,23 +1,23 @@
 # Workflow to clean out the directory where a deleted branch's files were deployed by CI
-name: OGD-Website Branch Delete Cleanup
+name: OGD Website - Dead Branch Cleanup Script
+run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'delete' && github.event.ref || 'Manual Run') }}
 
-# Controls when the action will run. Triggers the workflow on deletion of branches. 
 on:
   delete: # Trigger automatically when we do a deletion of a branch
-  workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
+  workflow_dispatch:
 
 env:
   DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
-  DEPLOY_PATH: ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.event.ref }}
+  DEPLOY_PATH:         ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.event.ref }}
   DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.event.ref }}
     
 jobs:
   branch_delete:
-    name: Branch Deletion Cleanup of Website
+    name: Branch Deletion Cleanup
     if: github.event.ref_type == 'branch'
     runs-on: ubuntu-22.04
     # concurrency:
-    #   group: ${{ github.workflow }}-${{ github.ref }}
+    #   group: ${{ github.repository }}-${{ github.ref }}-${{ github.workflow }}
     #   cancel-in-progress: false
     
     steps:
@@ -39,7 +39,7 @@ jobs:
         chmod 600 ./key.txt
 
     - name: Remove branch folder
-      run: ssh -o StrictHostKeyChecking=no -t -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.DEPLOY_HOST }} "rm -r ${{ env.DEPLOY_PATH }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.CLEAN_USER }}@${{ env.DEPLOY_HOST }} "rm -r ${{ env.DEPLOY_PATH }}"
     
     - name: Announce cleanup
       run: echo "Removed branch deploy at ${{ env.DEPLOY_URL }}"
