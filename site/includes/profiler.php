@@ -22,7 +22,7 @@ class Profiler
       return $this->subprofiler;
    }
 
-   public function resetSubprofiler()
+   public function ResetSubprofiler()
    {
       $this->getSubprofiler()->Complete();
       return $this->subprofiler = new Profiler($this->getIndent() + 1);
@@ -44,13 +44,16 @@ class Profiler
    {
       $final_timing = microtime(true);
       $count = count($this->profiler_timing);
-      echo "<div>";
-      for ($i = 0; $i < $count - 1; $i++)
+      if ($count > 0)
       {
-         $this->_printPoint($i, $this->profiler_timing[$i+1]);
+         echo "<div>";
+         for ($i = 0; $i < $count - 1; $i++)
+         {
+            $this->_printPoint($i, $this->profiler_timing[$i+1]);
+         }
+         $this->_printPoint($count-1, $final_timing);
+         echo "</div>";
       }
-      $this->_printPoint($count-1, $final_timing);
-      echo "</div>";
    }
 
    private function _printPoint(int $i, $end_time)
