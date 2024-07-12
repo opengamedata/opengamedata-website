@@ -49,4 +49,3 @@ class APIResponse
         return $this->_status;
     }
 }
-?>
