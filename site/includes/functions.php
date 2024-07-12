@@ -29,7 +29,7 @@ function profiler_print() {
         echo "<b>{$profiler_messages[$i]}</b>";
         echo sprintf("&nbsp&nbsp;&nbsp;%f<br>", $profiler_timing[$i+1]-$profiler_timing[$i]);
     }
-    echo "<b>{$profiler_messages[$count-1]}</b><br>";
-    echo sprintf("&nbsp&nbsp;&nbsp;%f<br>", $final_timing-$profiler_timing[$count]);
+    echo "<b>{$profiler_messages[$count-1]}</b>";
+    echo sprintf("&nbsp&nbsp;&nbsp;%f<br>", $final_timing-$profiler_timing[$count-1]);
     echo "</div>";
 }
