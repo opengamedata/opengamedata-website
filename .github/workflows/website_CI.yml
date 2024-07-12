@@ -21,6 +21,7 @@ on:
   push: # Trigger automatically when we do a push to the site.
     paths:
     - '.github/workflows/website_CI.yml'
+    - '.github/actions/web_config/**'
     - 'site/**'
     - 'gulpfile.js'
     - 'package.json'
