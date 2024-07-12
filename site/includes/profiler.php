@@ -24,14 +24,17 @@ class Profiler
 
    public function ResetSubprofiler()
    {
-      if (!is_null($this->subprofiler))
+      if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
-         $this->getSubprofiler()->Complete();
-         error_log("Ran 'complete' on subprofiler before reset.");
-      }
-      else
-      {
-         error_log("Subprofiler was null, doing a reset.");
+         if (!is_null($this->subprofiler))
+         {
+            $this->getSubprofiler()->Complete();
+            error_log("Ran 'complete' on subprofiler before reset.");
+         }
+         else
+         {
+            error_log("Subprofiler was null, doing a reset.");
+         }
       }
       $this->subprofiler = new Profiler($this->indent_level + 1);
    }
@@ -41,8 +44,11 @@ class Profiler
     */
    public function ProfilePoint($msg)
    {
-      $this->profiler_timing[] = microtime(true);
-      $this->profiler_messages[] = $msg;
+      if (\AppConfig::GetConfig()['DEBUG_ENV'])
+      {
+         $this->profiler_timing[] = microtime(true);
+         $this->profiler_messages[] = $msg;
+      }
    }
 
    /** Print out all profiling points to a div.
@@ -50,17 +56,20 @@ class Profiler
     */
    public function Complete()
    {
-      $final_timing = microtime(true);
-      $count = count($this->profiler_timing);
-      if ($count > 0)
+      if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
-         echo "<div>";
-         for ($i = 0; $i < $count - 1; $i++)
+         $final_timing = microtime(true);
+         $count = count($this->profiler_timing);
+         if ($count > 0)
          {
-            $this->_printPoint($i, $this->profiler_timing[$i+1]);
+            echo "<div>";
+            for ($i = 0; $i < $count - 1; $i++)
+            {
+               $this->_printPoint($i, $this->profiler_timing[$i+1]);
+            }
+            $this->_printPoint($count-1, $final_timing);
+            echo "</div>";
          }
-         $this->_printPoint($count-1, $final_timing);
-         echo "</div>";
       }
    }
 
