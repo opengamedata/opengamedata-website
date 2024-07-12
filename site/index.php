@@ -7,6 +7,7 @@ require_once 'models/game.php';
 require_once 'models/game_usage.php';
 require_once 'models/game_card.php';
 require_once 'components/card.php';
+require_once 'includes/functions.php';
 
 // Get game list
 $gamelist_json = services\getGameList();
