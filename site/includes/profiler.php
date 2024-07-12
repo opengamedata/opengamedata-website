@@ -15,10 +15,6 @@ class Profiler
    }
 
    // Get methods
-   public function getIndent()
-   {
-      return $this->indent_level;
-   }
    public function getSubprofiler()
    {
       return $this->subprofiler;
@@ -26,11 +22,16 @@ class Profiler
 
    public function ResetSubprofiler()
    {
-      if ($this->getSubprofiler() != null)
+      if (!is_null($this->subprofiler))
       {
          $this->getSubprofiler()->Complete();
+         error_log("Ran 'complete' on subprofiler before reset.");
       }
-      $this->subprofiler = new Profiler($this->getIndent() + 1);
+      else
+      {
+         error_log("Subprofiler was null, doing a reset.");
+      }
+      $this->subprofiler = new Profiler($this->indent_level + 1);
    }
 
    /** Set next "breakpoint" for profiling.
@@ -63,7 +64,7 @@ class Profiler
 
    private function _printPoint(int $i, $end_time)
    {
-      $indentation = $this->getIndent() * 3;
+      $indentation = $this->indent_level * 3;
       $timing = $end_time - $this->profiler_timing[$i];
       echo "<span style=\"margin-left:{$indentation}\">";
       echo "<b>{$this->profiler_messages[$i]}</b>";
