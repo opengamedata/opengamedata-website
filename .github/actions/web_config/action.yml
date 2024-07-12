@@ -9,9 +9,16 @@ inputs:
     description: "Base URL for the API."
     required: true
     default: 'user placeholder'
+  debug_env:
+    description: "Whether to run debugging-specific code in this instance of the app."
+    required: true
+    default: false
 runs:
   using: "composite"
   steps:
     - name: Set API Base URL
       run: sed -i 's@$APP_CONFIG\['\''WEBSITE_API_URL_BASE'\''\]\s*=\s*'\''.*'\'';@$APP_CONFIG['\''WEBSITE_API_URL_BASE'\''] = '\''${{inputs.api_base}}'\'';@g' site/includes/app_config.php
+      shell: bash
+    - name: Set whether to run debugging code or not
+      run: sed -i 's@$APP_CONFIG\['\''DEBUG_ENV'\''\]\s*=\s*[a-z]+;@$APP_CONFIG['\''DEBUG_ENV'\''] = '\''${{inputs.debug_env}}'\'';@g' site/includes/app_config.php
       shell: bash
