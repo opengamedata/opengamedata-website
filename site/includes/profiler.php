@@ -1,5 +1,7 @@
 <?php
 
+require_once 'includes/app_config.php';
+
 class Profiler
 {
    private $profiler_timing;
