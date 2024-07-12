@@ -1,5 +1,5 @@
 name: OGD Website - Release Script
-run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'release' && github.ref || 'Manual Run') }}
+run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'push' && github.ref || 'Manual Run') }}
 
 # Controls when the action will run. Triggers the workflow on creation of 
 # tags.  Creating new 'versions' via github is the most straightforward 
@@ -64,9 +64,9 @@ jobs:
         echo '${{secrets.VPN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     # - name: Ensure directory exists
-    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
+    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
