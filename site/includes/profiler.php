@@ -31,11 +31,11 @@ class Profiler
          if (!is_null($this->subprofiler))
          {
             $this->getSubprofiler()->Complete();
-            error_log("{$this->indent_level}: Ran 'complete' on subprofiler before reset.");
+            error_log("{$this->instance_id}: Ran 'complete' on subprofiler before reset.");
          }
          else
          {
-            error_log("{$this->indent_level}: Subprofiler was null, doing a reset.");
+            error_log("{$this->instance_id}: Subprofiler was null, doing a reset.");
          }
       }
       $this->subprofiler = new Profiler("Sub-{$this->instance_id}", $this->indent_level + 1);
