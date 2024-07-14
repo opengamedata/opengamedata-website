@@ -46,6 +46,7 @@ class Profiler
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
+         error_log("Profiling {$msg}.");
          $this->profiler_timing[] = microtime(true);
          $this->profiler_messages[] = $msg;
       }
