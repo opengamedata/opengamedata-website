@@ -8,9 +8,11 @@ class Profiler
    private $profiler_messages;
    private $subprofiler = null;
    private int $indent_level;
+   private string $instance_id;
 
-   public function __construct($indent_level=0)
+   public function __construct($id, $indent_level=0)
    {
+      $this->instance_id = $id;
       $this->profiler_timing   = [];
       $this->profiler_messages = [];
       $this->indent_level = $indent_level;
@@ -29,14 +31,14 @@ class Profiler
          if (!is_null($this->subprofiler))
          {
             $this->getSubprofiler()->Complete();
-            error_log("Ran 'complete' on subprofiler before reset.");
+            error_log("{$this->indent_level}: Ran 'complete' on subprofiler before reset.");
          }
          else
          {
-            error_log("Subprofiler was null, doing a reset.");
+            error_log("{$this->indent_level}: Subprofiler was null, doing a reset.");
          }
       }
-      $this->subprofiler = new Profiler($this->indent_level + 1);
+      $this->subprofiler = new Profiler("Sub-{$this->instance_id}", $this->indent_level + 1);
    }
 
    /** Set next "breakpoint" for profiling.
@@ -46,8 +48,7 @@ class Profiler
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
-         error_log("Profiling {$msg}.");
-         syslog(LOG_INFO, "Duplicate output of profiling point {$msg}");
+         error_log("{$this->indent_level}: Profiling {$msg}.");
          $this->profiler_timing[] = microtime(true);
          $this->profiler_messages[] = $msg;
       }
@@ -60,6 +61,7 @@ class Profiler
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
+         error_log("{$this->indent_level}: Completing.");
          $final_timing = microtime(true);
          $count = count($this->profiler_timing);
          if ($count > 0)

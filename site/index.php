@@ -9,7 +9,7 @@ require_once 'models/game_card.php';
 require_once 'components/card.php';
 require_once 'includes/profiler.php';
 
-$profiler = new Profiler(0);
+$profiler = new Profiler("Profile", 0);
 
 // Get game list
 $profiler->ProfilePoint("Get game data list from server");
