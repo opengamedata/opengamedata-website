@@ -47,6 +47,7 @@ class Profiler
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
          error_log("Profiling {$msg}.");
+         syslog(LOG_INFO, "Duplicate output of profiling point {$msg}");
          $this->profiler_timing[] = microtime(true);
          $this->profiler_messages[] = $msg;
       }
