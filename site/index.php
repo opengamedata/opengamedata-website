@@ -10,6 +10,7 @@ require_once 'components/card.php';
 require_once 'includes/profiler.php';
 
 $profiler = new Profiler("Profile", 0);
+$subprofiler = new Profiler("SubProfile", 1);
 
 // Get game list
 $profiler->ProfilePoint("Get game data list from server");
@@ -18,15 +19,14 @@ $gamelist = $gamelist_json ? json_decode($gamelist_json) : [];
 
 $games = [];
 $profiler->ProfilePoint("Process game list");
-$profiler->ResetSubprofiler();
 foreach($gamelist as $key => $value)
 {
     // Get game usage from api for each game
-    $profiler->getSubprofiler()->ProfilePoint("Get usage for game {$key}");
+    $subprofiler->ProfilePoint("Get usage for game {$key}");
     $response_obj = services\getGameUsage($key);
     $game_usage = null;
     if (isset($response_obj)) {
-        $profiler->getSubprofiler()->ProfilePoint("Setup game usage object for {$key}");
+        $subprofiler->ProfilePoint("Setup game usage object for {$key}");
         $api_response = APIResponse::fromObj($response_obj);
         if ($api_response->Status() == "SUCCESS") {
             $game_usage = GameUsage::fromObj($api_response->Value());
@@ -37,15 +37,16 @@ foreach($gamelist as $key => $value)
         }
     }
     else {
-        $profiler->getSubprofiler()->ProfilePoint("Handle error getting usage for game {$key}");
+        $subprofiler->ProfilePoint("Handle error getting usage for game {$key}");
         $err_str = "getGameUsage request, with game_id=".$key.", got no response object!";
         error_log($err_str);
     }
 
-    $profiler->getSubprofiler()->ProfilePoint("Create game card object for game {$key}");
+    $subprofiler->ProfilePoint("Create game card object for game {$key}");
     $game_card = new GameCard(Game::fromJson($key, json_encode($value)), $game_usage);
     array_push($games, $game_card);
-    $profiler->getSubprofiler()->ResetSubprofiler();
+    $subprofiler->Complete();
+    $subprofiler = new Profiler("SubProfile", 1);
 }
 ?>
 <?php require 'includes/header.php'; ?>

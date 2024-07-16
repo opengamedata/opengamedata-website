@@ -6,7 +6,6 @@ class Profiler
 {
    private $profiler_timing;
    private $profiler_messages;
-   private $subprofiler = null;
    private int $indent_level;
    private string $instance_id;
 
@@ -16,29 +15,6 @@ class Profiler
       $this->profiler_timing   = [];
       $this->profiler_messages = [];
       $this->indent_level = $indent_level;
-   }
-
-   // Get methods
-   public function getSubprofiler()
-   {
-      return $this->subprofiler;
-   }
-
-   public function ResetSubprofiler()
-   {
-      if (\AppConfig::GetConfig()['DEBUG_ENV'])
-      {
-         if (!is_null($this->subprofiler))
-         {
-            $this->getSubprofiler()->Complete();
-            error_log("{$this->instance_id}: Ran 'complete' on subprofiler before reset.");
-         }
-         else
-         {
-            error_log("{$this->instance_id}: Subprofiler was null, doing a reset.");
-         }
-      }
-      $this->subprofiler = new Profiler("Sub-{$this->instance_id}", $this->indent_level + 1);
    }
 
    /** Set next "breakpoint" for profiling.
