@@ -82,8 +82,8 @@ jobs:
         #           Give others (o) only read permissions, plus execute for directories.
         switches: -vrct --exclude-from 'rsync-exclude' --chmod=Du=rwx,Dg=rwx,Do=rx,Fu=rwx,Fg=rwx,Fo=r
         path: /site/*
-        remote_path: ${{ env.DEPLOY_HOST }}
-        remote_host: ${{ env.DEPLOY_DIR }}
+        remote_path: ${{ env.DEPLOY_DIR }}
+        remote_host: ${{ env.DEPLOY_HOST }}
         remote_user: ${{ secrets.VPN_USER }}
         remote_key:  ${{ secrets.VPN_KEY }}
 
