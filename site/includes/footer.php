@@ -11,7 +11,7 @@
                         design researchers to build new theory, we are thinking about modularity, scalability and performance.
                     </p>
                     <a class="btn btn-signup mt-4" href="https://forms.gle/z9HGvu5Kmsuf6xDD8" target="_blank" rel="nofollow noopener">Sign up to receive communications<i class="bi bi-chevron-right ms-5"></i></a>
-                    <a class="btn btn-signup mt-4" href="https://opengamedata-doc.readthedocs.io/en/latest/index.html" target="_blank" rel="nofollow noopener">Read the documentation<i class="bi bi-chevron-right ms-5"></i></a>
+                    <a class="btn btn-signup mt-4" href="https://github.com/opengamedata/opengamedata-website/issues/new?title=[Insert name of game and missing month(s)]&body=[Describe which types of data are missing (events, features, etc.)]" target="_blank" rel="nofollow noopener">Report a missing dataset<i class="bi bi-chevron-right ms-5"></i></a>
                 </div>
                 <div class="col-md-1 vr-wrapper">
                     <div class="vr"></div>
