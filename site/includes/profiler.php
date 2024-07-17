@@ -50,7 +50,7 @@ class Profiler
          if ($count > 0)
          {
             echo "<div>";
-            echo "<span>{$this->instance_id}</span>";
+            echo "<span><em>{$this->instance_id}</em></span>";
             for ($i = 0; $i < $count; $i++)
             {
                $this->_printPoint($i, $this->profiler_timing[$i+1]);
