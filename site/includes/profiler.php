@@ -46,7 +46,7 @@ class Profiler
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
-         $count = count($this->profiler_timing);
+         $count = count($this->profiler_messages);
          if ($count > 0)
          {
             echo "<div>";
