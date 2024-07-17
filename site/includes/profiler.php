@@ -31,7 +31,7 @@ class Profiler
       }
    }
 
-   public function EndPoint($msg)
+   public function EndPoint()
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
