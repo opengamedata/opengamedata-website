@@ -26,9 +26,16 @@ class Profiler
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
-         error_log("{$this->indent_level}: Profiling {$msg}.");
          $this->profiler_timing[] = microtime(true);
          $this->profiler_messages[] = $msg;
+      }
+   }
+
+   public function EndPoint($msg)
+   {
+      if (\AppConfig::GetConfig()['DEBUG_ENV'])
+      {
+         $this->profiler_timing[] = microtime(true);
       }
    }
 
@@ -39,17 +46,14 @@ class Profiler
    {
       if (\AppConfig::GetConfig()['DEBUG_ENV'])
       {
-         error_log("{$this->indent_level}: Completing.");
-         $final_timing = microtime(true);
          $count = count($this->profiler_timing);
          if ($count > 0)
          {
             echo "<div>";
-            for ($i = 0; $i < $count - 1; $i++)
+            for ($i = 0; $i < $count; $i++)
             {
                $this->_printPoint($i, $this->profiler_timing[$i+1]);
             }
-            $this->_printPoint($count-1, $final_timing);
             echo "</div>";
          }
       }
