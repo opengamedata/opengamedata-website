@@ -63,7 +63,7 @@ class Profiler
    {
       $indentation = $this->indent_level * 3;
       $timing = number_format($end_time - $this->profiler_timing[$i], $this->prec);
-      echo "<span style=\"margin-left:{$indentation} em\">";
+      echo "<span style=\"margin-left:{$indentation}em\">";
       echo "<b>{$this->profiler_messages[$i]}</b>";
       echo "&nbsp&nbsp;&nbsp;{$timing}<br>";
       echo "</span>";
