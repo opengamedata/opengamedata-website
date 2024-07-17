@@ -81,6 +81,6 @@ foreach($gamelist as $key => $value)
 <?php 
     $profilers[0]->EndPoint();
     foreach ($profilers as $profile) {
-        $profilers[0]->Complete();
+        $profile->Complete();
     }
 ?>
