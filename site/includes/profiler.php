@@ -4,17 +4,19 @@ require_once 'includes/app_config.php';
 
 class Profiler
 {
+   private string $instance_id;
+   private int $indent_level;
+   private int $prec;
    private $profiler_timing;
    private $profiler_messages;
-   private int $indent_level;
-   private string $instance_id;
 
-   public function __construct($id, $indent_level=0)
+   public function __construct($id, $indent_level=0, $precision=2)
    {
       $this->instance_id = $id;
+      $this->indent_level = $indent_level;
+      $this->prec = $precision;
       $this->profiler_timing   = [];
       $this->profiler_messages = [];
-      $this->indent_level = $indent_level;
    }
 
    /** Set next "breakpoint" for profiling.
@@ -56,7 +58,7 @@ class Profiler
    private function _printPoint(int $i, $end_time)
    {
       $indentation = $this->indent_level * 3;
-      $timing = $end_time - $this->profiler_timing[$i];
+      $timing = number_format($end_time - $this->profiler_timing[$i], $this->prec);
       echo "<span style=\"margin-left:{$indentation}\">";
       echo "<b>{$this->profiler_messages[$i]}</b>";
       echo "&nbsp&nbsp;&nbsp;{$timing}<br>";
