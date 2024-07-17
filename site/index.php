@@ -48,7 +48,6 @@ foreach($gamelist as $key => $value)
     $profilers[$i]->ProfilePoint("Create game card object for game {$key}");
     $game_card = new GameCard(Game::fromJson($key, json_encode($value)), $game_usage);
     array_push($games, $game_card);
-    $profilers[$i]->Complete();
 }
 ?>
 <?php require 'includes/header.php'; ?>
@@ -77,4 +76,9 @@ foreach($gamelist as $key => $value)
     </section>
 </main>
 <!-- Begin Footer Include -->
-<?php require 'includes/footer.php'; $profilers[0]->Complete();?>
+<?php require 'includes/footer.php';?>
+<?php 
+    foreach ($profilers as $profile) {
+        $profilers[0]->Complete();
+    }
+?>
