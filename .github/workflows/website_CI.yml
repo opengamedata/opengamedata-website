@@ -1,4 +1,5 @@
-name: OGD-Website CI Script
+name: OGD Website - CI Script
+run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'push' && github.event.head_commit.message || 'Manual Run') }}
 
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
@@ -21,9 +22,8 @@ on:
 
 env:
   DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
-  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_DIR:          ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
   DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
-  URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
   API_PATH:    ${{ vars.API_BASE_URL }}/files/app.wsgi/
   
