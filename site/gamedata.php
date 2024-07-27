@@ -2,6 +2,7 @@
 
 require_once 'includes/app_config.php';
 require_once 'includes/services.php';
+require_once 'models/APIResponse.php';
 require_once 'models/game.php';
 require_once 'models/game_file_info.php';
 require_once 'components/pipeline_button.php';
@@ -36,37 +37,58 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
    
 
     // Get game file info from API
+    /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
+       "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
+       and will say "that's alright good buddy, I'll just give you info on the most recent month."
+       As if it's obvious that a thing that says "request a month" would consider the month optional...
+       But not fixing yet because leaving a hack in place is easier than fucking around with which end is responsible for what.
+    */
     $response_obj = services\getGameFileInfoByMonth($game_id);
 
-    if (isset($response_obj) && $response_obj->{'success'}) {
-        $game_files = GameFileInfo::fromObj($response_obj->{'data'});
+    if (isset($response_obj)) {
+        $api_response = APIResponse::fromObj($response_obj);
 
-        $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
-        $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
-        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-        $month_name = $selected_date->format('F');
-        // Populate current, previous, and next dates
-        if ($game_files->getNextMonth($selected_date) == $selected_date) {
-            $next_disabled = 'disabled';
-            $next_month = $selected_date->modify('+1 month')->format('F');
-        } else {
-            $next_disabled = '';
-            $next_month = $game_files->getNextMonth($selected_date)->format('F');
-        }
-        if ($game_files->getPrevMonth($selected_date) == $selected_date) {
-            $prev_disabled = 'disabled';
-            $prev_month = $selected_date->modify('-1 month')->format('F');
-        } else {
-            $prev_disabled = '';
-            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
-        }
+        if ($api_response->Status() == "SUCCESS") {
+            $game_files = GameFileInfo::fromObj($api_response->Value());
+            if (!isset($game_files) || $game_files == null) {
+                $err_str = "Got empty game_files from request that had status=".$api_response->Status()." and val=".json_encode($api_response->Value());
+                error_log($err_str);
+            }
 
-        $raw_files = $game_files->getRawFile() ? array('Raw Data' => $game_files->getRawFile()) : [];
-        $detectors_files = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink()) : [];
-        $event_files = $game_files->getEventsFile() ? array('Calculated Events' => $game_files->getEventsFile()) : [];
-        $extractors_files = $game_files->getFeaturesLink() ? array('Extractors' => $game_files->getFeaturesLink()) : []; // aka Extractors or Feature Extractors
-        $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
-    
+            $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
+            $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
+            $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
+            $month_name = $selected_date->format('F');
+            // Populate current, previous, and next dates
+            if ($game_files->getNextMonth($selected_date) == $selected_date) {
+                $next_disabled = 'disabled';
+                $next_month = $selected_date->modify('+1 month')->format('F');
+            } else {
+                $next_disabled = '';
+                $next_month = $game_files->getNextMonth($selected_date)->format('F');
+            }
+            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+                $prev_disabled = 'disabled';
+                $prev_month = $selected_date->modify('-1 month')->format('F');
+            } else {
+                $prev_disabled = '';
+                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            }
+
+            $raw_files = $game_files->getRawFile() ? array('Raw Data' => $game_files->getRawFile()) : [];
+            $detectors_files = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink()) : [];
+            $event_files = $game_files->getEventsFile() ? array('Calculated Events' => $game_files->getEventsFile()) : [];
+            $extractors_files = $game_files->getFeaturesLink() ? array('Extractors' => $game_files->getFeaturesLink()) : []; // aka Extractors or Feature Extractors
+            $feature_files = $game_files->getFeatureFiles() ? $game_files->getFeatureFiles(): [];
+        }
+        else {
+            $err_str = "getGameFileInfoByMonth request, with year=null and month=null, was unsuccessful:\n".$api_response->Message()."\nDamn, maybe the authors shouldn't have written in a request for a specific month's data, but failed to supply a month! Who'd have thought?!?";
+            error_log($err_str);
+        }
+    }
+    else {
+        $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
+        error_log($err_str);
     }
     
     // Create Pipeline buttons (including the transition buttons)
@@ -90,6 +112,10 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     // If we don't have files for the selected month
     $have_no_files = count($raw_files) === 0 && count($event_files) === 0 && count($extractors_files) === 0 && count($feature_files) == 0;
 
+}
+else {
+    $err_str = "Got request with no game parameter!";
+    throw new ErrorException($err_str);
 }
 
 ?>
@@ -211,10 +237,10 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
 
                 <div class="btn-group-vertical">
-                    <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getEventsTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getEventsTemplate()); ?>">Events Template</a>
-                    <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPlayersTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPlayersTemplate()); ?>">Player Features Template</a>
-                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getPopulationTemplate()); ?>">Population Features Template</a>
-                    <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getSessionsTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars($game_files->getSessionsTemplate()); ?>">Session Features Template</a>
+                    <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2<?php     echo (isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getEventsTemplate()     : ""); ?>">Events Template</a>
+                    <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2<?php    echo (isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPlayersTemplate()    : ""); ?>">Player Features Template</a>
+                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPopulationTemplate() : ""); ?>">Population Features Template</a>
+                    <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2<?php   echo (isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getSessionsTemplate()   : ""); ?>">Session Features Template</a>
                 </div>
 
             </section>

@@ -1,4 +1,5 @@
-name: OGD-Website CI Script
+name: OGD Website - CI Script
+run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'push' && github.event.head_commit.message || 'Manual Run') }}
 
 on:
   workflow_dispatch: # Allow manual trigger of this workflow from the Actions tab
@@ -21,18 +22,17 @@ on:
 
 env:
   DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
-  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_DIR:          ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
   DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
-  URL_PATH:    ${{ github.event.repository.name }}/${{ github.ref_name }}
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
-  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
+  API_PATH:    ${{ vars.API_BASE_URL }}/files/app.wsgi/
   
 jobs:
   ci_deploy:
     name: CI Deploy of Website
     runs-on: ubuntu-22.04
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.repository }}-${{ github.ref }}-${{ github.workflow }}
       cancel-in-progress: true
     
     steps:
@@ -43,7 +43,7 @@ jobs:
       with:
         lfs: true  
     - name: Set up Config File (with Default API Endpoint)
-      if: "${{ github.event.inputs.use_custom_api == 'false' }}"
+      if: "${{ github.event.inputs.use_custom_api == 'false' || github.event_name == 'push' }}"
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}

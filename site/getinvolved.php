@@ -25,7 +25,7 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Use OGD for your research</h2>
-                <p>You can use the data for free right now to get started with your analysis. If you want to design an experiment that requires a change to the game, get involved in the <a href="https://forms.gle/z9HGvu5Kmsuf6xDD8" target="_blank">google community</a> or <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">contact us</a>.</p>
+                <p>You can use the data for free right now to get started with your analysis. If you want to design an experiment that requires a change to the game, get involved in the <a href="https://forms.gle/z9HGvu5Kmsuf6xDD8" target="_blank">slack community</a> or <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">contact us</a>.</p>
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
@@ -50,31 +50,11 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/coins.svg" alt="">
-            </div>
-            <div class="flex-fill mt-4">
-                <h2>Conference Travel Grant</h2>
-                <p>We want to support publication and dissemination of this research and we are offering travel grants to support this.</p>
-                <a href="https://forms.gle/TbLNSRw9EGQm7ZYJA" class="btn btn-header-dark" target="_blank">More Information</a>
-            </div>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
-            <div class="img-col mx-auto my-auto">
                 <img class="img-fluid" src="assets/images/graphics/ogd-community.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
-                <h2>Join the OGD Community for support</h2>
-                <a href="https://forms.gle/z9HGvu5Kmsuf6xDD8" class="btn btn-header-dark" target="_blank">Join the Google Community</a>
-            </div>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
-            <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/mail.svg" alt="">
-            </div>
-            <div class="flex-fill mt-4">
-                <h2>Stay Up to Date</h2>
-                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Sign up to our email</a> for updates on events, publications, news, and grant opportunities.<br/> 
-                    Or, <a href="https://fielddaylab.substack.com/" target="_blank">check us out on substack!</a></p>
+                <h2>Join the Community</h2>
+                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
