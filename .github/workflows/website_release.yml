@@ -1,4 +1,5 @@
-name: OGD-Website Release Script
+name: OGD Website - Release Script
+run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'push' && github.ref || 'Manual Run') }}
 
 # Controls when the action will run. Triggers the workflow on creation of 
 # tags.  Creating new 'versions' via github is the most straightforward 
@@ -12,21 +13,20 @@ on:
      branches: [ production ]
 
 env:
-  DEPLOY_HOST: ${{ vars.OGD_SERVICES_HOST }}
-  DEPLOY_DIR:  ${{ vars.WEB_PATH }}/opengamedata/
+  DEPLOY_HOST: fieldday-web.wcer.wisc.edu
+  DEPLOY_DIR: /var/www/opengamedata/
   DEPLOY_URL:  ${{ vars.OGD_SERVICES_HOST }}/opengamedata/
-  URL_PATH:    /opengamedata/
-  SECONDARY_HOST: fieldday-web.wcer.wisc.edu
-  SECONDARY_PATH: /var/www/opengamedata/
+  # SECONDARY_HOST: ${{ vars.OGD_SERVICES_HOST }}
+  # SECONDARY_DIR:  ${{ vars.WEB_PATH }}/opengamedata/
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
-  API_PATH:    wsgi-bin/opengamedata-website-api/production/app.wsgi/
+  API_PATH:    ${{ vars.API_BASE_URL }}/files/app.wsgi/
   
 jobs:
   production_deploy:
     name: Release Deploy of Website
     runs-on: ubuntu-22.04
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.repository }}-${{ github.ref }}-${{ github.workflow }}
       cancel-in-progress: true
     
     steps:
@@ -61,32 +61,32 @@ jobs:
     - name: Setup Access Key
       run: |
         mkdir -p ~/.ssh
-        echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
+        echo '${{secrets.VPN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
     - name: Ensure directory exists
-      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
-    - name: Ensure directory exists on secondary target
-      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
+      run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
+    # - name: Ensure directory exists
+    #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
     
     - name: Upload to web server via rsync
       uses: burnett01/rsync-deployments@5.2
       with:
-        switches: -vrct --delete --exclude-from 'rsync-exclude'
+        # switches:
+        # -v : verbose output
+        # -r : recurse into subdirectories
+        # -c : use checksum to determine what files to update/skip
+        # -t : preserve modification times
+        # -O : omit directory modification times
+        # --delete : NOT in use at moment; delete extraneous files from destination directories
+        # --exclude-from : skip any files in rsync-exclude
+        # --chmod : For each directory (D) and file (F), give user (u) and group (g) rwx permissions.
+        #           Give others (o) only read permissions, plus execute for directories.
+        switches: -vrctO --exclude-from 'rsync-exclude' --chmod=Du=rwx,Dg=rwx,Do=rx,Fu=rwx,Fg=rwx,Fo=r
         path: /site/*
         remote_path: ${{ env.DEPLOY_DIR }}
         remote_host: ${{ env.DEPLOY_HOST }}
-        remote_user: ${{ secrets.DEPLOY_USER }}
-        remote_key:  ${{ secrets.DEPLOY_KEY }}
-    
-    - name: Upload to secondary web server via rsync
-      uses: burnett01/rsync-deployments@5.2
-      with:
-        switches: -vrc --exclude-from 'rsync-exclude'
-        path: /site/*
-        remote_path: ${{ env.SECONDARY_PATH }}
-        remote_host: ${{ env.SECONDARY_HOST }}
-        remote_user: ${{ secrets.DEPLOY_USER }}
-        remote_key:  ${{ secrets.DEPLOY_KEY }}
+        remote_user: ${{ secrets.VPN_USER }}
+        remote_key:  ${{ secrets.VPN_KEY }}
 
   # 4. Cleanup & complete
     - name: Announce deploy
