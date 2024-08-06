@@ -76,6 +76,24 @@
         "feature_readme_link": null,
         "studies": []
     },
+        "Bloom": {
+        "game_name": "Bloom: The Saga of the Fertilizer Economy",
+        "game_description": "In Bloom, you’ll create trade networks and enact policies that keep farmers in business, while stopping excess manure from entering local lakes and rivers. Made with UW-Madison’s Scalable Systems Lab (Directed by Victor Zavala) with funding from the Environmental Protection Agency.",
+        "target_audience": "Grades 9-12",
+        "subject": "Life Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://fielddaylab.wisc.edu/play/bloom/",
+        "source_link": "https://github.com/fielddaylab/bloom",
+        "thumbnail_path" : "./assets/images/thumbs/bloom-thumb.jpg",
+        "event_readme_link": "https://github.com/opengamedata/opengamedata-core/tree/master/src/ogd/games/BLOOM",
+        "feature_readme_link": null,
+        "studies": []
+    },
     "CRYSTAL": {
         "game_name": "Crystal Cave",
         "game_description": "This simple puzzle game introduces kids to crystals! Players try their hand at arranging molecules with different shapes and properties into an ordered, stable configuration.",
@@ -300,6 +318,24 @@
         "thumbnail_path" : "./assets/images/thumbs/magnetism-thumb.png",
         "event_readme_link": "https://github.com/fielddaylab/magnetism/blob/master/README.md",
         "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/MAGNET/README.md",
+        "studies": []
+    },
+        "WEATHER_STATION": {
+        "game_name": "One The Ice: Weather Station",
+        "game_description": "Battle extreme weather conditions in Antarctica while repairing a network of broken weather stations. This VR experience is based on the real world adventures of polar researchers who build and maintain weather stations in Antarctica in order to collect valuable meteorological data.",
+        "target_audience": "Ages 10+",
+        "subject": "Polar Life Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://www.meta.com/en-gb/experiences/7405617912803425",
+        "source_link": "https://github.com/fielddaylab/weather-station",
+        "thumbnail_path" : "./assets/images/thumbs/ontheice-thumb.jpg",
+        "event_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WEATHER_STATION/README.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WEATHER_STATION/README.md",
         "studies": []
     },
     "PENGUINS": {
