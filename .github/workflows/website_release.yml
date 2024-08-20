@@ -13,9 +13,9 @@ on:
      branches: [ production ]
 
 env:
-  DEPLOY_HOST: fieldday-web.wcer.wisc.edu
+  DEPLOY_HOST: ${{ vars.FD_WEB_HOST }}
   DEPLOY_DIR: /var/www/opengamedata/
-  DEPLOY_URL:  ${{ vars.OGD_SERVICES_HOST }}/opengamedata/
+  DEPLOY_URL:  ${{ vars.FD_WEB_HOST }}/opengamedata/
   # SECONDARY_HOST: ${{ vars.OGD_SERVICES_HOST }}
   # SECONDARY_DIR:  ${{ vars.WEB_PATH }}/opengamedata/
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
