@@ -1,0 +1,3 @@
+[submodule "site/assets/extern"]
+	path = site/assets/extern
+	url = git@github.com:opengamedata/opengamedata-media-package.git
