@@ -203,7 +203,7 @@ else {
                 
                 <div class="pipeline-target-block<?php echo ($have_no_files ? '' : ' d-none'); ?>" id="pipeline-target-none">
                     <div class="d-flex">
-                        <img src="assets/images/pipeline-none.svg" class="me-4 mb-3">
+                        <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
                         <div id="pipeline-target-summary">
                             <h3>No Data</h3>
                             <?php if($month_name): ?>
@@ -257,7 +257,7 @@ else {
                 <?php
                     foreach ($game->getPublications() as $value) {
                         echo '<li class="mb-4 d-flex align-items-start">
-                                <img class="me-3" src="assets/images/publication.svg">
+                                <img class="me-3" src="assets/images/icons/publication.svg">
                                 <div>'. $value->getFormattedPublication() . '</div>
                             </li>';
                     }
