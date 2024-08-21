@@ -1,7 +1,7 @@
         <footer class="container-fluid px-sm-4 py-md-5 px-lg-5">
             <div class="row">
                 <div id="footer-ogd" class="col-md mt-5 mb-5">
-                    <img class="ogd-logo" src="assets/images/logos/OpenGameData-logo-black.png" alt="Field Day">
+                    <img class="ogd-logo" src="assets/extern/images/wordmarks/ogd/black-96.png" alt="Field Day">
                     <div class="fd-logo-wrapper mt-2">
                        <a href="https://fielddaylab.wisc.edu/" target="_blank" rel="noopener"><em class="me-2">A Project by:</em> <img src="assets/images/wordmarks/FieldDay-logo-black.png" alt="Field Day"></a>
                     </div>
