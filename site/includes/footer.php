@@ -27,7 +27,7 @@
                     <p class="mt-4"><strong>Funding Provided By:</strong></p>
                     <img src="assets/extern/images/logos/nsf/nsf-128.png" width="78" alt="National Science Foundation">
                     <img class="ms-1 ms-lg-3" src="assets/images/logos/the-learning-agency-logo.png" alt="The Learning Agency">
-                    <img class="ms-1 ms-lg-3" src="assets/images/logos/tools-competition-logo.png" alt="Tools Competition">
+                    <img class="ms-1 ms-lg-3" src="assets/images/wordmarks/tools-competition-logo.png" alt="Tools Competition">
                 </div>
             </div>           
         </footer>
