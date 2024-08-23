@@ -1,0 +1,53 @@
+/* About */
+#about {
+    .container-fluid {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        padding-top: 4rem;
+    }
+    .about-robot{
+        text-align: center;
+        img{
+            width: 65%;
+        }
+    }
+    .about-data{
+        text-align: center;
+        img{
+            width: 90%;
+        }
+    }
+    .top-buffer{
+        margin-top: 26px;
+    }
+    .blue-grad {
+        background: no-repeat linear-gradient(137deg, #41F9EC, #44CAFC);
+        > div {
+            border: 1px solid #89F1DB;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            > p {
+                max-width: 20rem;
+            }
+        }
+    }
+    .img-fluid-box {
+        max-width: 75%;
+        height: auto;
+    }
+    hr { color: #C2CCDA; border-top: 6px solid; border-radius: .625rem !important; }
+    h3 {
+        font-size: 1.875rem;
+    }
+    .staff-photo {
+        width: 100%;
+        max-width: 330px;
+        height: auto;
+        margin-top: 6rem;
+        @media (max-width: 575.98px) {
+            margin-top: 4rem;
+        }
+    }
+}
