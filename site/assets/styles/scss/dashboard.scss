@@ -7,11 +7,15 @@
         padding-top: 4rem;
     }
     .card-img-top {
-        height: 50%;
+        height: 70%;
         object-fit: cover;
-        width: auto;
+        // medium
+        @media (max-width: 767.98px) {
+            height: 50%;
+        }
+        // x-small
         @media (max-width: 575.98px) {
-            height: 70%;
+            height: 30%;
         }
     }
     .card:hover {
