@@ -9,13 +9,25 @@
     .card-img-top {
         height: 70%;
         object-fit: cover;
-        // medium
-        @media (max-width: 767.98px) {
-            height: 50%;
+        // XL
+        @media(max-width: 1399.98px) {
+            height:60%
         }
-        // x-small
-        @media (max-width: 575.98px) {
-            height: 30%;
+        // LG
+        @media(max-width: 1199.98px) {
+            height:55%
+        }
+        // MD
+        @media(max-width: 991.98px) {
+            height:50%
+        }
+        // SM
+        @media(max-width: 767.98px) {
+            height:50%
+        }
+        // XS
+        @media(max-width: 575.98px) {
+            height:65%
         }
     }
     .card:hover {
