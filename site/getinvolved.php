@@ -25,7 +25,7 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Use OGD for your research</h2>
-                <p>You can use the data for free right now to get started with your analysis. If you want to design an experiment that requires a change to the game, get involved in the <a href="https://forms.gle/z9HGvu5Kmsuf6xDD8" target="_blank">slack community</a> or <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">contact us</a>.</p>
+                <p>You can use the data for free right now to get started with your analysis. If you want to design an experiment that requires a change to the game, get involved in the <a href="Setup an Open Game Data Consultation" target="_blank">slack community</a> or <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">contact us</a>.</p>
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
@@ -54,7 +54,7 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Join the Community</h2>
-                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
+                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLScB8Vtlpit_t6dUrDa9bEKpSom8Ph7cAbOrnpzG8r5UAR038g/viewform?usp=sf_link" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
