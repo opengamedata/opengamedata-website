@@ -59,7 +59,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/icons/creative-commons.svg" alt="">
+                <img class="img-fluid" src="assets/images/logos/creative-commons.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Copyright license and Usage</h2>
