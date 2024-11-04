@@ -320,24 +320,6 @@
         "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/MAGNET/README.md",
         "studies": []
     },
-        "WEATHER_STATION": {
-        "game_name": "On The Ice: Weather Station",
-        "game_description": "Battle extreme weather conditions in Antarctica while repairing a network of broken weather stations. This VR experience is based on the real world adventures of polar researchers who build and maintain weather stations in Antarctica in order to collect valuable meteorological data.",
-        "target_audience": "Ages 10+",
-        "subject": "Polar Life Science",
-        "developers": [
-            {
-                "name": "Field Day Lab",
-                "link": "https://fielddaylab.wisc.edu/"
-            }
-        ],
-        "play_link": "https://www.meta.com/en-gb/experiences/7405617912803425",
-        "source_link": "https://github.com/fielddaylab/weather-station",
-        "thumbnail_path" : "./assets/images/thumbs/ontheice-thumb.jpg",
-        "event_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WEATHER_STATION/README.md",
-        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WEATHER_STATION/README.md",
-        "studies": []
-    },
     "PENGUINS": {
         "game_name": "Waddle: A Penguin's Tale",
         "game_description": "Our in-progress Penguins VR Project will allow players to experience life at the South Pole—as a penguin! We’re thrilled to work with penguin researcher Jean Pennycook to create a fun, playful experience that introduces people to her NSF-funded work.",
@@ -467,6 +449,24 @@
         "thumbnail_path" : "./assets/images/thumbs/waves-thumb.jpg",
         "event_readme_link": "https://github.com/fielddaylab/waves/blob/master/README.md",
         "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WAVES/README.md",
+        "studies": []
+    },
+    "WEATHER_STATION": {
+        "game_name": "On The Ice: Weather Station",
+        "game_description": "Battle extreme weather conditions in Antarctica while repairing a network of broken weather stations. This VR experience is based on the real world adventures of polar researchers who build and maintain weather stations in Antarctica in order to collect valuable meteorological data.",
+        "target_audience": "Ages 10+",
+        "subject": "Polar Life Science",
+        "developers": [
+            {
+                "name": "Field Day Lab",
+                "link": "https://fielddaylab.wisc.edu/"
+            }
+        ],
+        "play_link": "https://www.meta.com/en-gb/experiences/7405617912803425",
+        "source_link": "https://github.com/fielddaylab/weather-station",
+        "thumbnail_path" : "./assets/images/thumbs/ontheice-thumb.jpg",
+        "event_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WEATHER_STATION/README.md",
+        "feature_readme_link": "https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/WEATHER_STATION/README.md",
         "studies": []
     },
     "WIND": {
