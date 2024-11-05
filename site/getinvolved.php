@@ -12,7 +12,7 @@
     <section class="container-fluid">
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/add-game.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/add-game.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Add your game to OGD</h2>
@@ -21,7 +21,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/use-ogd.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/use-ogd.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Use OGD for your research</h2>
@@ -30,7 +30,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/cite-ogd.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/cite-ogd.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Cite OGD in your projects</h2>
@@ -41,7 +41,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/include-us.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/include-us.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Include us on your research grants</h2>
@@ -50,7 +50,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/ogd-community.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/ogd-community.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Join the Community</h2>
@@ -59,7 +59,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/creative-commons.svg" alt="">
+                <img class="img-fluid" src="assets/images/logos/creative-commons.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Copyright license and Usage</h2>
@@ -68,7 +68,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" id="envelope" src="assets/images/graphics/envelope.svg" alt="">
+                <img class="img-fluid" id="envelope" src="assets/images/icons/envelope.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Or just contact us</h2>
