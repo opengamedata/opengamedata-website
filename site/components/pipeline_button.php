@@ -46,8 +46,8 @@ class PipelineButton
         return '<div class="d-flex">
                     <div class="mt-3">
                         <button id="'. $this->button_id . '" class="text-nowrap btn shadow btn-pipeline btn-pipeline-segment position-relative' . ($this->is_active ? ' btn-outline-secondary' : '') . '" type="button"' . $this->btn_disabled . '>
-                            <img id="btn-image-' . $this->selector . '" src="assets/images/' . $this->image . '" class="btn-pipeline-segment-image' . (!$this->is_active ? '' : ' d-none') . '" />
-                            <img id="btn-image-active-' . $this->selector . '" src="assets/images/' . $this->image_active . '" class="btn-pipeline-segment-image-active' . ($this->is_active ? '' : ' d-none') . '" />
+                            <img id="btn-image-'        . $this->selector . '" src="assets/images/icons/' . $this->image . '" class="btn-pipeline-segment-image' . (!$this->is_active ? '' : ' d-none') . '" />
+                            <img id="btn-image-active-' . $this->selector . '" src="assets/images/icons/' . $this->image_active . '" class="btn-pipeline-segment-image-active' . ($this->is_active ? '' : ' d-none') . '" />
                             <span>' . htmlspecialchars($this->title) . '</span>
                         </button>
                     </div class="mt-3">
@@ -59,7 +59,7 @@ class PipelineButton
         return '<div class="d-flex">
                     <div class="mt-3">
                         <button id="'. $this->button_id . '" class="text-nowrap btn shadow btn-pipeline btn-pipeline-transition position-relative' . ($this->is_active ? ' btn-outline-secondary' : '') . '" type="button"' . $this->btn_disabled . '>
-                            <img id="btn-image-' . $this->selector . '" src="assets/images/' . $this->image . '" />
+                            <img id="btn-image-' . $this->selector . '" src="assets/images/icons/' . $this->image . '" />
                             <span>' . htmlspecialchars($this->title) . '</span>
                         </button>
                     </div class="mt-3">
@@ -74,7 +74,7 @@ class PipelineButton
 
         $output = '<div class="pipeline-target-block' . ($this->is_active ? '' : ' d-none') . '" id="pipeline-target-' . $this->selector . '">
                     <div class="d-flex">
-                        <img src="assets/images/' . $this->image_active . '" class="me-4 mb-3">
+                        <img src="assets/images/icons/' . $this->image_active . '" class="me-4 mb-3">
                         <div id="pipeline-target-summary">
                             <h3>' . htmlspecialchars($this->title) . '</h3>
                             <p class="pipeline-target-month">Month of ' . htmlspecialchars($this->month) . '</p>

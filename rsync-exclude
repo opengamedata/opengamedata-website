@@ -1,3 +1,9 @@
+<!-- custom ignores -->
+site/config/realtime_config.js.template
+site/assets/scripts/vendor
+site/assets/styles/scss
+<!-- other stuff -->
+rsync-exclude
 .DS_Store
 .gitignore
 .gitmodules
@@ -14,7 +20,3 @@ README.md
 coffee_out.js
 browserify_out.js
 minify_out.js.report.txt
-rsync-exclude
-site/config/realtime_config.js.template
-site/assets/scripts/vendor
-site/assets/styles/scss
