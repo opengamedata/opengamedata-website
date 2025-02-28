@@ -51,16 +51,29 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         if ($api_response->Status() == "SUCCESS") {
             $game_files = GameFileInfo::fromObj($api_response->Value());
             if (!isset($game_files) || $game_files == null) {
-                $err_str = "Got empty game_files from request that had status=".$api_response->Status()." and val=".json_encode($api_response->Value());
+                $last_year  = date("Y", strtotime("first day of previous month"));
+                $last_month = date("m", strtotime("first day of previous month"));
+                $err_str = "Got empty game_files from request that had status=".$api_response->Status()
+                          ." and val=".json_encode($api_response->Value())
+                          .", defaulting to last month (".$last_month."/".$last_year.").";
                 error_log($err_str);
+
+            } else {
+                $selected_year = $game_files->getLastYear();
+                $selected_month = $game_files->getLastMonth();
             }
 
-            $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
-            $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
             $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-            if ($selected_date != false) {
-                $month_name = $selected_date->format('F');
+            if ($selected_date == false) {
+                $last_year  = date("Y", strtotime("first day of previous month"));
+                $last_month = date("m", strtotime("first day of previous month"));
+                $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $last_year . '-' . $last_month . '-1');
+                $err_str = "Got invalid selected_date, defaulting to last month (".$last_month."/".$last_year.").";
+                error_log($err_str);
+
             }
+
+            $month_name = $selected_date->format('F');
             // Populate current, previous, and next dates
             if ($game_files->getNextMonth($selected_date) == $selected_date) {
                 $next_disabled = 'disabled';
