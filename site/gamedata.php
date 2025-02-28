@@ -37,7 +37,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
    
 
     // Get game file info from API
-    /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
+    /* HACK ALERT! We've inherited an awful hack that assumes a thing called
        "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
        and will say "that's alright good buddy, I'll just give you info on the most recent month."
        As if it's obvious that a thing that says "request a month" would consider the month optional...
