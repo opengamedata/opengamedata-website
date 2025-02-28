@@ -12,6 +12,15 @@
     <section class="container-fluid">
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
+                <img class="img-fluid" src="assets/images/icons/ogd-community.svg" alt="">
+            </div>
+            <div class="flex-fill mt-4">
+                <h2>Join the Community</h2>
+                <p>We facilitate a regular online event, <a href=https://sites.google.com/andrew.cmu.edu/ogd-office-hours/home">Open Game Data Office Hours</a>, for folks to share work in progress for help, talk about upcoming events, and generally plan how our community should develop. You can also <a href="https://docs.google.com/forms/d/e/1FAIpQLScB8Vtlpit_t6dUrDa9bEKpSom8Ph7cAbOrnpzG8r5UAR038g/viewform?usp=sf_link" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
+            </div>
+        </div>
+        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
+            <div class="img-col mx-auto my-auto">
                 <img class="img-fluid" src="assets/images/icons/add-game.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
@@ -46,15 +55,6 @@
             <div class="flex-fill mt-4">
                 <h2>Include us on your research grants</h2>
                 <p>Any large scale use of this project that will require support from our lab should include us in the grant. Using this data for larger scale projects will require support from our team. <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">Please set up a meeting with us</a> before including OGD in your grants.</p>
-            </div>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
-            <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/icons/ogd-community.svg" alt="">
-            </div>
-            <div class="flex-fill mt-4">
-                <h2>Join the Community</h2>
-                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLScB8Vtlpit_t6dUrDa9bEKpSom8Ph7cAbOrnpzG8r5UAR038g/viewform?usp=sf_link" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
