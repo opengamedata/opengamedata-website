@@ -58,7 +58,9 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
             $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
             $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-            $month_name = $selected_date->format('F');
+            if ($selected_date != false) {
+                $month_name = $selected_date->format('F');
+            }
             // Populate current, previous, and next dates
             if ($game_files->getNextMonth($selected_date) == $selected_date) {
                 $next_disabled = 'disabled';
@@ -67,7 +69,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 $next_disabled = '';
                 $next_month = $game_files->getNextMonth($selected_date)->format('F');
             }
-            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+            if ($selected_date != false && $game_files->getPrevMonth($selected_date) == $selected_date) {
                 $prev_disabled = 'disabled';
                 $prev_month = $selected_date->modify('-1 month')->format('F');
             } else {
