@@ -16,7 +16,7 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Join the Community</h2>
-                <p>We facilitate a regular online event, <a href=https://sites.google.com/andrew.cmu.edu/ogd-office-hours/home">Open Game Data Office Hours</a>, for folks to share work in progress for help, talk about upcoming events, and generally plan how our community should develop. You can also <a href="https://docs.google.com/forms/d/e/1FAIpQLScB8Vtlpit_t6dUrDa9bEKpSom8Ph7cAbOrnpzG8r5UAR038g/viewform?usp=sf_link" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
+                <p>We facilitate a regular online event, <a href="https://sites.google.com/andrew.cmu.edu/ogd-office-hours/home">Open Game Data Office Hours</a>, for folks to share work in progress for help, talk about upcoming events, and generally plan how our community should develop. You can also <a href="https://docs.google.com/forms/d/e/1FAIpQLScB8Vtlpit_t6dUrDa9bEKpSom8Ph7cAbOrnpzG8r5UAR038g/viewform?usp=sf_link" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
