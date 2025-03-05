@@ -1,0 +1,39 @@
+/* Dashboard */
+#dashboard {
+    line-height: 1.5;
+    .container-fluid {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        padding-top: 4rem;
+    }
+    .card-img-top {
+        height: 65%;
+        object-fit: cover;
+        // XL
+        @media(max-width: 1399.98px) {
+            height:60%
+        }
+        // LG
+        @media(max-width: 1199.98px) {
+            height:55%
+        }
+        // MD
+        @media(max-width: 991.98px) {
+            height:50%
+        }
+        // SM
+        @media(max-width: 767.98px) {
+            height:50%
+        }
+        // XS
+        @media(max-width: 575.98px) {
+            height:65%
+        }
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+    .top-buffer{
+        margin-top: 26px;
+    }
+}

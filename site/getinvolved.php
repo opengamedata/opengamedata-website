@@ -12,7 +12,16 @@
     <section class="container-fluid">
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/add-game.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/ogd-community.svg" alt="">
+            </div>
+            <div class="flex-fill mt-4">
+                <h2>Join the Community</h2>
+                <p>We facilitate a regular online event, <a href="https://sites.google.com/andrew.cmu.edu/ogd-office-hours/home">Open Game Data Office Hours</a>, for folks to share work in progress for help, talk about upcoming events, and generally plan how our community should develop. You can also <a href="https://docs.google.com/forms/d/e/1FAIpQLScB8Vtlpit_t6dUrDa9bEKpSom8Ph7cAbOrnpzG8r5UAR038g/viewform?usp=sf_link" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
+            </div>
+        </div>
+        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
+            <div class="img-col mx-auto my-auto">
+                <img class="img-fluid" src="assets/images/icons/add-game.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Add your game to OGD</h2>
@@ -21,16 +30,16 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/use-ogd.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/use-ogd.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Use OGD for your research</h2>
-                <p>You can use the data for free right now to get started with your analysis. If you want to design an experiment that requires a change to the game, get involved in the <a href="https://forms.gle/z9HGvu5Kmsuf6xDD8" target="_blank">slack community</a> or <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">contact us</a>.</p>
+                <p>You can use the data for free right now to get started with your analysis. If you want to design an experiment that requires a change to the game, get involved in the <a href="Setup an Open Game Data Consultation" target="_blank">slack community</a> or <a href="https://forms.gle/pe3VHPKKWUAwkFub9" target="_blank">contact us</a>.</p>
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/cite-ogd.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/cite-ogd.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Cite OGD in your projects</h2>
@@ -41,7 +50,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/include-us.svg" alt="">
+                <img class="img-fluid" src="assets/images/icons/include-us.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Include us on your research grants</h2>
@@ -50,16 +59,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/ogd-community.svg" alt="">
-            </div>
-            <div class="flex-fill mt-4">
-                <h2>Join the Community</h2>
-                <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdtbUH3fvT253U2MNbGL85yhvFXYhzYsAWhnoT4Q0c9Vs-H8Q/viewform" target="_blank">Join our Slack</a> for updates on events, publications, news, and grant opportunities.
-            </div>
-        </div>
-        <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
-            <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" src="assets/images/graphics/creative-commons.svg" alt="">
+                <img class="img-fluid" src="assets/images/logos/creative-commons.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Copyright license and Usage</h2>
@@ -68,7 +68,7 @@
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
             <div class="img-col mx-auto my-auto">
-                <img class="img-fluid" id="envelope" src="assets/images/graphics/envelope.svg" alt="">
+                <img class="img-fluid" id="envelope" src="assets/images/icons/envelope.svg" alt="">
             </div>
             <div class="flex-fill mt-4">
                 <h2>Or just contact us</h2>

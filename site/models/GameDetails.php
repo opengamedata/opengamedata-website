@@ -81,16 +81,16 @@ class GameDetails
         switch($this->developer_name)
         {
             case 'PBS Wisconsin':
-                return 'avatar-pbs-wi.png';
+                return 'pbs/pbs-64.png';
             break;
 
             case 'MIT Education Arcade':
-                return 'avatar-mit.png';
+                return 'mit/mit-64.png';
             break;
 
             case 'Field Day Lab':
             default:
-                return 'avatar.png';
+                return 'fieldday/fieldday-64.png';
             break;
 
         }

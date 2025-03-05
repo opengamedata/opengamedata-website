@@ -13,9 +13,9 @@ on:
      branches: [ production ]
 
 env:
-  DEPLOY_HOST: fieldday-web.wcer.wisc.edu
+  DEPLOY_HOST: ${{ vars.FD_WEB_HOST }}
   DEPLOY_DIR: /var/www/opengamedata/
-  DEPLOY_URL:  ${{ vars.OGD_SERVICES_HOST }}/opengamedata/
+  DEPLOY_URL:  ${{ vars.FD_WEB_HOST }}/opengamedata/
   # SECONDARY_HOST: ${{ vars.OGD_SERVICES_HOST }}
   # SECONDARY_DIR:  ${{ vars.WEB_PATH }}/opengamedata/
   API_HOST:    ${{ vars.OGD_SERVICES_HOST }}
@@ -33,9 +33,10 @@ jobs:
 
   # 1. Local checkout & config
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        lfs: true  
+        lfs: true
+        submodules: true
     - name: Set up Config File
       uses: ./.github/actions/web_config
       with:
@@ -43,7 +44,7 @@ jobs:
     
   # 2. Build 
     - name: Install Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 16
     - name: Install libraries
@@ -69,7 +70,7 @@ jobs:
     #   run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.SECONDARY_HOST }} "mkdir -p ${{ env.SECONDARY_PATH }}"
     
     - name: Upload to web server via rsync
-      uses: burnett01/rsync-deployments@5.2
+      uses: burnett01/rsync-deployments@7.0.1
       with:
         # switches:
         # -v : verbose output
@@ -92,6 +93,6 @@ jobs:
     - name: Announce deploy
       run: echo "Deployed to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         path: ./*.log

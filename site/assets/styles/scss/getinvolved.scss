@@ -1,0 +1,17 @@
+/* Get Involved */
+#getinvolved {
+    .container-fluid {
+        padding-left: 7vw;
+        padding-right: 7vw;
+        padding-top: 4rem;
+    }
+    #envelope {
+        margin-top: -1rem;
+    }
+    @media (min-width: 576px) {
+        .img-col {
+            flex: 0 0 auto;
+            width: 25%;
+        }
+    }
+}
