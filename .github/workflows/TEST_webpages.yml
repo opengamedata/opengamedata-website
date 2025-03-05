@@ -85,9 +85,8 @@ jobs:
       run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=WIND
 
   # 4. Cleanup & complete
-    - name: Announce deploy
-      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
+      if: failure()
       uses: actions/upload-artifact@v4
       with:
         path: ./*.log
