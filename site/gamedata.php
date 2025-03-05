@@ -68,7 +68,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 $last_year  = date("Y", strtotime("first day of previous month"));
                 $last_month = date("m", strtotime("first day of previous month"));
                 $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $last_year . '-' . $last_month . '-1');
-                $err_str = "Got invalid selected_date, defaulting to last month (".$last_month."/".$last_year.").";
+                $err_str = "Got invalid selected_date, defaulting to last month (".$last_month."/".$last_year.")";
                 error_log($err_str);
 
             }
