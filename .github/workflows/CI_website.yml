@@ -79,6 +79,7 @@ jobs:
         mkdir -p ~/.ssh
         echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
+
     - name: Ensure directory exists
       run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     
@@ -104,7 +105,9 @@ jobs:
   # 4. Cleanup & complete
     - name: Announce deploy
       run: echo "Deployed to ${{ env.DEPLOY_URL }}"
+
     - name: Upload logs as artifacts
+      if: failure()
       uses: actions/upload-artifact@v4
       with:
         path: ./*.log
