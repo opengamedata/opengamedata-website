@@ -1,6 +1,5 @@
 <?php 
-require_once 'models/game_card.php';
-require_once 'includes/functions.php';
+require_once 'includes/utils.php';
 
 class Card
 {

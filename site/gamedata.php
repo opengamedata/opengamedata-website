@@ -1,11 +1,11 @@
 <?php
 
-require_once 'includes/app_config.php';
+require_once 'config/AppConfig.php';
 require_once 'includes/services.php';
 require_once 'models/APIResponse.php';
-require_once 'models/game.php';
-require_once 'models/game_file_info.php';
-require_once 'components/pipeline_button.php';
+require_once 'models/GameDetails.php';
+require_once 'models/GameFileInfo.php';
+require_once 'components/PipelineButton.php';
 
 // Declare variables
 $game_id = null;
@@ -33,7 +33,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     
     // Get game details from api
     $game_json = services\getGameDetails($game_id);
-    $game = $game_json ? Game::fromJson($game_id, $game_json) : null;
+    $game = $game_json ? GameDetails::fromJson($game_id, $game_json) : null;
    
 
     // Get game file info from API
