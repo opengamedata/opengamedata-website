@@ -58,7 +58,9 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
             $selected_year = isset($game_files) ? $game_files->getLastYear() : '';
             $selected_month = isset($game_files) ? $game_files->getLastMonth() : '';
             $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-            $month_name = $selected_date->format('F');
+            if ($selected_date != false) {
+                $month_name = $selected_date->format('F');
+            }
             // Populate current, previous, and next dates
             if ($game_files->getNextMonth($selected_date) == $selected_date) {
                 $next_disabled = 'disabled';
@@ -67,7 +69,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
                 $next_disabled = '';
                 $next_month = $game_files->getNextMonth($selected_date)->format('F');
             }
-            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+            if ($selected_date != false && $game_files->getPrevMonth($selected_date) == $selected_date) {
                 $prev_disabled = 'disabled';
                 $prev_month = $selected_date->modify('-1 month')->format('F');
             } else {
@@ -127,7 +129,7 @@ else {
             <div class="col-md-7 my-auto">
                 <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
                 <div class="d-flex align-items-center mb-3">
-                    <img class="avatar" src="assets/images/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
+                    <img class="avatar" src="assets/extern/images/logos/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
                     <div class="button-bar">
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
                         <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
@@ -203,7 +205,7 @@ else {
                 
                 <div class="pipeline-target-block<?php echo ($have_no_files ? '' : ' d-none'); ?>" id="pipeline-target-none">
                     <div class="d-flex">
-                        <img src="assets/images/pipeline-none.svg" class="me-4 mb-3">
+                        <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
                         <div id="pipeline-target-summary">
                             <h3>No Data</h3>
                             <?php if($month_name): ?>
@@ -266,7 +268,7 @@ else {
                 <?php
                     foreach ($game->getPublications() as $value) {
                         echo '<li class="mb-4 d-flex align-items-start">
-                                <img class="me-3" src="assets/images/publication.svg">
+                                <img class="me-3" src="assets/images/icons/publication.svg">
                                 <div>'. $value->getFormattedPublication() . '</div>
                             </li>';
                     }

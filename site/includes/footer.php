@@ -1,9 +1,9 @@
         <footer class="container-fluid px-sm-4 py-md-5 px-lg-5">
             <div class="row">
                 <div id="footer-ogd" class="col-md mt-5 mb-5">
-                    <img class="ogd-logo" src="assets/images/logos/OpenGameData-logo-black.png" alt="Field Day">
+                    <img class="ogd-logo" src="assets/extern/images/wordmarks/ogd/black-96.png" alt="Field Day">
                     <div class="fd-logo-wrapper mt-2">
-                       <a href="https://fielddaylab.wisc.edu/" target="_blank" rel="noopener"><em class="me-2">A Project by:</em> <img src="assets/images/logos/FieldDay-logo-black.png" alt="Field Day"></a>
+                       <a href="https://fielddaylab.wisc.edu/" target="_blank" rel="noopener"><em class="me-2">A Project by:</em> <img src="assets/images/wordmarks/FieldDay-logo-black.png" alt="Field Day"></a>
                     </div>
                     <p class="mt-4">
                         We have built an open-source and community-maintained data storage and processing pipeline for educational game data.
@@ -25,9 +25,9 @@
                         games that bring contemporary research to the public, and we use the game data to understand how people learn.
                     </p>
                     <p class="mt-4"><strong>Funding Provided By:</strong></p>
-                    <img src="assets/images/logos/nsf-logo.png" alt="National Science Foundation">
+                    <img src="assets/extern/images/logos/nsf/nsf-128.png" width="78" alt="National Science Foundation">
                     <img class="ms-1 ms-lg-3" src="assets/images/logos/the-learning-agency-logo.png" alt="The Learning Agency">
-                    <img class="ms-1 ms-lg-3" src="assets/images/logos/tools-competition-logo.png" alt="Tools Competition">
+                    <img class="ms-1 ms-lg-3" src="assets/images/wordmarks/tools-competition-logo.png" alt="Tools Competition">
                 </div>
             </div>           
         </footer>
