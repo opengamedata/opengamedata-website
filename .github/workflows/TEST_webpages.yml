@@ -12,7 +12,7 @@ on:
       custom_deploy_url:
         description: "The base URL at which the website is deployed"
         required: true
-        default: "https://opengamedata.fielddaylab.wisc.edu/"
+        default: "https://opengamedata.fielddaylab.wisc.edu"
   workflow_call:
   
 jobs:
