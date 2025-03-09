@@ -1,20 +1,19 @@
 name: OGD Website - Webpage Test Script
 run-name: ${{ format('{0} - {1}', github.workflow, github.event_name == 'push' && github.event.head_commit.message || 'Manual Run') }}
 
+env:
+  DEPLOY_HOST: ${{ vars.OGD_STAGING_HOST }}
+  DEPLOY_DIR:          ${{ vars.WEB_PATH }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+  DEPLOY_URL:  ${{ vars.OGD_STAGING_HOST }}/${{ github.event.repository.name }}/${{ github.ref_name }}
+
 on:
   workflow_dispatch:
     inputs:
-      deploy_url:
+      custom_deploy_url:
         description: "The base URL at which the website is deployed"
         required: true
         default: "https://opengamedata.fielddaylab.wisc.edu/"
   workflow_call:
-    inputs:
-      deploy_url:
-        type: string
-        description: "The base URL at which the website is deployed"
-        required: true
-        default: "https://opengamedata.fielddaylab.wisc.edu/"
   
 jobs:
   webpage_tests:
@@ -38,55 +37,55 @@ jobs:
 
   # 3. Remote config & execute
     - name: Test Main Page
-      run: curl -It ${{ inputs.deploy_url }}
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}
     - name: Test "About Us" Page
-      run: curl -It ${{ inputs.deploy_url }}/about.php
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/about.php
     - name: Test "Get Involved" Page
-      run: curl -It ${{ inputs.deploy_url }}/getinvolved.php
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/getinvolved.php
     - name: Test AQUALAB Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=AQUALAB
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=AQUALAB
     - name: Test BACTERIA Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=BACTERIA
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=BACTERIA
     - name: Test BALLOON Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=BALLOON
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=BALLOON
     - name: Test BLOOM Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=BLOOM
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=BLOOM
     - name: Test CRYSTAL Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=CRYSTAL
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=CRYSTAL
     - name: Test CYCLE_CARBON Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=CYCLE_CARBON
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=CYCLE_CARBON
     - name: Test CYCLE_NITROGEN Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=CYCLE_NITROGEN
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=CYCLE_NITROGEN
     - name: Test CYCLE_WATER Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=CYCLE_WATER
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=CYCLE_WATER
     - name: Test EARTHQUAKE Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=EARTHQUAKE
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=EARTHQUAKE
     - name: Test ICECUBE Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=ICECUBE
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=ICECUBE
     - name: Test JOURNALISM Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=JOURNALISM
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=JOURNALISM
     - name: Test JOWILDER Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=JOWILDER
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=JOWILDER
     - name: Test LAKELAND Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=LAKELAND
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=LAKELAND
     - name: Test MAGNET Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=MAGNET
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=MAGNET
     - name: Test PENGUINS Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=PENGUINS
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=PENGUINS
     - name: Test SHADOWSPECT Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=SHADOWSPECT
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=SHADOWSPECT
     - name: Test SHIPWRECKS Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=SHIPWRECKS
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=SHIPWRECKS
     - name: Test THERMOVR Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=THERMOVR
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=THERMOVR
     - name: Test TRANSFORMATION_QUEST Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=TRANSFORMATION_QUEST
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=TRANSFORMATION_QUEST
     - name: Test WAVES Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=WAVES
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=WAVES
     - name: Test WEATHER_STATION Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=WEATHER_STATION
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=WEATHER_STATION
     - name: Test WIND Page
-      run: curl -It ${{ inputs.deploy_url }}/gamedata.php?game=WIND
+      run: curl -It ${{ inputs.custom_deploy_url || env.DEPLOY_URL }}/gamedata.php?game=WIND
 
   # 4. Cleanup & complete
     - name: Upload logs as artifacts
