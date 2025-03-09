@@ -29,6 +29,10 @@ jobs:
   # 1. Local checkout & config
     - name: Announce Run
       run: echo "Testing ${{ github.repository }} deployed at ${{ inputs.deploy_url }}"
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: false
     
   # 2. Build 
 
