@@ -15,7 +15,7 @@ on:
         default: "https://ogd-services.fielddaylab.wisc.edu/wsgi-bin/opengamedata-website-api/production/app.wsgi/"
   push: # Trigger automatically when we do a push to the site.
     paths:
-    - '.github/workflows/website_CI.yml'
+    - '.github/workflows/CI_website.yml'
     - 'site/**'
     - 'gulpfile.js'
     - 'package.json'
