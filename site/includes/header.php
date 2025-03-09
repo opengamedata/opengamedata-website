@@ -9,10 +9,17 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
         </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="assets/extern/images/logos/ogd/OGD-16.png">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&family=Inter:wght@400;500;700">
         <link rel="stylesheet" href="https://use.typekit.net/zra8nem.css">
         <link rel="stylesheet" href="assets/styles/bootstrap.css">
         <link rel="stylesheet" href="assets/styles/styles.css">
+        <link rel="stylesheet" href="assets/styles/hero.css">
+        <link rel="stylesheet" href="assets/styles/footer.css">
+        <link rel="stylesheet" href="assets/styles/dashboard.css">
+        <link rel="stylesheet" href="assets/styles/about.css">
+        <link rel="stylesheet" href="assets/styles/gamedata.css">
+        <link rel="stylesheet" href="assets/styles/getinvolved.css">
         <script>const WEBSITE_API_URL_BASE = '<?php echo htmlspecialchars(\AppConfig::getConfig()['WEBSITE_API_URL_BASE']); ?>';</script>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FZHES4D1G"></script>
@@ -28,7 +35,7 @@ $title = isset($game) ? " - " . htmlspecialchars($game->getName()) : "";
         <header class="shadow">
             <nav class="navbar navbar-default" aria-label="Main navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php"><img class="logo" src="assets/images/logos/OpenGameData-logo.png" alt="Open Game Data"></a>
+                    <a class="navbar-brand" href="index.php"><img class="logo" src="assets/extern/images/wordmarks/ogd/blue-128.png" width="732" alt="Open Game Data"></a>
                 </div>
                 <ul class="navbar-nav flex-fill flex-row justify-content-end align-items-center">
                     <li class="nav-item"><a href="https://opengamedata-doc.readthedocs.io/en/latest" class="btn btn-header mx-3">Technical Documentation</a></li>
