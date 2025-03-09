@@ -28,6 +28,7 @@ env:
   API_PATH:    ${{ vars.API_BASE_URL }}/files/app.wsgi/
   
 jobs:
+
   ci_deploy:
     name: CI Deploy of Website
     runs-on: ubuntu-22.04
@@ -101,11 +102,6 @@ jobs:
         remote_host: ${{ env.DEPLOY_HOST }}
         remote_user: ${{ secrets.DEPLOY_USER }}
         remote_key: ${{ secrets.DEPLOY_KEY }}
-    
-    - name: Run cURL Testing Script
-      uses: ./.github/workflows/TEST_webpages.yml
-      with:
-        deploy_url: ${{ env.DEPLOY_URL }}
 
   # 4. Cleanup & complete
     - name: Announce deploy
@@ -116,3 +112,10 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: ./*.log
+    
+  testbed_webpages:
+    name: Run cURL Testing Script
+    needs: ci_deploy
+    uses: ./.github/workflows/TEST_webpages.yml
+    with:
+      deploy_url: ${{ env.DEPLOY_URL }}
