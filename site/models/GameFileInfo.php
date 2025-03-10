@@ -1,4 +1,10 @@
 <?php
+/**
+ * GameFileInfo
+ * 
+ * Realistically, should be named DatasetInfo
+ * Contains all data for modeling a dataset, including date range, and links to files, templates, and generator code.
+ */
 class GameFileInfo 
 {
     protected $first_month;

@@ -1,12 +1,12 @@
 <?php
 
-require_once 'includes/app_config.php';
+require_once 'config/AppConfig.php';
 require_once 'includes/services.php';
 require_once 'models/APIResponse.php';
-require_once 'models/game.php';
-require_once 'models/game_usage.php';
-require_once 'models/game_card.php';
-require_once 'components/card.php';
+require_once 'models/GameDetails.php';
+require_once 'models/GameUsage.php';
+require_once 'models/GameCard.php';
+require_once 'components/Card.php';
 
 // Get game list
 $gamelist_json = services\getGameList();
@@ -33,7 +33,7 @@ foreach($gamelist as $key => $value)
         error_log($err_str);
     }
 
-    $game_card = new GameCard(Game::fromJson($key, json_encode($value)), $game_usage);
+    $game_card = new GameCard(GameDetails::fromJson($key, json_encode($value)), $game_usage);
     array_push($games, $game_card);
 }
 
