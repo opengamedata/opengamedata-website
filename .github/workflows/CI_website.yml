@@ -117,5 +117,3 @@ jobs:
     name: Run cURL Testing Script
     needs: ci_deploy
     uses: ./.github/workflows/TEST_webpages.yml
-    with:
-      deploy_url: ${{ env.DEPLOY_URL }}
