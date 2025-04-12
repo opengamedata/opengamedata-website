@@ -53,7 +53,7 @@ body:
     attributes:
       label: Developers
       description: List the name and URLs for all labs/studios that helped develop the game.
-      value: e.g. Field Day Lab, https://fielddaylab.wisc.edu/
+      placeholder: e.g. Field Day Lab, https://fielddaylab.wisc.edu/
     validations:
       required: true
   - type: textarea
@@ -99,7 +99,7 @@ body:
     id: studies
     attributes:
       label: Studies
-      description: List references for any published (including preprint) studies using this game that you would like to have listed on the website.
-      value: e.g. Struggling to Detect Struggle in Students Playing a Science Exploration Game, https://dl.acm.org/doi/10.1145/3573382.3616080
+      description: "Optional: List references for any published (including preprint) studies using this game that you would like to have listed on the website."
+      placeholder: e.g. Struggling to Detect Struggle in Students Playing a Science Exploration Game, https://dl.acm.org/doi/10.1145/3573382.3616080
     validations:
       required: true
