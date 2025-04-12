@@ -15,7 +15,7 @@ on:
         default: "https://ogd-services.fielddaylab.wisc.edu/wsgi-bin/opengamedata-website-api/production/app.wsgi/"
   push: # Trigger automatically when we do a push to the site.
     paths:
-    - '.github/workflows/website_CI.yml'
+    - '.github/workflows/CI_website.yml'
     - 'site/**'
     - 'gulpfile.js'
     - 'package.json'
@@ -28,6 +28,7 @@ env:
   API_PATH:    ${{ vars.API_BASE_URL }}/files/app.wsgi/
   
 jobs:
+
   ci_deploy:
     name: CI Deploy of Website
     runs-on: ubuntu-22.04
@@ -67,16 +68,19 @@ jobs:
       run: gulp build   
 
   # 3. Remote config & deploy
-    - name: Install OpenConnect
-      run: sudo apt-get -q update && sudo apt-get -q install openconnect
     - name: Connect to VPN
-      run: echo ${{ secrets.VPN_PASS }} | sudo openconnect --protocol=gp -u ${{ secrets.VPN_USER}} --passwd-on-stdin soe.vpn.wisc.edu &
+      uses: opengamedata/actions-openconnect-vpn@v1.1
+      with:
+        username: ${{ secrets.VPN_USER }}
+        password: ${{ secrets.VPN_PASS }}
+        endpoint: "soe.vpn.wisc.edu"
 
     - name: Setup Access Key
       run: |
         mkdir -p ~/.ssh
         echo '${{secrets.DEPLOY_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
+
     - name: Ensure directory exists
       run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.DEPLOY_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     
@@ -102,7 +106,14 @@ jobs:
   # 4. Cleanup & complete
     - name: Announce deploy
       run: echo "Deployed to ${{ env.DEPLOY_URL }}"
+
     - name: Upload logs as artifacts
+      if: failure()
       uses: actions/upload-artifact@v4
       with:
         path: ./*.log
+    
+  testbed_webpages:
+    name: Run cURL Testing Script
+    needs: ci_deploy
+    uses: ./.github/workflows/TEST_webpages.yml
