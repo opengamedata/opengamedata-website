@@ -54,17 +54,19 @@ jobs:
       run: gulp build   
 
   # 3. Remote config & deploy
-    - name: Install OpenConnect
-      run: sudo apt-get -q update && sudo apt-get -q install openconnect | 
-            sudo pip3 install https://github.com/dlenski/vpn-slice/archive/master.zip
     - name: Connect to VPN
-      run: echo ${{ secrets.VPN_PASS }} | sudo openconnect --protocol=gp -u ${{ secrets.VPN_USER}} --passwd-on-stdin soe.vpn.wisc.edu &
+      uses: opengamedata/actions-openconnect-vpn@v1.1
+      with:
+        username: ${{ secrets.VPN_USER }}
+        password: ${{ secrets.VPN_PASS }}
+        endpoint: "soe.vpn.wisc.edu"
 
     - name: Setup Access Key
       run: |
         mkdir -p ~/.ssh
         echo '${{secrets.VPN_KEY}}' >> ./key.txt
         chmod 600 ./key.txt
+
     - name: Ensure directory exists
       run: ssh -o StrictHostKeyChecking=no -T -i ./key.txt ${{ secrets.VPN_USER }}@${{ env.DEPLOY_HOST }} "mkdir -p ${{ env.DEPLOY_DIR }}"
     # - name: Ensure directory exists
