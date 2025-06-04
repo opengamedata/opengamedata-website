@@ -25,7 +25,7 @@
             </div>
             <div class="flex-fill mt-4">
                 <h2>Add your game to OGD</h2>
-                <p>If you have a game that you would like to add to open game data we can support this. We will do the development. We can also design studies and implement the code needed to cultivate the data or help you build relationships with other researchers. We are a conduit for relationships between game studios and researchers. The cost is much less than setting up a research team in-house.</p>
+                <p>Want to start logging to OGD? <a href = "https://github.com/opengamedata/opengamedata-website/issues/new?template=02-submit-new-game.yml">Submit your Game </a>(Github Account Required)</p>
             </div>
         </div>
         <div class="d-flex flex-wrap flex-sm-nowrap mb-5">
