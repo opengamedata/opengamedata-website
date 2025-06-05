@@ -6,7 +6,7 @@ require_once 'models/GameFileInfo.php';
 require_once 'models/GameUsage.php';
 
 /* Get Games from game_list
- * Returns list as JSON or false
+ * Returns list or false
  */ 
 function getGameList()
 { 
