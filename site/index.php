@@ -16,24 +16,9 @@ $games = [];
 foreach($gamelist as $key => $value)
 {
     // Get game usage from api for each game
-    $response_obj = services\getGameUsage($key);
-    $game_usage = null;
-    if (isset($response_obj)) {
-        $api_response = APIResponse::fromObj($response_obj);
-        if ($api_response->Status() == "SUCCESS") {
-            $game_usage = GameUsage::fromObj($api_response->Value());
-        }
-        else {
-            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$api_response->Message()."\nFull response: ".json_encode($response_obj);
-            error_log($err_str);
-        }
-    }
-    else {
-        $err_str = "getGameUsage request, with game_id=".$key.", got no response object!";
-        error_log($err_str);
-    }
+    $game_usage = services\getGameUsage($key);
 
-    $game_card = new GameCard(GameDetails::fromJson($key, json_encode($value)), $game_usage);
+    $game_card = new GameCard(GameDetails::fromArray($key, $value), $game_usage);
     array_push($games, $game_card);
 }
 
