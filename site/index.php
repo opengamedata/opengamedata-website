@@ -9,9 +9,7 @@ require_once 'models/GameCard.php';
 require_once 'components/Card.php';
 
 // Get game list
-$gamelist_json = services\getGameList();
-$gamelist = $gamelist_json ? json_decode($gamelist_json) : [];
-
+$gamelist = services\getGameList();
 $games = [];
 foreach($gamelist as $key => $value)
 {
