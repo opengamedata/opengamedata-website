@@ -2,6 +2,7 @@
 namespace services;
 
 require_once 'models/APIResponse.php';
+require_once 'models/GameDetails.php';
 require_once 'models/GameFileInfo.php';
 require_once 'models/GameUsage.php';
 
@@ -16,14 +17,14 @@ function getGameList()
 
 /* Get single game details from game_list
  * <param> string game_id
- * Returns Array object associated with given game_id
+ * Returns Array object associated with given game_id or null
  */
 function getGameDetails(string $game_id)
 {
     // Get full list of games
     $game_list = getGameList();
-    // API will return just one game, for now access $game_id and re-encode json
-    return !empty($game_list->{$game_id}) ? $game_list->{$game_id} : false;
+    // API will return just one game, for now access $game_id and return contents
+    return !empty($game_list->{$game_id}) ? \GameDetails::fromArray($game_id, $game_list->{$game_id}) : null;
 }
 
 /* Get game usage from API

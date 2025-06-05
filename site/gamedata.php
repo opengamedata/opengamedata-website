@@ -8,7 +8,7 @@ require_once 'components/PipelineButton.php';
 
 // Declare variables
 $game_id = null;
-$game = null;
+$game_details = null;
 $game_files = null;
 
 $month_name = null;
@@ -28,12 +28,11 @@ $game_json = null;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
+    // sanitize game ID by removing any characters that aren't alpha-numeric or an underscore
     $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9-_]+/", "", $_GET['game']));
     
     // 1. Get game details from the game_list file.
-    $game_json = services\getGameDetails($game_id);
-    $game = $game_json ? GameDetails::fromArray($game_id, $game_json) : null;
-   
+    $game_details = services\getGameDetails($game_id);
 
     // 2. Get game file info from API
     /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
@@ -108,28 +107,28 @@ else {
 ?>
 <?php require 'includes/header.php'; ?>
 <main id="gamedata" class="container-fluid">
-    <?php if (isset($game)) : ?>
+    <?php if (isset($game_details)) : ?>
     <section>
         <div class="row mb-5">
             <div class="col-md-7 my-auto">
-                <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
+                <h2><?php echo htmlspecialchars($game_details->getName()) ?></h2>
                 <div class="d-flex align-items-center mb-3">
-                    <img class="avatar" src="assets/extern/images/logos/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
+                    <img class="avatar" src="assets/extern/images/logos/<?php echo htmlspecialchars($game_details->getDeveloperIconFilename()); ?>">
                     <div class="button-bar">
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
-                        <?php if (count($game->getPublications()) > 0) : ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
+                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
+                        <?php if (count($game_details->getPublications()) > 0) : ?>
                             <a class="btn btn-secondary" href="#publications">Publications</a>
                         <?php endif ?> 
                     </div>
                 </div>
                 <p>
-                    <?php echo htmlspecialchars($game->getDescription()) ?>
+                    <?php echo htmlspecialchars($game_details->getDescription()) ?>
                 </p>
             </div>
             <div class="col">
-                <?php echo '<img class="img-fluid rounded" src="' . htmlspecialchars($game->getThumbPath()) . '">'; ?>
+                <?php echo '<img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">'; ?>
             </div>
         </div>
     </section>
@@ -162,7 +161,7 @@ else {
     
     <div class="row mb-5">
         <div class="col-md col-lg-5">
-            <section id="pipelines" class="<?php echo count($game->getPublications()) > 0 ? '' : ' mb-5'; ?>">
+            <section id="pipelines" class="<?php echo count($game_details->getPublications()) > 0 ? '' : ' mb-5'; ?>">
                 <!-- Data Pipeline -->
                 <div class="pipelines-wrapper">
                     <div class="pipelines-container">
@@ -233,7 +232,7 @@ else {
         </div> <!-- end column -->
     </div> <!-- end row --> 
 
-    <?php if (count($game->getPublications()) > 0) : ?>
+    <?php if (count($game_details->getPublications()) > 0) : ?>
     <hr>
     <div class="row mb-5 mt-3">
         <div class="col-md">
@@ -242,7 +241,7 @@ else {
                 <h3>Publications</h3>
                 <ul class="list-unstyled mt-4">
                 <?php
-                    foreach ($game->getPublications() as $value) {
+                    foreach ($game_details->getPublications() as $value) {
                         echo '<li class="mb-4 d-flex align-items-start">
                                 <img class="me-3" src="assets/images/icons/publication.svg">
                                 <div>'. $value->getFormattedPublication() . '</div>
