@@ -6,19 +6,20 @@ namespace services;
  */ 
 function getGameList()
 { 
-    return file_get_contents('config/game_list.json');
+    $game_list = file_get_contents('config/game_list.json');
+    return json_decode($game_list) ?? [];
 }
 
 /* Get single game details from game_list
  * <param> string game_id
- * Returns JSON
+ * Returns Array object associated with given game_id
  */
 function getGameDetails(string $game_id)
 {
     // Get full list of games
-    $game_list = json_decode(getGameList());
+    $game_list = getGameList();
     // API will return just one game, for now access $game_id and re-encode json
-    return !empty($game_list->{$game_id}) ? json_encode($game_list->{$game_id}) : false;
+    return !empty($game_list->{$game_id}) ? $game_list->{$game_id} : false;
 }
 
 /* Get game usage from API

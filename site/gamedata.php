@@ -31,12 +31,12 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
 
     $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9-_]+/", "", $_GET['game']));
     
-    // Get game details from api
+    // 1. Get game details from the game_list file.
     $game_json = services\getGameDetails($game_id);
-    $game = $game_json ? GameDetails::fromJson($game_id, $game_json) : null;
+    $game = $game_json ? GameDetails::fromArray($game_id, $game_json) : null;
    
 
-    // Get game file info from API
+    // 2. Get game file info from API
     /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
        "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
        and will say "that's alright good buddy, I'll just give you info on the most recent month."
