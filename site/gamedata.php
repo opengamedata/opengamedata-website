@@ -8,7 +8,7 @@ require_once 'components/PipelineButton.php';
 
 // Declare variables
 $game_id = null;
-$game = null;
+$game_details = null;
 $game_files = null;
 
 $month_name = null;
@@ -113,7 +113,7 @@ else {
 
 ?>
 <?php
-function renderOverviewSection($game_details)
+function renderOverviewSection(GameDetails $game_details)
 {
     $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
     return '<section id="game-overview">
@@ -152,7 +152,7 @@ function renderChartSection() {
     </section>';
 }
 
-function renderPipelineSection($game_details, $month_name, $buttons) {
+function renderPipelineSection(GameDetails $game_details, string $month_name, array $buttons) {
     $month_element = $month_name ? ('<div id="pipeline-month">Month of '.$month_name.'</div>') : '<div id="pipeline-month"></div>';
 
     return '<section id="pipelines" class="'. count($game_details->getPublications()) > 0 ? '' : ' mb-5'.'">
@@ -173,7 +173,7 @@ function renderPipelineSection($game_details, $month_name, $buttons) {
     </section>';
 }
 
-function renderPipelineTargetSection($month_name, $have_no_files, $buttons)
+function renderPipelineTargetSection(string $month_name, bool $have_no_files, array $buttons)
 {
     $month_element  = $month_name ? '<p class="pipeline-target-month">Month of '.htmlspecialchars($month_name).'</p>' : '<p class="pipeline-target-month"></p>';
     $nodata_element = $month_name ? '<p id="pipeline-target-no-data-for-month">There is currently no data for the month of '.htmlspecialchars($month_name).'.</p>' : '<p id="pipeline-target-no-data-for-month">There is currently no data.</p>';
@@ -198,6 +198,53 @@ function renderPipelineTargetSection($month_name, $have_no_files, $buttons)
         . $buttons["features"]->renderPipelineTarget()  . '\n' .
         
     '</section>';
+}
+
+function renderTemplatesSection(GameFileInfo $game_files)
+{
+    $events_class   = isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none';
+    $players_class  = isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none';
+    $pop_class      = isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none';
+    $sessions_class = isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none';
+
+    $events_template   = isset($game_files) ? $game_files->getEventsTemplate()     : '';
+    $players_template  = isset($game_files) ? $game_files->getPlayersTemplate()    : '';
+    $pop_template      = isset($game_files) ? $game_files->getPopulationTemplate() : '';
+    $sessions_template = isset($game_files) ? $game_files->getSessionsTemplate()   : '';
+
+    return '<section id="templates" class="mb-5">
+        <!-- Templates -->
+        <h3>Templates</h3>
+        <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+
+        <div class="btn-group-vertical">
+            <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2'.$events_class.'" href="'.htmlspecialchars($events_template).'">Events Template</a>
+            <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2'.$players_class.'" href="'.htmlspecialchars($players_template).'">Player Features Template</a>
+            <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2'.$pop_class.'" href="'.htmlspecialchars($pop_template).'">Population Features Template</a>
+            <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2'.$sessions_class.'" href="'.htmlspecialchars($sessions_template).'">Session Features Template</a>
+        </div>
+
+    </section>';
+}
+
+function renderPublicationsSection(GameDetails $game_details)
+{
+    $elements = ["foo", "bar"];
+    foreach ($game_details->getPublications() as $value) {
+        echo '<li class="mb-4 d-flex align-items-start">
+                <img class="me-3" src="assets/images/icons/publication.svg">
+                <div>'. $value->getFormattedPublication() . '</div>
+            </li>';
+    }
+    $publications = implode("\n", $elements);
+
+    return '<section id="publications" class="mb-5">
+        <!-- Publications -->
+        <h3>Publications</h3>
+        <ul class="list-unstyled mt-4">'
+            . $publications .
+        '</ul>
+    </section>';
 }
 ?>
 <?php require 'includes/header.php'; ?>
@@ -225,24 +272,12 @@ function renderPipelineTargetSection($month_name, $have_no_files, $buttons)
     
     <div class="row mb-5">
         <div class="col-md col-lg-5">
-        <?php echo renderPipelineSection($game, $month_name, $buttons) ?>
+        <?php echo renderPipelineSection($game_details, $month_name, $buttons) ?>
         </div>
         <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
-            <?php echo renderPipelineTargetSection($game, $have_no_files, $buttons) ?>
+            <?php echo renderPipelineTargetSection($month_name, $have_no_files, $buttons) ?>
             <hr>                
-            <section id="templates" class="mb-5">
-                <!-- Templates -->
-                <h3>Templates</h3>
-                <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
-
-                <div class="btn-group-vertical">
-                    <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2<?php     echo (isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getEventsTemplate()     : ""); ?>">Events Template</a>
-                    <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2<?php    echo (isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPlayersTemplate()    : ""); ?>">Player Features Template</a>
-                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPopulationTemplate() : ""); ?>">Population Features Template</a>
-                    <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2<?php   echo (isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getSessionsTemplate()   : ""); ?>">Session Features Template</a>
-                </div>
-
-            </section>
+            <?php renderTemplatesSection($game_files) ?>
 
            
         </div> <!-- end column -->
@@ -252,20 +287,7 @@ function renderPipelineTargetSection($month_name, $have_no_files, $buttons)
     <hr>
     <div class="row mb-5 mt-3">
         <div class="col-md">
-            <section id="publications" class="mb-5">
-                <!-- Publications -->
-                <h3>Publications</h3>
-                <ul class="list-unstyled mt-4">
-                <?php
-                    foreach ($game_details->getPublications() as $value) {
-                        echo '<li class="mb-4 d-flex align-items-start">
-                                <img class="me-3" src="assets/images/icons/publication.svg">
-                                <div>'. $value->getFormattedPublication() . '</div>
-                            </li>';
-                    }
-                ?>
-                </ul>
-            </section>
+            <?php renderPublicationsSection($game_details) ?>
         </div>
     </div>
     <?php endif; ?>
