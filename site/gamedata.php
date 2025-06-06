@@ -53,7 +53,7 @@ else {
 <?php
 function renderOverviewSection(?GameDetails $game_details)
 {
-    $ret_val = "NO OVERVIEW AVAILABLE, GAME DETAILS NOT FOUND!";
+    $ret_val = '<section id="game-overview">NO OVERVIEW AVAILABLE, GAME DETAILS NOT FOUND!</section>';
 
     if (isset($game_details)) {
         $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
@@ -85,48 +85,53 @@ function renderOverviewSection(?GameDetails $game_details)
 }
 
 function renderChartSection(?GameFileInfo $game_files) {
+    $ret_val = '<section id="monthly-sessions-chart">NO CHART AVAILABLE, GAME DETAILS NOT FOUND!</section>';
+
+    $nav_elements = '';
     $selected_year = null;
     $selected_month = null;
     $month_name = null;
+    if (isset($game_files)) {
 
-    $prev_month = null;
-    $next_month = null;
-    $prev_disabled = null;
-    $next_disabled = null;
+        $prev_month = null;
+        $next_month = null;
+        $prev_disabled = null;
+        $next_disabled = null;
 
-    $selected_date = $game_files->getLastDate();
-    if ($selected_date) {
-        $selected_year = $selected_date->format('Y');
-        $selected_month = $selected_date->format('n');
-        $month_name = $selected_date->format('F');
-        // Populate current, previous, and next dates
-        if ($game_files->getNextMonth($selected_date) == $selected_date) {
-            $next_disabled = 'disabled';
-            $next_month = $selected_date->modify('+1 month')->format('F');
-        } else {
-            $next_disabled = '';
-            $next_month = $game_files->getNextMonth($selected_date)->format('F');
+        $selected_date = $game_files->getLastDate();
+        if ($selected_date) {
+            $selected_year = $selected_date->format('Y');
+            $selected_month = $selected_date->format('n');
+            $month_name = $selected_date->format('F');
+            // Populate current, previous, and next dates
+            if ($game_files->getNextMonth($selected_date) == $selected_date) {
+                $next_disabled = 'disabled';
+                $next_month = $selected_date->modify('+1 month')->format('F');
+            } else {
+                $next_disabled = '';
+                $next_month = $game_files->getNextMonth($selected_date)->format('F');
+            }
+            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+                $prev_disabled = 'disabled';
+                $prev_month = $selected_date->modify('-1 month')->format('F');
+            } else {
+                $prev_disabled = '';
+                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            }
+            $nav_elements =
+                '<div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
+                    <nav class="text-nowrap">
+                            <button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>
+                            <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>
+                    </nav>
+                </div>';
         }
-        if ($game_files->getPrevMonth($selected_date) == $selected_date) {
-            $prev_disabled = 'disabled';
-            $prev_month = $selected_date->modify('-1 month')->format('F');
-        } else {
-            $prev_disabled = '';
-            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+        else {
+            error_log("Can not generate full month selection elements for the sessions chart in gamedata.php, did not get a valid selected date!\n\$selected_date=".strval($selected_date));
         }
     }
-    else {
-        error_log("Can not generate full month selection elements for the sessions chart in gamedata.php, did not get a valid selected date!\n\$selected_date=".strval($selected_date));
-    }
-    $nav_elements = isset($game_files) ? 
-        '<div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
-            <nav class="text-nowrap">
-                    <button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>
-                    <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>
-            </nav>
-        </div>'
-        : '';
-    return '<section id="monthly-sessions-chart">
+    $ret_val =
+    '<section id="monthly-sessions-chart">
         <div class="row mb-3">
             <div class="col">
                 <h3 class="mb-0">Monthly Player Activity</h3>
@@ -152,8 +157,8 @@ function renderChartSection(?GameFileInfo $game_files) {
             </div>
         </div>'
         .$nav_elements.
-    '</div>
-    ';
+    '</div>';
+    return $ret_val;
 }
 
 function generatePipelineButtons(?GameFileInfo $game_files)
