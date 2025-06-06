@@ -1,6 +1,9 @@
 <?php
 namespace services;
 
+use GameFileInfo;
+use GameUsage;
+
 require_once 'models/APIResponse.php';
 require_once 'models/GameFileInfo.php';
 require_once 'models/GameUsage.php';
@@ -31,7 +34,7 @@ function getGameDetails(string $game_id)
  * <param> string year - optional
  * <param> string month - optional
  */
-function getGameUsageByMonth($game_id, $year = null, $month = null)
+function getGameUsageByMonth(string $game_id, $year = null, $month = null): ?GameUsage
 {
     $ret_val = null;
 
@@ -76,7 +79,7 @@ function getGameUsageByMonth($game_id, $year = null, $month = null)
  * <param> string year --optional
  * <param> string month --optional
  */
-function getGameFileInfoByMonth($game_id, $year = null, $month = null)
+function getGameFileInfoByMonth(string $game_id, $year = null, $month = null) : ?GameFileInfo
 {
     $ret_val = null;
 
@@ -120,7 +123,7 @@ function getGameFileInfoByMonth($game_id, $year = null, $month = null)
 /* Get game usage from API
  * <param> string game_id
  */
-function getGameUsage($game_id)
+function getGameUsage(string $game_id): ?GameUsage
 {
     $params = array(
         'game_id' => $game_id
