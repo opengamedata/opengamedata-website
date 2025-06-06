@@ -85,6 +85,16 @@ class GameFileInfo
     {
         return $this->last_year;
     }
+    public function getLastDate() : ?DateTimeImmutable
+    {
+        $ret_val = null;
+
+        if ($this->getLastYear() && $this->getLastMonth()) {
+            $ret_val = DateTimeImmutable::createFromFormat('Y-n-j|', $this->getLastYear().'-'.$this->getLastMonth().'-1');
+        }
+
+        return $ret_val;
+    }
     public function getFoundRange()
     {
         return $this->found_matching_range;
