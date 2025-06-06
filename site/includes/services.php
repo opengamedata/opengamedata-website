@@ -2,11 +2,12 @@
 namespace services;
 
 require_once 'models/APIResponse.php';
+require_once 'models/GameDetails.php';
 require_once 'models/GameFileInfo.php';
 require_once 'models/GameUsage.php';
 
 /* Get Games from game_list
- * Returns list as JSON or false
+ * Returns list or false
  */ 
 function getGameList()
 { 
@@ -16,14 +17,14 @@ function getGameList()
 
 /* Get single game details from game_list
  * <param> string game_id
- * Returns Array object associated with given game_id
+ * Returns Array object associated with given game_id or null
  */
 function getGameDetails(string $game_id)
 {
     // Get full list of games
     $game_list = getGameList();
-    // API will return just one game, for now access $game_id and re-encode json
-    return !empty($game_list->{$game_id}) ? $game_list->{$game_id} : false;
+    // API will return just one game, for now access $game_id and return contents
+    return !empty($game_list->{$game_id}) ? \GameDetails::fromArray($game_id, $game_list->{$game_id}) : null;
 }
 
 /* Get game usage from API
@@ -31,7 +32,7 @@ function getGameDetails(string $game_id)
  * <param> string year - optional
  * <param> string month - optional
  */
-function getGameUsageByMonth($game_id, $year = null, $month = null)
+function getGameUsageByMonth(string $game_id, $year = null, $month = null): ?\GameUsage
 {
     $ret_val = null;
 
@@ -76,7 +77,7 @@ function getGameUsageByMonth($game_id, $year = null, $month = null)
  * <param> string year --optional
  * <param> string month --optional
  */
-function getGameFileInfoByMonth($game_id, $year = null, $month = null)
+function getGameFileInfoByMonth(string $game_id, $year = null, $month = null) : ?\GameFileInfo
 {
     $ret_val = null;
 
@@ -120,7 +121,7 @@ function getGameFileInfoByMonth($game_id, $year = null, $month = null)
 /* Get game usage from API
  * <param> string game_id
  */
-function getGameUsage($game_id)
+function getGameUsage(string $game_id): ?\GameUsage
 {
     $params = array(
         'game_id' => $game_id

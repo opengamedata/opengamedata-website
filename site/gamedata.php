@@ -8,34 +8,19 @@ require_once 'components/PipelineButton.php';
 
 // Declare variables
 $game_id = null;
-$game = null;
+$game_details = null;
 $game_files = null;
 
-$month_name = null;
-$prev_month = null;
-$next_month = null;
-$prev_disabled = null;
-$next_disabled = null;
-$selected_year = null;
-$selected_month = null;
-$raw_files = [];
-$detectors_files = [];
-$event_files = [];
-$extractors_files = [];
-$feature_files = [];
-
-$game_json = null;
+$buttons = null;
+$have_no_files = true;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
+    // 1. sanitize game ID by removing any characters that aren't alpha-numeric or an underscore
     $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9-_]+/", "", $_GET['game']));
-    
-    // 1. Get game details from the game_list file.
-    $game_json = services\getGameDetails($game_id);
-    $game = $game_json ? GameDetails::fromArray($game_id, $game_json) : null;
-   
-
-    // 2. Get game file info from API
+    // 2. Get game details from the game_list file.
+    $game_details = services\getGameDetails($game_id);
+    // 3. Get game file info from API
     /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
        "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
        and will say "that's alright good buddy, I'll just give you info on the most recent month."
@@ -43,61 +28,20 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
        But not fixing yet because leaving a hack in place is easier than fucking around with which end is responsible for what.
     */
     $game_files = services\getGameFileInfoByMonth($game_id);
-
     if (isset($game_files)) {
-        $selected_year = $game_files->getLastYear() ?? '';
-        $selected_month = $game_files->getLastMonth() ?? '';
-        $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-        if ($selected_date != false) {
-            $month_name = $selected_date->format('F');
-        }
-        // Populate current, previous, and next dates
-        if ($game_files->getNextMonth($selected_date) == $selected_date) {
-            $next_disabled = 'disabled';
-            $next_month = $selected_date->modify('+1 month')->format('F');
-        } else {
-            $next_disabled = '';
-            $next_month = $game_files->getNextMonth($selected_date)->format('F');
-        }
-        if ($selected_date != false && $game_files->getPrevMonth($selected_date) == $selected_date) {
-            $prev_disabled = 'disabled';
-            $prev_month = $selected_date->modify('-1 month')->format('F');
-        } else {
-            $prev_disabled = '';
-            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
-        }
-
-        $raw_files        = $game_files->getRawFile()       ? array('Raw Data' => $game_files->getRawFile())             : [];
-        $detectors_files  = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink())      : [];
-        $event_files      = $game_files->getEventsFile()    ? array('Calculated Events' => $game_files->getEventsFile()) : [];
-        $extractors_files = $game_files->getFeaturesLink()  ? array('Extractors' => $game_files->getFeaturesLink())      : []; // aka Extractors or Feature Extractors
-        $feature_files    = $game_files->getFeatureFiles()  ? $game_files->getFeatureFiles()                             : [];
+        // Determine if we don't have files for the selected month
+        $have_no_files = $game_files->getRawFile() == false
+                    // detectors link wasn't included in original logic, need to determine if that was a bug or if there was reason for not considering it.
+                    //   && $game_files->getDetectorsLink() == false
+                      && $game_files->getEventsFile() == false
+                      && $game_files->getFeaturesLink() == false
+                      && $game_files->getFeatureFiles() == false;
     }
     else {
         $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
         error_log($err_str);
     }
-    
-    // Create Pipeline buttons (including the transition buttons)
-
-    // $title, $image, $image_active, $selector, $file_links, $month, $text, $is_a_transition_button)
-    $button_raw = new PipelineButton('Raw Data', 'pipeline-raw.svg', 'pipeline-raw-active.svg', 'raw',
-        $raw_files, $month_name, 'Time-sequenced data as provided by the game directly. Includes player events, system feedback and game progression.', count($raw_files) > 0, false);
-
-    $button_detectors = new PipelineButton('Detectors', 'pipeline-transform-btn.png', 'pipeline-transform-active.svg', 'detector',
-         $detectors_files, $month_name, '', count($raw_files) == 0 && count($detectors_files) > 0, true);
-
-    $button_event = new PipelineButton('Calculated Events', 'pipeline-event.svg', 'pipeline-event-active.svg', 'event', 
-        $event_files, $month_name, 'Raw time-sequenced data interwoven with with events generated by automated detectors.', count($raw_files) === 0 && count($detectors_files) === 0 && count($event_files) > 0, false);
-
-    $button_extractors = new PipelineButton('Extractors', 'pipeline-transform-btn.png', 'pipeline-transform-active.svg', 'extractor',
-        $extractors_files, $month_name, '', count($raw_files) == 0 && count($detectors_files) === 0 && count($event_files) === 0 && count($extractors_files) > 0, true);
-
-    $button_feature = new PipelineButton('Feature Data', 'pipeline-feature.svg', 'pipeline-feature-active.svg', 'feature',
-        $feature_files, $month_name, 'Feature-engineered data that describe game-play at different levels of aggregation.', count($raw_files) === 0 && count($event_files) === 0 && count($extractors_files) === 0 && count($feature_files) > 0, false);
-
-    // If we don't have files for the selected month
-    $have_no_files = count($raw_files) === 0 && count($event_files) === 0 && count($extractors_files) === 0 && count($feature_files) == 0;
+    $buttons = generatePipelineButtons($game_files, $selected_date);
 
 }
 else {
@@ -106,158 +50,304 @@ else {
 }
 
 ?>
-<?php require 'includes/header.php'; ?>
-<main id="gamedata" class="container-fluid">
-    <?php if (isset($game)) : ?>
-    <section>
-        <div class="row mb-5">
-            <div class="col-md-7 my-auto">
-                <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
-                <div class="d-flex align-items-center mb-3">
-                    <img class="avatar" src="assets/extern/images/logos/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
-                    <div class="button-bar">
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
-                        <?php if (count($game->getPublications()) > 0) : ?>
-                            <a class="btn btn-secondary" href="#publications">Publications</a>
-                        <?php endif ?> 
-                    </div>
-                </div>
-                <p>
-                    <?php echo htmlspecialchars($game->getDescription()) ?>
-                </p>
+<?php
+function renderOverviewSection(?GameDetails $game_details)
+{
+    $overview_elem = '<div class="col-md-7 my-auto">NO OVERVIEW AVAILABLE, GAME DETAILS NOT FOUND!</div>';
+    $thumb_elem    = '<img class="img-fluid rounded" src="./assets/exter/images/graphics/robohead-512.png">';
+
+    if (isset($game_details)) {
+        $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
+        $overview_elem = 
+        '<div class="col-md-7 my-auto">
+            <h2>'.htmlspecialchars($game_details->getName()).'</h2>
+            <div class="d-flex align-items-center mb-3">
+                <img class="avatar" src="assets/extern/images/logos/'.htmlspecialchars($game_details->getDeveloperIconFilename()).'">
+                <div class="button-bar">
+                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>
+                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>
+                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getSourceLink()) . '" target="_blank">Source Code</a>'
+                    . $publications_link .
+                '</div>
             </div>
-            <div class="col">
-                <?php echo '<img class="img-fluid rounded" src="' . htmlspecialchars($game->getThumbPath()) . '">'; ?>
-            </div>
+            <p>'
+                .htmlspecialchars($game_details->getDescription()).
+            '</p>
+        </div>';
+        $thumb_elem = '<img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">';
+    }
+    
+    return 
+    '<section id="game-overview">
+        <div class="row mb-5">'.
+            $overview_elem.'\n'.
+            '<div class="col">'.'\n'.
+                $thumb_elem.'\n'.
+            '</div>
         </div>
-    </section>
-    <section>
+    </section>';
+
+}
+
+function renderChartSection(?GameFileInfo $game_files) {
+    $ret_val = '<section id="monthly-sessions-chart">NO CHART AVAILABLE, GAME DETAILS NOT FOUND!</section>';
+
+    $nav_elements = '';
+    $selected_year = null;
+    $selected_month = null;
+    $month_name = null;
+    if (isset($game_files)) {
+
+        $prev_month = null;
+        $next_month = null;
+        $prev_disabled = null;
+        $next_disabled = null;
+
+        $selected_date = $game_files->getLastDate();
+        if ($selected_date) {
+            $selected_year = $selected_date->format('Y');
+            $selected_month = $selected_date->format('n');
+            $month_name = $selected_date->format('F');
+            // Populate current, previous, and next dates
+            if ($game_files->getNextMonth($selected_date) == $selected_date) {
+                $next_disabled = 'disabled';
+                $next_month = $selected_date->modify('+1 month')->format('F');
+            } else {
+                $next_disabled = '';
+                $next_month = $game_files->getNextMonth($selected_date)->format('F');
+            }
+            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+                $prev_disabled = 'disabled';
+                $prev_month = $selected_date->modify('-1 month')->format('F');
+            } else {
+                $prev_disabled = '';
+                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            }
+            $nav_elements =
+                '<div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
+                    <nav class="text-nowrap">
+                            <button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>
+                            <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>
+                    </nav>
+                </div>';
+        }
+        else {
+            error_log("Can not generate full month selection elements for the sessions chart in gamedata.php, did not get a valid selected date!\n\$selected_date=".strval($selected_date));
+        }
+    }
+    $ret_val =
+    '<section id="monthly-sessions-chart">
         <div class="row mb-3">
             <div class="col">
                 <h3 class="mb-0">Monthly Player Activity</h3>
             </div>
         </div>
         <!-- Chart -->
-        <?php require 'includes/chart.php'; ?>
+        <div class="position-relative">    
+            <div id="chart-wrapper" class="position-relative">
+                <div id="chart" class="position-relative">
+                    <canvas id="activityChart" style="height: 0;"></canvas>
+                </div>
+            </div>
+            <canvas id="chartYAxis" height="0" width="0"></canvas>
+        </div>
+        <script src="assets/scripts/chart.umd.js"></script>
+        <script type="module" src="assets/scripts/chart.js"></script>
     </section>
-    
     <div class="row mb-5 gy-2 ms-1">
-        <div class="<?php echo (isset($game_files) ? 'col' : 'me-1 col'); ?>">
-            <div class="bg-primary rounded row" id="stats" data-year="<?php echo $selected_year; ?>" data-month="<?php echo $selected_month; ?>">
-                <div class="col" id="stats-header"><?php echo htmlspecialchars($month_name . ' ' . $selected_year); ?></div>
+        <div class="'.isset($game_files) ? 'col' : 'me-1 col'.'">
+            <div class="bg-primary rounded row" id="stats" data-year="'.$selected_year.'" data-month="'.$selected_month.'">
+                <div class="col" id="stats-header">'.htmlspecialchars($month_name . ' ' . $selected_year).'</div>
                 <div class="col text-end" id="num-plays">No Plays</div>
             </div>
+        </div>'
+        .$nav_elements.
+    '</div>';
+    return $ret_val;
+}
+
+function generatePipelineButtons(?GameFileInfo $game_files)
+{
+    $raw_files = [];
+    $detectors_files = [];
+    $event_files = [];
+    $extractors_files = [];
+    $feature_files = [];
+
+    if (isset($game_files)) {
+        $raw_files        = $game_files->getRawFile()       ? array('Raw Data' => $game_files->getRawFile())             : [];
+        $detectors_files  = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink())      : [];
+        $event_files      = $game_files->getEventsFile()    ? array('Calculated Events' => $game_files->getEventsFile()) : [];
+        $extractors_files = $game_files->getFeaturesLink()  ? array('Extractors' => $game_files->getFeaturesLink())      : []; // aka Extractors or Feature Extractors
+        $feature_files    = $game_files->getFeatureFiles()  ? $game_files->getFeatureFiles()                             : [];
+    }
+
+    $month_name = $game_files->getLastDate() ? $game_files->getLastDate()->format('F') : "NO MONTH AVAILABLE";
+
+    // Create Pipeline buttons (including the transition buttons)
+    // $title, $image, $image_active, $selector, $file_links, $month, $text, $is_active, $is_a_transition_button)
+    $raw_description      = 'Time-sequenced data as provided by the game directly. Includes player events, system feedback and game progression.';
+    $events_description   = 'Raw time-sequenced data interwoven with with events generated by automated detectors.';
+    $features_description = 'Feature-engineered data that describe game-play at different levels of aggregation.';
+    return [
+        "raw"
+        => new PipelineButton('Raw Data', 'pipeline-raw.svg', 'pipeline-raw-active.svg',
+                                'raw', $raw_files, $month_name, $raw_description,
+                                count($raw_files) > 0,
+                                false
+        ),
+        "detectors"
+        => new PipelineButton('Detectors', 'pipeline-transform-btn.png', 'pipeline-transform-active.svg',
+                                'detector', $detectors_files, $month_name, '',
+                                count($raw_files) == 0 && count($detectors_files) > 0,
+                                true
+        ),
+        "events"
+        => new PipelineButton('Calculated Events', 'pipeline-event.svg', 'pipeline-event-active.svg',
+                                'event', $event_files, $month_name, $events_description,
+                                count($raw_files) === 0 && count($detectors_files) === 0 && count($event_files) > 0,
+                                false
+        ),
+        "extractors"
+        => new PipelineButton('Extractors', 'pipeline-transform-btn.png', 'pipeline-transform-active.svg',
+                                'extractor', $extractors_files, $month_name, '',
+                                count($raw_files) == 0 && count($detectors_files) === 0 && count($event_files) === 0 && count($extractors_files) > 0,
+                                true
+        ),
+        "features"
+        => new PipelineButton('Feature Data', 'pipeline-feature.svg', 'pipeline-feature-active.svg',
+                                'feature', $feature_files, $month_name, $features_description,
+                                count($raw_files) === 0 && count($event_files) === 0 && count($extractors_files) === 0 && count($feature_files) > 0,
+                                false
+        )
+    ];
+}
+
+function renderPipelineSection(?GameDetails $game_details, ?DateTimeImmutable $selected_date, array $buttons)
+{
+    $month_element = $selected_date ? ('<div id="pipeline-month">Month of '.$selected_date->format('n').'</div>') : '<div id="pipeline-month"></div>';
+
+    return '<section id="pipelines" class="'. count($game_details->getPublications()) > 0 ? '' : ' mb-5'.'">
+        <!-- Data Pipeline -->
+        <div class="pipelines-wrapper">
+            <div class="pipelines-container">
+                <h3 id="pipeline-header">Data Pipeline</h3>' . '\n'
+                . $month_element . '\n' .
+                '<div class="pipeline-segments-wrapper mt-2">' . '\n'
+                    . $buttons["raw"]->renderPipelineSegment()       . '\n'
+                    . $buttons["detectors"]->renderPipelineSegment() . '\n'
+                    . $buttons["events"]->renderPipelineSegment()    . '\n'
+                    . $buttons["extractors"]->renderPipelineSegment(). '\n'
+                    . $buttons["features"]->renderPipelineSegment()  . '\n' .
+                '</div>
+            </div>
         </div>
-        <?php if (isset($game_files)) : ?>
-        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
-            <nav class="text-nowrap">
-                    <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
-                    <?php echo '<button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
-            </nav>
+    </section>';
+}
+
+function renderPipelineTargetSection(bool $have_no_files, ?DateTimeImmutable $selected_date, array $buttons)
+{
+    $month_name = $selected_date ? htmlspecialchars( $selected_date->format('n') ) : null;
+    $month_element  = $selected_date ? '<p class="pipeline-target-month">Month of '.$month_name.'</p>' : '<p class="pipeline-target-month"></p>';
+    $nodata_element = $selected_date ? '<p id="pipeline-target-no-data-for-month">There is currently no data for the month of '.$month_name.'.</p>' : '<p id="pipeline-target-no-data-for-month">There is currently no data.</p>';
+
+    return '<section id="pipeline-target">
+        
+        <div class="pipeline-target-block' . $have_no_files ? '' : ' d-none' . '" id="pipeline-target-none">
+            <div class="d-flex">
+                <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
+                <div id="pipeline-target-summary">
+                    <h3>No Data</h3>' . '\n' .
+                    $month_element . '\n' .
+                '</div>
+            </div>' . '\n' .
+            $nodata_element . '\n' .
+        '</div>' . '\n' .
+        $buttons["raw"]->renderPipelineTarget()       . '\n' .
+        $buttons["detectors"]->renderPipelineTarget() . '\n' .
+        $buttons["events"]->renderPipelineTarget()    . '\n' .
+        $buttons["extractors"]->renderPipelineTarget(). '\n' .
+        $buttons["features"]->renderPipelineTarget()  . '\n' .
+    '</section>';
+}
+
+function renderTemplatesSection(?GameFileInfo $game_files)
+{
+    $events_class   = isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none';
+    $players_class  = isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none';
+    $pop_class      = isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none';
+    $sessions_class = isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none';
+
+    $events_template   = isset($game_files) ? $game_files->getEventsTemplate()     : '';
+    $players_template  = isset($game_files) ? $game_files->getPlayersTemplate()    : '';
+    $pop_template      = isset($game_files) ? $game_files->getPopulationTemplate() : '';
+    $sessions_template = isset($game_files) ? $game_files->getSessionsTemplate()   : '';
+
+    return '<section id="templates" class="mb-5">
+        <!-- Templates -->
+        <h3>Templates</h3>
+        <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+
+        <div class="btn-group-vertical">
+            <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2'.$events_class.'" href="'.htmlspecialchars($events_template).'">Events Template</a>
+            <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2'.$players_class.'" href="'.htmlspecialchars($players_template).'">Player Features Template</a>
+            <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2'.$pop_class.'" href="'.htmlspecialchars($pop_template).'">Population Features Template</a>
+            <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2'.$sessions_class.'" href="'.htmlspecialchars($sessions_template).'">Session Features Template</a>
         </div>
-        <?php endif; ?>
-    </div>
+
+    </section>';
+}
+
+function renderPublicationsSection(?GameDetails $game_details)
+{
+    $elements = ["foo", "bar"];
+    foreach ($game_details->getPublications() as $value) {
+        echo '<li class="mb-4 d-flex align-items-start">
+                <img class="me-3" src="assets/images/icons/publication.svg">
+                <div>'. $value->getFormattedPublication() . '</div>
+            </li>';
+    }
+    $publications = implode("\n", $elements);
+
+    return '<section id="publications" class="mb-5">
+        <!-- Publications -->
+        <h3>Publications</h3>
+        <ul class="list-unstyled mt-4">'
+            . $publications .
+        '</ul>
+    </section>';
+}
+?>
+<?php require 'includes/header.php'; ?>
+<main id="gamedata" class="container-fluid">
+<?php if (isset($game_details)) : ?>
+    <?php echo renderOverviewSection($game_details) ?>
+    <?php echo renderChartSection($game_files, $selected_date) ?>
     
     <div class="row mb-5">
         <div class="col-md col-lg-5">
-            <section id="pipelines" class="<?php echo count($game->getPublications()) > 0 ? '' : ' mb-5'; ?>">
-                <!-- Data Pipeline -->
-                <div class="pipelines-wrapper">
-                    <div class="pipelines-container">
-                        <h3 id="pipeline-header">Data Pipeline</h3>
-
-                        <?php if($month_name): ?>
-                            <div id="pipeline-month">Month of <?php echo $month_name ?></div>
-                        <?php else: ?>
-                            <div id="pipeline-month"></div>
-                        <?php endif; ?>
-
-                        <div class="pipeline-segments-wrapper mt-2">
-                            <?php echo $button_raw->renderPipelineSegment(); ?>
-                            <?php echo $button_detectors->renderPipelineSegment(); ?>
-                            <?php echo $button_event->renderPipelineSegment(); ?>
-                            <?php echo $button_extractors->renderPipelineSegment(); ?>
-                            <?php echo $button_feature->renderPipelineSegment(); ?>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <?php echo renderPipelineSection($game_details, $month_name, $buttons) ?>
         </div>
         <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
-            <section id="pipeline-target">
-                
-                <div class="pipeline-target-block<?php echo ($have_no_files ? '' : ' d-none'); ?>" id="pipeline-target-none">
-                    <div class="d-flex">
-                        <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
-                        <div id="pipeline-target-summary">
-                            <h3>No Data</h3>
-                            <?php if($month_name): ?>
-                                <p class="pipeline-target-month">Month of <?php echo htmlspecialchars($month_name); ?></p>
-                            <?php else: ?>
-                                <p class="pipeline-target-month"></p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <?php if($month_name): ?>
-                        <p id="pipeline-target-no-data-for-month">There is currently no data for the month of <?php echo htmlspecialchars($month_name); ?>.</p>
-                    <?php else: ?>
-                        <p id="pipeline-target-no-data-for-month">There is currently no data.</p>
-                    <?php endif; ?>
-                </div>
-
-                <?php echo $button_raw->renderPipelineTarget(); ?>
-                <?php echo $button_detectors->renderPipelineTarget(); ?>
-                <?php echo $button_event->renderPipelineTarget(); ?>
-                <?php echo $button_extractors->renderPipelineTarget(); ?>
-                <?php echo $button_feature->renderPipelineTarget(); ?>
-                
-            </section>
+            <?php echo renderPipelineTargetSection($have_no_files, $month_name, $buttons) ?>
             <hr>                
-            <section id="templates" class="mb-5">
-                <!-- Templates -->
-                <h3>Templates</h3>
-                <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+            <?php renderTemplatesSection($game_files) ?>
 
-                <div class="btn-group-vertical">
-                    <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2<?php     echo (isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getEventsTemplate()     : ""); ?>">Events Template</a>
-                    <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2<?php    echo (isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPlayersTemplate()    : ""); ?>">Player Features Template</a>
-                    <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2<?php echo (isset($game_files) && $game_files->getPopulationTemplate() ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getPopulationTemplate() : ""); ?>">Population Features Template</a>
-                    <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2<?php   echo (isset($game_files) && $game_files->getSessionsTemplate()   ? '' : ' d-none'); ?>" href="<?php echo htmlspecialchars(isset($game_files) ? $game_files->getSessionsTemplate()   : ""); ?>">Session Features Template</a>
-                </div>
-
-            </section>
-
-           
+        
         </div> <!-- end column -->
     </div> <!-- end row --> 
-
-    <?php if (count($game->getPublications()) > 0) : ?>
-    <hr>
-    <div class="row mb-5 mt-3">
-        <div class="col-md">
-            <section id="publications" class="mb-5">
-                <!-- Publications -->
-                <h3>Publications</h3>
-                <ul class="list-unstyled mt-4">
-                <?php
-                    foreach ($game->getPublications() as $value) {
-                        echo '<li class="mb-4 d-flex align-items-start">
-                                <img class="me-3" src="assets/images/icons/publication.svg">
-                                <div>'. $value->getFormattedPublication() . '</div>
-                            </li>';
-                    }
-                ?>
-                </ul>
-            </section>
+    <?php if (count($game_details->getPublications()) > 0) : ?>
+        <hr>
+        <div class="row mb-5 mt-3">
+            <div class="col-md">
+                <?php renderPublicationsSection($game_details) ?>
+            </div>
         </div>
-    </div>
     <?php endif; ?>
 
-    <?php else : 
-        echo '<h2 class="h3">No game data available.</h2>';
-    endif; ?>
+<?php else : 
+    echo '<h2 class="h3">No game data available.</h2>';
+endif; ?>
 </main>
 <script type="module" src="assets/scripts/services.js"></script>
 <script type="module" src="assets/scripts/game_usage.js"></script>
