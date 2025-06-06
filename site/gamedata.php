@@ -106,42 +106,51 @@ else {
 }
 
 ?>
-<?php require 'includes/header.php'; ?>
-<main id="gamedata" class="container-fluid">
-    <?php if (isset($game)) : ?>
-    <section>
+<?php
+function renderOverviewSection($game_details)
+{
+    $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
+    return '<section id="game-overview">
         <div class="row mb-5">
             <div class="col-md-7 my-auto">
                 <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
                 <div class="d-flex align-items-center mb-3">
                     <img class="avatar" src="assets/extern/images/logos/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
                     <div class="button-bar">
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game->getDeveloperName()) . '</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getPlayLink()) . '" target="_blank">Play Game</a>'; ?>
-                        <?php echo '<a class="btn btn-secondary" href="' . htmlspecialchars($game->getSourceLink()) . '" target="_blank">Source Code</a>'; ?>
-                        <?php if (count($game->getPublications()) > 0) : ?>
-                            <a class="btn btn-secondary" href="#publications">Publications</a>
-                        <?php endif ?> 
-                    </div>
+                        <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>
+                        <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>
+                        <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getSourceLink()) . '" target="_blank">Source Code</a>'
+                        . $publications_link .
+                    '</div>
                 </div>
                 <p>
                     <?php echo htmlspecialchars($game->getDescription()) ?>
                 </p>
             </div>
             <div class="col">
-                <?php echo '<img class="img-fluid rounded" src="' . htmlspecialchars($game->getThumbPath()) . '">'; ?>
+                <img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">
             </div>
         </div>
-    </section>
-    <section>
+    </section>';
+}
+
+function renderChartSection() {
+    return '<section id="monthly-sessions-chart">
         <div class="row mb-3">
             <div class="col">
                 <h3 class="mb-0">Monthly Player Activity</h3>
             </div>
         </div>
-        <!-- Chart -->
-        <?php require 'includes/chart.php'; ?>
-    </section>
+        <!-- Chart -->'
+        .require "includes/chart.php".'
+    </section>';
+}
+?>
+<?php require 'includes/header.php'; ?>
+<main id="gamedata" class="container-fluid">
+    <?php if (isset($game_details)) : ?>
+    <?php echo renderOverviewSection($game_details) ?>
+    <?php echo renderChartSection() ?>
     
     <div class="row mb-5 gy-2 ms-1">
         <div class="<?php echo (isset($game_files) ? 'col' : 'me-1 col'); ?>">
