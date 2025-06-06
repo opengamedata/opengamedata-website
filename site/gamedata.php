@@ -88,7 +88,7 @@ else {
 
 ?>
 <?php
-function renderOverviewSection(GameDetails $game_details)
+function renderOverviewSection(?GameDetails $game_details)
 {
     $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
     return '<section id="game-overview">
@@ -115,7 +115,7 @@ function renderOverviewSection(GameDetails $game_details)
     </section>';
 }
 
-function renderChartSection($game_files, DateTimeImmutable $selected_date) {
+function renderChartSection($game_files, ?DateTimeImmutable $selected_date) {
     $selected_year = null;
     $selected_month = null;
     $month_name = null;
@@ -186,7 +186,7 @@ function renderChartSection($game_files, DateTimeImmutable $selected_date) {
     ';
 }
 
-function renderPipelineSection(GameDetails $game_details, ?DateTimeImmutable $selected_date, array $buttons) {
+function renderPipelineSection(?GameDetails $game_details, ?DateTimeImmutable $selected_date, array $buttons) {
     $month_element = $selected_date ? ('<div id="pipeline-month">Month of '.$selected_date->format('n').'</div>') : '<div id="pipeline-month"></div>';
 
     return '<section id="pipelines" class="'. count($game_details->getPublications()) > 0 ? '' : ' mb-5'.'">
@@ -233,7 +233,7 @@ function renderPipelineTargetSection(?DateTimeImmutable $selected_date, bool $ha
     '</section>';
 }
 
-function renderTemplatesSection(GameFileInfo $game_files)
+function renderTemplatesSection(?GameFileInfo $game_files)
 {
     $events_class   = isset($game_files) && $game_files->getEventsTemplate()     ? '' : ' d-none';
     $players_class  = isset($game_files) && $game_files->getPlayersTemplate()    ? '' : ' d-none';
@@ -260,7 +260,7 @@ function renderTemplatesSection(GameFileInfo $game_files)
     </section>';
 }
 
-function renderPublicationsSection(GameDetails $game_details)
+function renderPublicationsSection(?GameDetails $game_details)
 {
     $elements = ["foo", "bar"];
     foreach ($game_details->getPublications() as $value) {
