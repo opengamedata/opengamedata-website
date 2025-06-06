@@ -32,7 +32,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     
     // 1. Get game details from the game_list file.
     $game_json = services\getGameDetails($game_id);
-    $game = $game_json ? GameDetails::fromArray($game_id, $game_json) : null;
+    $game_details = $game_json ? GameDetails::fromArray($game_id, $game_json) : null;
    
 
     // 2. Get game file info from API
@@ -119,9 +119,9 @@ function renderOverviewSection($game_details)
     return '<section id="game-overview">
         <div class="row mb-5">
             <div class="col-md-7 my-auto">
-                <h2><?php echo htmlspecialchars($game->getName()) ?></h2>
+                <h2>'.htmlspecialchars($game_details->getName()).'</h2>
                 <div class="d-flex align-items-center mb-3">
-                    <img class="avatar" src="assets/extern/images/logos/<?php echo htmlspecialchars($game->getDeveloperIconFilename()); ?>">
+                    <img class="avatar" src="assets/extern/images/logos/'.htmlspecialchars($game_details->getDeveloperIconFilename()).'">
                     <div class="button-bar">
                         <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>
                         <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>
@@ -129,9 +129,9 @@ function renderOverviewSection($game_details)
                         . $publications_link .
                     '</div>
                 </div>
-                <p>
-                    <?php echo htmlspecialchars($game->getDescription()) ?>
-                </p>
+                <p>'
+                    .htmlspecialchars($game_details->getDescription()).
+                '</p>
             </div>
             <div class="col">
                 <img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">
@@ -152,10 +152,10 @@ function renderChartSection() {
     </section>';
 }
 
-function renderPipelineSection($game, $month_name, $buttons) {
+function renderPipelineSection($game_details, $month_name, $buttons) {
     $month_element = $month_name ? ('<div id="pipeline-month">Month of '.$month_name.'</div>') : '<div id="pipeline-month"></div>';
 
-    return '<section id="pipelines" class="'. count($game->getPublications()) > 0 ? '' : ' mb-5'.'">
+    return '<section id="pipelines" class="'. count($game_details->getPublications()) > 0 ? '' : ' mb-5'.'">
         <!-- Data Pipeline -->
         <div class="pipelines-wrapper">
             <div class="pipelines-container">
@@ -248,7 +248,7 @@ function renderPipelineTargetSection($month_name, $have_no_files, $buttons)
         </div> <!-- end column -->
     </div> <!-- end row --> 
 
-    <?php if (count($game->getPublications()) > 0) : ?>
+    <?php if (count($game_details->getPublications()) > 0) : ?>
     <hr>
     <div class="row mb-5 mt-3">
         <div class="col-md">
@@ -257,7 +257,7 @@ function renderPipelineTargetSection($month_name, $have_no_files, $buttons)
                 <h3>Publications</h3>
                 <ul class="list-unstyled mt-4">
                 <?php
-                    foreach ($game->getPublications() as $value) {
+                    foreach ($game_details->getPublications() as $value) {
                         echo '<li class="mb-4 d-flex align-items-start">
                                 <img class="me-3" src="assets/images/icons/publication.svg">
                                 <div>'. $value->getFormattedPublication() . '</div>
