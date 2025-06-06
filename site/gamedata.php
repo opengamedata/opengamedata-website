@@ -53,35 +53,40 @@ else {
 <?php
 function renderOverviewSection(?GameDetails $game_details)
 {
-    $ret_val = '<section id="game-overview">NO OVERVIEW AVAILABLE, GAME DETAILS NOT FOUND!</section>';
+    $overview_elem = '<div class="col-md-7 my-auto">NO OVERVIEW AVAILABLE, GAME DETAILS NOT FOUND!</div>';
+    $thumb_elem    = '<img class="img-fluid rounded" src="./assets/exter/images/graphics/robohead-512.png">';
 
     if (isset($game_details)) {
         $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
-        $ret_val = '<section id="game-overview">
-            <div class="row mb-5">
-                <div class="col-md-7 my-auto">
-                    <h2>'.htmlspecialchars($game_details->getName()).'</h2>
-                    <div class="d-flex align-items-center mb-3">
-                        <img class="avatar" src="assets/extern/images/logos/'.htmlspecialchars($game_details->getDeveloperIconFilename()).'">
-                        <div class="button-bar">
-                            <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>
-                            <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>
-                            <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getSourceLink()) . '" target="_blank">Source Code</a>'
-                            . $publications_link .
-                        '</div>
-                    </div>
-                    <p>'
-                        .htmlspecialchars($game_details->getDescription()).
-                    '</p>
-                </div>
-                <div class="col">
-                    <img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">
-                </div>
+        $overview_elem = 
+        '<div class="col-md-7 my-auto">
+            <h2>'.htmlspecialchars($game_details->getName()).'</h2>
+            <div class="d-flex align-items-center mb-3">
+                <img class="avatar" src="assets/extern/images/logos/'.htmlspecialchars($game_details->getDeveloperIconFilename()).'">
+                <div class="button-bar">
+                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>
+                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>
+                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getSourceLink()) . '" target="_blank">Source Code</a>'
+                    . $publications_link .
+                '</div>
             </div>
-        </section>';
+            <p>'
+                .htmlspecialchars($game_details->getDescription()).
+            '</p>
+        </div>';
+        $thumb_elem = '<img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">';
     }
     
-    return $ret_val;
+    return 
+    '<section id="game-overview">
+        <div class="row mb-5">'.
+            $overview_elem.'\n'.
+            '<div class="col">'.'\n'.
+                $thumb_elem.'\n'.
+            '</div>
+        </div>
+    </section>';
+
 }
 
 function renderChartSection(?GameFileInfo $game_files) {
