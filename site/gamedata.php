@@ -147,8 +147,17 @@ function renderChartSection() {
                 <h3 class="mb-0">Monthly Player Activity</h3>
             </div>
         </div>
-        <!-- Chart -->'
-        .require "includes/chart.php".'
+        <!-- Chart -->
+        <div class="position-relative">    
+            <div id="chart-wrapper" class="position-relative">
+                <div id="chart" class="position-relative">
+                    <canvas id="activityChart" style="height: 0;"></canvas>
+                </div>
+            </div>
+            <canvas id="chartYAxis" height="0" width="0"></canvas>
+        </div>
+        <script src="assets/scripts/chart.umd.js"></script>
+        <script type="module" src="assets/scripts/chart.js"></script>
     </section>';
 }
 
@@ -250,47 +259,47 @@ function renderPublicationsSection(GameDetails $game_details)
 <?php require 'includes/header.php'; ?>
 <main id="gamedata" class="container-fluid">
     <?php if (isset($game_details)) : ?>
-    <?php echo renderOverviewSection($game_details) ?>
-    <?php echo renderChartSection() ?>
-    
-    <div class="row mb-5 gy-2 ms-1">
-        <div class="<?php echo (isset($game_files) ? 'col' : 'me-1 col'); ?>">
-            <div class="bg-primary rounded row" id="stats" data-year="<?php echo $selected_year; ?>" data-month="<?php echo $selected_month; ?>">
-                <div class="col" id="stats-header"><?php echo htmlspecialchars($month_name . ' ' . $selected_year); ?></div>
-                <div class="col text-end" id="num-plays">No Plays</div>
+        <?php echo renderOverviewSection($game_details) ?>
+        <?php echo renderChartSection() ?>
+        
+        <div class="row mb-5 gy-2 ms-1">
+            <div class="<?php echo (isset($game_files) ? 'col' : 'me-1 col'); ?>">
+                <div class="bg-primary rounded row" id="stats" data-year="<?php echo $selected_year; ?>" data-month="<?php echo $selected_month; ?>">
+                    <div class="col" id="stats-header"><?php echo htmlspecialchars($month_name . ' ' . $selected_year); ?></div>
+                    <div class="col text-end" id="num-plays">No Plays</div>
+                </div>
+            </div>
+            <?php if (isset($game_files)) : ?>
+            <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
+                <nav class="text-nowrap">
+                        <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
+                        <?php echo '<button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
+                </nav>
+            </div>
+            <?php endif; ?>
+        </div>
+        
+        <div class="row mb-5">
+            <div class="col-md col-lg-5">
+            <?php echo renderPipelineSection($game_details, $month_name, $buttons) ?>
+            </div>
+            <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
+                <?php echo renderPipelineTargetSection($month_name, $have_no_files, $buttons) ?>
+                <hr>                
+                <?php renderTemplatesSection($game_files) ?>
+
+            
+            </div> <!-- end column -->
+        </div> <!-- end row --> 
+
+        <?php if (count($game_details->getPublications()) > 0) : ?>
+        <hr>
+        <div class="row mb-5 mt-3">
+            <div class="col-md">
+                <?php renderPublicationsSection($game_details) ?>
             </div>
         </div>
-        <?php if (isset($game_files)) : ?>
-        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
-            <nav class="text-nowrap">
-                    <?php echo '<button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>'; ?>
-                    <?php echo '<button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>'; ?>
-            </nav>
-        </div>
         <?php endif; ?>
-    </div>
-    
-    <div class="row mb-5">
-        <div class="col-md col-lg-5">
-        <?php echo renderPipelineSection($game_details, $month_name, $buttons) ?>
-        </div>
-        <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
-            <?php echo renderPipelineTargetSection($month_name, $have_no_files, $buttons) ?>
-            <hr>                
-            <?php renderTemplatesSection($game_files) ?>
-
-           
-        </div> <!-- end column -->
-    </div> <!-- end row --> 
-
-    <?php if (count($game_details->getPublications()) > 0) : ?>
-    <hr>
-    <div class="row mb-5 mt-3">
-        <div class="col-md">
-            <?php renderPublicationsSection($game_details) ?>
-        </div>
-    </div>
-    <?php endif; ?>
 
     <?php else : 
         echo '<h2 class="h3">No game data available.</h2>';
