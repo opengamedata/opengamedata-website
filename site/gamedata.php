@@ -28,12 +28,11 @@ $game_json = null;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
+    // sanitize game ID by removing any characters that aren't alpha-numeric or an underscore
     $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9-_]+/", "", $_GET['game']));
     
     // 1. Get game details from the game_list file.
-    $game_json = services\getGameDetails($game_id);
-    $game_details = $game_json ? GameDetails::fromArray($game_id, $game_json) : null;
-   
+    $game_details = services\getGameDetails($game_id);
 
     // 2. Get game file info from API
     /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
@@ -48,23 +47,23 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         $selected_year = $game_files->getLastYear() ?? '';
         $selected_month = $game_files->getLastMonth() ?? '';
         $selected_date = DateTimeImmutable::createFromFormat('Y-n-j|', $selected_year . '-' . $selected_month . '-1');
-        if ($selected_date != false) {
+        if (isset($selected_date) && $selected_date != false) {
             $month_name = $selected_date->format('F');
-        }
-        // Populate current, previous, and next dates
-        if ($game_files->getNextMonth($selected_date) == $selected_date) {
-            $next_disabled = 'disabled';
-            $next_month = $selected_date->modify('+1 month')->format('F');
-        } else {
-            $next_disabled = '';
-            $next_month = $game_files->getNextMonth($selected_date)->format('F');
-        }
-        if ($selected_date != false && $game_files->getPrevMonth($selected_date) == $selected_date) {
-            $prev_disabled = 'disabled';
-            $prev_month = $selected_date->modify('-1 month')->format('F');
-        } else {
-            $prev_disabled = '';
-            $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            // Populate current, previous, and next dates
+            if ($game_files->getNextMonth($selected_date) == $selected_date) {
+                $next_disabled = 'disabled';
+                $next_month = $selected_date->modify('+1 month')->format('F');
+            } else {
+                $next_disabled = '';
+                $next_month = $game_files->getNextMonth($selected_date)->format('F');
+            }
+            if ($game_files->getPrevMonth($selected_date) == $selected_date) {
+                $prev_disabled = 'disabled';
+                $prev_month = $selected_date->modify('-1 month')->format('F');
+            } else {
+                $prev_disabled = '';
+                $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
+            }
         }
 
         $raw_files        = $game_files->getRawFile()       ? array('Raw Data' => $game_files->getRawFile())             : [];
