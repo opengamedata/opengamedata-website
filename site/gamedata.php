@@ -145,6 +145,9 @@ function renderChartSection($game_files, DateTimeImmutable $selected_date) {
             $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
         }
     }
+    else {
+        error_log("Can not generate full month selection elements for the sessions chart in gamedata.php, did not get a valid selected date!\n\$selected_date=".strval($selected_date));
+    }
     $nav_elements = isset($game_files) ? 
         '<div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
             <nav class="text-nowrap">
