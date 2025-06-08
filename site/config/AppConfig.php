@@ -6,6 +6,7 @@ class AppConfig
     {
         // Set Api Url base string (populated in Github actions)
         $APP_CONFIG = [];
+        $APP_CONFIG['DISPLAY_VERSION'] = false;
         $APP_CONFIG['WEBSITE_API_URL_BASE'] = 'OGD_API_PATH_BASE';
 
         // If hostname starts with localhost

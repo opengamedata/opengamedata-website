@@ -41,6 +41,7 @@ jobs:
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
+        use_display_version: 'false'
     
   # 2. Build 
     - name: Install Node
