@@ -141,16 +141,19 @@ function renderChartSection(?GameFileInfo $game_files) {
                 $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
             }
             $play_count_class = 'col';
-            $play_count_element =
-                    '<div class="bg-primary rounded row" id="stats" data-year="'.$selected_year.'" data-month="'.$selected_month.'">
-                        <div class="col" id="stats-header">'.htmlspecialchars($month_name . ' ' . $selected_year).'</div>
-                        <div class="col text-end" id="num-plays">No Plays</div>
-                    </div>';
-            $nav_elements =
-                '<nav class="text-nowrap">
-                    <button id="month-prev" type="button" class="btn btn-outline-secondary" ' . $prev_disabled . '><i class="bi bi-chevron-left"></i> ' . $prev_month . '</button>
-                    <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" ' . $next_disabled . '>' . $next_month . ' <i class="bi bi-chevron-right"></i></button>
-                </nav>';
+            $date_name = htmlspecialchars($month_name . ' ' . $selected_year);
+            $play_count_element = <<<HTML
+                <div class="bg-primary rounded row" id="stats" data-year="'.$selected_year.'" data-month="'.$selected_month.'">
+                    <div class="col" id="stats-header">{$date_name}</div>
+                    <div class="col text-end" id="num-plays">No Plays</div>
+                </div>
+                HTML;
+            $nav_elements = <<<HTML
+                <nav class="text-nowrap">
+                    <button id="month-prev" type="button" class="btn btn-outline-secondary" {$prev_disabled}><i class="bi bi-chevron-left"></i>{$prev_month}</button>
+                    <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" {$next_disabled}>{$next_month}<i class="bi bi-chevron-right"></i></button>
+                </nav>
+                HTML;
         }
         else {
             error_log("Can not generate full month selection elements for the sessions chart in gamedata.php, did not get a valid selected date!\n\$selected_date=".strval($selected_date));
