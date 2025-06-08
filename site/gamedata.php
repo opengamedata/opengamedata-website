@@ -357,10 +357,10 @@ function renderPublicationsSection(?GameDetails $game_details)
     $publications = '<li class="mb-4 d-flex align-items-start">NO PUBLICATIONS AVAILABLE, GAME DETAILS NOT FOUND!</li>';
 
     if (isset($game_details)) {
-        // TODO : not done implementing
-        $elements = ["foo", "bar"];
+        $elements = [];
         foreach ($game_details->getPublications() as $value) {
-            echo '<li class="mb-4 d-flex align-items-start">
+            $elements[] =
+                '<li class="mb-4 d-flex align-items-start">
                     <img class="me-3" src="assets/images/icons/publication.svg">
                     <div>'. $value->getFormattedPublication() . '</div>
                 </li>';
