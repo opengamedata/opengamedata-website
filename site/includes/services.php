@@ -123,6 +123,8 @@ function getGameFileInfoByMonth(string $game_id, $year = null, $month = null) : 
  */
 function getGameUsage(string $game_id): ?\GameUsage
 {
+    $ret_val = null;
+
     $params = array(
         'game_id' => $game_id
     );
@@ -143,9 +145,8 @@ function getGameUsage(string $game_id): ?\GameUsage
         $response_object = $response_raw ? json_decode(($response_raw)) : null;
 
         $api_response = \APIResponse::fromObj($response_object);
-        $game_files = null;
         if ($api_response->Status() == "SUCCESS") {
-            $game_files = \GameUsage::fromObj($api_response->Value());
+            $ret_val = \GameUsage::fromObj($api_response->Value());
         }
         else {
             $err_str = "getGameUsage request, with game_id=".$game_id.", was unsuccessful:\n".$api_response->Message();
@@ -157,5 +158,5 @@ function getGameUsage(string $game_id): ?\GameUsage
         error_log($err_str);
     }
 
-    return $game_files;
+    return $ret_val;
 }
