@@ -87,7 +87,7 @@ function renderOverviewSection(?GameDetails $game_details)
                 </p>
             </div>
             HTML;
-        $thumb_elem = '<img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">';
+        $thumb_elem = '<img class="img-fluid rounded" src="' . $game_details->getThumbPath() . '">';
     }
     else {
         error_log("Can not generate all elements for the overview in gamedata.php, did not get a valid set of game details!");

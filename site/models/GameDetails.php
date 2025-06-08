@@ -63,9 +63,9 @@ class GameDetails
     {
         return $html_safe ? htmlspecialchars($this->source_link) : $this->source_link;
     }
-    public function getThumbPath()
+    public function getThumbPath(bool $html_safe = true) : ?string
     {
-        return $this->thumbnail_path;
+        return $html_safe ? htmlspecialchars($this->thumbnail_path) : $this->thumbnail_path;
     }
     public function getDeveloperName(bool $html_safe = true) : ?string
     {
