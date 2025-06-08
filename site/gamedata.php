@@ -383,7 +383,6 @@ function renderPublicationsSection(?GameDetails $game_details)
 <main id="gamedata" class="container-fluid">
     <?php echo renderOverviewSection($game_details); ?>
     <?php echo renderChartSection($game_files); ?>
-    
     <div class="row mb-5">
         <div class="col-md col-lg-5">
         <?php echo renderPipelineSection($game_details, $selected_date, $buttons); ?>
