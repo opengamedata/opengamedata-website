@@ -106,6 +106,7 @@ function renderOverviewSection(?GameDetails $game_details)
 
 function renderChartSection(?GameFileInfo $game_files) {
     $play_count_element = '<div class="bg-primary rounded row">NO PLAY COUNT AVAILABLE, GAME DETAILS NOT FOUND!</div>';
+    $play_count_class = 'me-1 col';
     $nav_elements = '<nav class="text-nowrap"></nav>';
 
     if (isset($game_files)) {
@@ -138,6 +139,7 @@ function renderChartSection(?GameFileInfo $game_files) {
                 $prev_disabled = '';
                 $prev_month = $game_files->getPrevMonth($selected_date)->format('F');
             }
+            $play_count_class = 'col';
             $play_count_element =
                     '<div class="bg-primary rounded row" id="stats" data-year="'.$selected_year.'" data-month="'.$selected_month.'">
                         <div class="col" id="stats-header">'.htmlspecialchars($month_name . ' ' . $selected_year).'</div>
@@ -173,7 +175,7 @@ function renderChartSection(?GameFileInfo $game_files) {
     <script type="module" src="assets/scripts/chart.js"></script>
 </section>
 <div class="row mb-5 gy-2 ms-1">
-    <div class="'.isset($game_files) ? 'col' : 'me-1 col'.'">'."\n".
+    <div class="'.$play_count_class.'">'."\n".
         $play_count_element."\n".
     '</div>
     <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'."\n".
