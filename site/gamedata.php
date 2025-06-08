@@ -95,9 +95,9 @@ function renderOverviewSection(?GameDetails $game_details)
     return 
     '<section id="game-overview">
         <div class="row mb-5">'.
-            $overview_elem.'\n'.
-            '<div class="col">'.'\n'.
-                $thumb_elem.'\n'.
+            $overview_elem."\n".
+            '<div class="col">'."\n".
+                $thumb_elem."\n".
             '</div>
         </div>
     </section>';
@@ -173,11 +173,11 @@ function renderChartSection(?GameFileInfo $game_files) {
         <script type="module" src="assets/scripts/chart.js"></script>
     </section>
     <div class="row mb-5 gy-2 ms-1">
-        <div class="'.isset($game_files) ? 'col' : 'me-1 col'.'">'.'\n'.
-            $play_count_element.'\n'.
+        <div class="'.isset($game_files) ? 'col' : 'me-1 col'.'">'."\n".
+            $play_count_element."\n".
         '</div>
-        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'.'\n'.
-            $nav_elements.'\n'.
+        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'."\n".
+            $nav_elements."\n".
         '</div>
     </div>';
 }
@@ -254,14 +254,14 @@ function renderPipelineSection(?GameDetails $game_details, ?DateTimeImmutable $s
         <!-- Data Pipeline -->
         <div class="pipelines-wrapper">
             <div class="pipelines-container">
-                <h3 id="pipeline-header">Data Pipeline</h3>' . '\n'
-                . $month_element . '\n' .
-                '<div class="pipeline-segments-wrapper mt-2">' . '\n'
-                    . $buttons["raw"]->renderPipelineSegment()       . '\n'
-                    . $buttons["detectors"]->renderPipelineSegment() . '\n'
-                    . $buttons["events"]->renderPipelineSegment()    . '\n'
-                    . $buttons["extractors"]->renderPipelineSegment(). '\n'
-                    . $buttons["features"]->renderPipelineSegment()  . '\n' .
+                <h3 id="pipeline-header">Data Pipeline</h3>' . "\n"
+                . $month_element . "\n" .
+                '<div class="pipeline-segments-wrapper mt-2">' . "\n"
+                    . $buttons["raw"]->renderPipelineSegment()       . "\n"
+                    . $buttons["detectors"]->renderPipelineSegment() . "\n"
+                    . $buttons["events"]->renderPipelineSegment()    . "\n"
+                    . $buttons["extractors"]->renderPipelineSegment(). "\n"
+                    . $buttons["features"]->renderPipelineSegment()  . "\n" .
                 '</div>
             </div>
         </div>
@@ -298,17 +298,17 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
             <div class="d-flex">
                 <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
                 <div id="pipeline-target-summary">
-                    <h3>No Data</h3>' . '\n' .
-                    $month_element . '\n' .
+                    <h3>No Data</h3>' . "\n" .
+                    $month_element . "\n" .
                 '</div>
-            </div>' . '\n' .
-            $nodata_element . '\n' .
-        '</div>' . '\n' .
-        $buttons["raw"]->renderPipelineTarget()       . '\n' .
-        $buttons["detectors"]->renderPipelineTarget() . '\n' .
-        $buttons["events"]->renderPipelineTarget()    . '\n' .
-        $buttons["extractors"]->renderPipelineTarget(). '\n' .
-        $buttons["features"]->renderPipelineTarget()  . '\n' .
+            </div>' . "\n" .
+            $nodata_element . "\n" .
+        '</div>' . "\n" .
+        $buttons["raw"]->renderPipelineTarget()       . "\n" .
+        $buttons["detectors"]->renderPipelineTarget() . "\n" .
+        $buttons["events"]->renderPipelineTarget()    . "\n" .
+        $buttons["extractors"]->renderPipelineTarget(). "\n" .
+        $buttons["features"]->renderPipelineTarget()  . "\n" .
     '</section>';
 }
 
