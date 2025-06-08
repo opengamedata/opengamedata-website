@@ -70,22 +70,23 @@ function renderOverviewSection(?GameDetails $game_details)
 
     if (isset($game_details)) {
         $publications_link = count($game_details->getPublications()) > 0 ? '<a class="btn btn-secondary" href="#publications">Publications</a>' : '';
-        $overview_elem = 
-        '<div class="col-md-7 my-auto">
-            <h2>'.htmlspecialchars($game_details->getName()).'</h2>
-            <div class="d-flex align-items-center mb-3">
-                <img class="avatar" src="assets/extern/images/logos/'.htmlspecialchars($game_details->getDeveloperIconFilename()).'">
-                <div class="button-bar">
-                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getDeveloperLink()) . '" target="_blank">Developer: ' . htmlspecialchars($game_details->getDeveloperName()) . '</a>
-                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getPlayLink()) . '" target="_blank">Play Game</a>
-                    <a class="btn btn-secondary" href="' . htmlspecialchars($game_details->getSourceLink()) . '" target="_blank">Source Code</a>'
-                    . $publications_link .
-                '</div>
+        $overview_elem = <<<HTML
+            <div class="col-md-7 my-auto">
+                <h2>{$game_details->getName()}</h2>
+                <div class="d-flex align-items-center mb-3">
+                    <img class="avatar" src="assets/extern/images/logos/{$game_details->getDeveloperIconFilename()}">
+                    <div class="button-bar">
+                        <a class="btn btn-secondary" href="{$game_details->getDeveloperLink()}" target="_blank">Developer: {$game_details->getDeveloperName()}</a>
+                        <a class="btn btn-secondary" href="{$game_details->getPlayLink()}" target="_blank">Play Game</a>
+                        <a class="btn btn-secondary" href="{$game_details->getSourceLink()}" target="_blank">Source Code</a>'
+                        {$publications_link}
+                    </div>
+                </div>
+                <p>
+                    {$game_details->getDescription()}
+                </p>
             </div>
-            <p>'
-                .htmlspecialchars($game_details->getDescription()).
-            '</p>
-        </div>';
+            HTML;
         $thumb_elem = '<img class="img-fluid rounded" src="' . htmlspecialchars($game_details->getThumbPath()) . '">';
     }
     else {
