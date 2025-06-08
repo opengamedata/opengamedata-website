@@ -375,7 +375,6 @@ function renderPublicationsSection(?GameDetails $game_details)
 ?>
 <?php require 'includes/header.php'; ?>
 <main id="gamedata" class="container-fluid">
-<?php if (isset($game_details)) : ?>
     <?php echo renderOverviewSection($game_details) ?>
     <?php echo renderChartSection($game_files, $selected_date) ?>
     
@@ -387,8 +386,6 @@ function renderPublicationsSection(?GameDetails $game_details)
             <?php echo renderPipelineTargetSection($have_no_files, $selected_date, $buttons) ?>
             <hr>                
             <?php renderTemplatesSection($game_files) ?>
-
-        
         </div> <!-- end column -->
     </div> <!-- end row --> 
     <?php if ( isset($game_details) && count($game_details->getPublications()) > 0 ) : ?>
@@ -399,10 +396,6 @@ function renderPublicationsSection(?GameDetails $game_details)
             </div>
         </div>
     <?php endif; ?>
-
-<?php else : 
-    echo '<h2 class="h3">No game data available.</h2>';
-endif; ?>
 </main>
 <script type="module" src="assets/scripts/services.js"></script>
 <script type="module" src="assets/scripts/game_usage.js"></script>
