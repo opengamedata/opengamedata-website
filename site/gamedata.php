@@ -93,15 +93,14 @@ function renderOverviewSection(?GameDetails $game_details)
     }
     
     return 
-    '<section id="game-overview">
-        <div class="row mb-5">'.
-            $overview_elem."\n".
-            '<div class="col">'."\n".
-                $thumb_elem."\n".
-            '</div>
-        </div>
-    </section>';
-
+'<section id="game-overview">
+    <div class="row mb-5">'.
+        $overview_elem.'\n'.
+        '<div class="col">'.'\n'.
+            $thumb_elem.'\n'.
+        '</div>
+    </div>
+</section>';
 }
 
 function renderChartSection(?GameFileInfo $game_files) {
@@ -154,32 +153,32 @@ function renderChartSection(?GameFileInfo $game_files) {
         }
     }
     return
-    '<section id="monthly-sessions-chart">
-        <div class="row mb-3">
-            <div class="col">
-                <h3 class="mb-0">Monthly Player Activity</h3>
+'<section id="monthly-sessions-chart">
+    <div class="row mb-3">
+        <div class="col">
+            <h3 class="mb-0">Monthly Player Activity</h3>
+        </div>
+    </div>
+    <!-- Chart -->
+    <div class="position-relative">    
+        <div id="chart-wrapper" class="position-relative">
+            <div id="chart" class="position-relative">
+                <canvas id="activityChart" style="height: 0;"></canvas>
             </div>
         </div>
-        <!-- Chart -->
-        <div class="position-relative">    
-            <div id="chart-wrapper" class="position-relative">
-                <div id="chart" class="position-relative">
-                    <canvas id="activityChart" style="height: 0;"></canvas>
-                </div>
-            </div>
-            <canvas id="chartYAxis" height="0" width="0"></canvas>
-        </div>
-        <script src="assets/scripts/chart.umd.js"></script>
-        <script type="module" src="assets/scripts/chart.js"></script>
-    </section>
-    <div class="row mb-5 gy-2 ms-1">
-        <div class="'.isset($game_files) ? 'col' : 'me-1 col'.'">'."\n".
-            $play_count_element."\n".
-        '</div>
-        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'."\n".
-            $nav_elements."\n".
-        '</div>
-    </div>';
+        <canvas id="chartYAxis" height="0" width="0"></canvas>
+    </div>
+    <script src="assets/scripts/chart.umd.js"></script>
+    <script type="module" src="assets/scripts/chart.js"></script>
+</section>
+<div class="row mb-5 gy-2 ms-1">
+    <div class="'.isset($game_files) ? 'col' : 'me-1 col'.'">'.'\n'.
+        $play_count_element.'\n'.
+    '</div>
+    <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'.'\n'.
+        $nav_elements.'\n'.
+    '</div>
+</div>';
 }
 
 function generatePipelineButtons(?GameFileInfo $game_files)
@@ -250,22 +249,22 @@ function renderPipelineSection(?GameDetails $game_details, ?DateTimeImmutable $s
                    : '<div id="pipeline-month"></div>';
 
     return
-    '<section id="pipelines" class="'.$section_class.'">
-        <!-- Data Pipeline -->
-        <div class="pipelines-wrapper">
-            <div class="pipelines-container">
-                <h3 id="pipeline-header">Data Pipeline</h3>' . "\n"
-                . $month_element . "\n" .
-                '<div class="pipeline-segments-wrapper mt-2">' . "\n"
-                    . $buttons["raw"]->renderPipelineSegment()       . "\n"
-                    . $buttons["detectors"]->renderPipelineSegment() . "\n"
-                    . $buttons["events"]->renderPipelineSegment()    . "\n"
-                    . $buttons["extractors"]->renderPipelineSegment(). "\n"
-                    . $buttons["features"]->renderPipelineSegment()  . "\n" .
-                '</div>
-            </div>
+'<section id="pipelines" class="'.$section_class.'">
+    <!-- Data Pipeline -->
+    <div class="pipelines-wrapper">
+        <div class="pipelines-container">
+            <h3 id="pipeline-header">Data Pipeline</h3>' . '\n'
+            . $month_element . '\n' .
+            '<div class="pipeline-segments-wrapper mt-2">' . '\n'
+                . $buttons["raw"]->renderPipelineSegment()       . '\n'
+                . $buttons["detectors"]->renderPipelineSegment() . '\n'
+                . $buttons["events"]->renderPipelineSegment()    . '\n'
+                . $buttons["extractors"]->renderPipelineSegment(). '\n'
+                . $buttons["features"]->renderPipelineSegment()  . '\n' .
+            '</div>
         </div>
-    </section>';
+    </div>
+</section>';
 }
 
 function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
@@ -293,23 +292,23 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
     }
 
     return
-    '<section id="pipeline-target">
-        <div class="pipeline-target-block' . $have_no_files ? '' : ' d-none' . '" id="pipeline-target-none">
-            <div class="d-flex">
-                <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
-                <div id="pipeline-target-summary">
-                    <h3>No Data</h3>' . "\n" .
-                    $month_element . "\n" .
-                '</div>
-            </div>' . "\n" .
-            $nodata_element . "\n" .
-        '</div>' . "\n" .
-        $buttons["raw"]->renderPipelineTarget()       . "\n" .
-        $buttons["detectors"]->renderPipelineTarget() . "\n" .
-        $buttons["events"]->renderPipelineTarget()    . "\n" .
-        $buttons["extractors"]->renderPipelineTarget(). "\n" .
-        $buttons["features"]->renderPipelineTarget()  . "\n" .
-    '</section>';
+'<section id="pipeline-target">
+    <div class="pipeline-target-block' . $have_no_files ? '' : ' d-none' . '" id="pipeline-target-none">
+        <div class="d-flex">
+            <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
+            <div id="pipeline-target-summary">
+                <h3>No Data</h3>' . '\n' .
+                $month_element . '\n' .
+            '</div>
+        </div>' . '\n' .
+        $nodata_element . '\n' .
+    '</div>' . '\n' .
+    $buttons["raw"]->renderPipelineTarget()       . '\n' .
+    $buttons["detectors"]->renderPipelineTarget() . '\n' .
+    $buttons["events"]->renderPipelineTarget()    . '\n' .
+    $buttons["extractors"]->renderPipelineTarget(). '\n' .
+    $buttons["features"]->renderPipelineTarget()  . '\n' .
+'</section>';
 }
 
 function renderTemplatesSection(?GameFileInfo $game_files)
@@ -337,19 +336,20 @@ function renderTemplatesSection(?GameFileInfo $game_files)
         $sessions_class = $sessions_template ? '' : $sessions_class;
     }
 
-    return '<section id="templates" class="mb-5">
-        <!-- Templates -->
-        <h3>Templates</h3>
-        <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+    return
+'<section id="templates" class="mb-5">
+    <!-- Templates -->
+    <h3>Templates</h3>
+    <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
 
-        <div class="btn-group-vertical">
-            <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2'.$events_class.'" href="'.htmlspecialchars($events_template).'">Events Template</a>
-            <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2'.$players_class.'" href="'.htmlspecialchars($players_template).'">Player Features Template</a>
-            <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2'.$pop_class.'" href="'.htmlspecialchars($pop_template).'">Population Features Template</a>
-            <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2'.$sessions_class.'" href="'.htmlspecialchars($sessions_template).'">Session Features Template</a>
-        </div>
+    <div class="btn-group-vertical">
+        <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2'.$events_class.'" href="'.htmlspecialchars($events_template).'">Events Template</a>
+        <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2'.$players_class.'" href="'.htmlspecialchars($players_template).'">Player Features Template</a>
+        <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2'.$pop_class.'" href="'.htmlspecialchars($pop_template).'">Population Features Template</a>
+        <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2'.$sessions_class.'" href="'.htmlspecialchars($sessions_template).'">Session Features Template</a>
+    </div>
 
-    </section>';
+</section>';
 }
 
 function renderPublicationsSection(?GameDetails $game_details)
@@ -369,13 +369,13 @@ function renderPublicationsSection(?GameDetails $game_details)
     }
 
     return
-    '<section id="publications" class="mb-5">
-        <!-- Publications -->
-        <h3>Publications</h3>
-        <ul class="list-unstyled mt-4">'
-            . $publications .
-        '</ul>
-    </section>';
+'<section id="publications" class="mb-5">
+    <!-- Publications -->
+    <h3>Publications</h3>
+    <ul class="list-unstyled mt-4">'
+        . $publications .
+    '</ul>
+</section>';
 }
 ?>
 <?php require 'includes/header.php'; ?>
