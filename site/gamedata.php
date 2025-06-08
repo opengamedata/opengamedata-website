@@ -38,12 +38,16 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     $game_id = strtoupper(preg_replace("/[^a-zA-Z0-9-_]+/", "", $_GET['game']));
     // 2. Get game details from the game_list file.
     $game_details = services\getGameDetails($game_id);
+    if (!isset($game_details)) {
+        $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
+        error_log($err_str);
+    }
     // 3. Get game file info from API
     /* HACK ALERT! Dumb, stupid, awful hack that assumes a thing called
        "get game file-info by *month*" will be fine if you don't give it a month whose file info you want,
        and will say "that's alright good buddy, I'll just give you info on the most recent month."
        As if it's obvious that a thing that says "request a month" would consider the month optional...
-       But not fixing yet because leaving a hack in place is easier than fucking around with which end is responsible for what.
+       Future version of API should provide endpoint to allow request of most recent month for a game, directly.
     */
     $game_files = services\getGameFileInfoByMonth($game_id);
     if (!isset($game_files)) {
@@ -53,8 +57,8 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     $buttons = generatePipelineButtons($game_files, $selected_date);
 }
 else {
-    $err_str = "Got request with no game parameter!";
-    throw new ErrorException($err_str);
+    $err_str = "gamedata.php got request with no game parameter!";
+    error_log($err_str);
 }
 
 ?>
