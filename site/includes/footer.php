@@ -1,3 +1,6 @@
+        <?php
+            require_once 'config/AppConfig.php';
+        ?>
         <footer class="container-fluid px-sm-4 py-md-5 px-lg-5">
             <div class="row">
                 <div id="footer-ogd" class="col-md mt-5 mb-5">
@@ -30,6 +33,7 @@
                     <img class="ms-1 ms-lg-3" src="assets/images/wordmarks/tools-competition-logo.png" alt="Tools Competition">
                 </div>
             </div>           
+            <?php echo '<div>'.(\AppConfig::GetConfig()['DISPLAY_VERSION'] != false ? \AppConfig::GetConfig()['DISPLAY_VERSION'] : '').'</div>'?>
         </footer>
     </body>
     <!-- Bootstrap 5 Javascript -->
