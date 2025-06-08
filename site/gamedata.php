@@ -380,24 +380,24 @@ function renderPublicationsSection(?GameDetails $game_details)
 ?>
 <?php require 'includes/header.php'; ?>
 <main id="gamedata" class="container-fluid">
-    <?php echo renderOverviewSection($game_details) ?>
-    <?php echo renderChartSection($game_files) ?>
+    <?php echo renderOverviewSection($game_details); ?>
+    <?php echo renderChartSection($game_files); ?>
     
     <div class="row mb-5">
         <div class="col-md col-lg-5">
-        <?php echo renderPipelineSection($game_details, $selected_date, $buttons) ?>
+        <?php echo renderPipelineSection($game_details, $selected_date, $buttons); ?>
         </div>
         <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
-            <?php echo renderPipelineTargetSection($game_files, $buttons) ?>
+            <?php echo renderPipelineTargetSection($game_files, $buttons); ?>
             <hr>                
-            <?php renderTemplatesSection($game_files) ?>
+            <?php echo renderTemplatesSection($game_files); ?>
         </div> <!-- end column -->
     </div> <!-- end row --> 
     <?php if ( isset($game_details) && count($game_details->getPublications()) > 0 ) : ?>
         <hr>
         <div class="row mb-5 mt-3">
             <div class="col-md">
-                <?php renderPublicationsSection($game_details) ?>
+                <?php renderPublicationsSection($game_details); ?>
             </div>
         </div>
     <?php endif; ?>
