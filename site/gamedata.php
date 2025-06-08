@@ -39,7 +39,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     // 2. Get game details from the game_list file.
     $game_details = services\getGameDetails($game_id);
     if (!isset($game_details)) {
-        $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
+        $err_str = "Failed to find game details for game_id=".$game_id.", got no response object!";
         error_log($err_str);
     }
     // 3. Get game file info from API
@@ -51,7 +51,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
     */
     $game_files = services\getGameFileInfoByMonth($game_id);
     if (!isset($game_files)) {
-        $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
+        $err_str = "getGameFileInfoByMonth request, for game_id=".$game_id." with year=null and month=null, got no response object!";
         error_log($err_str);
     }
     $buttons = generatePipelineButtons($game_files, $selected_date);
