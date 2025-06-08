@@ -391,7 +391,7 @@ function renderPublicationsSection(?GameDetails $game_details)
         
         </div> <!-- end column -->
     </div> <!-- end row --> 
-    <?php if (count($game_details->getPublications()) > 0) : ?>
+    <?php if ( isset($game_details) && count($game_details->getPublications()) > 0 ) : ?>
         <hr>
         <div class="row mb-5 mt-3">
             <div class="col-md">
