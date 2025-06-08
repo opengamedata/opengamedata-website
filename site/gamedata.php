@@ -171,17 +171,17 @@ function renderChartSection(?GameFileInfo $game_files) {
         </div>
         <canvas id="chartYAxis" height="0" width="0"></canvas>
     </div>
+    <div class="row mb-5 gy-2 ms-1">
+        <div class="'.$play_count_class.'">'."\n".
+            $play_count_element."\n".
+        '</div>
+        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'."\n".
+            $nav_elements."\n".
+        '</div>
+    </div>
     <script src="assets/scripts/chart.umd.js"></script>
     <script type="module" src="assets/scripts/chart.js"></script>
-</section>
-<div class="row mb-5 gy-2 ms-1">
-    <div class="'.$play_count_class.'">'."\n".
-        $play_count_element."\n".
-    '</div>
-    <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'."\n".
-        $nav_elements."\n".
-    '</div>
-</div>';
+</section>';
 }
 
 function generatePipelineButtons(?GameFileInfo $game_files)
