@@ -43,93 +43,95 @@ class GameDetails
     }
 
     // Get methods
-    public function getId()
+    public function getId(bool $html_safe = true) : ?string
     {
-        return $this->game_id;
+        return $html_safe ? htmlspecialchars($this->game_id) : $this->game_id;
     }
-    public function getName()
+    public function getName(bool $html_safe = true) : ?string
     {
-        return $this->game_name;
+        return $html_safe ? htmlspecialchars($this->game_name) : $this->game_name;
     }
-    public function getDescription()
+    public function getDescription(bool $html_safe = true) : ?string
     {
-        return $this->game_description;
+        return $html_safe ? htmlspecialchars($this->game_description) : $this->game_description;
     }
-    public function getPlayLink()
+    public function getPlayLink(bool $html_safe = true) : ?string
     {
-        return $this->play_link;
+        return $html_safe ? htmlspecialchars($this->play_link) : $this->play_link;
     }
-    public function getSourceLink()
+    public function getSourceLink(bool $html_safe = true) : ?string
     {
-        return $this->source_link;
+        return $html_safe ? htmlspecialchars($this->source_link) : $this->source_link;
     }
     public function getThumbPath()
     {
         return $this->thumbnail_path;
     }
-    public function getDeveloperName()
+    public function getDeveloperName(bool $html_safe = true) : ?string
     {
-        return $this->developer_name;
+        return $html_safe ? htmlspecialchars($this->developer_name) : $this->developer_name;
     }
-    public function getDeveloperLink()
+    public function getDeveloperLink(bool $html_safe = true) : ?string
     {
-        return $this->developer_link;
+        return $html_safe ? htmlspecialchars($this->developer_link) : $this->developer_link;
     }
     public function getPublications()
     {
         return $this->publications;
     }
 
-    public function getDeveloperIconFilename()
+    public function getDeveloperIconFilename(bool $html_safe = true) : ?string
     {
+        $path = null;
         switch($this->developer_name)
         {
             case 'PBS Wisconsin':
-                return 'pbs/pbs-64.png';
+                $path = 'pbs/pbs-64.png';
             break;
 
             case 'MIT Education Arcade':
-                return 'mit/mit-64.png';
+                $path = 'mit/mit-64.png';
             break;
 
             case 'Field Day Lab':
             default:
-                return 'fieldday/fieldday-64.png';
+                $path = 'fieldday/fieldday-64.png';
             break;
 
         }
+        return $html_safe ? htmlspecialchars($path) : $path;
     }
 
     // Set methods
-    public function setId($id)
+    public function setId(string $id)
     {
         $this->game_id = $id;
     }
-    public function setName($name)
+    public function setName(string $name)
     {
         return $this->game_name = $name;
     }
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         return $this->game_description = $description;
     }
-    public function setPlayLink($link)
+    public function setPlayLink(string $link)
     {
         return $this->play_link = $link;
     }
-    public function setSourceLink($link)
+    public function setSourceLink(string $link)
     {
         return $this->source_link = $link;
     }
-    public function setThumbPath($path)
+    public function setThumbPath(string $path)
     {
         return $this->thumbnail_path = $path;
     }
-    public function setDeveloperName($name)
+    public function setDeveloperName(string $name)
     {
         return $this->developer_name = $name;
     }
-    public function setDeveloperLink($link)
+    public function setDeveloperLink(string $link)
     {
         return $this->developer_link = $link;
     }
