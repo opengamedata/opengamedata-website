@@ -1,0 +1,105 @@
+name: Submit a New Game
+description: Enter metadata for a new game to be added to the OpenGameData website.
+title: "Add New Game: [Insert Game Name Here]"
+labels: [new-game]
+assignees:
+  - LswaN58
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for submitting your game for inclusion on OpenGameData's website!
+  - type: input
+    id: game-title
+    attributes:
+      label: Game Title
+      description: The human-readable title of the game that will appear on the site (i.e. not an internal placeholder name).
+      placeholder: "ex. Wake: Tales from the Aqualab"
+    validations:
+      required: true
+  - type: input
+    id: game-id
+    attributes:
+      label: Game ID
+      description: The database identifier for the game, in CAPS_CASE format.
+      placeholder: ex. AQUALAB
+    validations:
+      required: true
+  - type: textarea
+    id: game-desc
+    attributes:
+      label: Game Description
+      description: A 1-2 sentence summary of the game.
+    validations:
+      required: true
+  - type: input
+    id: target-audience
+    attributes:
+      label: Target Audience
+      description: "Optional: The age range or school grades the game is intended for."
+      placeholder: ex. Grades 6-9
+    validations:
+      required: false
+  - type: input
+    id: subject
+    attributes:
+      label: Subject
+      description: "Optional: The closest match for school subject the game is about."
+      placeholder: ex. Life Sciences
+    validations:
+      required: false
+  - type: textarea
+    id: developers
+    attributes:
+      label: Developers
+      description: List the name and URLs for all labs/studios that helped develop the game.
+      placeholder: e.g. Field Day Lab, https://fielddaylab.wisc.edu/
+    validations:
+      required: true
+  - type: textarea
+    id: thumbnail
+    attributes:
+      label: Thumbnail Image
+      description: "Optional: Please drag-and-drop or paste a thumbnail image of the game for use on the game page."
+    validations:
+      required: false
+  - type: input
+    id: play-link
+    attributes:
+      label: Play Link
+      description: A link to a playable copy of the game.
+      placeholder: ex. https://fielddaylab.org/play/wake/ci/production/
+    validations:
+      required: true
+  - type: input
+    id: source-link
+    attributes:
+      label: Source Link
+      description: "Optional: A link to the game source code, if the game is open-source."
+      placeholder: ex. https://github.com/fielddaylab/wake
+    validations:
+      required: false
+  - type: input
+    id: event-readme
+    attributes:
+      label: "'Event Readme' Link"
+      description: "Optional: A link to the documentation of the game's logging schema, such as a readme file."
+      placeholder: ex. https://github.com/fielddaylab/wake/blob/master/README.md
+    validations:
+      required: false
+  - type: input
+    id: feat-readme
+    attributes:
+      label: "'Feature Readme' Link"
+      description: "Optional: A link to the documentation of the game's standard feature extractors, such as a readme file."
+      placeholder: ex. https://github.com/opengamedata/opengamedata-core/blob/master/src/ogd/games/AQUALAB/README.md
+    validations:
+      required: false
+  - type: textarea
+    id: studies
+    attributes:
+      label: Studies
+      description: "Optional: List references for any published (including preprint) studies using this game that you would like to have listed on the website."
+      placeholder: e.g. Struggling to Detect Struggle in Students Playing a Science Exploration Game, https://dl.acm.org/doi/10.1145/3573382.3616080
+    validations:
+      required: true

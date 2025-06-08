@@ -1,6 +1,6 @@
 <?php
-require_once 'publication.php';
-class Game
+require_once 'Publication.php';
+class GameDetails
 {
     protected $game_id;
     protected $game_name;
@@ -29,6 +29,10 @@ class Game
         // game object returned from api
         $data = json_decode($json);
         
+        return GameDetails::fromArray($id, $data);
+    }
+
+    public static function fromArray($id, $data) {
         // build the array for publications
         $publications = array();
         foreach ($data->{'studies'} as $value) {
