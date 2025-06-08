@@ -7,7 +7,7 @@ site/**/AppConfig.php
 # dependencies
 /node_modules
 /site/assets/scripts/axios.min.js
-/site/assets/scripts/bootstrap.min.js
+/site/assets/scripts/bootstrap.bundle.min.js
 /site/assets/scripts/chart.umd.js
 /site/assets/scripts/vendor
 
