@@ -20,6 +20,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Set up config file
+      run: cp site/config/AppConfig.php.template site/config/AppConfig.php 
+      shell: bash
     - name: Set API Base URL
       run: sed -i 's@$APP_CONFIG\['\''WEBSITE_API_URL_BASE'\''\]\s*=\s*'\''.*'\'';@$APP_CONFIG['\''WEBSITE_API_URL_BASE'\''] = '\''${{inputs.api_base}}'\'';@g' site/config/AppConfig.php
       shell: bash
