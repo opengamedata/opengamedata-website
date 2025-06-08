@@ -25,14 +25,16 @@ class GameDetails
         $this->publications = $publications;
     }
 
-    public static function fromJson($id, $json) {
+    public static function fromJson($id, $json): GameDetails
+    {
         // game object returned from api
         $data = json_decode($json);
         
         return GameDetails::fromArray($id, $data);
     }
 
-    public static function fromArray($id, $data) {
+    public static function fromArray($id, $data): GameDetails
+    {
         // build the array for publications
         $publications = array();
         foreach ($data->{'studies'} as $value) {
