@@ -54,7 +54,7 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
         $err_str = "getGameFileInfoByMonth request, for game_id=".$game_id." with year=null and month=null, got no response object!";
         error_log($err_str);
     }
-    $buttons = generatePipelineButtons($game_files, $selected_date);
+    $buttons = generatePipelineButtons($game_files);
 }
 else {
     $err_str = "gamedata.php got request with no game parameter!";
