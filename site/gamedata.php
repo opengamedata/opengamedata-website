@@ -92,15 +92,16 @@ function renderOverviewSection(?GameDetails $game_details)
         error_log("Can not generate all elements for the overview in gamedata.php, did not get a valid set of game details!");
     }
     
-    return 
-'<section id="game-overview">
-    <div class="row mb-5">'.
-        $overview_elem.'\n'.
-        '<div class="col">'.'\n'.
-            $thumb_elem.'\n'.
-        '</div>
-    </div>
-</section>';
+    return <<<HTML
+        <section id="game-overview">
+            <div class="row mb-5">
+                {$overview_elem}
+                <div class="col">
+                    {$thumb_elem}
+                </div>
+            </div>
+        </section>
+        HTML;
 }
 
 function renderChartSection(?GameFileInfo $game_files) {
