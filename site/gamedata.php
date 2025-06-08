@@ -93,15 +93,15 @@ function renderOverviewSection(?GameDetails $game_details)
     }
     
     return <<<HTML
-        <section id="game-overview">
-            <div class="row mb-5">
-                {$overview_elem}
-                <div class="col">
-                    {$thumb_elem}
-                </div>
+    <section id="game-overview">
+        <div class="row mb-5">
+            {$overview_elem}
+            <div class="col">
+                {$thumb_elem}
             </div>
-        </section>
-        HTML;
+        </div>
+    </section>
+    HTML;
 }
 
 function renderChartSection(?GameFileInfo $game_files) {
@@ -155,33 +155,34 @@ function renderChartSection(?GameFileInfo $game_files) {
             error_log("Can not generate full month selection elements for the sessions chart in gamedata.php, did not get a valid selected date!\n\$selected_date=".strval($selected_date));
         }
     }
-    return
-'<section id="monthly-sessions-chart">
-    <div class="row mb-3">
-        <div class="col">
-            <h3 class="mb-0">Monthly Player Activity</h3>
-        </div>
-    </div>
-    <!-- Chart -->
-    <div class="position-relative">    
-        <div id="chart-wrapper" class="position-relative">
-            <div id="chart" class="position-relative">
-                <canvas id="activityChart" style="height: 0;"></canvas>
+    return <<<HTML
+    <section id="monthly-sessions-chart">
+        <div class="row mb-3">
+            <div class="col">
+                <h3 class="mb-0">Monthly Player Activity</h3>
             </div>
         </div>
-        <canvas id="chartYAxis" height="0" width="0"></canvas>
-    </div>
-    <div class="row mb-5 gy-2 ms-1">
-        <div class="'.$play_count_class.'">'."\n".
-            $play_count_element."\n".
-        '</div>
-        <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">'."\n".
-            $nav_elements."\n".
-        '</div>
-    </div>
-    <script src="assets/scripts/chart.umd.js"></script>
-    <script type="module" src="assets/scripts/chart.js"></script>
-</section>';
+        <!-- Chart -->
+        <div class="position-relative">    
+            <div id="chart-wrapper" class="position-relative">
+                <div id="chart" class="position-relative">
+                    <canvas id="activityChart" style="height: 0;"></canvas>
+                </div>
+            </div>
+            <canvas id="chartYAxis" height="0" width="0"></canvas>
+        </div>
+        <div class="row mb-5 gy-2 ms-1">
+            <div class="'.$play_count_class.'">
+                {$play_count_element}
+            </div>
+            <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
+                {$nav_elements}
+            </div>
+        </div>
+        <script src="assets/scripts/chart.umd.js"></script>
+        <script type="module" src="assets/scripts/chart.js"></script>
+    </section>
+    HTML;
 }
 
 function generatePipelineButtons(?GameFileInfo $game_files)
