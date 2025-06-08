@@ -31,7 +31,6 @@ $game_details = null;
 $game_files = null;
 
 $buttons = null;
-$have_no_files = true;
 
 if (isset($_GET['game']) && $_GET['game'] != '') {
 
@@ -47,21 +46,11 @@ if (isset($_GET['game']) && $_GET['game'] != '') {
        But not fixing yet because leaving a hack in place is easier than fucking around with which end is responsible for what.
     */
     $game_files = services\getGameFileInfoByMonth($game_id);
-    if (isset($game_files)) {
-        // Determine if we don't have files for the selected month
-        $have_no_files = $game_files->getRawFile() == false
-                    // detectors link wasn't included in original logic, need to determine if that was a bug or if there was reason for not considering it.
-                    //   && $game_files->getDetectorsLink() == false
-                      && $game_files->getEventsFile() == false
-                      && $game_files->getFeaturesLink() == false
-                      && $game_files->getFeatureFiles() == false;
-    }
-    else {
+    if (!isset($game_files)) {
         $err_str = "getGameFileInfoByMonth request, with year=null and month=null, got no response object!";
         error_log($err_str);
     }
     $buttons = generatePipelineButtons($game_files, $selected_date);
-
 }
 else {
     $err_str = "Got request with no game parameter!";
@@ -275,16 +264,28 @@ function renderPipelineSection(?GameDetails $game_details, ?DateTimeImmutable $s
     </section>';
 }
 
-function renderPipelineTargetSection(bool $have_no_files, ?DateTimeImmutable $selected_date, array $buttons)
+function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
 {
+    $have_no_files = true;
     $month_name     = null;
     $month_element  = '<p class="pipeline-target-month"></p>';
     $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data, and no selected date.</p>';
-    
-    if ($selected_date) {
-        $month_name     = htmlspecialchars( $selected_date->format('n') );
-        $month_element  = '<p class="pipeline-target-month">Month of '.$month_name.'</p>';
-        $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data for the month of '.$month_name.'.</p>';
+
+    if (isset($game_files)) {
+        // Determine stuff about the month that should be selected.
+        $selected_date = $game_files->getLastDate();
+        if ($selected_date) {
+            $month_name     = htmlspecialchars( $selected_date->format('n') );
+            $month_element  = '<p class="pipeline-target-month">Month of '.$month_name.'</p>';
+            $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data for the month of '.$month_name.'.</p>';
+        }
+        // Determine if we don't have files for the selected month
+        $have_no_files = $game_files->getRawFile() == false
+                    // detectors link wasn't included in original logic, need to determine if that was a bug or if there was reason for not considering it.
+                    //   && $game_files->getDetectorsLink() == false
+                      && $game_files->getEventsFile() == false
+                      && $game_files->getFeaturesLink() == false
+                      && $game_files->getFeatureFiles() == false;
     }
 
     return
@@ -376,14 +377,14 @@ function renderPublicationsSection(?GameDetails $game_details)
 <?php require 'includes/header.php'; ?>
 <main id="gamedata" class="container-fluid">
     <?php echo renderOverviewSection($game_details) ?>
-    <?php echo renderChartSection($game_files, $selected_date) ?>
+    <?php echo renderChartSection($game_files) ?>
     
     <div class="row mb-5">
         <div class="col-md col-lg-5">
         <?php echo renderPipelineSection($game_details, $selected_date, $buttons) ?>
         </div>
         <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
-            <?php echo renderPipelineTargetSection($have_no_files, $selected_date, $buttons) ?>
+            <?php echo renderPipelineTargetSection($game_files, $buttons) ?>
             <hr>                
             <?php renderTemplatesSection($game_files) ?>
         </div> <!-- end column -->
