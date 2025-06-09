@@ -41,3 +41,7 @@ There are a few options for running the website locally:
 
     - Files are not watched, but changes will be reflected upon manually reloading the page.
     - Changes to scss are not automatically built to update the generated css files.
+
+3. Run local Apache Server
+
+    - TODO
