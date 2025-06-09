@@ -176,7 +176,7 @@ function renderChartSection(?GameFileInfo $game_files) {
             <canvas id="chartYAxis" height="0" width="0"></canvas>
         </div>
         <div class="row mb-5 gy-2 ms-1">
-            <div class="'.$play_count_class.'">
+            <div class="{$play_count_class}">
                 {$play_count_element}
             </div>
             <div class="month-nav-wrapper col-md-3 col-sm-4 gy-2 text-end">
@@ -392,7 +392,7 @@ function renderPublicationsSection(?GameDetails $game_details)
     <?php echo renderChartSection($game_files); ?>
     <div class="row mb-5">
         <div class="col-md col-lg-5">
-        <?php echo renderPipelineSection($game_details, $selected_date, $buttons); ?>
+        <?php echo renderPipelineSection($game_details, $game_files->getLastDate(), $buttons); ?>
         </div>
         <div class="col-md col-lg-7 ps-lg-5 ps-xl-0">
             <?php echo renderPipelineTargetSection($game_files, $buttons); ?>
