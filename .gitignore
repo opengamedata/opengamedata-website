@@ -1,5 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 site/**/AppConfig.php
+**/php_errors.log
 
 # compiled output
 /site/assets/styles/*.css
