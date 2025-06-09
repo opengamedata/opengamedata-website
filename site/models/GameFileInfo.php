@@ -93,7 +93,7 @@ class GameFileInfo
             $ret_val = DateTimeImmutable::createFromFormat('Y-n-j|', $this->getLastYear().'-'.$this->getLastMonth().'-1');
         }
 
-        return $ret_val;
+        return $ret_val ? $ret_val : null;
     }
     public function getFoundRange()
     {
