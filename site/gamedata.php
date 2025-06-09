@@ -106,7 +106,7 @@ function renderOverviewSection(?GameDetails $game_details)
 }
 
 function renderChartSection(?GameFileInfo $game_files) {
-    $play_count_element = '<div class="bg-primary rounded row">NO PLAY COUNT AVAILABLE, GAME DETAILS NOT FOUND!</div>';
+    $play_count_element = '<div class="bg-primary rounded row">NO PLAY COUNT AVAILABLE, GAME FILES NOT FOUND!</div>';
     $play_count_class = 'me-1 col';
     $nav_elements = '<nav class="text-nowrap"></nav>';
 
@@ -121,6 +121,7 @@ function renderChartSection(?GameFileInfo $game_files) {
         $next_disabled = null;
 
         $selected_date = $game_files->getLastDate();
+        error_log("In renderChartSection, selected date is ".($selected_date ? $selected_date->format('Y-m-d') : 'null'));
         if ($selected_date) {
             $selected_year = $selected_date->format('Y');
             $selected_month = $selected_date->format('n');
@@ -256,23 +257,24 @@ function renderPipelineSection(?GameDetails $game_details, ?DateTimeImmutable $s
                    ? '<div id="pipeline-month">Month of '.$selected_date->format('n').'</div>'
                    : '<div id="pipeline-month"></div>';
 
-    return
-'<section id="pipelines" class="'.$section_class.'">
-    <!-- Data Pipeline -->
-    <div class="pipelines-wrapper">
-        <div class="pipelines-container">
-            <h3 id="pipeline-header">Data Pipeline</h3>' . "\n"
-            . $month_element . "\n" .
-            '<div class="pipeline-segments-wrapper mt-2">' . "\n"
-                . $buttons["raw"]->renderPipelineSegment()       . "\n"
-                . $buttons["detectors"]->renderPipelineSegment() . "\n"
-                . $buttons["events"]->renderPipelineSegment()    . "\n"
-                . $buttons["extractors"]->renderPipelineSegment(). "\n"
-                . $buttons["features"]->renderPipelineSegment()  . "\n" .
-            '</div>
-        </div>
-    </div>
-</section>';
+    return <<<HTML
+        <section id="pipelines" class="{$section_class}">
+            <!-- Data Pipeline -->
+            <div class="pipelines-wrapper">
+                <div class="pipelines-container">
+                    <h3 id="pipeline-header">Data Pipeline</h3>
+                    {$month_element}
+                    <div class="pipeline-segments-wrapper mt-2">
+                        {$buttons["raw"]->renderPipelineSegment()}
+                        {$buttons["detectors"]->renderPipelineSegment()}
+                        {$buttons["events"]->renderPipelineSegment()}
+                        {$buttons["extractors"]->renderPipelineSegment()}
+                        {$buttons["features"]->renderPipelineSegment()}
+                    </div>
+                </div>
+            </div>
+        </section>
+        HTML;
 }
 
 function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
@@ -281,6 +283,7 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
     $month_name     = null;
     $month_element  = '<p class="pipeline-target-month"></p>';
     $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data, and no selected date.</p>';
+    $block_class = 'd-none';
 
     if (isset($game_files)) {
         // Determine stuff about the month that should be selected.
@@ -297,26 +300,28 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
                       && $game_files->getEventsFile() == false
                       && $game_files->getFeaturesLink() == false
                       && $game_files->getFeatureFiles() == false;
+        $block_class = $have_no_files ? '' : $block_class;
     }
 
-    return
-'<section id="pipeline-target">
-    <div class="pipeline-target-block' . $have_no_files ? '' : ' d-none' . '" id="pipeline-target-none">
-        <div class="d-flex">
-            <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
-            <div id="pipeline-target-summary">
-                <h3>No Data</h3>' . "\n" .
-                $month_element . "\n" .
-            '</div>
-        </div>' . "\n" .
-        $nodata_element . "\n" .
-    '</div>' . "\n" .
-    $buttons["raw"]->renderPipelineTarget()       . "\n" .
-    $buttons["detectors"]->renderPipelineTarget() . "\n" .
-    $buttons["events"]->renderPipelineTarget()    . "\n" .
-    $buttons["extractors"]->renderPipelineTarget(). "\n" .
-    $buttons["features"]->renderPipelineTarget()  . "\n" .
-'</section>';
+    return <<<HTML
+        <section id="pipeline-target">
+            <div class="pipeline-target-block {$block_class}" id="pipeline-target-none">
+                <div class="d-flex">
+                    <img src="assets/images/icons/pipeline-none.svg" class="me-4 mb-3">
+                    <div id="pipeline-target-summary">
+                        <h3>No Data</h3>
+                        {$month_element}
+                    </div>
+                </div>
+                {$nodata_element}
+            </div>
+            {$buttons["raw"]->renderPipelineTarget()}
+            {$buttons["detectors"]->renderPipelineTarget()}
+            {$buttons["events"]->renderPipelineTarget()}
+            {$buttons["extractors"]->renderPipelineTarget()}
+            {$buttons["features"]->renderPipelineTarget()}
+        </section>
+        HTML;
 }
 
 function renderTemplatesSection(?GameFileInfo $game_files)
