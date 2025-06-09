@@ -16,17 +16,32 @@ NOTE: a local install of PHP and the php_curl bindings are sufficient to test th
 
 ### Build the Website
 
-Run `npm install` in your `%project_dir%`
-
-Run `gulp build` to build the site for deployment.
-
-Note: Transpiled css and vendor js files are excluded from GIT
+1. Create a copy of `AppConfig.php` from the `AppConfig.php.template` file in the `%project_dir%/site/config` folder.  
+    NOTE: This approach ensures local config settings are not committed by mistake. Any desired changes to the default configuration can be copied back to the `.template` file and committed.
+2. Run `npm install` in your `%project_dir%`
+3. Run `gulp build` to build the site for deployment.  
+    NOTE: Transpiled css and vendor js files are excluded from GIT
 
 ### Run the dev API backend
 
 The API (opengamedata-website-api) should be running on <http://localhost:5000> in order to get Game Usage and Data Pipeline/Templates files list.
 
 - See README in the [API repository](https://github.com/opengamedata/opengamedata-website-api) for further instructions.
+
+Alternately, you may use an online instance of the File API.
+
+- Comment out the following in the `site/config/AppConfig.php` file:
+
+    ```php
+    // If hostname starts with localhost
+    if(!empty($_SERVER['HTTP_HOST']) && substr($_SERVER['HTTP_HOST'], 0, 9) === 'localhost')
+    {
+        // Assume we're in a development environment
+        $APP_CONFIG['WEBSITE_API_URL_BASE'] = 'http://localhost:5000/';
+    }
+    ```
+
+- Then make sure to set the `$APP_CONFIG['WEBSITE_API_URL_BASE']` line with a valid online path, such as the main instance hosted on `ogd-services`: <https://ogd-services.fielddaylab.wisc.edu/wsgi-bin/opengamedata/apis/files/app.wsgi/>
 
 ### Run the Website
 
