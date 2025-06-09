@@ -32,6 +32,8 @@ jobs:
     steps:
 
   # 1. Local checkout & config
+    - name: Announce Run
+      run: echo "Deploying ${{ github.repository }} to ${{ env.DEPLOY_URL }} via ${{ github.actor }}"
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -93,8 +95,6 @@ jobs:
         remote_key:  ${{ secrets.VPN_KEY }}
 
   # 4. Cleanup & complete
-    - name: Announce deploy
-      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
       uses: actions/upload-artifact@v4
       with:
