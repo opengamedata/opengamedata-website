@@ -282,7 +282,11 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
     $have_no_files = true;
     $month_name     = null;
     $month_element  = '<p class="pipeline-target-month"></p>';
-    $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data, and no selected date.</p>';
+    $nodata_element = <<<HTML
+        <p id="pipeline-target-no-data-for-month">
+            There is currently no data, and no selected date.
+        </p>
+        HTML;
     $block_class = 'd-none';
 
     if (isset($game_files)) {
@@ -291,7 +295,11 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
         if ($selected_date) {
             $month_name     = htmlspecialchars( $selected_date->format('n') );
             $month_element  = '<p class="pipeline-target-month">Month of '.$month_name.'</p>';
-            $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data for the month of '.$month_name.'.</p>';
+            $nodata_element = <<<HTML
+                <p id="pipeline-target-no-data-for-month">
+                    There is currently no data for the month of {$month_name}
+                </p>
+                HTML;
         }
         // Determine if we don't have files for the selected month
         $have_no_files = $game_files->getRawFileLink(false) == false
@@ -368,16 +376,21 @@ function renderTemplatesSection(?GameFileInfo $game_files)
 
 function renderPublicationsSection(?GameDetails $game_details)
 {
-    $publications = '<li class="mb-4 d-flex align-items-start">NO PUBLICATIONS AVAILABLE, GAME DETAILS NOT FOUND!</li>';
+    $publications = <<<HTML
+        <li class="mb-4 d-flex align-items-start">
+            NO PUBLICATIONS AVAILABLE, GAME DETAILS NOT FOUND!
+        </li>'
+        HTML;
 
     if (isset($game_details)) {
         $elements = [];
         foreach ($game_details->getPublications() as $value) {
-            $elements[] =
-                '<li class="mb-4 d-flex align-items-start">
+            $elements[] = <<<HTML
+                <li class="mb-4 d-flex align-items-start">
                     <img class="me-3" src="assets/images/icons/publication.svg">
-                    <div>'. $value->getFormattedPublication() . '</div>
-                </li>';
+                    <div>{$value->getFormattedPublication()}</div>
+                </li>
+                HTML;
         }
         $publications = implode("\n", $elements);
     }
