@@ -144,15 +144,19 @@ function renderChartSection(?GameFileInfo $game_files) {
             $play_count_class = 'col';
             $date_name = htmlspecialchars($month_name . ' ' . $selected_year);
             $play_count_element = <<<HTML
-                <div class="bg-primary rounded row" id="stats" data-year="'.$selected_year.'" data-month="'.$selected_month.'">
+                <div class="bg-primary rounded row" id="stats" data-year="{$selected_year}" data-month="{$selected_month}">
                     <div class="col" id="stats-header">{$date_name}</div>
                     <div class="col text-end" id="num-plays">No Plays</div>
                 </div>
                 HTML;
             $nav_elements = <<<HTML
                 <nav class="text-nowrap">
-                    <button id="month-prev" type="button" class="btn btn-outline-secondary" {$prev_disabled}><i class="bi bi-chevron-left"></i>{$prev_month}</button>
-                    <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" {$next_disabled}>{$next_month}<i class="bi bi-chevron-right"></i></button>
+                    <button id="month-prev" type="button" class="btn btn-outline-secondary" {$prev_disabled}>
+                        <i class="bi bi-chevron-left"></i>{$prev_month}
+                    </button>
+                    <button id="month-next" type="button" class="ms-2 btn btn-outline-secondary" {$next_disabled}>
+                        {$next_month}<i class="bi bi-chevron-right"></i>
+                    </button>
                 </nav>
                 HTML;
         }
