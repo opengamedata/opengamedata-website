@@ -99,41 +99,41 @@ class GameFileInfo
     {
         return $this->found_matching_range;
     }
-    public function getEventsFile()
+    public function getRawFileLink(bool $html_safe = true) : ?string
     {
-        return $this->events_file;
+        return $html_safe ? htmlspecialchars($this->raw_file) : $this->raw_file;
     }
-    public function getEventsTemplate()
+    public function getEventsFileLink(bool $html_safe = true) : ?string
     {
-        return $this->events_template;
+        return $html_safe ? htmlspecialchars($this->events_file) : $this->events_file;
     }
-    public function getPlayersFile()
+    public function getEventsTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->players_file;
+        return $html_safe ? htmlspecialchars($this->events_template) : $this->events_template;
     }
-    public function getPlayersTemplate()
+    public function getPlayersFileLink(bool $html_safe = true) : ?string
     {
-        return $this->players_template;
+        return $html_safe ? htmlspecialchars($this->players_file) : $this->players_file;
     }
-    public function getPopulationFile()
+    public function getPlayersTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->population_file;
+        return $html_safe ? htmlspecialchars($this->players_template) : $this->players_template;
     }
-    public function getPopulationTemplate()
+    public function getPopulationFileLink(bool $html_safe = true) : ?string
     {
-        return $this->population_template;
+        return $html_safe ? htmlspecialchars($this->population_file) : $this->population_file;
     }
-    public function getRawFile()
+    public function getPopulationTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->raw_file;
+        return $html_safe ? htmlspecialchars($this->population_template) : $this->population_template;
     }
-    public function getSessionsFile()
+    public function getSessionsFileLink(bool $html_safe = true) : ?string
     {
-        return $this->sessions_file;
+        return $html_safe ? htmlspecialchars($this->sessions_file) : $this->sessions_file;
     }
-    public function getSessionsTemplate()
+    public function getSessionsTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->sessions_template;
+        return $html_safe ? htmlspecialchars($this->sessions_template) : $this->sessions_template;
     }
     public function getFeatureFiles()
     {
@@ -144,14 +144,14 @@ class GameFileInfo
         return $this->feature_files;
     }
 
-    public function getDetectorsLink()
+    public function getDetectorsLink(bool $html_safe = true) : ?string
     {
-        return $this->detectors_link;
+        return $html_safe ? htmlspecialchars($this->detectors_link) : $this->detectors_link;
     }
 
-    public function getFeaturesLink()
+    public function getFeaturesLink(bool $html_safe = true) : ?string
     {
-        return $this->features_link;
+        return $html_safe ? htmlspecialchars($this->features_link) : $this->features_link;
     }
 
     // Prev/next month functions

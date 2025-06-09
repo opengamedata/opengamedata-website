@@ -200,11 +200,11 @@ function generatePipelineButtons(?GameFileInfo $game_files)
     $month_name = "NO MONTH AVAILABLE";
 
     if (isset($game_files)) {
-        $raw_files        = $game_files->getRawFile()       ? array('Raw Data' => $game_files->getRawFile())             : [];
-        $detectors_files  = $game_files->getDetectorsLink() ? array('Detectors' => $game_files->getDetectorsLink())      : [];
-        $event_files      = $game_files->getEventsFile()    ? array('Calculated Events' => $game_files->getEventsFile()) : [];
-        $extractors_files = $game_files->getFeaturesLink()  ? array('Extractors' => $game_files->getFeaturesLink())      : []; // aka Extractors or Feature Extractors
-        $feature_files    = $game_files->getFeatureFiles()  ? $game_files->getFeatureFiles()                             : [];
+        $raw_files        = $game_files->getRawFileLink(false)    ? array('Raw Data'          => $game_files->getRawFileLink(false))    : [];
+        $detectors_files  = $game_files->getDetectorsLink(false)  ? array('Detectors'         => $game_files->getDetectorsLink(false))  : [];
+        $event_files      = $game_files->getEventsFileLink(false) ? array('Calculated Events' => $game_files->getEventsFileLink(false)) : [];
+        $extractors_files = $game_files->getFeaturesLink(false)   ? array('Extractors'        => $game_files->getFeaturesLink(false))   : []; // aka Extractors or Feature Extractors
+        $feature_files    = $game_files->getFeatureFiles()        ? $game_files->getFeatureFiles()                             : [];
         $month_name       = $game_files->getLastDate() ? $game_files->getLastDate()->format('F') : $month_name;
     }
 
@@ -294,12 +294,12 @@ function renderPipelineTargetSection(?GameFileInfo $game_files, array $buttons)
             $nodata_element = '<p id="pipeline-target-no-data-for-month">There is currently no data for the month of '.$month_name.'.</p>';
         }
         // Determine if we don't have files for the selected month
-        $have_no_files = $game_files->getRawFile() == false
+        $have_no_files = $game_files->getRawFileLink(false) == false
                     // detectors link wasn't included in original logic, need to determine if that was a bug or if there was reason for not considering it.
-                    //   && $game_files->getDetectorsLink() == false
-                      && $game_files->getEventsFile() == false
-                      && $game_files->getFeaturesLink() == false
-                      && $game_files->getFeatureFiles() == false;
+                    //   && $game_files->getDetectorsLink(false) == false
+                      && $game_files->getEventsFileLink(false) == false
+                      && $game_files->getFeaturesLink(false) == false
+                      && $game_files->getFeatureFiles(false) == false;
         $block_class = $have_no_files ? '' : $block_class;
     }
 
@@ -338,10 +338,10 @@ function renderTemplatesSection(?GameFileInfo $game_files)
 
     if (isset($game_files)) {
 
-        $events_template   = $game_files->getEventsTemplate();
-        $players_template  = $game_files->getPlayersTemplate();
-        $pop_template      = $game_files->getPopulationTemplate();
-        $sessions_template = $game_files->getSessionsTemplate();
+        $events_template   = $game_files->getEventsTemplateLink();
+        $players_template  = $game_files->getPlayersTemplateLink();
+        $pop_template      = $game_files->getPopulationTemplateLink();
+        $sessions_template = $game_files->getSessionsTemplateLink();
 
         $events_class   = $events_template   ? '' : $events_class;
         $players_class  = $players_template  ? '' : $players_class;
@@ -349,20 +349,21 @@ function renderTemplatesSection(?GameFileInfo $game_files)
         $sessions_class = $sessions_template ? '' : $sessions_class;
     }
 
-    return
-'<section id="templates" class="mb-5">
-    <!-- Templates -->
-    <h3>Templates</h3>
-    <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
+    return <<<HTML
+        <section id="templates" class="mb-5">
+            <!-- Templates -->
+            <h3>Templates</h3>
+            <p>These samples link out to a github codespace and are useful for exploration and visualization. They are also effective starting spots for your own experiments.</p>
 
-    <div class="btn-group-vertical">
-        <a id="events-data" class="btn btn-secondary btn-outline-secondary mb-2'.$events_class.'" href="'.htmlspecialchars($events_template).'">Events Template</a>
-        <a id="players-data" class="btn btn-secondary btn-outline-secondary mb-2'.$players_class.'" href="'.htmlspecialchars($players_template).'">Player Features Template</a>
-        <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2'.$pop_class.'" href="'.htmlspecialchars($pop_template).'">Population Features Template</a>
-        <a id="sessions-data" class="btn btn-secondary btn-outline-secondary mb-2'.$sessions_class.'" href="'.htmlspecialchars($sessions_template).'">Session Features Template</a>
-    </div>
+            <div class="btn-group-vertical">
+                <a id="events-data"     class="btn btn-secondary btn-outline-secondary mb-2 {$events_class}"   href="{$events_template}">Events Template</a>
+                <a id="players-data"    class="btn btn-secondary btn-outline-secondary mb-2 {$players_class}"  href="{$players_template}">Player Features Template</a>
+                <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2 {$pop_class}"      href="{$pop_template}">Population Features Template</a>
+                <a id="sessions-data"   class="btn btn-secondary btn-outline-secondary mb-2 {$sessions_class}" href="{$sessions_template}">Session Features Template</a>
+            </div>
 
-</section>';
+        </section>'
+        HTML;
 }
 
 function renderPublicationsSection(?GameDetails $game_details)
