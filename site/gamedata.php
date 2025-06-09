@@ -382,14 +382,15 @@ function renderPublicationsSection(?GameDetails $game_details)
         $publications = implode("\n", $elements);
     }
 
-    return
-'<section id="publications" class="mb-5">
-    <!-- Publications -->
-    <h3>Publications</h3>
-    <ul class="list-unstyled mt-4">'
-        . $publications .
-    '</ul>
-</section>';
+    return <<<HTML
+        <section id="publications" class="mb-5">
+            <!-- Publications -->
+            <h3>Publications</h3>
+            <ul class="list-unstyled mt-4">'
+                {$publications}
+            </ul>
+        </section>
+        HTML;
 }
 ?>
 <?php require 'includes/header.php'; ?>
