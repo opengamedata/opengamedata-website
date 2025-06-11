@@ -63,7 +63,7 @@ jobs:
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 18
     - name: Install libraries
       run: npm install
     - name: Build
@@ -106,9 +106,6 @@ jobs:
         remote_key: ${{ secrets.DEPLOY_KEY }}
 
   # 4. Cleanup & complete
-    - name: Announce deploy
-      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
-
     - name: Upload logs as artifacts
       if: failure()
       uses: actions/upload-artifact@v4
