@@ -35,5 +35,5 @@ runs:
       run: sed -i 's@$APP_CONFIG\['\''DISPLAY_VERSION'\''\]\s*=\s*false;@$APP_CONFIG['\''DISPLAY_VERSION'\''] = '\''${{inputs.display_version}}'\'';@g' site/config/AppConfig.php
       shell: bash
     - name: Set whether to run debugging code or not
-      run: sed -i 's@$APP_CONFIG\['\''DEBUG_ENV'\''\]\s*=\s*[a-z]\+;@$APP_CONFIG['\''DEBUG_ENV'\''] = ${{inputs.debug_env}};@g' site/config/app_config.php
+      run: sed -i 's@$APP_CONFIG\['\''DEBUG_ENV'\''\]\s*=\s*[a-z]\+;@$APP_CONFIG['\''DEBUG_ENV'\''] = ${{inputs.debug_env}};@g' site/config/AppConfig.php
       shell: bash
