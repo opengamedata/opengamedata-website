@@ -1,4 +1,10 @@
 <?php
+/**
+ * GameFileInfo
+ * 
+ * Realistically, should be named DatasetInfo
+ * Contains all data for modeling a dataset, including date range, and links to files, templates, and generator code.
+ */
 class GameFileInfo 
 {
     protected $first_month;
@@ -95,61 +101,76 @@ class GameFileInfo
     {
         return $this->last_year;
     }
+    public function getLastDate() : ?DateTimeImmutable
+    {
+        $ret_val = null;
+
+        if ($this->getLastYear() && $this->getLastMonth()) {
+            $ret_val = DateTimeImmutable::createFromFormat('Y-n-j|', $this->getLastYear().'-'.$this->getLastMonth().'-1');
+        }
+
+        return $ret_val ? $ret_val : null;
+    }
     public function getFoundRange()
     {
         return $this->found_matching_range;
     }
-    public function getEventsFile()
+    /* Links for raw file */
+    public function getRawFileLink(bool $html_safe = true) : ?string
     {
-        return $this->events_file;
+        return $html_safe ? htmlspecialchars($this->raw_file) : $this->raw_file;
     }
-    public function getEventsTemplate()
+    /* Links for events file */
+    public function getEventsFileLink(bool $html_safe = true) : ?string
     {
-        return $this->events_template;
+        return $html_safe ? htmlspecialchars($this->events_file) : $this->events_file;
     }
-    public function getEventsCodespace()
+    public function getEventsTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->events_codespace;
+        return $html_safe ? htmlspecialchars($this->events_template) : $this->events_template;
     }
-    public function getSessionsFile()
+    public function getEventsCodespace(bool $html_safe = true) : ?string
     {
-        return $this->sessions_file;
+        return $html_safe ? htmlspecialchars($this->events_codespace) : $this->events_codespace;
     }
-    public function getSessionsTemplate()
+    /* Links for sessions file */
+    public function getSessionsFileLink(bool $html_safe = true) : ?string
     {
-        return $this->sessions_template;
+        return $html_safe ? htmlspecialchars($this->sessions_file) : $this->sessions_file;
     }
-    public function getSessionsCodespace()
+    public function getSessionsTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->sessions_codespace;
+        return $html_safe ? htmlspecialchars($this->sessions_template) : $this->sessions_template;
     }
-    public function getPlayersFile()
+    public function getSessionsCodespace(bool $html_safe = true) : ?string
     {
-        return $this->players_file;
+        return $html_safe ? htmlspecialchars($this->sessions_codespace) : $this->sessions_codespace;
     }
-    public function getPlayersTemplate()
+    /* Links for players file */
+    public function getPlayersFileLink(bool $html_safe = true) : ?string
     {
-        return $this->players_template;
+        return $html_safe ? htmlspecialchars($this->players_file) : $this->players_file;
     }
-    public function getPlayersCodespace()
+    public function getPlayersTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->players_codespace;
+        return $html_safe ? htmlspecialchars($this->players_template) : $this->players_template;
     }
-    public function getPopulationFile()
+    public function getPlayersCodespace(bool $html_safe = true) : ?string
     {
-        return $this->population_file;
+        return $html_safe ? htmlspecialchars($this->players_codespace) : $this->players_codespace;
     }
-    public function getPopulationTemplate()
+    /* Links for population file */
+    public function getPopulationFileLink(bool $html_safe = true) : ?string
     {
-        return $this->population_template;
+        return $html_safe ? htmlspecialchars($this->population_file) : $this->population_file;
     }
-    public function getPopulationCodespace()
+    public function getPopulationTemplateLink(bool $html_safe = true) : ?string
     {
-        return $this->population_codespace;
+        return $html_safe ? htmlspecialchars($this->population_template) : $this->population_template;
     }
-    public function getRawFile()
+    public function getPopulationCodespace(bool $html_safe = true) : ?string
     {
-        return $this->raw_file;
+        return $html_safe ? htmlspecialchars($this->population_codespace) : $this->population_codespace;
     }
     public function getFeatureFiles()
     {
@@ -160,14 +181,14 @@ class GameFileInfo
         return $this->feature_files;
     }
 
-    public function getDetectorsLink()
+    public function getDetectorsLink(bool $html_safe = true) : ?string
     {
-        return $this->detectors_link;
+        return $html_safe ? htmlspecialchars($this->detectors_link) : $this->detectors_link;
     }
 
-    public function getFeaturesLink()
+    public function getFeaturesLink(bool $html_safe = true) : ?string
     {
-        return $this->features_link;
+        return $html_safe ? htmlspecialchars($this->features_link) : $this->features_link;
     }
 
     // Prev/next month functions

@@ -1,6 +1,6 @@
 name: "Set up config file for a run"
 author: Luke Swanson
-description: "Given a set of appropriate inputs, this action prepares the app_config.php file for a website deploy."
+description: "Given a set of appropriate inputs, this action prepares the AppConfig.php file for a website deploy."
 branding:
   icon: 'clipboard'
   color: 'blue'
@@ -9,9 +9,24 @@ inputs:
     description: "Base URL for the API."
     required: true
     default: 'user placeholder'
+  use_display_version:
+    description: "Whether to include versioning info in the site footer"
+    required: false
+    default: 'false'
+  display_version:
+    description: "The version number/hash to display, if version is being displayed"
+    required: false
+    default: 'UNKNOWN VERSION'
 runs:
   using: "composite"
   steps:
+    - name: Set up config file
+      run: cp site/config/AppConfig.php.template site/config/AppConfig.php 
+      shell: bash
     - name: Set API Base URL
-      run: sed -i 's@$APP_CONFIG\['\''WEBSITE_API_URL_BASE'\''\]\s*=\s*'\''.*'\'';@$APP_CONFIG['\''WEBSITE_API_URL_BASE'\''] = '\''${{inputs.api_base}}'\'';@g' site/includes/app_config.php
+      run: sed -i 's@$APP_CONFIG\['\''WEBSITE_API_URL_BASE'\''\]\s*=\s*'\''.*'\'';@$APP_CONFIG['\''WEBSITE_API_URL_BASE'\''] = '\''${{inputs.api_base}}'\'';@g' site/config/AppConfig.php
+      shell: bash
+    - name: Set Version Display Config
+      if: ${{ inputs.use_display_version == 'true' }}
+      run: sed -i 's@$APP_CONFIG\['\''DISPLAY_VERSION'\''\]\s*=\s*false;@$APP_CONFIG['\''DISPLAY_VERSION'\''] = '\''${{inputs.display_version}}'\'';@g' site/config/AppConfig.php
       shell: bash

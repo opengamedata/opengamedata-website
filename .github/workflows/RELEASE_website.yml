@@ -32,6 +32,8 @@ jobs:
     steps:
 
   # 1. Local checkout & config
+    - name: Announce Run
+      run: echo "Deploying ${{ github.repository }} to ${{ env.DEPLOY_URL }} via ${{ github.actor }}"
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
@@ -41,12 +43,13 @@ jobs:
       uses: ./.github/actions/web_config
       with:
         api_base: https://${{env.API_HOST}}/${{env.API_PATH}}
+        use_display_version: 'false'
     
   # 2. Build 
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version: 16
+        node-version: 18
     - name: Install libraries
       run: npm install
     - name: Build
@@ -92,8 +95,6 @@ jobs:
         remote_key:  ${{ secrets.VPN_KEY }}
 
   # 4. Cleanup & complete
-    - name: Announce deploy
-      run: echo "Deployed to ${{ env.DEPLOY_URL }}"
     - name: Upload logs as artifacts
       uses: actions/upload-artifact@v4
       with:

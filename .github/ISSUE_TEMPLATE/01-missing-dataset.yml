@@ -1,0 +1,37 @@
+name: Missing Dataset
+description : Report a Dataset Missing from the Open Game Data Website
+title: Missing Data from [Insert Game Name Here]
+labels: [missing-dataset]
+assignees:
+  - LswaN58
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out a missing dataset report!
+  - type: input
+    id: game-id
+    attributes:
+      label: Which game?
+      description: Tell us which game is missing a dataset. Please include this in the title as well.
+      placeholder: ex. AQUALAB
+    validations:
+      required: true
+  - type: input
+    id: months
+    attributes:
+      label: Which month(s)?
+      description: Tell us which month (or months) is missing data.
+      placeholder: ex. January 2025
+    validations:
+      required: true
+  - type: checkboxes
+    id: file-types
+    attributes:
+      label: Which kind of data?
+      description: Tell us which kind of data (events, sessions, players, population) is missing.
+      options:
+        - label: Events
+        - label: Sessions
+        - label: Players
+        - label: Population

@@ -1,3 +1,6 @@
+        <?php
+            require_once 'config/AppConfig.php';
+        ?>
         <footer class="container-fluid px-sm-4 py-md-5 px-lg-5">
             <div class="row">
                 <div id="footer-ogd" class="col-md mt-5 mb-5">
@@ -11,7 +14,7 @@
                         design researchers to build new theory, we are thinking about modularity, scalability and performance.
                     </p>
                     <a class="btn btn-signup mt-4" href="https://forms.gle/z9HGvu5Kmsuf6xDD8" target="_blank" rel="nofollow noopener">Sign up to receive communications<i class="bi bi-chevron-right ms-5"></i></a>
-                    <a class="btn btn-signup mt-4" href="https://github.com/opengamedata/opengamedata-website/issues/new?title=[Insert name of game and missing month(s)]&body=[Describe which types of data are missing (events, features, etc.)]" target="_blank" rel="nofollow noopener">Report a missing dataset<i class="bi bi-chevron-right ms-5"></i></a>
+                    <a class="btn btn-signup mt-4" href="https://github.com/opengamedata/opengamedata-website/issues/new?template=01-missing-dataset.yml" target="_blank" rel="nofollow noopener">Report a missing dataset<i class="bi bi-chevron-right ms-5"></i></a>
                 </div>
                 <div class="col-md-1 vr-wrapper">
                     <div class="vr"></div>
@@ -30,6 +33,7 @@
                     <img class="ms-1 ms-lg-3" src="assets/images/wordmarks/tools-competition-logo.png" alt="Tools Competition">
                 </div>
             </div>           
+            <?php echo '<div>v.'.(\AppConfig::GetConfig()['DISPLAY_VERSION'] != false ? \AppConfig::GetConfig()['DISPLAY_VERSION'] : '').'</div>'?>
         </footer>
     </body>
     <!-- Bootstrap 5 Javascript -->
