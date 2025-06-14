@@ -32,6 +32,9 @@ class Card
                                 <img class="avatar me-2" src="assets/extern/images/logos/' . htmlspecialchars($this->game->getDeveloperIconFilename()) . '" alt="avatar"> 
                                 <h5 class="mb-0">' . htmlspecialchars($this->game->getDeveloperName()) . '</h5> 
                             </div>
+                            <div>
+                                <img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($this->game->getId())) . '.yml/badge.svg">
+                            </div>
                         </div>
                     </a>
                 </div>';
