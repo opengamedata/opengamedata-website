@@ -18,10 +18,13 @@ const statsHeader = document.getElementById('stats-header');
 const numPlays    = document.getElementById('num-plays');
 
 // Anchor elements in the Templates section
-const eventsData     = document.getElementById('events-data');
-const playersData    = document.getElementById('players-data');
-const populationData = document.getElementById('population-data');
-const sessionsData   = document.getElementById('sessions-data');
+const eventsTemplate     = document.getElementById('events-tplate');
+const eventsCodespace    = document.getElementById('events-cspace');
+const sessionsTemplate   = document.getElementById('sessions-tplate');
+const sessionsCodespace  = document.getElementById('sessions-cspace');
+const playersTemplate    = document.getElementById('players-tplate');
+const playersCodespace   = document.getElementById('players-cspace');
+const populationTemplate = document.getElementById('population-tplate');
 
 // Pipeline buttons
 const rawBtn       = document.getElementById('raw-btn');
@@ -205,48 +208,80 @@ function updateHtml(gameId, currentYear, currentMonth) {
             prevMonth.disabled = (response.Values.first_year > currentYear || (response.Values.first_year === currentYear && response.Values.first_month >= currentMonth)) ? true : false;
 
             // Update the general template links, showing/hiding as appropriate
-
-            if (response.Values.events_template) {
-               eventsData.href = response.Values.events_template;
-               eventsData.classList.remove('d-none');
+            
+            if(response.Values.events_template)
+            {
+                eventsTemplate.href = response.Values.events_template;
+                eventsTemplate.classList.remove('d-none');
             }
-            else {
-               eventsData.classList.add('d-none');
+            else
+            {
+                eventsTemplate.classList.add('d-none');
             }
-
-            if (response.Values.players_template) {
-               playersData.href = response.Values.players_template;
-               playersData.classList.remove('d-none');
+            if(response.data.events_codespace)
+            {
+                eventsCodespace.href = response.Values.events_codespace;
+                eventsCodespace.classList.remove('d-none');
             }
-            else {
-               playersData.classList.add('d-none');
-            }
-
-            if (response.Values.population_template) {
-               populationData.href = response.Values.population_template;
-               populationData.classList.remove('d-none');
-            }
-            else {
-               populationData.classList.add('d-none');
+            else
+            {
+                eventsCodespace.classList.add('d-none');
             }
 
-            if (response.Values.sessions_template) {
-               sessionsData.href = response.Values.sessions_template;
-               sessionsData.classList.remove('d-none');
+              
+            if(response.Values.sessions_codespace)
+            {
+                sessionsCodespace.href = response.Values.sessions_codespace;
+                sessionsCodespace.classList.remove('d-none');
+            
             }
             else {
-               sessionsData.classList.add('d-none');
+               sessionsCodespace.classList.add('d-none');
+            }
+
+              
+            if(response.Values.players_template)
+            {
+                playersTemplate.href = response.Values.players_template;
+                playersTemplate.classList.remove('d-none');
+            
+            }
+            else
+            {
+                playersTemplate.classList.add('d-none');
+            }
+            if(response.Values.players_codespace)
+            {
+                playersCodespace.href = response.Values.players_codespace;
+                playersCodespace.classList.remove('d-none');
+            
+            }
+            else
+            {
+                playersCodespace.classList.add('d-none');
+            }
+
+              
+            if(response.Values.population_template)
+            {
+                populationTemplate.href = response.Values.population_template;
+                populationTemplate.classList.remove('d-none');
+            
+            }
+            else
+            {
+                populationTemplate.classList.add('d-none');
             }
 
             // Data Pipeline updates
             document.getElementById('pipeline-month').innerText = 'Month of ' + currentMonthName;
 
             // Enable/disable buttons in pipeline
-            rawBtn.disabled = response.Values.raw_file ? false : true;
-            detectorBtn.disabled = response.Values.detectors_link ? false : true;
-            eventBtn.disabled = response.Values.events_file ? false : true;
+            rawBtn.disabled       = response.Values.raw_file ? false : true;
+            detectorBtn.disabled  = response.Values.detectors_link ? false : true;
+            eventBtn.disabled     = response.Values.events_file ? false : true;
             extractorBtn.disabled = response.Values.features_link ? false : true;
-            featureBtn.disabled = response.Values.population_file || response.Values.players_file || response.Values.sessions_file ? false : true;
+            featureBtn.disabled   = response.Values.population_file || response.data.players_file || response.data.sessions_file ? false : true;
 
             // Determine the selector for the earliest data pipeline button that has data
             // We'll make that button active

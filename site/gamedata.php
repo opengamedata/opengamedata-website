@@ -350,10 +350,13 @@ function renderTemplatesSection(?GameFileInfo $game_files)
 
     if (isset($game_files)) {
 
-        $events_template   = $game_files->getEventsTemplateLink();
-        $players_template  = $game_files->getPlayersTemplateLink();
-        $pop_template      = $game_files->getPopulationTemplateLink();
-        $sessions_template = $game_files->getSessionsTemplateLink();
+        $events_template    = $game_files->getEventsTemplateLink();
+        $events_codespace   = $game_files->getEventsCodespace();
+        $players_template   = $game_files->getPlayersTemplateLink();
+        $players_codespace  = $game_files->getPlayersCodespace();
+        $pop_template       = $game_files->getPopulationTemplateLink();
+        $sessions_template  = $game_files->getSessionsTemplateLink();
+        $sessions_codespace = $game_files->getSessionsCodespace();
 
         $events_class   = $events_template   ? '' : $events_class;
         $players_class  = $players_template  ? '' : $players_class;
@@ -369,9 +372,18 @@ function renderTemplatesSection(?GameFileInfo $game_files)
 
             <div class="btn-group-vertical">
                 <a id="events-data"     class="btn btn-secondary btn-outline-secondary mb-2 {$events_class}"   href="{$events_template}">Events Template</a>
+                <a id="events-cspace"   class="btn btn-secondary btn-outline-secondary mb-2 {$events_class}"   href="{$events_codespace}">
+                    <img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'>
+                </a>
                 <a id="players-data"    class="btn btn-secondary btn-outline-secondary mb-2 {$players_class}"  href="{$players_template}">Player Features Template</a>
+                <a id="players-cspace"  class="btn btn-secondary btn-outline-secondary mb-2 {$players_class}"  href="{$players_codespace}">
+                    <img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'>
+                </a>
                 <a id="population-data" class="btn btn-secondary btn-outline-secondary mb-2 {$pop_class}"      href="{$pop_template}">Population Features Template</a>
                 <a id="sessions-data"   class="btn btn-secondary btn-outline-secondary mb-2 {$sessions_class}" href="{$sessions_template}">Session Features Template</a>
+                <a id="sessions-cspace" class="btn btn-secondary btn-outline-secondary mb-2 {$sessions_class}" href="{$sessions_codespace}">
+                    <img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'>
+                </a>
             </div>
 
         </section>'

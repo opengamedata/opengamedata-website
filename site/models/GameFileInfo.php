@@ -14,20 +14,28 @@ class GameFileInfo
     protected $found_matching_range;
     protected $events_file;
     protected $events_template;
-    protected $players_file;
-    protected $players_template;
-    protected $population_file;
-    protected $population_template;
-    protected $raw_file;
+    protected $events_codespace;
     protected $sessions_file;
     protected $sessions_template;
+    protected $sessions_codespace;
+    protected $players_file;
+    protected $players_template;
+    protected $players_codespace;
+    protected $population_file;
+    protected $population_template;
+    protected $population_codespace;
+    protected $raw_file;
     protected $feature_files = [];
     protected $detectors_link;
     protected $features_link; // Extractors in the UI
     
-    public function __construct($first_month, $first_year, $last_month, $last_year, $found_matching_range, $events_file = null, $events_template = null,
-     $players_file = null, $players_template = null, $population_file = null, $population_template = null, $raw_file = null, $sessions_file = null,
-     $sessions_template = null, $detectors_link = null, $features_link = null)
+    public function __construct($first_month, $first_year, $last_month, $last_year, $found_matching_range,
+     $events_file = null,     $events_template = null,     $events_codespace = null,
+     $sessions_file = null,   $sessions_template = null,   $sessions_codespace = null,
+     $players_file = null,    $players_template = null,    $players_codespace = null,
+     $population_file = null, $population_template = null, $population_codespace = null,
+     $raw_file = null,
+     $detectors_link = null, $features_link = null)
     {
         $this->first_month = $first_month;
         $this->first_year = $first_year;
@@ -36,13 +44,17 @@ class GameFileInfo
         $this->found_matching_range = $found_matching_range;
         $this->events_file = $events_file;
         $this->events_template = $events_template;
-        $this->players_file = $players_file;
-        $this->players_template = $players_template;
-        $this->population_file = $population_file;
-        $this->population_template = $population_template;
-        $this->raw_file = $raw_file;
+        $this->events_codespace = $events_codespace;
         $this->sessions_file = $sessions_file;
         $this->sessions_template = $sessions_template;
+        $this->sessions_codespace = $sessions_codespace;
+        $this->players_file = $players_file;
+        $this->players_template = $players_template;
+        $this->players_codespace = $players_codespace;
+        $this->population_file = $population_file;
+        $this->population_template = $population_template;
+        $this->population_codespace = $population_codespace;
+        $this->raw_file = $raw_file;
         $this->detectors_link = $detectors_link;
         $this->features_link = $features_link;
     }
@@ -56,13 +68,17 @@ class GameFileInfo
             $obj->{'found_matching_range'},
             $obj->{'events_file'},
             $obj->{'events_template'},
-            $obj->{'players_file'},
-            $obj->{'players_template'},
-            $obj->{'population_file'},
-            $obj->{'population_template'},
-            $obj->{'raw_file'},
+            $obj->{'events_codespace'},
             $obj->{'sessions_file'},
             $obj->{'sessions_template'},
+            $obj->{'sessions_codespace'},
+            $obj->{'players_file'},
+            $obj->{'players_template'},
+            $obj->{'players_codespace'},
+            $obj->{'population_file'},
+            $obj->{'population_template'},
+            $obj->{'population_codespace'},
+            $obj->{'raw_file'},
             $obj->{'detectors_link'},
             $obj->{'features_link'}
         );
@@ -99,10 +115,12 @@ class GameFileInfo
     {
         return $this->found_matching_range;
     }
+    /* Links for raw file */
     public function getRawFileLink(bool $html_safe = true) : ?string
     {
         return $html_safe ? htmlspecialchars($this->raw_file) : $this->raw_file;
     }
+    /* Links for events file */
     public function getEventsFileLink(bool $html_safe = true) : ?string
     {
         return $html_safe ? htmlspecialchars($this->events_file) : $this->events_file;
@@ -111,6 +129,24 @@ class GameFileInfo
     {
         return $html_safe ? htmlspecialchars($this->events_template) : $this->events_template;
     }
+    public function getEventsCodespace(bool $html_safe = true) : ?string
+    {
+        return $html_safe ? htmlspecialchars($this->events_codespace) : $this->events_codespace;
+    }
+    /* Links for sessions file */
+    public function getSessionsFileLink(bool $html_safe = true) : ?string
+    {
+        return $html_safe ? htmlspecialchars($this->sessions_file) : $this->sessions_file;
+    }
+    public function getSessionsTemplateLink(bool $html_safe = true) : ?string
+    {
+        return $html_safe ? htmlspecialchars($this->sessions_template) : $this->sessions_template;
+    }
+    public function getSessionsCodespace(bool $html_safe = true) : ?string
+    {
+        return $html_safe ? htmlspecialchars($this->sessions_codespace) : $this->sessions_codespace;
+    }
+    /* Links for players file */
     public function getPlayersFileLink(bool $html_safe = true) : ?string
     {
         return $html_safe ? htmlspecialchars($this->players_file) : $this->players_file;
@@ -119,6 +155,11 @@ class GameFileInfo
     {
         return $html_safe ? htmlspecialchars($this->players_template) : $this->players_template;
     }
+    public function getPlayersCodespace(bool $html_safe = true) : ?string
+    {
+        return $html_safe ? htmlspecialchars($this->players_codespace) : $this->players_codespace;
+    }
+    /* Links for population file */
     public function getPopulationFileLink(bool $html_safe = true) : ?string
     {
         return $html_safe ? htmlspecialchars($this->population_file) : $this->population_file;
@@ -127,13 +168,9 @@ class GameFileInfo
     {
         return $html_safe ? htmlspecialchars($this->population_template) : $this->population_template;
     }
-    public function getSessionsFileLink(bool $html_safe = true) : ?string
+    public function getPopulationCodespace(bool $html_safe = true) : ?string
     {
-        return $html_safe ? htmlspecialchars($this->sessions_file) : $this->sessions_file;
-    }
-    public function getSessionsTemplateLink(bool $html_safe = true) : ?string
-    {
-        return $html_safe ? htmlspecialchars($this->sessions_template) : $this->sessions_template;
+        return $html_safe ? htmlspecialchars($this->population_codespace) : $this->population_codespace;
     }
     public function getFeatureFiles()
     {
