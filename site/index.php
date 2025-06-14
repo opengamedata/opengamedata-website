@@ -1,12 +1,12 @@
 <?php
 
-require_once 'includes/app_config.php';
+require_once 'config/AppConfig.php';
 require_once 'includes/services.php';
 require_once 'models/APIResponse.php';
-require_once 'models/game.php';
-require_once 'models/game_usage.php';
-require_once 'models/game_card.php';
-require_once 'components/card.php';
+require_once 'models/GameDetails.php';
+require_once 'models/GameUsage.php';
+require_once 'models/GameCard.php';
+require_once 'components/Card.php';
 require_once 'includes/profiler.php';
 
 $profilers = [];
@@ -14,9 +14,7 @@ $profilers[] = new Profiler("Profile", 0);
 
 // Get game list
 $profilers[0]->ProfilePoint("Get game data list from server");
-$gamelist_json = services\getGameList();
-$gamelist = $gamelist_json ? json_decode($gamelist_json) : [];
-
+$gamelist = services\getGameList();
 $games = [];
 $profilers[0]->ProfilePoint("Process game list");
 $i=0;
@@ -26,27 +24,10 @@ foreach($gamelist as $key => $value)
     $profilers[] = new Profiler("{$key}Profile", 1);
     $i++;
     $profilers[$i]->ProfilePoint("Get usage for game {$key}");
-    $response_obj = services\getGameUsage($key);
-    $game_usage = null;
-    if (isset($response_obj)) {
-        $profilers[$i]->ProfilePoint("Setup game usage object for {$key}");
-        $api_response = APIResponse::fromObj($response_obj);
-        if ($api_response->Status() == "SUCCESS") {
-            $game_usage = GameUsage::fromObj($api_response->Value());
-        }
-        else {
-            $err_str = "getGameUsage request, with game id=".$key.", was unsuccessful:\n".$api_response->Message()."\nFull response: ".json_encode($response_obj);
-            error_log($err_str);
-        }
-    }
-    else {
-        $profilers[$i]->ProfilePoint("Handle error getting usage for game {$key}");
-        $err_str = "getGameUsage request, with game_id=".$key.", got no response object!";
-        error_log($err_str);
-    }
+    $game_usage = services\getGameUsage($key);
 
     $profilers[$i]->ProfilePoint("Create game card object for game {$key}");
-    $game_card = new GameCard(Game::fromJson($key, json_encode($value)), $game_usage);
+    $game_card = new GameCard(GameDetails::fromArray($key, $value), $game_usage);
     array_push($games, $game_card);
     $profilers[$i]->EndPoint();
 }

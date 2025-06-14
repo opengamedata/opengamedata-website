@@ -76,7 +76,7 @@
         "feature_readme_link": null,
         "studies": []
     },
-        "Bloom": {
+    "BLOOM": {
         "game_name": "Bloom: The Saga of the Fertilizer Economy",
         "game_description": "In Bloom, you’ll create trade networks and enact policies that keep farmers in business, while stopping excess manure from entering local lakes and rivers. Made with UW-Madison’s Scalable Systems Lab (Directed by Victor Zavala) with funding from the Environmental Protection Agency.",
         "target_audience": "Grades 9-12",
