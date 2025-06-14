@@ -82,12 +82,12 @@ function renderOverviewSection(?GameDetails $game_details)
                         <a class="btn btn-secondary" href="{$game_details->getSourceLink()}" target="_blank">Source Code</a>'
                         {$publications_link}
                     </div>
+                    <div>
+                        <img src="{$badge_link}">
+                    </div>
                 </div>
                 <p>
                     {$game_details->getDescription()}
-                </p>
-                <p>
-                    <img src="{$badge_link}">
                 </p>
             </div>
             HTML;
