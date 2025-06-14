@@ -1,6 +1,5 @@
 <?php 
-require_once 'models/game_card.php';
-require_once 'includes/functions.php';
+require_once 'includes/utils.php';
 
 class Card
 {
@@ -24,7 +23,7 @@ class Card
         return '<div class="col">
                     <a href="' . htmlspecialchars($this->game_link) . '" class="text-reset text-decoration-none">
                         <div class="card shadow">
-                            <img src="' . htmlspecialchars($this->game->getThumbPath()) . '" class="card-img-top" alt="">
+                            <img src="' . $this->game->getThumbPath() . '" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h4 class="card-title">' . htmlspecialchars($this->game->getName()) . '</h4>
                                 <p class="card-subtitle small">' . ($_monthly_sessions ? $_monthly_sessions . ' Monthly Sessions' : 'Coming Soon!') . '</p>

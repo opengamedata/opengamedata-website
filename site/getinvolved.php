@@ -1,5 +1,5 @@
 <?php
-    require_once 'includes/app_config.php';
+    require_once 'config/AppConfig.php';
     require 'includes/header.php'; 
 ?>
 <section class="hero hero-involved w-100 px-3 py-5 px-md-5 bg-dark text-white d-flex flex-wrap flex-sm-nowrap">

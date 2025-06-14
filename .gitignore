@@ -1,10 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+site/**/AppConfig.php
+**/php_errors.log
 
 # compiled output
 /site/assets/styles/*.css
 
 # dependencies
 /node_modules
+/site/assets/scripts/axios.min.js
+/site/assets/scripts/bootstrap.bundle.min.js
+/site/assets/scripts/chart.umd.js
 /site/assets/scripts/vendor
 
 # profiling files
