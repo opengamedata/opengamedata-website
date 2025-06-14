@@ -65,6 +65,7 @@ else {
 <?php
 function renderOverviewSection(?GameDetails $game_details)
 {
+    $badge_link    = 'https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($game_details->getID())) . '.yml/badge.svg';
     $overview_elem = '<div class="col-md-7 my-auto">NO OVERVIEW AVAILABLE, GAME DETAILS NOT FOUND!</div>';
     $thumb_elem    = '<img class="img-fluid rounded" src="./assets/exter/images/graphics/robohead-512.png">';
 
@@ -86,7 +87,7 @@ function renderOverviewSection(?GameDetails $game_details)
                     {$game_details->getDescription()}
                 </p>
                 <p>
-                    <?php echo '<img src="https://github.com/opengamedata/opengamedata-automation/actions/workflows/' . htmlspecialchars(strtolower($game_id)) . '.yml/badge.svg">'; ?>
+                    <img src="{$badge_link}">
                 </p>
             </div>
             HTML;
